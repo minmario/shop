@@ -10,18 +10,16 @@
 <html>
 <head>
     <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         #wrap{
             width: 1000px;
-            border: 1px solid black;
-            align-items: center;     /* 수평 가운데 정렬 */
-            justify-content: center; /* 수직 가운데 정렬 */
+            align-items: center;
         }
 
         #wrap, #wrap-table{
+            margin: auto;
             text-align: center;
-            align-items: center;     /* 수평 가운데 정렬 */
-            justify-content: center; /* 수직 가운데 정렬 */
         }
 
         #delivery-table{
@@ -38,7 +36,7 @@
         #wrap-ul>ul{
             list-style: none;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;;
         }
 
         #wrap-ul li{
@@ -52,7 +50,9 @@
         <div id="wrap-ul">
             <ul>
                 <li>배송지 관리</li>
-                <li><button type="button">배송지 추가</button></li>
+                <li>
+                    <button type="button" class="btn btn-primary" onclick="location.href='addDelivery.jsp'">배송지 추가</button>
+                </li>
             </ul>
             <hr/>
         </div>
@@ -71,17 +71,17 @@
                     <td>서울특별시 동작구 보라매로5길 15</td>
                     <td>010-0000-0000</td>
                     <td>
-                        <button type="button">수정</button>
-                        <button type="button">삭제</button>
+                        <button type="button" class="btn btn-outline-primary">수정</button>
+                        <button type="button" class="btn btn-outline-danger">삭제</button>
                     </td>
                 </tr>
             </table>
         </div>
-
-
     </div>
 </body>
 <footer>
     <jsp:include page="./layout/footer.jsp"></jsp:include>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 </html>
