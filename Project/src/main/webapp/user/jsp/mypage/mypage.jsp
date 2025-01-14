@@ -13,88 +13,112 @@
     <link rel="stylesheet" type="text/css" href="./user/css/mypage/mypage.css"/>
 </head>
 <body>
+    <%-- header --%>
     <jsp:include page="../layout/header.jsp"></jsp:include>
-    <div class="container-fluid mt-4" style="padding-left: 20px; padding-right: 0;">
+
+    <%-- content --%>
+    <div class="container-fluid mt-4">
         <div class="row">
-            <div class="border-bottom pb-2 mb-3">
-                <div class="user-info">
-                    <span style="margin: 0; font-weight: bold;">브론즈 OOO님</span>&nbsp;|&nbsp;
-                    <span style="margin: 0; font-weight: bold;">
-                        알림 10개
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                        </svg>
-                    </span>
+            <!-- Breadcrumb Section -->
+            <div class="breadcrumb-container">
+                <span>무신사 > 스냅 > 스트릿 스냅</span>
+            </div>
+
+            <!-- User Info Section -->
+            <div class="header-option">
+                <div class="header-user">
+                    <span class="user-level">브론즈</span>&nbsp;|&nbsp;
+                    <span class="user-name">OOO님</span>&nbsp;|&nbsp;
+                    <span class="notification-count">알림 10개</span>
+                    <span class="notification-icon"></span>
                 </div>
                 <div class="logout">
-                    <span style="margin: 0; font-weight: bold;">로그아웃</span>
+                    <span class="logout-text">로그아웃</span>
                 </div>
             </div>
 
-            <div class="col-md-10">
-                <div class="border-bottom pb-2 mb-3">
-                    무신사 > 스냅 > 스트릿 스냅
-                </div>
-                <div class="border-bottom pb-2 mb-3">
-                    <h3 style="margin: 0; font-weight: bold;">My Page</h3>
-                </div>
-                <div class="border-bottom pb-2 mb-3">
-                    <div class="profile-container">
-                        <div class="profile"></div>
-                    </div>
-                    <div class="user-info">
-                        <span class="grade">실버</span>
-                        <span class="userName">OOO님</span>
-                        <span class="user-info-change">[회원정보변경]</span>
-                    </div>
-                </div>
-                <div class="border-bottom pb-2 mb-3">
-                    <div class="point-info">
-                        <span>적립금</span>
-                    </div>
-                    <div class="point-value">
-                        <span>000점</span>
-                    </div>
-                </div>
-                <div class="border-bottom pb-2 mb-3">
-                    <div class="coupon-info">
-                        <span>쿠폰</span>
-                    </div>
-                    <div class="coupon-value">
-                        <span>00장</span>
-                    </div>
+            <!-- My Page Section -->
+            <div class="text-title">
+                <h3 style="font-weight: bold;">My Page</h3>
+            </div>
+
+            <!-- User Info Section -->
+            <div class="user-info-table">
+                <table id="user-table">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div class="profile"></div>
+                        </td>
+                        <td>
+                            <div>
+                                <span class="grade">실버</span>
+                                <span class="userName">OOO님</span>
+                            </div>
+                            <div>
+                                <a href="" class="user-info-change">[회원정보변경]</a>
+                            </div>
+                        <td>
+                            <div class="point-info">
+                                <span>적립금</span>
+                            </div>
+                            <div class="point-value">
+                                <span>000점</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="coupon-info">
+                                <span>쿠폰</span>
+                            </div>
+                            <div class="coupon-value">
+                                <span>00장</span>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Action Buttons Section -->
+            <div class="user-action-buttons">
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="btnradiotab" id="btnradio1" autocomplete="off" checked>
+                    <label class="btn btn-outline-secondary" for="btnradio1">장바구니</label>
+                    <input type="radio" class="btn-check" name="btnradiotab" id="btnradio2" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="btnradio2">주문조회</label>
+                    <input type="radio" class="btn-check" name="btnradiotab" id="btnradio3" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="btnradio3">좋아요</label>
+                    <input type="radio" class="btn-check" name="btnradiotab" id="btnradio4" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="btnradio4">구매후기</label>
+                    <input type="radio" class="btn-check" name="btnradiotab" id="btnradio5" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="btnradio5">상품문의</label>
+                    <input type="radio" class="btn-check" name="btnradiotab" id="btnradio6" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="btnradio6">1:1문의</label>
+                    <input type="radio" class="btn-check" name="btnradiotab" id="btnradio7" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="btnradio7">적립금</label>
+                    <input type="radio" class="btn-check" name="btnradiotab" id="btnradio8" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="btnradio8">쿠폰</label>
+                    <input type="radio" class="btn-check" name="btnradiotab" id="btnradio9" autocomplete="off">
+                    <label class="btn btn-outline-secondary" for="btnradio9">배송지</label>
                 </div>
             </div>
 
-            <div class="col-md-10">
-                <div class="btn-group" role="group" aria-label="Basic outlined example">
-                    <button type="button" class="btn btn-outline-secondary">장바구니</button>
-                    <button type="button" class="btn btn-outline-secondary">주문조회</button>
-                    <button type="button" class="btn btn-outline-secondary">좋아요</button>
-                    <button type="button" class="btn btn-outline-secondary">구매후기</button>
-                    <button type="button" class="btn btn-outline-secondary">상품문의</button>
-                    <button type="button" class="btn btn-outline-secondary">1:1문의</button>
-                    <button type="button" class="btn btn-outline-secondary">적립금</button>
-                    <button type="button" class="btn btn-outline-secondary">쿠폰</button>
-                    <button type="button" class="btn btn-outline-secondary">배송지</button>
-                </div>
-            </div>
-
-            <div class="col-md-10">
-                <div>
-                    <div>
-                        <span>상품평 작성</span>
+            <!-- Review Section -->
+            <div class="review-section-container">
+                <div class="review-section">
+                    <div class="review-header">
+                        <span class="review-title">상품평 작성</span>
                     </div>
-                    <div>
-                        <div class="btn-group" role="group" aria-label="Basic outlined example">
-                            <button type="button" class="btn btn-outline-secondary">후기 내역</button>
-                            <button type="button" class="btn btn-outline-secondary">후기 작성</button>
+                    <div class="review-buttons">
+                        <div class="btn-group" role="group">
+                            <input type="radio" class="btn-check" name="btnradioreview" id="btnradio10" autocomplete="off" checked>
+                            <label class="btn btn-outline-secondary" for="btnradio10">후기 내역</label>
+                            <input type="radio" class="btn-check" name="btnradioreview" id="btnradio11" autocomplete="off">
+                            <label class="btn btn-outline-secondary" for="btnradio11">후기 작성</label>
                         </div>
                     </div>
                 </div>
-                <table id="table">
-                    <caption>상품평 작성</caption>
+                <table id="review-table" class="table">
                     <thead>
                         <tr>
                             <th>번호</th>
@@ -106,46 +130,50 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>2</td>
-                            <td>
+                            <td class="order-id">2</td>
+                            <td class="product-info">
                                 <div class="prod_info">
                                     <div class="prod_img"></div>
-                                    <div class="prod_brand">
-                                        [페이퍼리즘]
+                                    <div class="prod_details">
+                                        <div class="prod_brand">
+                                            [페이퍼리즘]
+                                        </div>
+                                        <div class="prod_name">
+                                            ZIGGY LIGHTING 3/4 SLV T-SHIRT [GRAY]
+                                        </div>
+                                        <div class="prod_option">옵션&nbsp;:&nbsp;L&nbsp;/&nbsp;수량&nbsp;:&nbsp;1</div>
                                     </div>
-                                    <div class="prod_name">
-                                        ZIGGY LIGHTING 3/4 SLV T-SHIRT [GRAY]
-                                    </div>
-                                    <div class="prod_option">옵션 &nbsp; : &nbsp; L / 수량 &nbsp; : &nbsp; 1</div>
                                 </div>
                             </td>
-                            <td>2025-01-14</td>
-                            <td>
+                            <td class="purchase-date">2025-01-14</td>
+                            <td class="general-review">
                                 <button type="button" class="btn btn-outline-secondary">작성하기</button>
                             </td>
-                            <td>
+                            <td class="style-review">
                                 <button type="button" class="btn btn-outline-secondary">작성하기</button>
                             </td>
                         </tr>
                         <tr>
-                            <td>1</td>
-                            <td>
+                            <td class="review-id">1</td>
+                            <td class="product-info">
                                 <div class="prod_info">
                                     <div class="prod_img"></div>
-                                    <div class="prod_brand">
-                                        [페이퍼리즘]
+                                    <div class="prod_details">
+                                        <div class="prod_brand">
+                                            [페이퍼리즘]
+                                        </div>
+                                        <div class="prod_name">
+                                            ZIGGY LIGHTING 3/4 SLV T-SHIRT [GRAY]
+                                        </div>
+                                        <div class="prod_option">옵션&nbsp;:&nbsp;L&nbsp;/&nbsp;수량&nbsp;:&nbsp;1</div>
                                     </div>
-                                    <div class="prod_name">
-                                        ZIGGY LIGHTING 3/4 SLV T-SHIRT [GRAY]
-                                    </div>
-                                    <div class="prod_option">옵션 &nbsp; : &nbsp; L / 수량 &nbsp; : &nbsp; 1</div>
                                 </div>
                             </td>
-                            <td>2025-01-10</td>
-                            <td>
+                            <td class="purchase-date">2025-01-10</td>
+                            <td class="general-review">
                                 <button type="button" class="btn btn-outline-secondary">작성하기</button>
                             </td>
-                            <td>
+                            <td class="style-review">
                                 <button type="button" class="btn btn-outline-secondary">작성하기</button>
                             </td>
                         </tr>
@@ -154,9 +182,9 @@
             </div>
         </div>
     </div>
-    <footer>
-        <jsp:include page="../layout/footer.jsp"></jsp:include>
-    </footer>
+
+    <%-- footer --%>
+    <jsp:include page="../layout/footer.jsp"></jsp:include>
 
     <script>
         const selectedCategoryDiv = document.getElementById('selectedCategoryDiv');
