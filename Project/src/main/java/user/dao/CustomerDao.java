@@ -1,8 +1,8 @@
-package sist.dao;
+package user.dao;
 
 import org.apache.ibatis.session.SqlSession;
-import sist.service.FactoryService;
-import sist.vo.CustomerVO;
+import service.FactoryService;
+import user.vo.CustomerVO;
 
 public class CustomerDao {
    //로그인

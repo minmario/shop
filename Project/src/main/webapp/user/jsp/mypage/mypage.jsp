@@ -40,7 +40,7 @@
 </head>
 <body>
 
-<jsp:include page="header.jsp"></jsp:include>
+<jsp:include page="../layout/header.jsp"></jsp:include>
 
 
 <div class="container-fluid mt-4" style="padding-left: 20px; padding-right: 0;">
@@ -92,7 +92,7 @@
 
                 <div class="col">
                     <div class="card">
-                        <img src="images/shot1.jpg" class="card-img-top" alt="코디 이미지">
+                        <img src="../../images/shot1.jpg" class="card-img-top" alt="코디 이미지">
                         <div class="card-body">
                             <h5 class="card-title">서울 [홍대입구]</h5>
                             <p class="card-text info">16-03-29 | 조회수: 123</p>
@@ -103,7 +103,7 @@
 
                 <div class="col">
                     <div class="card">
-                        <img src="images/shot2.jpg" class="card-img-top" alt="코디 이미지">
+                        <img src="../../images/shot2.jpg" class="card-img-top" alt="코디 이미지">
                         <div class="card-body">
                             <h5 class="card-title">Kenila [강남]</h5>
                             <p class="card-text info">16-03-29 | 조회수: 456</p>
@@ -114,7 +114,7 @@
 
                 <div class="col">
                     <div class="card">
-                        <img src="images/shot3.jpg" class="card-img-top" alt="코디 이미지">
+                        <img src="../../images/shot3.jpg" class="card-img-top" alt="코디 이미지">
                         <div class="card-body">
                             <h5 class="card-title">정우 [신촌]</h5>
                             <p class="card-text info">16-03-29 | 조회수: 789</p>
@@ -124,7 +124,7 @@
 
                 <div class="col">
                     <div class="card">
-                        <img src="images/shot4.jpg" class="card-img-top" alt="코디 이미지">
+                        <img src="../../images/shot4.jpg" class="card-img-top" alt="코디 이미지">
                         <div class="card-body">
                             <h5 class="card-title">최윤영 [홍대]</h5>
                             <p class="card-text info">16-03-29 | 조회수: 101</p>
@@ -138,7 +138,7 @@
 </body>
 
 <footer>
-    <jsp:include page="footer.jsp"></jsp:include>
+    <jsp:include page="../layout/footer.jsp"></jsp:include>
 </footer>
 <script>
   const selectedCategoryDiv = document.getElementById('selectedCategoryDiv');

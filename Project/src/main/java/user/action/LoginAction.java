@@ -1,7 +1,7 @@
-package sist.action;
+package user.action;
 
-import sist.dao.CustomerDao;
-import sist.vo.CustomerVO;
+import user.dao.CustomerDao;
+import user.vo.CustomerVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,10 +26,10 @@ public class LoginAction  implements Action {
       session.setAttribute("nickname", loginResult.getCus_nickname());
       request.setAttribute("isLoggedIn", true);
       request.setAttribute("nickname", loginResult.getCus_nickname());
-      viewpath="index.jsp";
+      viewpath="/user/jsp/index.jsp";
     }
     else{
-      viewpath="login.jsp";
+      viewpath="/user/jsp/login/login.jsp";
     }
     return viewpath;
 }

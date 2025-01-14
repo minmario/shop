@@ -27,8 +27,8 @@
         </button>
     </form>
     <div class="d-flex justify-content-between mt-3">
-        <a href="signup.jsp" class="text-decoration-none text-muted">회원가입</a>
-        <a href="index.jsp" class="text-decoration-none text-muted">이전 페이지</a>
+        <a href="../signup/signup.jsp" class="text-decoration-none text-muted">회원가입</a>
+        <a href="../index.jsp" class="text-decoration-none text-muted">이전 페이지</a>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

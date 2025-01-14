@@ -90,7 +90,7 @@
             <button type="submit" class="btn btn-dark w-100">회원가입</button>
         </form>
         <div class="d-flex justify-content-center mt-3">
-            <a href="index.jsp" class="text-decoration-none text-muted">이전 페이지</a>
+            <a href="../index.jsp" class="text-decoration-none text-muted">이전 페이지</a>
         </div>
     </div>
 </div>

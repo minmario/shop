@@ -1,15 +1,8 @@
-package sist.action;
-
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.input.SAXBuilder;
+package user.action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.List;
 
 public class IndexAction implements Action {
 
@@ -25,7 +18,7 @@ public class IndexAction implements Action {
      request.setAttribute("isLoggedIn", false);
    }
 
-    return "index.jsp";
+    return "/user/jsp/index.jsp";
   }
 
 }

@@ -1,4 +1,4 @@
-package sist.control;
+package user.control;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import sist.action.Action;
+import user.action.Action;
 
 /**
  * Servlet implementation class Controller

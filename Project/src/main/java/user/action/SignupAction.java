@@ -1,7 +1,7 @@
-package sist.action;
+package user.action;
 
-import sist.dao.CustomerDao;
-import sist.vo.CustomerVO;
+import user.dao.CustomerDao;
+import user.vo.CustomerVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,10 +42,10 @@ public class SignupAction implements Action {
         System.out.println("cnt:"+cnt);
         // 성공 시 로그인 페이지로 이동
         if (cnt > 0) {
-          return "login.jsp";
+          return "/user/jsp/login/login.jsp";
         }
         else  {
-          return "login.jsp";
+          return "/user/jsp/login/login.jsp";
         }
 
 
