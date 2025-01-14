@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="customer">
+  <!-- 인자로 카테고리 값을 받아 검색하는 기능 -->
+
+  <update id="updateStock" parameterType="Map">
+    UPDATE inventory
+    SET count += #{stock}
+    WHERE prod_no =#{id}
+  </update>
+  <insert id="addStock" parameterType="Map">
+    INSERT INTO inventory(prod_no, count)
+    VALUES(#{id},#{stock}
+  </insert>
+</mapper>

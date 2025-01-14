@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="customer">
+  <!-- 인자로 카테고리 값을 받아 검색하는 기능 -->
+
+  <update id="updateProduct" parameterType="Map">
+    UPDATE product
+    SET
+    category_no = #{category_no},
+    seller_no = #{seller_no},
+    name = #{name},
+    desc = #{desc},
+    color = #{color},
+    size = #{size},
+    length = #{length},
+    shoulder = #{shoulder},
+    chest = #{chest},
+    sleeve = #{sleeve},
+    waist = #{waist},
+    hip = #{hip},
+    thigh = #{thigh},
+    rise = #{rise},
+    hem = #{hem},
+    foot_length = #{foot_length},
+    foot_width = #{foot_width},
+    ankle_height = #{ankle_height},
+    heel_height = #{heel_height},
+    price = #{price}
+    WHERE product_id = #{product_id}
+  </update>
+  <insert id="addProduct" parameterType="Map">
+    INSERT INTO product(category_no, seller_no, name, desc, color,
+    size, length, shoulder, chest, sleeve, waist, hip, thigh, rise,
+    hem, foot_length, foot_width, ankle_height, heel_height, price)
+    VALUES(#{category_no}, #{seller_no}, #{name},#{desc}, #{color},
+    #{size}, #{length}, #{shoulder}, #{chest}, #{sleeve}, #{waist}, #{hip}, #{thigh}, #{rise},
+    #{hem}, #{foot_length}, #{foot_width}, #{ankle_height}, #{heel_height}, #{price})
+  </insert>
+</mapper>
