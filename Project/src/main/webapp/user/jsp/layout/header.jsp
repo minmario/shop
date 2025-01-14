@@ -91,7 +91,7 @@
                     </c:when>
                     <c:otherwise>
                         <button type="button" class="btn btn-outline-primary"
-                                onclick="location.href='../login/login.jsp';">로그인</button>
+                                onclick="location.href='../user/jsp/login/login.jsp';">로그인</button>
                     </c:otherwise>
                 </c:choose>
             </div>

@@ -56,7 +56,7 @@
          </div>
          <!-- 두 번째 이미지 -->
          <div class="carousel-item">
-             <img src="../images/index2.jpg" class="d-block w-100" alt="이벤트 이미지 2">
+             <img src="../user/images/index2.jpg" class="d-block w-100" alt="이벤트 이미지 2">
          </div>
 
      </div>
@@ -81,7 +81,7 @@
 
          <div class="col">
              <div class="card h-100">
-                 <img src="../images/product1.jpg" class="card-img-top" alt="Product Image">
+                 <img src="../user/images/product1.jpg" class="card-img-top" alt="Product Image">
                  <div class="card-body">
                      <h5 class="card-title">Sunground Hoody - 4COL</h5>
                      <p class="card-text text-danger">55% 48,600원</p>
@@ -91,7 +91,7 @@
 
          <div class="col">
              <div class="card h-100">
-                 <img src="../images/product2.jpg" class="card-img-top" alt="Product Image">
+                 <img src="../user/images/product2.jpg" class="card-img-top" alt="Product Image">
                  <div class="card-body">
                      <h5 class="card-title">조던 부루클린 플리스 팬츠</h5>
                      <p class="card-text text-danger">10% 76,500원</p>
@@ -101,7 +101,7 @@
 
          <div class="col">
              <div class="card h-100">
-                 <img src="../images/product3.jpg" class="card-img-top" alt="Product Image">
+                 <img src="../user/images/product3.jpg" class="card-img-top" alt="Product Image">
                  <div class="card-body">
                      <h5 class="card-title">INDIGO WASHED JOGGER PANTS</h5>
                      <p class="card-text text-danger">80% 15,800원</p>
@@ -111,7 +111,7 @@
 
          <div class="col">
              <div class="card h-100">
-                 <img src="../images/product4.jpg" class="card-img-top" alt="Product Image">
+                 <img src="../user/images/product4.jpg" class="card-img-top" alt="Product Image">
                  <div class="card-body">
                      <h5 class="card-title">[2PACK] 프렌치 테리 팬츠</h5>
                      <p class="card-text text-danger">62% 40,000원</p>
@@ -121,7 +121,7 @@
 
          <div class="col">
              <div class="card h-100">
-                 <img src="../images/product5.jpg" class="card-img-top" alt="Product Image">
+                 <img src="../user/images/product5.jpg" class="card-img-top" alt="Product Image">
                  <div class="card-body">
                      <h5 class="card-title">유니버스 오버핏 스웨트</h5>
                      <p class="card-text text-danger">40% 29,880원</p>
@@ -130,7 +130,7 @@
          </div>
          <div class="col">
              <div class="card h-100">
-                 <img src="../images/product6.jpg" class="card-img-top" alt="Product Image">
+                 <img src="../user/images/product6.jpg" class="card-img-top" alt="Product Image">
                  <div class="card-body">
                      <h5 class="card-title">RDS 2PK 후디 미드</h5>
                      <p class="card-text text-danger">43% 169,000원</p>
@@ -139,7 +139,7 @@
          </div>
          <div class="col">
              <div class="card h-100">
-                 <img src="../images/product7.jpg" class="card-img-top" alt="Product Image">
+                 <img src="../user/images/product7.jpg" class="card-img-top" alt="Product Image">
                  <div class="card-body">
                      <h5 class="card-title">AV LOGO CROP HOODY</h5>
                      <p class="card-text text-danger">35% 80,600원</p>
@@ -148,7 +148,7 @@
          </div>
          <div class="col">
              <div class="card h-100">
-                 <img src="../images/product8.jpg" class="card-img-top" alt="Product Image">
+                 <img src="../user/images/product8.jpg" class="card-img-top" alt="Product Image">
                  <div class="card-body">
                      <h5 class="card-title">스포츠 스타일 팬츠</h5>
                      <p class="card-text text-danger">45,000원</p>
