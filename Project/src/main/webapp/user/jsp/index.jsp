@@ -81,7 +81,7 @@
 
          <div class="col">
              <div class="card h-100">
-                 <img src="../images/product1.jpg" class="card-img-top" alt="Product Image">
+                 <img src="${pageContext.request.contextPath}/images/product1.jpg" class="card-img-top" alt="Product Image">
                  <div class="card-body">
                      <h5 class="card-title">Sunground Hoody - 4COL</h5>
                      <p class="card-text text-danger">55% 48,600원</p>
@@ -111,7 +111,7 @@
 
          <div class="col">
              <div class="card h-100">
-                 <img src="../images/product4.jpg" class="card-img-top" alt="Product Image">
+                 <img src="/user/images/product1.jpg" class="card-img-top" alt="Product Image">
                  <div class="card-body">
                      <h5 class="card-title">[2PACK] 프렌치 테리 팬츠</h5>
                      <p class="card-text text-danger">62% 40,000원</p>
