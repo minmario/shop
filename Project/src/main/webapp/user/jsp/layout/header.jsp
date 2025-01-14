@@ -91,14 +91,14 @@
                     </c:when>
                     <c:otherwise>
                         <button type="button" class="btn btn-outline-primary"
-                                onclick="location.href='../login/login.jsp';">로그인</button>
+                                onclick="location.href='Controller?type=login';">로그인</button>
                     </c:otherwise>
                 </c:choose>
             </div>
 
             <div class="d-flex gap-3 align-items-center">
                 <a href="#" class="text-decoration-none text-dark">바로접속 ON</a>
-                <a href="../mypage/mypage.jsp" class="text-decoration-none text-dark">마이페이지</a>
+                <a href="Controller?type=myPage" class="text-decoration-none text-dark">마이페이지</a>
                 <a href="#" class="text-decoration-none text-dark">최근 본 상품</a>
                 <a href="#" class="text-decoration-none text-danger">좋아요</a>
                 <a href="#" class="text-decoration-none text-dark position-relative">

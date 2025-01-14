@@ -124,23 +124,20 @@ public class Controller extends HttpServlet {
 			String type = request.getParameter("type");
 			
 			// 만약! type이 null이면 기본객체(DateAction)을 지정한다.
-			if(type == null)
+			if (type == null)
 				type = "index";
+
+			System.out.println("type : " + type);
 			
 			// type으로 받은 값이 actionMap의 key로 사용되고 있으며
 			// actionMap으로부터 원하는 객체를 얻도록 한다.
 			Action action = actionMap.get(type);
 			
 			String viewPath = action.execute(request, response);
-			
-			// viewPath가 null이면 현재 컨트롤러를 sendRedirect로 
-			//다시 호출하도록 하자!
 
-
-				//forward 준비
-				RequestDispatcher disp = request.getRequestDispatcher(viewPath);
-				disp.forward(request, response);
-
+			//forward 준비
+			RequestDispatcher disp = request.getRequestDispatcher(viewPath);
+			disp.forward(request, response);
 		}
 
 		/**

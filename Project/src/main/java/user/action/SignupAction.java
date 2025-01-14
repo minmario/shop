@@ -7,10 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class SignupAction implements Action {
-
-
-      @Override
-      public String execute(HttpServletRequest request, HttpServletResponse response) {
+    @Override
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
         // 모든 입력 데이터를 가져오기
         String cusId = request.getParameter("cus_id");
         String cusPw = request.getParameter("cus_pw");
@@ -37,17 +35,15 @@ public class SignupAction implements Action {
         vo.setWeight(weight);
         vo.setIs_del(is_del);
 
-
         int cnt = CustomerDao.cusadd(vo);
-        System.out.println("cnt:"+cnt);
+        System.out.println("cnt:" + cnt);
+
+
         // 성공 시 로그인 페이지로 이동
         if (cnt > 0) {
-          return "/user/jsp/login/login.jsp";
+            return "/user/jsp/login/login.jsp";
+        } else {
+            return "/user/jsp/login/login.jsp";
         }
-        else  {
-          return "/user/jsp/login/login.jsp";
-        }
-
-
-      }
+    }
 }
