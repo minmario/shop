@@ -1,0 +1,116 @@
+@charset "UTF-8";
+
+@import "reset.css";
+
+#wrap{
+    width: 100%;
+    height: 100%;
+    margin: auto;
+}
+/****** 상단영역 ******/
+#header{
+    width: 970px;
+    height: 120px;
+    margin: auto;
+}
+/* header안에 있는 h1태그의 너비를 181px, 높이를 59px로 지정
+   그리고 배경이미지는 img폴더에 있는 logo.png로 지정하고 텍스트는 보이지 않게 설정 */
+#header>h1{
+    width: 181px;
+    height: 59px;
+    background-image: url("../img/logo.png");
+    background-repeat: no-repeat;
+    text-indent: -9999px;
+}
+/*** 메뉴작업 ***/
+#header .gnb{ /* ul을 의미 */
+    width: 100%;
+    height: 50px;
+    overflow: hidden;
+    display: flex;
+    list-style: none;
+
+}
+#header .gnb li{
+    flex: 1 1 194px;
+    height: 100%; /* 50px */
+    background-color: #ff5001;
+}
+#header .gnb li a{
+    display: block;
+    width: auto; /* flex에서 auto로 너비 설정 가능*/
+    height: 100%;
+    text-decoration: none;
+    text-align: center;
+}
+#header .gnb li a>span{
+    display: inline-block;
+    height: 20px;
+    margin-top: 15px;
+    line-height: 20px;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    background: url("../img/gnb_bult.png") no-repeat;
+    padding-left: 25px;
+}
+/* 각 메뉴들의 아이콘 변경 */
+#header .gnb li a>span.m01{background-position: 0px 0px;}
+#header .gnb li a>span.m02{background-position: 0px -22px;}
+#header .gnb li a>span.m03{background-position: 0px -44px;}
+#header .gnb li a>span.m04{background-position: 0px -66px;}
+#header .gnb li a>span.m05{background-position: 0px -88px;}
+
+/**** 푸터영역 ****/
+#footer{
+    width: auto; /* auto로 설정하면 부모보다 작은 사이즈로 조정가능, 100%로 설정 시 970로 고정된다 */
+    /* 안쪽여백 좌/우는 0px로 하고, 위쪽은 40px로, 아래쪽은 50px로 지정한다. */
+    padding: 40px 0px 50px; /* 4개로 설정 시 위, 오른쪽, 아래, 왼쪽 순으로 설정/ 2개로 설정 시 위/아래, 좌/우로 설정
+                                  3개로 설정 시 위, 좌/우, 아래로 설정 / 1개로 설정 시 모든 방향에 적용 */
+    background: #eee;
+    margin-top: 50px;
+}
+#footer .footer_area{
+    width: 900px;
+    margin: auto; /* 가운데 맞춤 */
+}
+#footer .footer_guide{
+    padding-bottom: 20px;
+    overflow: hidden; /* 넘어가는 부분은 가려지도록 한다 */
+}
+#footer .footer_guide li{
+    display: inline-block;
+    padding: 0px 10px;
+    border-right: 1px solid #999;
+}
+/* li태그들 중 마지막인 요소(last-child)에 있는 오른쪽 선을 없앤다. (첫번째 요소 : first-child) */
+#footer .footer_guide li:last-child{
+    border-right: none;
+}
+#footer .footer_guide li a{
+    color: #777;
+    font-size: 12px;
+    font-weight: bold;
+}
+#footer .footer_guide li a:hover{
+    color: #ff4f00;
+}
+#footer address{
+    font-size: 12px;
+    color: #777;
+    padding-bottom: 6px;
+}
+#footer .copyright{font-size: 11px;}
+
+/**************
+기타 스타일
+***************/
+.ellip{ /* 문자열이 공간에 맞도록 줄임표 표현 */
+    display: inline-block;
+    width: 97%;
+
+    /* 스페이스, 탭 줄바꿈 등을 공백 1칸으로 표시 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* 줄임표 표현 */
+}
