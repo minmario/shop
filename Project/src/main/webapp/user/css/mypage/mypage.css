@@ -1,0 +1,38 @@
+.category-buttons .btn {
+    font-size: 12px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.thumbnail img {
+    max-width: 100%;
+    height: auto;
+}
+
+.thumbnail .info {
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.user-info {
+    width: 50%;
+}
+
+.logout {
+    text-align: right;
+    padding-right: 15px;
+}
+
+.profile {
+    background: url("../../images/blank-profile.png") no-repeat;
+    background-size: 50px 50px;
+    width: 50px;
+    height: 50px;
+    float: left;
+    margin-right: 30px;
+}
+
+#table th, table td {
+    border: 1px solid #000;
+    padding: 10px 10px;
+}
