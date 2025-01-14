@@ -1,4 +1,4 @@
-package seller.vo;
+package comm.vo;
 
 public class SellerVO {
     private String id, seller_id, seller_pw, name, phone, email, desc, courier, address, is_del;

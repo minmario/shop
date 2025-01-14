@@ -38,4 +38,14 @@
     #{size}, #{length}, #{shoulder}, #{chest}, #{sleeve}, #{waist}, #{hip}, #{thigh}, #{rise},
     #{hem}, #{foot_length}, #{foot_width}, #{ankle_height}, #{heel_height}, #{price})
   </insert>
+  <update id="deleteProduct" parameterType="String">
+    UPDATE product
+    SET is_del = 0
+    WHERE prod_no  = #{id}
+  </update>
+  <select id="SellerProduct" parameterType="String" resultType="seller.vo.ProductVO">
+    SELECT * FROM product
+    WHERE seller_no = #{id}
+  </select>
+
 </mapper>

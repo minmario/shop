@@ -1,4 +1,4 @@
-package user.vo;
+package comm.vo;
 
 public class CustomerVO {
   private String id, grade_no, cus_id, cus_pw, cus_name, cus_nickname, cus_gender, cus_birth, cus_phone, cus_email, weight, height, total, expire_date, is_del;

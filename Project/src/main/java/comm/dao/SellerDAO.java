@@ -1,8 +1,7 @@
-package seller.dao;
+package comm.dao;
 
 import org.apache.ibatis.session.SqlSession;
-import seller.vo.SellerVO;
-import service.FactoryService;
+import comm.service.FactoryService;
 
 public class SellerDAO {
 

@@ -1,6 +1,11 @@
-package seller.control;
+package comm.control;
 
-import seller.action.Action;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Properties;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebInitParam;
@@ -8,12 +13,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Properties;
+
+import user.action.Action;
 
 /**
  * Servlet implementation class Controller

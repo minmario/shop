@@ -1,7 +1,7 @@
 package user.action;
 
-import user.dao.CustomerDao;
-import user.vo.CustomerVO;
+import comm.dao.CustomerDao;
+import comm.vo.CustomerVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

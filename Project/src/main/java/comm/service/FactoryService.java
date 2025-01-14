@@ -1,4 +1,4 @@
-package service;
+package comm.service;
 
 import java.io.Reader;
 

@@ -5,7 +5,7 @@
 <mapper namespace="customer">
   <!-- 인자로 카테고리 값을 받아 검색하는 기능 -->
 
-    <insert id="signupInsert" parameterType="user.vo.CustomerVO">
+    <insert id="signupInsert" parameterType="comm.vo.CustomerVO">
       INSERT INTO `customer` (
       `cus_id`, `cus_pw`, `cus_name`, `cus_nickname`, `cus_gender`, `cus_birth`,
       `cus_phone`, `cus_email`, `weight`, `height`, `total`, `expire_date`, `is_del` )
@@ -13,7 +13,7 @@
       #{cus_id}, #{cus_pw}, #{cus_name}, #{cus_nickname}, #{cus_gender}, #{cus_birth},
       #{cus_phone}, #{cus_email}, #{weight}, #{height}, #{total}, #{expire_date}, #{is_del} )
     </insert>
-  <select id="loginSelect" parameterType="user.vo.CustomerVO" resultType="user.vo.CustomerVO">
+  <select id="loginSelect" parameterType="comm.vo.CustomerVO" resultType="comm.vo.CustomerVO">
     SELECT * FROM `customer`
     WHERE cus_id = #{cus_id} AND
     cus_pw = #{cus_pw}
