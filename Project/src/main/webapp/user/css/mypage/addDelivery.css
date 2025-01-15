@@ -1,18 +1,18 @@
-#wrap{
+.wrap {
     padding: 20px;
 }
 
-.wrap-bar{
+.wrap-bar {
     width: 1000px;
     margin: 0 auto;
 }
 
-#wrap-title{
+.wrap-title {
     width: 1000px;
     margin: 0 auto 20px auto;
 }
 
-.info{
+.modal-table-info {
     background-color: #ffffff;
     color: #555;
     text-align: center;
@@ -28,53 +28,53 @@
     bottom: 4px;
 }
 
-#table{
+.modal-table {
     border-collapse: collapse;
     width: 1000px;
     margin: 0 auto;
 }
 
-#table>caption{
+.modal-table > caption {
     text-indent: -9999px;
     line-height: 0px;
 }
 
-#table tr, #table td{
+.modal-table tr, .table td {
     border-top: 1px solid #a3a4a5;
     border-bottom: 1px solid #a3a4a5;
 }
 
-#table td{
+.modal-table td {
     padding: 5px;
 }
 
-#table tr:first-child{
+.modal-table tr:first-child {
     width: 190px;
 }
 
-#table tr:nth-child(2){
+.modal-table tr:nth-child(2) {
     width: auto;
 }
 
-#wrap-checkbox{
+.wrap-checkbox {
     width: 1000px;
     height: 40px;
     margin: 0 auto;
     line-height: 40px;
 }
 
-.left{
+.modal-footer-left {
     float: left;
     text-align: left;
     margin: auto;
 }
 
-.right{
+.modal-footer-right {
     float: right;
     text-align: right;
 }
 
-#wrap-list{
+.wrap-list {
     width: 1000px;
     height: 100px;
     margin: 0 auto;
@@ -84,33 +84,33 @@
     color: #fff;
 }
 
-#wrap-list>ol{
+.wrap-list > ol {
     list-style: none;
     padding-top: 30px;
 }
 
-#wrap-list li{
+.wrap-list li {
     text-align: left;
 }
 
-input.text{
+input.text {
     height: 30px;
     width: 350px;
     margin: 5px 10px;
 }
 
-input.addr1{
+input.addr1 {
     height: 30px;
     width: 200px;
     margin: 5px 10px;
 }
 
-input.addr2, input.toggle, #select{
+input.addr2, input.toggle, .select {
     height: 30px;
     width: 500px;
     margin: 5px 10px;
 }
 
-#custom-input{
+.custom-input {
     display: none;
 }
