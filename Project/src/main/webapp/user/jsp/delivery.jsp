@@ -25,14 +25,6 @@
             <table id="table">
                 <caption>배송지 테이블</caption>
                 <tbody>
-                    <colgroup>
-                        <col width="40px"/>
-                        <col width="40px"/>
-                        <col width="90px"/>
-                        <col width="120px"/>
-                        <col width="*"/>
-                        <col width="120px"/>
-                    </colgroup>
                     <tr>
                         <th><input type="checkbox" id="all"/></th>
                         <th>번호</th>
@@ -60,7 +52,7 @@
 
         <div id="wrap-button">
             <span class="left">
-                <button type="button" class="btn btn-secondary btn-sm">선택 배송지 삭제</button>
+                <button type="button" class="btn btn-sm btn-outline-danger" onclick="">선택 배송지 삭제</button>
             </span>
             <span class="right">
             <button type="button" class="btn btn-primary btn-sm" onclick="location.href='addDelivery.jsp'">배송지 추가</button>

@@ -14,9 +14,6 @@
 <body>
 <jsp:include page="./layout/header.jsp"></jsp:include>
     <div id="wrap">
-        <div class="border-bottom pb-2 mb-3 wrap-bar">
-            <span>무신사 > 내 정보 > 배송지 관리 > 배송지 추가</span>
-        </div>
 
         <div id="wrap-title">
             <h4>배송지 추가</h4>
@@ -25,39 +22,35 @@
         <div id="wrap-table">
             <table id="table">
                 <caption>배송지 정보 입력 테이블</caption>
-                <colgroup>
-                    <col width="190px"/>
-                    <col width="*">
-                </colgroup>
                 <tbody>
                     <tr>
                         <td class="info">
                             <span>이름</span>
-                            <img src="../images/asterisk_img.png">
+                            <span class="asterisk"></span>
                         </td>
-                        <td><input type="text" class="text"/></td>
+                        <td><input type="text" class="text" name="name" placeholder="받는 분의 이름을 입력하세요"/></td>
                     </tr>
                     <tr>
                         <td class="info">
                             <span>연락처</span>
-                            <img src="../images/asterisk_img.png">
+                            <span class="asterisk"></span>
                         </td>
-                        <td><input type="text" class="text"/></td>
+                        <td><input type="text" class="text" name="phone" placeholder="받는 분의 연락처를 입력하세요"/></td>
                     </tr>
                     <tr>
                         <td class="info">
                             <span>주소</span>
-                            <img src="../images/asterisk_img.png">
+                            <span class="asterisk"></span>
                         </td>
                         <td>
-                            <input type="text" class="addr1" placeholder="우편번호"/>
+                            <input type="text" class="addr1" name="pos_code" placeholder="우편번호"/>
                             <button class="btn btn-primary" type="submit">주소검색</button><br/>
-                            <input type="text" class="addr2" placeholder="주소"/><br/>
-                            <input type="text" class="addr2" placeholder="상세주소"/><br/>
+                            <input type="text" class="addr2" name="addr1" placeholder="주소"/><br/>
+                            <input type="text" class="addr2" name="addr2" placeholder="상세주소"/><br/>
                         </td>
                     </tr>
                     <tr>
-                        <td class="info">배송 요청사항 (선택)</td>
+                        <td class="info"><span>배송 요청사항 (선택)</span></td>
                         <td>
                             <select id="select" name="select" onchange="addInput()">
                                 <option selected="selected">:: 배송 요청사항을 선택하세요 ::</option> <!--가장 먼저 작성하는 것이 선택되기 때문에 selected로 지정한다. -->
@@ -70,7 +63,7 @@
                             <br/>
                             <!-- '직접 입력'을 선택할 때만 보이는 새로운 입력 필드 -->
                             <div id="custom-input">
-                                <input type="text" class="toggle" placeholder="배송 요청 사항을 직접 입력하세요"/>
+                                <input type="text" class="toggle" name="deli_request" placeholder="배송 요청 사항을 직접 입력하세요"/>
                             </div>
                         </td>
                     </tr>
@@ -84,10 +77,10 @@
                 <label for="chk">기본 배송지로 설정</label>
             </span>
             <span class="right">
-                <button type="button" class="btn btn-secondary">등록</button>
+                <button type="button" class="btn btn-secondary" onclick="save()">등록</button>
             </span>
         </div>
-        <br/><br/>
+        <br/>
         <div id="wrap-list">
             <ol>
                 <li>배송 주소록은 최대 3개까지 등록할 수 있으며, 별도로 등록하지 않을 경우 최근 배송 주소록 기준으로 자동 업데이트 됩니다.</li>
