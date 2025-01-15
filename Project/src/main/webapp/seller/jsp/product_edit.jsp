@@ -8,6 +8,7 @@
 
 <html>
 <header>
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
     <jsp:include page="./layout/header.jsp"/>
     <style>
         .image-container {
@@ -64,13 +65,14 @@
         .placeholder {
             background-color: #f9f9f9;
         }
+
     </style>
 </header>
 <body class="container mt-4">
 <h3 class="mb-3 center">상품 등록</h3>
 
 <!-- 상품 정보 폼 -->
-<form method="POST" action="updateproduct.jsp" class="form-container">
+<form method="POST" action="updateproduct.jsp" class="form-container" enctype="multipart/form-data">
     <!-- 상품 명 -->
     <div style="flex-grow: 1;">
         <div class="mb-3">
@@ -161,7 +163,43 @@
         </div>
         <button type="button" class="btn btn-outline-success mt-3" onclick="addAdditionalImage()">이미지 추가</button>
     </div>
+    <!-- 추가 이미지 아래에 HTML 에디터 추가 -->
+    <div class="mb-3">
+        <label class="form-label">HTML 에디터</label>
+        <textarea name="htmlContent" id="htmlEditor" class="form-control" rows="10" placeholder="여기에 HTML을 작성하세요..."></textarea>
+    </div>
 
+    <script>
+        // CKEditor 초기화
+        ClassicEditor
+            .create(document.querySelector('#htmlEditor'), {
+                simpleUpload: {
+                    uploadUrl:  "./seller/images/file.jpg", // 파일을 업로드할 서버 URL을 설정
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+    </script>
+    <button type="button" class="btn btn-outline-primary mt-2" onclick="loadExternalHtml()">외부 HTML 불러오기</button>
+
+    <script>
+        // 외부 HTML 파일을 불러와 에디터에 로드하는 함수
+
+        function loadExternalHtml() {
+            fetch('/static/external/file.html')
+                .then(response => response.text())
+                .then(data => {
+                    // 가져온 HTML을 에디터에 삽입
+                    const editorInstance = ClassicEditor.instances.htmlEditor;
+                    editorInstance.setData(data);
+                })
+                .catch(error => {
+                    console.error("HTML 파일을 불러오는 중 오류가 발생했습니다.", error);
+                });
+        }
+    </script>
     <!-- 수정/저장 버튼 -->
     <div class="button-container">
         <button type="button" class="btn btn-primary" id="editButton" onclick="enableEditing()">수정</button>
