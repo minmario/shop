@@ -1,5 +1,6 @@
 package user.action;
 
+import comm.action.Action;
 import comm.dao.CustomerDao;
 import comm.vo.CustomerVO;
 

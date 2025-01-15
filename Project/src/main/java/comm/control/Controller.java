@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import user.action.Action;
+import comm.action.Action;
 
 /**
  * Servlet implementation class Controller
@@ -125,7 +125,7 @@ public class Controller extends HttpServlet {
 			
 			// 만약! type이 null이면 기본객체(DateAction)을 지정한다.
 			if(type == null)
-				type = "index";
+				type = "productList";
 			
 			// type으로 받은 값이 actionMap의 key로 사용되고 있으며
 			// actionMap으로부터 원하는 객체를 얻도록 한다.

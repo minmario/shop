@@ -1,5 +1,6 @@
 package user.action;
 
+import comm.action.Action;
 import org.json.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
