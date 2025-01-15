@@ -12,7 +12,7 @@
             <!-- 회사 정보 -->
             <div class="col-md-4 mb-3">
                 <h5 class="text-uppercase">MUSINSA</h5>
-                <p>
+                <p class="text-addr">
                     주소: 서울특별시 중구 예제로 123<br>
                     전화: 02-1234-5678<br>
                     이메일: info@example.com

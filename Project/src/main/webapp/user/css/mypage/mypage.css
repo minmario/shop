@@ -2,6 +2,25 @@
     flex: 1;
     padding-left: 20px;
     padding-right: 0;
+    overflow-y: auto;
+}
+
+.container-fluid::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.container-fluid::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 12px 12px 12px 12px;
+}
+
+.container-fluid::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.row {
+    padding: 20px;
 }
 
 .category-buttons .btn {
@@ -30,54 +49,16 @@
     margin-bottom: 15px;
 }
 
-.breadcrumb-container, .header-option, .text-title, .user-info-table {
+.header-option, .text-title, .user-info-table {
     display: flex;
     justify-content: flex-start;
     margin-left: auto;
     margin-right: auto;
-    width: 80% !important;
-}
-
-.breadcrumb-container {
-    height: 50px;
-    border-bottom: 1px solid #a3a4a5;
-}
-
-.breadcrumb-container > span {
-    line-height: 50px;
-    font-weight: bold;
-}
-
-.header-option {
-    height: 45px;
-    border-bottom: 1px solid #a3a4a5;
-}
-
-.header-option > div {
-    line-height: 45px;
-}
-
-.header-option > .header-user > span, .header-option > .header-user > div > span {
-    font-weight: bold;
-}
-
-.header-option > .header-user > .notification-icon {
-    background: url("../../images/plus-square.svg") no-repeat;
-    background-size: 10px 10px;
-    width: 10px;
-    height: 10px;
-    display: inline-block;
-}
-
-.logout {
-    text-align: right;
-    padding-right: 15px;
-    margin-left: auto;
+    width: 55% !important;
 }
 
 .text-title {
     height: 60px;
-    border-bottom: 1px solid #a3a4a5;
 }
 
 .text-title h3 {
@@ -130,6 +111,14 @@ table th, table td {
     border-right: none;
 }
 
+#user-table .point-info, #user-table .coupon-info {
+    font-weight: bold;
+}
+
+#user-table .point-value, #user-table .coupon-value {
+    margin-top: 5px;
+}
+
 .user-info-change, .user-info-change:active, .user-info-change:visited, .user-info-change:hover {
     text-decoration: #dee2e6;
     font-weight: bold;
@@ -147,7 +136,7 @@ table th, table td {
 }
 
 .user-action-buttons .btn-group, .review-section-container {
-    width: 80% !important;
+    width: 55% !important;
 }
 
 .review-section-container {
@@ -171,6 +160,10 @@ table th, table td {
     float: right;
 }
 
+#review-table {
+    margin-bottom: 20px;
+}
+
 #review-table th, #review-table td {
     border: 1px solid #dee2e6;
     padding: 10px;
@@ -178,6 +171,10 @@ table th, table td {
 
 #review-table th {
     text-align: center;
+    font-weight: bold;
+}
+
+#review-table thead tr th {
     font-weight: bold;
 }
 
@@ -218,6 +215,7 @@ table th, table td {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    position: relative;
 }
 
 .product-info .prod_details > div {
@@ -226,4 +224,19 @@ table th, table td {
 
 .product-info .prod_details > div:last-child {
     margin-bottom: 0;
+}
+
+.prod_brand {
+    font-weight: bold;
+}
+
+.prod_option {
+    color: #9ea4a9;
+    position: absolute;
+    top: 80px;
+}
+
+.navigation {
+    display: flex;
+    justify-content: center;
 }
