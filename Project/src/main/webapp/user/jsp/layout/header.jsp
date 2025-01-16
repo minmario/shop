@@ -15,7 +15,7 @@
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <div class="container-fluid">
             <!-- 로고 -->
-            <a class="navbar-brand fw-bold text-white" href="#" style="font-size: 1.8rem;">MUSINSA</a>
+            <a class="navbar-brand fw-bold text-white" href="${pageContext.request.contextPath}/Controller?type=main" style="font-size: 1.8rem;">MUSINSA</a>
 
             <!-- 검색창 -->
             <form class="d-flex align-items-center" role="search">
@@ -72,19 +72,19 @@
 
         <div class="index header d-flex justify-content-between align-items-center p-3 bg-light border-bottom">
 
-            <div>
-                <c:choose>
-                    <c:when test="${isLoggedIn}">
-                        <span class="me-3">환영합니다, <strong>${nickname}님</strong></span>
-                        <button type="button" class="btn btn-outline-secondary"
-                                onclick="location.href='Controller?type=logout';">로그아웃</button>
-                    </c:when>
-                    <c:otherwise>
-                        <button type="button" class="btn btn-outline-primary"
-                                onclick="location.href='Controller?type=login';">로그인</button>
-                    </c:otherwise>
-                </c:choose>
-            </div>
+            <c:choose>
+                <c:when test="${not empty sessionScope.nickname}">
+                    <!-- 로그인 상태 -->
+                    <span>${sessionScope.nickname}님</span>
+                    <button type="button" class="btn btn-outline-danger"
+                            onclick="location.href='${pageContext.request.contextPath}/Controller?type=logout';">로그아웃</button>
+                </c:when>
+                <c:otherwise>
+                    <!-- 비로그인 상태 -->
+                    <button type="button" class="btn btn-outline-primary"
+                            onclick="location.href='${pageContext.request.contextPath}/Controller?type=showlogin';">로그인</button>
+                </c:otherwise>
+            </c:choose>
 
             <div class="d-flex gap-3 align-items-center user-header-menu">
                 <%-- 좋아요 --%>

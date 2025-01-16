@@ -5,18 +5,7 @@
 <mapper namespace="delivery">
     <!-- 인자로 카테고리 값을 받아 검색하는 기능 -->
 
-    <insert id="signupInsert" parameterType="user.vo.CustomerVO">
-        INSERT INTO `customer` (
-        `cus_id`, `cus_pw`, `cus_name`, `cus_nickname`, `cus_gender`, `cus_birth`,
-        `cus_phone`, `cus_email`, `weight`, `height`, `total`, `expire_date`, `is_del` )
-        VALUES (
-        #{cus_id}, #{cus_pw}, #{cus_name}, #{cus_nickname}, #{cus_gender}, #{cus_birth},
-        #{cus_phone}, #{cus_email}, #{weight}, #{height}, #{total}, #{expire_date}, #{is_del} )
-    </insert>
+    <select id="deliverySelect" parameterType="user.vo.DeliveryVO" resultType="user.vo.DeliveryVO">
 
-    <select id="deliverySelect" parameterType="user.vo.CustomerVO" resultType="user.vo.CustomerVO">
-        SELECT * FROM `customer`
-        WHERE cus_id = #{cus_id} AND
-        cus_pw = #{cus_pw}
     </select>
 </mapper>

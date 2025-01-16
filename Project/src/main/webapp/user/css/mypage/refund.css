@@ -1,0 +1,109 @@
+#wrap{
+    padding: 20px;
+}
+
+.wrap-title{
+    width: 80%;
+    height: 20px;
+    margin: 10px auto;
+    font-weight: bold;
+}
+
+.left{
+    float: left;
+    text-align: left;
+}
+
+#table{
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+.num{
+    width: 80px;
+}
+
+#table>caption{
+    text-indent: -9999px;
+    line-height: 0;
+}
+
+#table tr{
+    border-top: 1px solid #a3a4a5;
+    border-bottom: 1px solid #a3a4a5;
+    text-align: center;
+}
+
+#table td{
+    border-left: 1px solid #a3a4a5;
+    border-right: 1px solid #a3a4a5;
+}
+
+#table th{
+    border-left: 1px solid #a3a4a5;
+    border-right: 1px solid #a3a4a5;
+}
+
+#table td.product-info {
+    border-left: none;
+    border-right: none;
+}
+
+#table .table-child{
+    height: 150px;
+}
+
+.wrap-buttons{
+    text-align: center;
+}
+
+.product-info, .product-img, .product-content{
+    display: flex;
+}
+
+.product-info {
+    width: 250px;
+}
+
+.product-img{
+    line-height: 150px;
+    margin-right: 10px;
+}
+
+.product-content{
+    position: absolute;
+    text-align: left;
+    margin-top: 28px;
+    margin-left: 20px;
+}
+
+.thisisnever_img{
+    background: url("../../images/thisisnever_img.png") no-repeat;
+    background-size: 90px 90px;
+    width: 90px;
+    height: 90px;
+}
+
+.option-text{
+    margin-top: 10px;
+    color: #a3a4a5;
+    font-size: 9pt;
+}
+
+#table>tfoot>tr{
+    height: 20px;
+}
+
+#table>tfoot td{
+    text-align: right;
+}
+
+.wrap-pagination{
+    display: flex;
+    justify-content: right;
+}
+
+.height{
+    height: 40px;
+}

@@ -1,0 +1,181 @@
+#wrap{
+    padding: 20px;
+}
+
+.wrap-title{
+    width: 80%;
+    height: 20px;
+    margin: 10px auto;
+    font-weight: bold;
+}
+
+.left{
+    float: left;
+    text-align: left;
+}
+
+.right{
+    float: right;
+    text-align: right;
+}
+
+#table{
+    border-collapse: collapse;
+    width: 80%;
+    margin: 0 auto;
+}
+
+#table>caption{
+    text-indent: -9999px;
+    line-height: 0px;
+}
+
+#table tr{
+    border: 1px solid #a3a4a5;
+    text-align: center;
+    height: 70px;
+}
+
+#table td{
+    border-left: 1px solid #a3a4a5;
+    border-right: 1px solid #a3a4a5;
+    position: relative;
+    padding: 10px;
+}
+
+#table th{
+    border-left: 1px solid #a3a4a5;
+    border-right: 1px solid #a3a4a5;
+}
+
+.num{
+    width: 80px;
+}
+
+.thisisnever_img{
+    background: url("../../images/thisisnever_img.png") no-repeat;
+    background-size: 90px 90px;
+    width: 90px;
+    height: 90px;
+}
+
+#table .table-child{
+    height: 150px;
+}
+
+.product-info, .product-img, .product-content{
+    display: flex;
+}
+
+.product-img{
+    line-height: 150px;
+    margin-right: 10px;
+}
+
+.product-content{
+    position: absolute;
+    text-align: left;
+    margin-top: 20px;
+}
+
+.product-info {
+    width: 250px;
+}
+
+#table td.product-info {
+    border-left: none;
+    border-right: none;
+}
+
+.product-info a{
+    text-decoration: none;
+}
+
+.option-text{
+    margin-top: 10px;
+    color: #a3a4a5;
+    font-size: 9pt;
+}
+
+#table>tfoot>tr{
+    height: 20px;
+}
+
+#table>tfoot td{
+    text-align: right;
+}
+
+/*.merge-cell{*/
+/*    text-align: right;*/
+/*    padding: 10px;*/
+/*    border: none; !* 테두리 제거 *!*/
+/*    background: transparent; !* 배경 제거 *!*/
+/*}*/
+
+ul.paging {
+    display: flex;
+    text-align: right;
+    list-style: none;
+}
+
+ul.paging > li {
+    /*display: inline-block;*/
+    border: 1px solid #dcdcdc;
+    margin: 0;
+    color: #555;
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+ul.paging > li > a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul.paging > li:hover {
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+ul.paging > li.active {
+    background-color: #333;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* 모달 배경 */
+.modal {
+    display: none; /* 기본적으로 숨김 */
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.4); /* 배경 반투명 */
+}
+
+/* 모달 내용 */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    position: relative;
+}
+
+/* 닫기 버튼 */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #aaa;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover, .close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
