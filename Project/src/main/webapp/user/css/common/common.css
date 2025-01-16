@@ -2,6 +2,24 @@
 
 @import "reset.css";
 
+.wrap {
+    height: 80%;
+}
+
+.wrap::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.wrap::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 12px 12px 12px 12px;
+}
+
+.wrap::-webkit-scrollbar-track {
+    background: transparent;
+}
+
 footer {
     margin-top: auto;
     background-color: rgb(33 37 41);
