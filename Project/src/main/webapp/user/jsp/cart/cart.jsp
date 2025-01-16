@@ -205,16 +205,10 @@
             });
         });
 
-        // 옵션 변경 모달 닫기
+        // 옵션 변경 모달 열기
         function onShowOption() {
             let modal = new bootstrap.Modal(document.getElementById('optionModal'));
             modal.show();
-        }
-
-        // 옵션 변경 모달 닫기
-        function onHideOption() {
-            let modal = new bootstrap.Modal(document.getElementById('optionModal'));
-            modal.hide();
         }
     </script>
 </body>

@@ -380,22 +380,10 @@
             modal.show();
         }
 
-        // 배송 조회 모달 닫기
-        function onHideDeliveryModal() {
-            let modal = new bootstrap.Modal(document.getElementById('deliveryModal'));
-            modal.hide();
-        }
-
         // 배송지 추가 > 모달
-        function onShowAddAddrBtn() {
+        function onShowAddAddrModal() {
             let modal = new bootstrap.Modal(document.getElementById('addrModal'));
             modal.show();
-        }
-
-        // 배송지 추가 모달 닫기
-        function onHideAddAddrBtn() {
-            let modal = new bootstrap.Modal(document.getElementById('addrModal'));
-            modal.hide();
         }
 
         // 배송지 모달 > 요청 사항 필드 추가
@@ -403,11 +391,10 @@
             let selectValue = document.getElementById("request-select").value;
             let customInput = document.getElementById("custom-input");
 
-            // 선택된 값이 '5'이면 input 필드를 표시하고, 아니면 숨긴다.
             if (selectValue == "5") {
-                customInput.style.display = "block";  // 새로운 input 필드를 보이게 한다.
+                customInput.style.display = "block";
             } else {
-                customInput.style.display = "none";   // 새로운 input 필드를 숨긴다.
+                customInput.style.display = "none";
             }
         }
     </script>

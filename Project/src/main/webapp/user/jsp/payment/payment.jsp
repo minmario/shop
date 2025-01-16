@@ -506,22 +506,10 @@
             modal.show();
         }
 
-        // 포인트 안내 모달 닫기
-        function onHidePoints() {
-            let modal = new bootstrap.Modal(document.getElementById('pointsModal'));
-            modal.hide();
-        }
-
         // 리워드 안내 모달 열기
         function onShowReward() {
             let modal = new bootstrap.Modal(document.getElementById('rewardModal'));
             modal.show();
-        }
-
-        // 리워드 안내 모달 닫기
-        function onHideReward() {
-            let modal = new bootstrap.Modal(document.getElementById('rewardModal'));
-            modal.hide();
         }
 
         // 적립 혜택 안내 모달 열기
@@ -530,22 +518,10 @@
             modal.show();
         }
 
-        // 적립 혜택 안내 모달 닫기
-        function onHideRewardBenefits() {
-            let modal = new bootstrap.Modal(document.getElementById('rewardBenefitsModal'));
-            modal.hide();
-        }
-
         // 혜택 안내 모달 열기
         function onShowBenefits() {
             let modal = new bootstrap.Modal(document.getElementById('benefitsModal'));
             modal.show();
-        }
-
-        // 혜택 안내 모달 닫기
-        function onHideBenefits() {
-            let modal = new bootstrap.Modal(document.getElementById('benefitsModal'));
-            modal.hide();
         }
     </script>
 </body>
