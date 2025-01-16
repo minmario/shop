@@ -99,8 +99,8 @@
                         <label class="btn btn-outline-secondary" for="btnradio-points">적립금</label>
                         <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-coupons" autocomplete="off">
                         <label class="btn btn-outline-secondary" for="btnradio-coupons">쿠폰</label>
-                        <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-address" autocomplete="off">
-                        <label class="btn btn-outline-secondary" for="btnradio-address">배송지</label>
+                        <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-delivery" autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="btnradio-delivery">배송지</label>
                     </div>
                 </div>
 
@@ -185,6 +185,151 @@
                     </nav>
                 </div>
 
+                <!-- Point Section -->
+                <div class="point-section-container" id="point-article">
+                    <div class="point-section">
+                        <div class="point-header">
+                            <span class="point-title">적립금</span>
+                        </div>
+                    </div>
+                    <div class="loyalty-points-section">
+                        <div class="points-list">
+                            <li class="points-item">
+                                <div class="points-label text-left">예정 적립금</div>
+                                <div class="points-value text-right">1000원</div>
+                            </li>
+                            <li class="points-item">
+                                <div class="points-label text-left">소멸 예정 적립금(30일 이내)</div>
+                                <div class="points-value text-right">0원</div>
+                            </li>
+                        </div>
+                    </div>
+                    <div class="point-tabs">
+                        <ul class="nav nav-tabs" id="nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#" data-target="#table-all">전체</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-target="#table-earned">적립</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-target="#table-used">사용</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-target="#table-upcoming">예정</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="tables">
+                        <table id="table-all" class="table" style="display: table;">
+                            <thead>
+                            <tr><th>전체</th></tr>
+                            </thead>
+                            <tbody>
+                            <tr><td>전체 내역 1</td></tr>
+                            </tbody>
+                        </table>
+                        <table id="table-earned" class="table" style="display: none;">
+                            <thead>
+                            <tr><th>적립</th></tr>
+                            </thead>
+                            <tbody>
+                            <tr><td>적립 내역 1</td></tr>
+                            </tbody>
+                        </table>
+                        <table id="table-used" class="table" style="display: none;">
+                            <thead>
+                            <tr><th>사용</th></tr>
+                            </thead>
+                            <tbody>
+                            <tr><td>사용 내역 1</td></tr>
+                            </tbody>
+                        </table>
+                        <table id="table-upcoming" class="table" style="display: none;">
+                            <thead>
+                            <tr><th>예정</th></tr>
+                            </thead>
+                            <tbody>
+                            <tr><td>예정 내역 1</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <nav aria-label="Page navigation" class="navigation">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <!-- Coupon Section -->
+                <div class="coupon-section-container" id="coupon-article">
+                    <div class="coupon-section">
+                        <div class="coupon-header">
+                            <span class="coupon-title">쿠폰 목록</span>
+                        </div>
+                        <div class="coupon-sort">
+                            <select class="form-select coupon-sort-options">
+                                <option>최신순</option>
+                                <option>할인순</option>
+                            </select>
+                        </div>
+                    </div>
+                    <table id="coupon-table" class="table">
+                        <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>할인율</th>
+                                <th>쿠폰명</th>
+                                <th>만료일</th>
+                                <th>적용 상품</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:set var="cnt" value="5"/>
+                            <c:forEach begin="1" end="${cnt}" varStatus="st">
+                                <tr>
+                                    <td>${st.index}</td>
+                                    <td>${st.index * 3}%</td>
+                                    <td>${st.index}월 무신사 회원 정기 쿠폰</td>
+                                    <td>2025-01-${st.index + 5}까지</td>
+                                    <td>
+                                        <a href="">적용 상품</a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                    <nav aria-label="Page navigation" class="navigation">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
                 <%-- Delivery Section --%>
                 <div class="delivery-section-container" id="delivery-article">
                     <div class="delivery-section">
@@ -220,12 +365,12 @@
                         </tbody>
                     </table>
                     <div class="delivery-buttons">
-                    <span class="delivery-buttons-left">
-                        <button type="button" class="btn btn-sm btn-outline-danger" onclick="">선택 배송지 삭제</button>
-                    </span>
+                        <span class="delivery-buttons-left">
+                            <button type="button" class="btn btn-sm btn-outline-danger" onclick="">선택 배송지 삭제</button>
+                        </span>
                         <span class="delivery-buttons-right">
-                        <button type="button" class="btn btn-primary btn-sm" onclick="onShowAddAddrBtn()">배송지 추가</button>
-                    </span>
+                            <button type="button" class="btn btn-primary btn-sm" onclick="onShowAddAddrBtn()">배송지 추가</button>
+                        </span>
                     </div>
                     <br/><br/>
                     <div class="delivery-notice">
@@ -254,56 +399,56 @@
                         <table class="modal-table">
                             <caption>배송지 정보 입력 테이블</caption>
                             <tbody>
-                                <tr>
-                                    <th class="modal-table-info">
-                                        <span>이름</span>
-                                        <span class="asterisk"></span>
-                                    </th>
-                                    <td>
-                                        <input type="text" class="text" name="name" placeholder="받는 분의 이름을 입력하세요"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="modal-table-info">
-                                        <span>연락처</span>
-                                        <span class="asterisk"></span>
-                                    </th>
-                                    <td>
-                                        <input type="text" class="text" name="phone" placeholder="받는 분의 연락처를 입력하세요"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="modal-table-info">
-                                        <span>주소</span>
-                                        <span class="asterisk"></span>
-                                    </th>
-                                    <td>
-                                        <input type="text" class="addr1" name="pos_code" placeholder="우편번호"/>
-                                        <button class="btn btn-primary" type="submit">주소검색</button><br/>
-                                        <input type="text" class="addr2" name="addr1" placeholder="주소"/><br/>
-                                        <input type="text" class="addr2" name="addr2" placeholder="상세주소"/><br/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="modal-table-info">
-                                        <span>배송 요청사항 (선택)</span>
-                                    </th>
-                                    <td>
-                                        <select id="request-select" name="select" onchange="addInput()">
-                                            <option selected="selected">:: 배송 요청사항을 선택하세요 ::</option> <!--가장 먼저 작성하는 것이 선택되기 때문에 selected로 지정한다. -->
-                                            <option value="1">문 앞에 놔주세요</option>
-                                            <option value="2">경비실에 맡겨주세요</option>
-                                            <option value="3">택배함에 넣어주세요</option>
-                                            <option value="4">배송 전에 연락주세요</option>
-                                            <option value="5">직접 입력</option>
-                                        </select>
-                                        <br/>
-                                        <!-- '직접 입력'을 선택할 때만 보이는 새로운 입력 필드 -->
-                                        <div id="custom-input">
-                                            <input type="text" class="toggle" name="deli_request" placeholder="배송 요청 사항을 직접 입력하세요"/>
-                                        </div>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <th class="modal-table-info">
+                                    <span>이름</span>
+                                    <span class="asterisk"></span>
+                                </th>
+                                <td>
+                                    <input type="text" class="text" name="name" placeholder="받는 분의 이름을 입력하세요"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="modal-table-info">
+                                    <span>연락처</span>
+                                    <span class="asterisk"></span>
+                                </th>
+                                <td>
+                                    <input type="text" class="text" name="phone" placeholder="받는 분의 연락처를 입력하세요"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="modal-table-info">
+                                    <span>주소</span>
+                                    <span class="asterisk"></span>
+                                </th>
+                                <td>
+                                    <input type="text" class="addr1" name="pos_code" placeholder="우편번호"/>
+                                    <button class="btn btn-primary" type="submit">주소검색</button><br/>
+                                    <input type="text" class="addr2" name="addr1" placeholder="주소"/><br/>
+                                    <input type="text" class="addr2" name="addr2" placeholder="상세주소"/><br/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="modal-table-info">
+                                    <span>배송 요청사항 (선택)</span>
+                                </th>
+                                <td>
+                                    <select id="request-select" name="select" onchange="addInput()">
+                                        <option selected="selected">:: 배송 요청사항을 선택하세요 ::</option> <!--가장 먼저 작성하는 것이 선택되기 때문에 selected로 지정한다. -->
+                                        <option value="1">문 앞에 놔주세요</option>
+                                        <option value="2">경비실에 맡겨주세요</option>
+                                        <option value="3">택배함에 넣어주세요</option>
+                                        <option value="4">배송 전에 연락주세요</option>
+                                        <option value="5">직접 입력</option>
+                                    </select>
+                                    <br/>
+                                    <!-- '직접 입력'을 선택할 때만 보이는 새로운 입력 필드 -->
+                                    <div id="custom-input">
+                                        <input type="text" class="toggle" name="deli_request" placeholder="배송 요청 사항을 직접 입력하세요"/>
+                                    </div>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -322,6 +467,7 @@
         </div>
     </div>
 
+    <%-- JQuery --%>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
     <script>
@@ -393,16 +539,59 @@
             });
 
             const tabActions = {
-                "#btnradio-reviews": ["#delivery-article", "#review-article"],
-                "#btnradio-address": ["#review-article", "#delivery-article"]
+                //"#btnradio-order": "#order-article",
+                //"#btnradio-likes": "#likes-article",
+                "#btnradio-reviews": "#review-article",
+                //"#btnradio-questions": "#questions-article",
+                //"#btnradio-inquiry": "#inquiry-article",
+                "#btnradio-points": "#point-article",
+                "#btnradio-coupons": "#coupon-article",
+                "#btnradio-delivery": "#delivery-article"
             };
 
-            Object.keys(tabActions).forEach((selector) => {
-                $(selector).on("click", function () {
-                    const [toHide, toShow] = tabActions[selector];
-                    $(toHide).hide();
-                    $(toShow).show();
-                });
+            const allTabs = Object.values(tabActions);
+
+            // 초기 상태 설정 - 주문 내역만 보이도록
+            allTabs.forEach((tab) => {
+                const element = document.querySelector(tab);
+                if (element) {
+                    element.style.display = tab === "#order-article" ? "block" : "none";
+                }
+            });
+
+            // 버튼 클릭 이벤트 설정
+            Object.keys(tabActions).forEach((buttonSelector) => {
+                const button = document.querySelector(buttonSelector);
+                if (button) {
+                    button.addEventListener("click", function () {
+                        allTabs.forEach((tab) => {
+                            const element = document.querySelector(tab);
+                            if (element) {
+                                element.style.display = "none";
+                            }
+                        });
+
+                        const toShow = tabActions[buttonSelector];
+                        const showElement = document.querySelector(toShow);
+                        if (showElement) {
+                            showElement.style.display = "block";
+                        }
+                    });
+                } else {
+                    console.error(`Button with selector '${buttonSelector}' not found.`);
+                }
+            });
+
+            // 적립금 탭 클릭 이벤트
+            $(".nav-link").on("click", function (event) {
+                event.preventDefault();
+
+                $(".nav-link").removeClass("active");
+                $(this).addClass("active");
+
+                $("#tables table").hide();
+                const targetTable = $(this).data("target");
+                $(targetTable).show();
             });
         });
 
@@ -411,7 +600,7 @@
             let modal = new bootstrap.Modal(document.getElementById('addrModalCenter'));
             modal.show();
         }
-        
+
         // 배송지 추가 모달 닫기
         function onHideAddAddrBtn() {
             let modal = new bootstrap.Modal(document.getElementById('addrModalCenter'));

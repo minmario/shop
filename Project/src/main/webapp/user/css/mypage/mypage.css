@@ -130,27 +130,28 @@ table th, table td {
     height: 100%;
 }
 
-.user-action-buttons, .review-section-container, .delivery-section-container{
+.user-action-buttons, .review-section-container, .delivery-section-container, .coupon-section-container, .point-section-container {
     margin: 0 auto;
 }
 
-.user-action-buttons, .user-action-buttons .btn-group, .review-section-container, .delivery-section-container {
+.user-action-buttons, .user-action-buttons .btn-group, .review-section-container, .delivery-section-container, .coupon-section-container, .point-section-container {
     width: 900px !important;
 }
-.review-section-container, .delivery-section-container {
+
+.review-section-container, .delivery-section-container, .coupon-section-container, .point-section-container {
     margin-top: 20px !important;
 }
 
-.review-section, .delivery-section {
+.review-section, .delivery-section, .coupon-section, .point-section {
     height: 35px;
 }
 
-.review-header, .delivery-header {
+.review-header, .delivery-header, .coupon-header, .point-header {
     line-height: 35px;
     float: left;
 }
 
-.review-title, .delivery-title {
+.review-title, .delivery-title, .coupon-title, .point-title {
     font-weight: bold;
 }
 
@@ -292,11 +293,60 @@ table th, table td {
     color: #fff;
 }
 
+.coupon-section-container .point-header {
+    float: left;
+}
 
+.coupon-section-container .coupon-sort {
+    float: right;
+}
 
+.coupon-section-container .coupon-sort .coupon-sort-options {
+    width: 80px;
+    float: right;
+}
 
+.coupon-section-container #coupon-table tbody tr td:last-child a {
+    border-bottom: 1px solid #8d8d88;
+}
 
+.loyalty-points-section {
+    width: 100%;
+    margin: 0 auto;
+}
 
+.points-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.points-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.points-item:last-child {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.points-label {
+    text-align: left;
+    font-size: 14px;
+    color: #333;
+}
+
+.points-value {
+    text-align: right;
+    font-size: 14px;
+    color: #333;
+}
+
+.point-tabs {
+    margin-top: 20px;
+}
 
 
 
@@ -401,6 +451,6 @@ input.addr2, input.toggle, #request-select {
 
 
 
-#review-article, #delivery-article {
-    display: none;
+.hidden {
+    display: none !important;
 }
