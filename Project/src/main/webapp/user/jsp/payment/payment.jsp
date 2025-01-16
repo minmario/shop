@@ -6,6 +6,9 @@
     <link rel="icon" href="./user/images/share_musinsa.png">
     <title>Musinsa</title>
 
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <%-- CSS --%>
     <link rel="stylesheet" type="text/css" href="./user/css/common/common.css"/>
     <link rel="stylesheet" type="text/css" href="./user/css/payment/payment.css"/>
@@ -269,40 +272,15 @@
     <%-- footer --%>
     <jsp:include page="../layout/footer.jsp"></jsp:include>
 
-    <%-- 옵션 변경 모달 --%>
-    <div class="modal fade" id="optionModal" tabindex="-1" role="dialog" aria-labelledby="optionModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">옵션 변경</h5>
-                </div>
-                <div class="modal-body">
-                    <select class="color-select" id="color">
-                        <option>검정</option>
-                        <option>네이비</option>
-                        <option>아이보리</option>
-                    </select>
-                    <select class="size-select" id="size">
-                        <option>S</option>
-                        <option>M</option>
-                        <option>L</option>
-                    </select>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-dark" onclick="onHideOption()">취소</button>
-                    <button type="button" class="btn btn-outline-dark">변경하기</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <%-- 보유 적립금 모달 --%>
     <div class="modal fade" id="pointsModal" tabindex="-1" role="dialog" aria-labelledby="pointsModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="pointsModalTitle">보유 적립금</h5>
-                    <button type="button" onclick="onHidePoints()">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div>
@@ -341,7 +319,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="rewardModalTitle">구매 적립/선할인 안내</h5>
-                    <button type="button" onclick="onHideBenefits()">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <ul>
@@ -415,7 +395,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="rewardBenefitsModalTitle">적립 혜택 안내</h5>
-                    <button type="button" onclick="onHideRewardBenefits()">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="reward-section grade-reward">
@@ -458,7 +440,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="benefitsModalTitle">이번 주문으로 받을 혜택 안내</h5>
-                    <button type="button" onclick="onHideBenefits()">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <ul>
@@ -470,9 +454,11 @@
         </div>
     </div>
 
+    <%-- JQuery --%>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+    <%-- Bootstrap --%>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {

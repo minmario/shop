@@ -7,12 +7,12 @@
 }
 
 .container {
-    width: 900px !important;
+    width: 1500px !important;
     margin: 0 auto;
 }
 
 .user-info {
-    width: 900px;
+    width: 1500px;
 }
 
 .user-info, .user-action-buttons {
@@ -26,7 +26,7 @@
     justify-content: flex-start;
     margin-left: auto;
     margin-right: auto;
-    width: 900px !important;
+    width: 1500px !important;
 }
 
 .breadcrumb-container {
@@ -130,28 +130,32 @@ table th, table td {
     height: 100%;
 }
 
-.user-action-buttons, .review-section-container, .delivery-section-container, .coupon-section-container, .point-section-container {
+.user-action-buttons, .review-section-container, .delivery-section-container,
+.coupon-section-container, .point-section-container, .order-section-container {
     margin: 0 auto;
 }
 
-.user-action-buttons, .user-action-buttons .btn-group, .review-section-container, .delivery-section-container, .coupon-section-container, .point-section-container {
-    width: 900px !important;
+.user-action-buttons, .user-action-buttons .btn-group, .review-section-container,
+.delivery-section-container, .coupon-section-container, .point-section-container,
+.order-section-container {
+    width: 1500px !important;
 }
 
-.review-section-container, .delivery-section-container, .coupon-section-container, .point-section-container {
+.review-section-container, .delivery-section-container, .coupon-section-container,
+.point-section-container, .order-section-container {
     margin-top: 20px !important;
 }
 
-.review-section, .delivery-section, .coupon-section, .point-section {
+.review-section, .delivery-section, .coupon-section, .point-section, .order-section {
     height: 35px;
 }
 
-.review-header, .delivery-header, .coupon-header, .point-header {
+.review-header, .delivery-header, .coupon-header, .point-header, .order-header {
     line-height: 35px;
     float: left;
 }
 
-.review-title, .delivery-title, .coupon-title, .point-title {
+.review-title, .delivery-title, .coupon-title, .point-title, .order-title {
     font-weight: bold;
 }
 
@@ -347,6 +351,50 @@ table th, table td {
 .point-tabs {
     margin-top: 20px;
 }
+
+.order-section-container #order-table thead tr th:first-child {
+    width: 350px;
+}
+
+.order-section-container #order-table thead tr th:nth-child(2) {
+    width: 120px;
+}
+
+#order-table thead tr th:nth-child(3), #order-table thead tr th:nth-child(4), #order-table thead tr th:nth-child(5),
+#order-table thead tr th:nth-child(7), #order-table thead tr th:nth-child(8) {
+    width: 100px;
+}
+
+#order-table thead tr th:nth-child(6) {
+    width: 250px;
+}
+
+#order-table tbody tr td button.text-blue {
+    color: #007bff;
+}
+
+#order-table tbody tr td button.text-blue:hover {
+    color: #007bff;
+    background-color: #eee;
+}
+
+#order-table tbody tr td.product-info .prod_details {
+    margin-top: 10px;
+}
+
+#order-table tbody tr td.product-info .prod_details div {
+    margin: 5px 0;
+}
+
+#order-table tbody tr td.product-info .prod_details .prod_option {
+    position: inherit;
+    top: inherit;
+}
+
+#order-table tbody tr td.product-info .prod_details .prod_price {
+    font-weight: bold;
+}
+
 
 
 

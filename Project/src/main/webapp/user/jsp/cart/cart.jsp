@@ -6,6 +6,9 @@
     <link rel="icon" href="./user/images/share_musinsa.png">
     <title>Musinsa</title>
 
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <%-- CSS --%>
     <link rel="stylesheet" type="text/css" href="./user/css/common/common.css"/>
     <link rel="stylesheet" type="text/css" href="./user/css/cart/cart.css"/>
@@ -128,6 +131,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">옵션 변경</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <select class="color-select" id="color">
@@ -142,14 +148,18 @@
                     </select>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-dark" onclick="onHideOption()">취소</button>
-                    <button type="button" class="btn btn-outline-dark">변경하기</button>
+                    <button type="button" class="btn btn-outline-dark" data-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-outline-dark">변경</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <%-- JQuery --%>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <%-- Bootstrap --%>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         $(function () {

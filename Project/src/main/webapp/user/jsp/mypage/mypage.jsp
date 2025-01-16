@@ -9,6 +9,7 @@
     <title>Musinsa</title>
 
     <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <%-- CSS --%>
     <link rel="stylesheet" type="text/css" href="./user/css/common/common.css"/>
@@ -104,281 +105,29 @@
                     </div>
                 </div>
 
+                <!-- Order Section -->
+                <div class="order-section-container" id="order-article">
+                    <jsp:include page="./components/order.jsp"/>
+                </div>
+
                 <!-- Review Section -->
                 <div class="review-section-container" id="review-article">
-                    <div class="review-section">
-                        <div class="review-header">
-                            <span class="review-title">상품평 작성</span>
-                        </div>
-                        <div class="review-buttons">
-                            <div class="btn-group" role="group">
-                                <input type="radio" class="btn-check" name="btnradioreview" id="btnradio10" autocomplete="off" checked>
-                                <label class="btn btn-outline-secondary" for="btnradio10">후기 내역</label>
-                                <input type="radio" class="btn-check" name="btnradioreview" id="btnradio11" autocomplete="off">
-                                <label class="btn btn-outline-secondary" for="btnradio11">후기 작성</label>
-                            </div>
-                        </div>
-                    </div>
-                    <table id="review-table" class="table">
-                        <thead>
-                        <tr>
-                            <th>번호</th>
-                            <th>상품정보</th>
-                            <th>구매일자</th>
-                            <th>일반 후기</th>
-                            <th>스타일 후기</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:set var="cnt" value="2"/>
-                        <c:forEach begin="1" end="${cnt}" varStatus="st">
-                            <tr>
-                                <td class="order-id">${st.index}</td>
-                                <td class="product-info">
-                                    <div class="prod_info">
-                                        <div class="prod_img">
-                                            <img src="./user/images/product1.jpg"/>
-                                        </div>
-                                        <div class="prod_details">
-                                            <div class="prod_brand">
-                                                [페이퍼리즘]
-                                            </div>
-                                            <div class="prod_name">
-                                                ZIGGY LIGHTING 3/4 SLV T-SHIRT
-                                            </div>
-                                            <div class="prod_color">
-                                                [GRAY]
-                                            </div>
-                                            <div class="prod_option">
-                                                옵션&nbsp;:&nbsp;L&nbsp;/&nbsp;수량&nbsp;:&nbsp;${st.index}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="purchase-date">2025-01-14</td>
-                                <td class="general-review">
-                                    <button type="button" class="btn btn-outline-secondary">작성하기</button>
-                                </td>
-                                <td class="style-review">
-                                    <button type="button" class="btn btn-outline-secondary">작성하기</button>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-                    <nav aria-label="Page navigation" class="navigation">
-                        <ul class="pagination">
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <jsp:include page="./components/review.jsp"/>
                 </div>
 
                 <!-- Point Section -->
                 <div class="point-section-container" id="point-article">
-                    <div class="point-section">
-                        <div class="point-header">
-                            <span class="point-title">적립금</span>
-                        </div>
-                    </div>
-                    <div class="loyalty-points-section">
-                        <div class="points-list">
-                            <li class="points-item">
-                                <div class="points-label text-left">예정 적립금</div>
-                                <div class="points-value text-right">1000원</div>
-                            </li>
-                            <li class="points-item">
-                                <div class="points-label text-left">소멸 예정 적립금(30일 이내)</div>
-                                <div class="points-value text-right">0원</div>
-                            </li>
-                        </div>
-                    </div>
-                    <div class="point-tabs">
-                        <ul class="nav nav-tabs" id="nav-tabs">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#" data-target="#table-all">전체</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" data-target="#table-earned">적립</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" data-target="#table-used">사용</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" data-target="#table-upcoming">예정</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div id="tables">
-                        <table id="table-all" class="table" style="display: table;">
-                            <thead>
-                            <tr><th>전체</th></tr>
-                            </thead>
-                            <tbody>
-                            <tr><td>전체 내역 1</td></tr>
-                            </tbody>
-                        </table>
-                        <table id="table-earned" class="table" style="display: none;">
-                            <thead>
-                            <tr><th>적립</th></tr>
-                            </thead>
-                            <tbody>
-                            <tr><td>적립 내역 1</td></tr>
-                            </tbody>
-                        </table>
-                        <table id="table-used" class="table" style="display: none;">
-                            <thead>
-                            <tr><th>사용</th></tr>
-                            </thead>
-                            <tbody>
-                            <tr><td>사용 내역 1</td></tr>
-                            </tbody>
-                        </table>
-                        <table id="table-upcoming" class="table" style="display: none;">
-                            <thead>
-                            <tr><th>예정</th></tr>
-                            </thead>
-                            <tbody>
-                            <tr><td>예정 내역 1</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <nav aria-label="Page navigation" class="navigation">
-                        <ul class="pagination">
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <jsp:include page="./components/point.jsp"/>
                 </div>
 
                 <!-- Coupon Section -->
                 <div class="coupon-section-container" id="coupon-article">
-                    <div class="coupon-section">
-                        <div class="coupon-header">
-                            <span class="coupon-title">쿠폰 목록</span>
-                        </div>
-                        <div class="coupon-sort">
-                            <select class="form-select coupon-sort-options">
-                                <option>최신순</option>
-                                <option>할인순</option>
-                            </select>
-                        </div>
-                    </div>
-                    <table id="coupon-table" class="table">
-                        <thead>
-                            <tr>
-                                <th>번호</th>
-                                <th>할인율</th>
-                                <th>쿠폰명</th>
-                                <th>만료일</th>
-                                <th>적용 상품</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:set var="cnt" value="5"/>
-                            <c:forEach begin="1" end="${cnt}" varStatus="st">
-                                <tr>
-                                    <td>${st.index}</td>
-                                    <td>${st.index * 3}%</td>
-                                    <td>${st.index}월 무신사 회원 정기 쿠폰</td>
-                                    <td>2025-01-${st.index + 5}까지</td>
-                                    <td>
-                                        <a href="">적용 상품</a>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                    <nav aria-label="Page navigation" class="navigation">
-                        <ul class="pagination">
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <jsp:include page="./components/coupon.jsp"/>
                 </div>
 
                 <%-- Delivery Section --%>
                 <div class="delivery-section-container" id="delivery-article">
-                    <div class="delivery-section">
-                        <div class="delivery-header">
-                            <span class="delivery-title">배송지 목록</span>
-                        </div>
-                    </div>
-                    <table id="delivery-table" class="table">
-                        <thead>
-                        <tr>
-                            <th><input type="checkbox" id="delivery-all"/></th>
-                            <th>번호</th>
-                            <th>이름</th>
-                            <th>연락처</th>
-                            <th>주소</th>
-                            <th>관리</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:set var="cnt" value="3"/>
-                        <c:forEach begin="1" end="${cnt}" varStatus="st">
-                            <tr>
-                                <td><input type="checkbox" name="chk-delivery"/></td>
-                                <td>${st.index}</td>
-                                <td>OOO</td>
-                                <td>010-0000-0000</td>
-                                <td>서울특별시 동작구 보라매로5길 15</td>
-                                <td>
-                                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=editAddr'">수정</button>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-                    <div class="delivery-buttons">
-                        <span class="delivery-buttons-left">
-                            <button type="button" class="btn btn-sm btn-outline-danger" onclick="">선택 배송지 삭제</button>
-                        </span>
-                        <span class="delivery-buttons-right">
-                            <button type="button" class="btn btn-primary btn-sm" onclick="onShowAddAddrBtn()">배송지 추가</button>
-                        </span>
-                    </div>
-                    <br/><br/>
-                    <div class="delivery-notice">
-                        <ol>
-                            <li>배송 주소록은 최대 3개까지 등록할 수 있으며, 별도로 등록하지 않을 경우 최근 배송 주소록 기준으로 자동 업데이트 됩니다.</li>
-                            <li>기본 배송지는 1개만 저장됩니다. 다른 배송지를 기본 배송지로 설정하시면 기본 배송지가 변경됩니다.</li>
-                        </ol>
-                    </div>
+                    <jsp:include page="./components/delivery.jsp"/>
                 </div>
             </div>
         </div>
@@ -387,12 +136,15 @@
     <%-- footer --%>
     <jsp:include page="../layout/footer.jsp"></jsp:include>
 
-    <!-- Modal -->
-    <div class="modal fade" id="addrModalCenter" tabindex="-1" role="dialog" aria-labelledby="addrModalCenterTitle" aria-hidden="true">
+    <!-- 배송지 추가 Modal -->
+    <div class="modal fade" id="addrModal" tabindex="-1" role="dialog" aria-labelledby="addrModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addrModalCenterTitle">배송지 추가</h5>
+                    <h5 class="modal-title" id="addrModalTitle">배송지 추가</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="modal-table-container">
@@ -459,7 +211,7 @@
                         <label for="chkDefault">기본 배송지로 설정</label>
                     </div>
                     <div class="modal-footer-right">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">닫기</button>
                         <button type="button" class="btn btn-outline-primary" onclick="save()">등록</button>
                     </div>
                 </div>
@@ -467,8 +219,31 @@
         </div>
     </div>
 
+    <!-- 배송조회 모달 -->
+    <div class="modal fade" id="deliveryModal" tabindex="-1" role="dialog" aria-labelledby="deliveryModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deliveryModalTitle">배송 조회</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>배송 조회 내용을 여기에 표시합니다.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <%-- JQuery --%>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <%-- Bootstrap --%>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         const selectedCategoryDiv = document.getElementById('selectedCategoryDiv');
@@ -501,6 +276,9 @@
         });
 
         $(function () {
+            // 초기 상태 설정 - 주문 내역 선택
+            $('#btnradio-order').prop('checked', true);
+
             // 장바구니 체크 박스 전체 선택 / 해제 기능
             $("#cart-table #cart-all").on("click", function () {
                 console.log("click");
@@ -539,7 +317,7 @@
             });
 
             const tabActions = {
-                //"#btnradio-order": "#order-article",
+                "#btnradio-order": "#order-article",
                 //"#btnradio-likes": "#likes-article",
                 "#btnradio-reviews": "#review-article",
                 //"#btnradio-questions": "#questions-article",
@@ -553,6 +331,7 @@
 
             // 초기 상태 설정 - 주문 내역만 보이도록
             allTabs.forEach((tab) => {
+                document.querySelector(".user-action-buttons .btn-group")
                 const element = document.querySelector(tab);
                 if (element) {
                     element.style.display = tab === "#order-article" ? "block" : "none";
@@ -595,15 +374,27 @@
             });
         });
 
+        // 배송 조회 모달 열기
+        function onShowDeliveryModal() {
+            let modal = new bootstrap.Modal(document.getElementById('deliveryModal'));
+            modal.show();
+        }
+
+        // 배송 조회 모달 닫기
+        function onHideDeliveryModal() {
+            let modal = new bootstrap.Modal(document.getElementById('deliveryModal'));
+            modal.hide();
+        }
+
         // 배송지 추가 > 모달
         function onShowAddAddrBtn() {
-            let modal = new bootstrap.Modal(document.getElementById('addrModalCenter'));
+            let modal = new bootstrap.Modal(document.getElementById('addrModal'));
             modal.show();
         }
 
         // 배송지 추가 모달 닫기
         function onHideAddAddrBtn() {
-            let modal = new bootstrap.Modal(document.getElementById('addrModalCenter'));
+            let modal = new bootstrap.Modal(document.getElementById('addrModal'));
             modal.hide();
         }
 

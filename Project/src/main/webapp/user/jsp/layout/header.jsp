@@ -15,7 +15,7 @@
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <div class="container-fluid">
             <!-- 로고 -->
-            <a class="navbar-brand fw-bold text-white" href="${pageContext.request.contextPath}/Controller?type=main" style="font-size: 1.8rem;">MUSINSA</a>
+            <a class="navbar-brand fw-bold text-white" href="${pageContext.request.contextPath}/Controller?type=index" style="font-size: 1.8rem;">MUSINSA</a>
 
             <!-- 검색창 -->
             <form class="d-flex align-items-center" role="search">
