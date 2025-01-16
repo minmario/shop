@@ -1,7 +1,4 @@
 .wrap {
-    flex: 1;
-    padding-left: 20px;
-    padding-right: 0;
     overflow: hidden auto;
 }
 
@@ -9,8 +6,13 @@
     padding: 20px;
 }
 
+.container {
+    width: 900px !important;
+    margin: 0 auto;
+}
+
 .user-info {
-    width: 50%;
+    width: 900px;
 }
 
 .user-info, .user-action-buttons {
@@ -24,7 +26,7 @@
     justify-content: flex-start;
     margin-left: auto;
     margin-right: auto;
-    width: 55% !important;
+    width: 900px !important;
 }
 
 .breadcrumb-container {
@@ -119,41 +121,45 @@ table th, table td {
 }
 
 .prod_img {
-    background: url("../../images/product1.jpg");
-    background-size: 100px 100px;
     width: 100px;
     height: 100px;
 }
 
-.user-action-buttons, .review-section-container, .delivery-section-container,
-.cart-section-container {
+.prod_img img {
+    width: 100%;
+    height: 100%;
+}
+
+.user-action-buttons, .review-section-container, .delivery-section-container{
     margin: 0 auto;
 }
 
-.user-action-buttons .btn-group, .review-section-container, .delivery-section-container,
-.cart-section-container {
-    width: 55% !important;
+.user-action-buttons, .user-action-buttons .btn-group, .review-section-container, .delivery-section-container {
+    width: 900px !important;
 }
-
-.review-section-container, .delivery-section-container, .cart-section-container {
+.review-section-container, .delivery-section-container {
     margin-top: 20px !important;
 }
 
-.review-section, .delivery-section, .cart-section {
+.review-section, .delivery-section {
     height: 35px;
 }
 
-.review-header, .delivery-header, .cart-header {
+.review-header, .delivery-header {
     line-height: 35px;
     float: left;
 }
 
-.review-title, .delivery-title, .cart-title {
+.review-title, .delivery-title {
     font-weight: bold;
 }
 
 .review-buttons {
     float: right;
+}
+
+.review-buttons .btn-group {
+    width: 180px;
 }
 
 .table {
@@ -177,6 +183,40 @@ table th, table td {
 .table td {
     vertical-align: middle;
     text-align: center;
+}
+
+.product-info .prod_info {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.product-info .prod_img {
+    margin-right: 10px;
+}
+
+.product-info .prod_details {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+}
+
+.product-info .prod_details > div {
+    margin-bottom: 5px;
+}
+
+.product-info .prod_details > div:last-child {
+    margin-bottom: 0;
+}
+
+.prod_brand {
+    font-weight: bold;
+}
+
+.prod_option {
+    color: #9ea4a9;
+    position: absolute;
+    top: 80px;
 }
 
 #review-table thead tr th:first-child {
@@ -219,81 +259,6 @@ table th, table td {
     width: 120px;
 }
 
-#cart-table thead tr th:first-child {
-    width: 50px;
-}
-
-#cart-table thead tr th:nth-child(2) {
-    width: 300px;
-}
-
-#cart-table thead tr th:nth-child(3) {
-    width: 100px;
-}
-
-#cart-table thead tr th:nth-child(4) {
-    width: 80px;
-}
-
-#cart-table thead tr th:last-child {
-    width: 80px;
-}
-
-#cart-table tbody tr td:nth-child(3) div {
-    text-align: center;
-}
-
-#cart-table tbody .product-info .prod_details {
-    width: 370px;
-}
-
-#cart-table tbody .product-info .prod_details .prod_option {
-    width: 100%;
-}
-
-#cart-table tbody .product-info .prod_details .prod_option .prod_option_left {
-    width: 10%;
-    float: left;
-}
-
-#cart-table tbody .product-info .prod_details .prod_option .prod_option_right {
-    width: 90%;
-}
-
-.product-info .prod_info {
-    display: flex;
-    justify-content: flex-start;
-}
-
-.product-info .prod_img {
-    margin-right: 10px;
-}
-
-.product-info .prod_details {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    position: relative;
-}
-
-.product-info .prod_details > div {
-    margin-bottom: 5px;
-}
-
-.product-info .prod_details > div:last-child {
-    margin-bottom: 0;
-}
-
-.prod_brand {
-    font-weight: bold;
-}
-
-.prod_option {
-    color: #9ea4a9;
-    position: absolute;
-    top: 80px;
-}
-
 .navigation {
     display: flex;
     justify-content: right;
@@ -326,6 +291,20 @@ table th, table td {
     text-align: left;
     color: #fff;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* modal */
 .modal-table-info {

@@ -25,189 +25,120 @@
     <%-- content --%>
     <div class="wrap">
         <div class="row">
-            <!-- Breadcrumb Section -->
-            <div class="breadcrumb-container">
-                <span>무신사 스토어 > 장바구니</span>
-            </div>
-
-            <!-- My Page Section -->
-            <div class="text-title">
-                <div class="title-left">
-                    <h3>My Page</h3>
+            <div class="container">
+                <!-- Breadcrumb Section -->
+                <div class="breadcrumb-container">
+                    <span>무신사 스토어 > 장바구니</span>
                 </div>
-                <div class="title-right">
-                    <span class="current">장바구니</span>
-                    <span>&gt;</span>
-                    <span>주문서</span>
-                    <span>&gt;</span>
-                    <span>주문완료</span>
-                </div>
-            </div>
 
-            <!-- User Info Section -->
-            <div class="user-info-table">
-                <table id="user-table">
-                    <tbody>
-                    <tr>
-                        <td>
-                            <div class="profile"></div>
-                        </td>
-                        <td>
-                            <div>
-                                <span class="grade">실버</span>
-                                <span class="userName">${user.cus_name}</span>
-                            </div>
-                            <div>
-                                <a href="" class="user-info-change">[회원정보변경]</a>
-                            </div>
-                        <td>
-                            <div class="point-info">
-                                적립금
-                            </div>
-                            <div class="point-value">
-                                000점
-                            </div>
-                        </td>
-                        <td>
-                            <div class="coupon-info">
-                                쿠폰
-                            </div>
-                            <div class="coupon-value">
-                                00장
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Action Buttons Section -->
-            <div class="user-action-buttons">
-                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="btnradiotab" id="btnradio1" autocomplete="off" checked>
-                    <label class="btn btn-outline-secondary" for="btnradio1">장바구니</label>
-                    <input type="radio" class="btn-check" name="btnradiotab" id="btnradio2" autocomplete="off">
-                    <label class="btn btn-outline-secondary" for="btnradio2">주문조회</label>
-                    <input type="radio" class="btn-check" name="btnradiotab" id="btnradio3" autocomplete="off">
-                    <label class="btn btn-outline-secondary" for="btnradio3">좋아요</label>
-                    <input type="radio" class="btn-check" name="btnradiotab" id="btnradio4" autocomplete="off">
-                    <label class="btn btn-outline-secondary" for="btnradio4">구매후기</label>
-                    <input type="radio" class="btn-check" name="btnradiotab" id="btnradio5" autocomplete="off">
-                    <label class="btn btn-outline-secondary" for="btnradio5">상품문의</label>
-                    <input type="radio" class="btn-check" name="btnradiotab" id="btnradio6" autocomplete="off">
-                    <label class="btn btn-outline-secondary" for="btnradio6">1:1문의</label>
-                    <input type="radio" class="btn-check" name="btnradiotab" id="btnradio7" autocomplete="off">
-                    <label class="btn btn-outline-secondary" for="btnradio7">적립금</label>
-                    <input type="radio" class="btn-check" name="btnradiotab" id="btnradio8" autocomplete="off">
-                    <label class="btn btn-outline-secondary" for="btnradio8">쿠폰</label>
-                    <input type="radio" class="btn-check" name="btnradiotab" id="btnradio9" autocomplete="off">
-                    <label class="btn btn-outline-secondary" for="btnradio9">배송지</label>
-                </div>
-            </div>
-
-            <!-- Cart Section -->
-            <div class="cart-section-container" id="cart-article">
-                <div class="cart-section">
-                    <div class="cart-header">
-                        <span class="cart-title">장바구니</span>
+                <!-- My Page Section -->
+                <div class="text-title">
+                    <div class="title-left">
+                        <h3>My Page</h3>
+                    </div>
+                    <div class="title-right">
+                        <span class="current">장바구니</span>
+                        <span>&gt;</span>
+                        <span>주문서</span>
+                        <span>&gt;</span>
+                        <span>주문완료</span>
                     </div>
                 </div>
-                <table id="cart-table" class="table">
-                    <thead>
+
+                <!-- User Info Section -->
+                <div class="user-info-table">
+                    <table id="user-table">
+                        <tbody>
+                        <tr>
+                            <td>
+                                <div class="profile"></div>
+                            </td>
+                            <td>
+                                <div>
+                                    <span class="grade">실버</span>
+                                    <span class="userName">${user.cus_name}</span>
+                                </div>
+                                <div>
+                                    <a href="" class="user-info-change">[회원정보변경]</a>
+                                </div>
+                            <td>
+                                <div class="point-info">
+                                    적립금
+                                </div>
+                                <div class="point-value">
+                                    000점
+                                </div>
+                            </td>
+                            <td>
+                                <div class="coupon-info">
+                                    쿠폰
+                                </div>
+                                <div class="coupon-value">
+                                    00장
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Action Buttons Section -->
+                <div class="user-action-buttons">
+                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-order" autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="btnradio-order">주문내역</label>
+                        <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-likes" autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="btnradio-likes">좋아요</label>
+                        <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-reviews" autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="btnradio-reviews">구매후기</label>
+                        <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-questions" autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="btnradio-questions">상품문의</label>
+                        <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-inquiry" autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="btnradio-inquiry">1:1문의</label>
+                        <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-points" autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="btnradio-points">적립금</label>
+                        <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-coupons" autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="btnradio-coupons">쿠폰</label>
+                        <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-address" autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="btnradio-address">배송지</label>
+                    </div>
+                </div>
+
+                <!-- Review Section -->
+                <div class="review-section-container" id="review-article">
+                    <div class="review-section">
+                        <div class="review-header">
+                            <span class="review-title">상품평 작성</span>
+                        </div>
+                        <div class="review-buttons">
+                            <div class="btn-group" role="group">
+                                <input type="radio" class="btn-check" name="btnradioreview" id="btnradio10" autocomplete="off" checked>
+                                <label class="btn btn-outline-secondary" for="btnradio10">후기 내역</label>
+                                <input type="radio" class="btn-check" name="btnradioreview" id="btnradio11" autocomplete="off">
+                                <label class="btn btn-outline-secondary" for="btnradio11">후기 작성</label>
+                            </div>
+                        </div>
+                    </div>
+                    <table id="review-table" class="table">
+                        <thead>
                         <tr>
                             <th>번호</th>
                             <th>상품정보</th>
-                            <th>개별 판매가</th>
-                            <th>수량</th>
-                            <th><input type="checkbox" class="all"/></th>
+                            <th>구매일자</th>
+                            <th>일반 후기</th>
+                            <th>스타일 후기</th>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <c:set var="cnt" value="5"/>
-                        <c:forEach begin="1" end="${cnt}" varStatus="st">
-                            <tr>
-                                <td class="order-id">${st.index}</td>
-                                <td class="product-info">
-                                    <div class="prod_info">
-                                        <div class="prod_img"></div>
-                                        <div class="prod_details">
-                                            <div class="prod_brand">
-                                                [페이퍼리즘]
-                                            </div>
-                                            <div class="prod_name">
-                                                ZIGGY LIGHTING 3/4 SLV T-SHIRT
-                                            </div>
-                                            <div class="prod_option">
-                                                <div class="prod_option_left">옵션 : </div>
-                                                <div class="prod_option_right">RED / 1 Size</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="product-price">
-                                    <div class="default-price">59,000원</div>
-                                    <div class="sale-price">39,900원</div>
-                                </td>
-                                <td class="cart-count">5</td>
-                                <td>
-                                    <input type="checkbox" name="chk-cart"/>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-                <nav aria-label="Page navigation" class="navigation">
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-
-            <!-- Review Section -->
-            <div class="review-section-container" id="review-article">
-                <div class="review-section">
-                    <div class="review-header">
-                        <span class="review-title">상품평 작성</span>
-                    </div>
-                    <div class="review-buttons">
-                        <div class="btn-group" role="group">
-                            <input type="radio" class="btn-check" name="btnradioreview" id="btnradio10" autocomplete="off" checked>
-                            <label class="btn btn-outline-secondary" for="btnradio10">후기 내역</label>
-                            <input type="radio" class="btn-check" name="btnradioreview" id="btnradio11" autocomplete="off">
-                            <label class="btn btn-outline-secondary" for="btnradio11">후기 작성</label>
-                        </div>
-                    </div>
-                </div>
-                <table id="review-table" class="table">
-                    <thead>
-                    <tr>
-                        <th>번호</th>
-                        <th>상품정보</th>
-                        <th>구매일자</th>
-                        <th>일반 후기</th>
-                        <th>스타일 후기</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                        </thead>
+                        <tbody>
                         <c:set var="cnt" value="2"/>
                         <c:forEach begin="1" end="${cnt}" varStatus="st">
                             <tr>
                                 <td class="order-id">${st.index}</td>
                                 <td class="product-info">
                                     <div class="prod_info">
-                                        <div class="prod_img"></div>
+                                        <div class="prod_img">
+                                            <img src="./user/images/product1.jpg"/>
+                                        </div>
                                         <div class="prod_details">
                                             <div class="prod_brand">
                                                 [페이퍼리즘]
@@ -233,46 +164,46 @@
                                 </td>
                             </tr>
                         </c:forEach>
-                    </tbody>
-                </table>
-                <nav aria-label="Page navigation" class="navigation">
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-
-            <%-- Delivery Section --%>
-            <div class="delivery-section-container" id="delivery-article">
-                <div class="delivery-section">
-                    <div class="delivery-header">
-                        <span class="delivery-title">배송지 목록</span>
-                    </div>
+                        </tbody>
+                    </table>
+                    <nav aria-label="Page navigation" class="navigation">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
-                <table id="delivery-table" class="table">
-                    <thead>
+
+                <%-- Delivery Section --%>
+                <div class="delivery-section-container" id="delivery-article">
+                    <div class="delivery-section">
+                        <div class="delivery-header">
+                            <span class="delivery-title">배송지 목록</span>
+                        </div>
+                    </div>
+                    <table id="delivery-table" class="table">
+                        <thead>
                         <tr>
-                            <th><input type="checkbox" id="all"/></th>
+                            <th><input type="checkbox" id="delivery-all"/></th>
                             <th>번호</th>
                             <th>이름</th>
                             <th>연락처</th>
                             <th>주소</th>
                             <th>관리</th>
                         </tr>
-                    </thead>
-                    <tbody>
+                        </thead>
+                        <tbody>
                         <c:set var="cnt" value="3"/>
                         <c:forEach begin="1" end="${cnt}" varStatus="st">
                             <tr>
@@ -286,13 +217,13 @@
                                 </td>
                             </tr>
                         </c:forEach>
-                    </tbody>
-                </table>
-                <div class="delivery-buttons">
+                        </tbody>
+                    </table>
+                    <div class="delivery-buttons">
                     <span class="delivery-buttons-left">
                         <button type="button" class="btn btn-sm btn-outline-danger" onclick="">선택 배송지 삭제</button>
                     </span>
-                    <span class="delivery-buttons-right">
+                        <span class="delivery-buttons-right">
                         <button type="button" class="btn btn-primary btn-sm" onclick="onShowAddAddrBtn()">배송지 추가</button>
                     </span>
                     </div>
@@ -307,6 +238,9 @@
             </div>
         </div>
     </div>
+
+    <%-- footer --%>
+    <jsp:include page="../layout/footer.jsp"></jsp:include>
 
     <!-- Modal -->
     <div class="modal fade" id="addrModalCenter" tabindex="-1" role="dialog" aria-labelledby="addrModalCenterTitle" aria-hidden="true">
@@ -388,9 +322,6 @@
         </div>
     </div>
 
-    <%-- footer --%>
-    <jsp:include page="../layout/footer.jsp"></jsp:include>
-
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
     <script>
@@ -424,8 +355,27 @@
         });
 
         $(function () {
+            // 장바구니 체크 박스 전체 선택 / 해제 기능
+            $("#cart-table #cart-all").on("click", function () {
+                console.log("click");
+                let ar = $("#cart-table > tbody").find(":checkbox");
+                ar.prop("checked", this.checked);
+            });
+
+            // 장바구니 체크 박스 개별 선택 / 해제 기능
+            $("#cart-table > tbody").find(":checkbox").on("click", function () {
+                let allCheck = true;
+                $("#cart-table > tbody").find(":checkbox").not("#cart-table #cart-all").each(function () {
+                    if (!this.checked) {
+                        allCheck = false;
+                        return allCheck;
+                    }
+                });
+                $("#cart-table #cart-all").prop("checked", allCheck);
+            });
+
             // 배송지 체크 박스 전체 선택 / 해제 기능
-            $("#delivery-table #all").on("click", function () {
+            $("#delivery-table #delivery-all").on("click", function () {
                 let ar = $("#delivery-table > tbody").find(":checkbox");
                 ar.prop("checked", this.checked);
             });
@@ -433,32 +383,26 @@
             // 배송지 체크 박스 개별 선택 / 해제 기능
             $("#delivery-table > tbody").find(":checkbox").on("click", function () {
                 let allCheck = true;
-                $("#delivery-table > tbody").find(":checkbox").not("#delivery-table #all").each(function () {
+                $("#delivery-table > tbody").find(":checkbox").not("#delivery-table #delivery-all").each(function () {
                     if (!this.checked) {
                         allCheck = false;
                         return allCheck;
                     }
                 });
-                $("#delivery-table #all").prop("checked", allCheck);
+                $("#delivery-table #delivery-all").prop("checked", allCheck);
             });
 
-            // 장바구니
-            $("#btnradio1").on("click", function () {
-                $("#review-article").hide();
-                $("#delivery-article").hide();
-                $("#cart-article").show();
-            });
+            const tabActions = {
+                "#btnradio-reviews": ["#delivery-article", "#review-article"],
+                "#btnradio-address": ["#review-article", "#delivery-article"]
+            };
 
-            // 리뷰
-            $("#btnradio4").on("click", function () {
-                $("#delivery-article").hide();
-                $("#review-article").show();
-            });
-
-            // 배송지
-            $("#btnradio9").on("click", function () {
-                $("#review-article").hide();
-                $("#delivery-article").show();
+            Object.keys(tabActions).forEach((selector) => {
+                $(selector).on("click", function () {
+                    const [toHide, toShow] = tabActions[selector];
+                    $(toHide).hide();
+                    $(toShow).show();
+                });
             });
         });
 

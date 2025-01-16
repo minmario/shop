@@ -4,7 +4,6 @@
 
 .wrap {
     height: 80%;
-    overflow-y: auto;
 }
 
 .wrap::-webkit-scrollbar {
