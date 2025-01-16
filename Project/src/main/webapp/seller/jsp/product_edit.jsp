@@ -8,8 +8,8 @@
 
 <html>
 <header>
-    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
     <jsp:include page="./layout/header.jsp"/>
+    <title>상품 등록</title>
     <style>
         .image-container {
             width: 150px;
@@ -21,7 +21,6 @@
             position: relative;
             background-color: #f9f9f9;
         }
-
         .image-container img {
             max-width: 100%;
             max-height: 100%;
@@ -34,14 +33,8 @@
             font-weight: bold;
         }
 
-        .additional-option-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
         .form-container {
-            width: 50%;
+            width: 100%;
             margin: 0 auto;
             text-align: left;
         }
@@ -68,14 +61,15 @@
 
     </style>
 </header>
-<body class="container mt-4">
+<body>
+<div class="container mt-5">
 <h3 class="mb-3 center">상품 등록</h3>
-
+<hr/>
 <!-- 상품 정보 폼 -->
 <form method="POST" action="updateproduct.jsp" class="form-container" enctype="multipart/form-data">
     <!-- 상품 명 -->
     <div style="flex-grow: 1;">
-        <div class="mb-3">
+        <div class="mb-4">
             <label for="prod_name" class="form-label">상품명</label>
             <input type="text" class="form-control" id="prod_name" name="prod_name" value="${product.prod_name}" style="width: 100%;">
         </div>
@@ -164,42 +158,12 @@
         <button type="button" class="btn btn-outline-success mt-3" onclick="addAdditionalImage()">이미지 추가</button>
     </div>
     <!-- 추가 이미지 아래에 HTML 에디터 추가 -->
-    <div class="mb-3">
-        <label class="form-label">HTML 에디터</label>
-        <textarea name="htmlContent" id="htmlEditor" class="form-control" rows="10" placeholder="여기에 HTML을 작성하세요..."></textarea>
+    <div class="mb-3" style="margin-top: 30px;">
+        <label for="content">상세 설명(HTML)</label>
+        <textarea id="content" name="content"></textarea>
     </div>
 
-    <script>
-        // CKEditor 초기화
-        ClassicEditor
-            .create(document.querySelector('#htmlEditor'), {
-                simpleUpload: {
-                    uploadUrl:  "./seller/images/file.jpg", // 파일을 업로드할 서버 URL을 설정
-                }
-            })
-            .catch(error => {
-                console.error(error);
-            });
 
-    </script>
-    <button type="button" class="btn btn-outline-primary mt-2" onclick="loadExternalHtml()">외부 HTML 불러오기</button>
-
-    <script>
-        // 외부 HTML 파일을 불러와 에디터에 로드하는 함수
-
-        function loadExternalHtml() {
-            fetch('/static/external/file.html')
-                .then(response => response.text())
-                .then(data => {
-                    // 가져온 HTML을 에디터에 삽입
-                    const editorInstance = ClassicEditor.instances.htmlEditor;
-                    editorInstance.setData(data);
-                })
-                .catch(error => {
-                    console.error("HTML 파일을 불러오는 중 오류가 발생했습니다.", error);
-                });
-        }
-    </script>
     <!-- 수정/저장 버튼 -->
     <div class="button-container">
         <button type="button" class="btn btn-primary" id="editButton" onclick="enableEditing()">수정</button>
@@ -207,8 +171,48 @@
     </div>
     <hr/>
 </form>
-
+</div>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
 <script>
+    $(function(){
+        $("#content").summernote({
+            lang:"ko-KR",
+            callbacks:{
+                onImageUpload: function(files, editor){
+                    // 이미지가 에디터에 추가될 때마다 수행하는 곳!!!!!!!!!
+                    //이미지를 첨부하면 배열로 인식된다.
+                    //이것을 서버로 비동기식 통신을 수행하면
+                    //서버에 업로드를 시킬 수 있다.
+                    for(let i=0; i<files.length; i++)
+                        saveImg(files[i], editor);
+                }
+            }
+        });
+    });
+
+    function saveImg(file, editor){
+        // 서버로 이미지를 보내기 위해 폼객체 준비
+        let frm = new FormData();
+
+        // 서버로 파일을 보내기 위해 폼객체에 파라미터를 지정
+        frm.append("upload", file);
+
+        //비 동기식 통신
+        $.ajax({
+            url: "Controller?type=saveImg",
+            data: frm,
+            type: "post",
+            contentType: false,
+            processData: false,// 첨부파일을 보내는 것이고, 일반적인 데이터 전송이 아님!
+            dataType: "json"
+        }).done(function(res){
+            //서버에서 보내는 json데이터는 res가 되며, 그 res안에 img_url을 가지고
+            //img요소를 에디터에 추가
+            $("#content").summernote("editor.insertImage", res.img_url);
+        });
+    }
     // 상품 옵션 추가
     function addOption() {
         const container = document.getElementById('productOptionsContainer');
@@ -304,7 +308,10 @@
     // 정가나 할인 금액이 변경될 때마다 가격 업데이트
     document.getElementById('price').addEventListener('input', updateDiscountedPrice);
     document.getElementById('sale_price').addEventListener('input', updateDiscountedPrice);
-</script>
+
 </script>
 </body>
+<footer>
+    <jsp:include page="./layout/footer.jsp"></jsp:include>
+</footer>
 </html>

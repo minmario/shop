@@ -25,7 +25,7 @@
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <div class="container-fluid">
             <!-- 로고 -->
-            <a class="navbar-brand fw-bold text-white" href="./shop/seller/jsp/index.jsp" style="font-size: 1.8rem;">MUSINSA</a>
+            <a class="navbar-brand fw-bold text-white" href="./shop/seller/jsp/index.jsp" style="font-size: 1.8rem;">MUSINSA Partner Center</a>
 
             <!-- 검색창 -->
 
@@ -52,14 +52,13 @@
 
         <!-- 중앙: 바로접속 ~ 고객센터 -->
         <div class="d-flex gap-3 align-items-center justify-content-center flex-grow-1">
-            <a href="#" class="text-decoration-none text-dark">상품/재고관리</a>
-
-            <a href="#" class="text-decoration-none text-dark">주문/배송</a>
-            <a href="#" class="text-decoration-none text-dark">문의</a>
+            <a href="Controller?type=productList" class="text-decoration-none text-dark">상품/재고관리</a>
+            <a href="Controller?type=orderList" class="text-decoration-none text-dark">주문/배송</a>
+            <a href="Controller?type=question" class="text-decoration-none text-dark">문의</a>
             <a href="#" class="text-decoration-none text-dark">매출/정산</a>
 
             <a href="#" class="text-decoration-none text-dark">쿠폰관리</a>
-            <a href="#" class="text-decoration-none text-dark">브랜드 정보 및 수정</a>
+            <a href="#" class="text-decoration-none text-dark">브랜드 관리</a>
         </div>
     </div>
 </header>

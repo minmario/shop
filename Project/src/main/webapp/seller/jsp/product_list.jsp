@@ -10,15 +10,12 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
+    <jsp:include page="./layout/header.jsp"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Title</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        #wrap {
-            display: flex;
-            justify-content: center; /* 수평 가운데 정렬 */
-            height: 100vh; /* 화면 전체 높이 */
-        }
         #table{
             width: 1100px;
         }
@@ -42,11 +39,20 @@
         .stock {
             width: 80px;
         }
+        .center{
+            text-align: center;
+        }
+        .filter-section {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
-<jsp:include page="./layout/header.jsp"></jsp:include>
-<div id="wrap">
+
+
+<div class="container mt-5">
+    <h3 class="center">상품/재고 관리</h3>
+    <hr/>
     <div id="search">
     </div>
     <div id="content">

@@ -6,20 +6,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class ProductListAction implements Action {
+public class QuestionAction implements Action {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
 
-        String  prod_no = (String) session.getAttribute("prod_no");
+        String  question_no= (String) session.getAttribute("question_no");
 
 
-        if(prod_no == null){
+        if(question_no == null){
 
-            return "/seller/jsp/product_list.jsp";
+            return "/seller/jsp/question.jsp";
         }
 
-        return "/seller/jsp/product_list.jsp";
+        return "/seller/jsp/question.jsp";
     }
 
 }
