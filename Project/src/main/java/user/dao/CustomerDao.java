@@ -39,4 +39,16 @@ public class CustomerDao {
 
         return cvo;
     }
+
+    public  static int getId(String nickname){
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            return ss.selectOne("customer.getId", nickname);
+        } finally {
+            ss.close(); // 세션은 반드시 닫아야 합니다.
+        }
+
+    }
+
 }

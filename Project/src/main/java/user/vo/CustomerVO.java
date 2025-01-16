@@ -1,7 +1,15 @@
 package user.vo;
 
 public class CustomerVO {
-  private String id, grade_no, cus_id, cus_pw, cus_name, cus_nickname, cus_gender, cus_birth, cus_phone, cus_email, weight, height, total, expire_date, is_del;
+  private String id, grade_no, cus_id, cus_pw, cus_name, cus_nickname, cus_gender, cus_birth, cus_phone, cus_email, weight, height, total, expire_date, is_del, nickname;
+
+  public String getNickname() {
+    return nickname;
+  }
+
+  public void setNickname(String nickname) {
+    this.nickname = nickname;
+  }
 
   public String getId() {
     return id;
