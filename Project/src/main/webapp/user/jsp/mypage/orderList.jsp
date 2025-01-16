@@ -66,7 +66,9 @@
                             (-0)
                         </td>
                         <td>주문확정</td>
-                        <td></td>
+                        <td>
+                            <button type="button" class="btn btn-outline-secondary">환불신청</button>
+                        </td>
                     </tr>
                     </c:forEach>
                 </tbody>
