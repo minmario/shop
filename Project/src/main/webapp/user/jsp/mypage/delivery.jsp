@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: 권나현
-  Date: 2025-01-14
-  Time: 오후 2:06
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -33,7 +27,7 @@
                         <th>주소</th>
                         <th>관리</th>
                     </tr>
-                    <c:set var="cnt" value="3"/> <%-- int cnt = 5; --%>
+                    <c:set var="cnt" value="3"/>
                     <c:forEach begin="1" end="${cnt}" varStatus="st">
                     <tr>
                         <td><input type="checkbox" name="chk"/></td>
