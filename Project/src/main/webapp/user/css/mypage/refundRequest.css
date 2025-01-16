@@ -1,0 +1,184 @@
+#wrap{
+    padding: 50px;
+}
+
+.wrap-title{
+    width: 40%;
+    height: 40px;
+    margin: 10px auto;
+    font-weight: bold;
+    border-bottom: 1px solid #a3a4a5;
+}
+
+.wrap-title>span{
+    padding: 10px 10px;
+}
+
+.left{
+    float: left;
+    text-align: left;
+}
+
+.box{
+    width: 40%;
+    height: auto;
+    margin: 0 auto 40px auto;
+    padding: 10px;
+}
+
+#custom-input{
+    display: none;
+}
+
+.bold{
+    font-weight: bold;
+    padding: 5px 0;
+}
+
+.toggle{
+    margin-top: 5px;
+    width: 100%;
+}
+
+.wrap-product, .product-content{
+    display: flex;
+}
+
+.thisisnever_img{
+    background: url("../../images/thisisnever_img.png") no-repeat;
+    background-size: 100px 100px;
+    width: 100px;
+    height: 100px;
+}
+
+.option-text{
+    margin-top: 10px;
+    color: #a3a4a5;
+    font-size: 9pt;
+}
+
+/**********주소선택 css*************/
+
+.add-address-button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.add-address-button:hover {
+    background-color: #f5f5f5;
+}
+
+/* 배송지 박스 */
+.address-box {
+    display: flex;
+    align-items: flex-start;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+/* 기본 배송지 라벨 */
+.address-details {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.name {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.default {
+    font-size: 12px;
+    color: #007aff;
+    margin-left: 5px;
+}
+
+.address {
+    font-size: 13px;
+    color: #555;
+    margin: 5px 0;
+    line-height: 1.4;
+}
+
+.phone {
+    font-size: 13px;
+    color: #555;
+}
+
+/***********환불계좌 등록 css************/
+
+/* 배송지 추가하기 버튼 */
+.add-address-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.add-address-button:hover {
+    background-color: #f5f5f5;
+}
+
+/* 배송지 박스 */
+.address-box {
+    display: flex;
+    align-items: flex-start;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+/* 기본 배송지 라벨 */
+.address-details {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.name {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.default {
+    font-size: 12px;
+    color: #007aff;
+    margin-left: 5px;
+}
+
+.address {
+    font-size: 13px;
+    color: #555;
+    margin: 5px 0;
+    line-height: 1.4;
+}
+
+.phone {
+    font-size: 13px;
+    color: #555;
+}
+
+/* 수정 버튼 */
+.edit-button {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #333;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
