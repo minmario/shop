@@ -28,4 +28,13 @@ public class ProductDAO {
         ss.close();
         return ar;
     }
+    public static ProductVO getProductOne(String prod_no){
+        SqlSession ss = FactoryService.getFactory().openSession();
+        ProductVO vo=null;
+        if(prod_no!=null) {
+            vo = ss.selectOne("product.getProductOne",prod_no);
+        }
+        ss.close();
+        return vo;
+    }
 }

@@ -1,42 +1,10 @@
 package comm.vo;
 
 public class ProductVO {
-    private String id, category_no, seller_no, name, desc, color,
-            size, length, shoulder, chest, sleeve, waist, hip, thigh, rise, hem, foot_length,
-            foot_width, ankle_height, heel_height, price, add_date, view_count, is_del,
-            prod_image,sale,inventory,active;
-
-    public String getActive() {
-        return active;
-    }
-
-    public void setActive(String active) {
-        this.active = active;
-    }
-
-    public String getInventory() {
-        return inventory;
-    }
-
-    public void setInventory(String inventory) {
-        this.inventory = inventory;
-    }
-
-    public String getSale() {
-        return sale;
-    }
-
-    public void setSale(String sale) {
-        this.sale = sale;
-    }
-
-    public String getProd_image() {
-        return prod_image;
-    }
-
-    public void setProd_image(String prod_image) {
-        this.prod_image = prod_image;
-    }
+    private String id, category_no, seller_no, name, color, length, shoulder, chest, sleeve, waist, hip, thigh, rise,
+            hem, foot_length, foot_width, ankle_height, heel_height, price, add_date, view_count, inventory, active,
+            option1, option2, option3, option4, option5, sale, prod_image,
+            addtional_image1, addtional_image2, addtional_image3, addtional_image4, addtional_image5, html;
 
     public String getId() {
         return id;
@@ -70,28 +38,12 @@ public class ProductVO {
         this.name = name;
     }
 
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
     public String getColor() {
         return color;
     }
 
     public void setColor(String color) {
         this.color = color;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
     }
 
     public String getLength() {
@@ -222,11 +174,123 @@ public class ProductVO {
         this.view_count = view_count;
     }
 
-    public String getIs_del() {
-        return is_del;
+    public String getInventory() {
+        return inventory;
     }
 
-    public void setIs_del(String is_del) {
-        this.is_del = is_del;
+    public void setInventory(String inventory) {
+        this.inventory = inventory;
+    }
+
+    public String getActive() {
+        return active;
+    }
+
+    public void setActive(String active) {
+        this.active = active;
+    }
+
+    public String getOption1() {
+        return option1;
+    }
+
+    public void setOption1(String option1) {
+        this.option1 = option1;
+    }
+
+    public String getOption2() {
+        return option2;
+    }
+
+    public void setOption2(String option2) {
+        this.option2 = option2;
+    }
+
+    public String getOption3() {
+        return option3;
+    }
+
+    public void setOption3(String option3) {
+        this.option3 = option3;
+    }
+
+    public String getOption4() {
+        return option4;
+    }
+
+    public void setOption4(String option4) {
+        this.option4 = option4;
+    }
+
+    public String getOption5() {
+        return option5;
+    }
+
+    public void setOption5(String option5) {
+        this.option5 = option5;
+    }
+
+    public String getSale() {
+        return sale;
+    }
+
+    public void setSale(String sale) {
+        this.sale = sale;
+    }
+
+    public String getProd_image() {
+        return prod_image;
+    }
+
+    public void setProd_image(String prod_image) {
+        this.prod_image = prod_image;
+    }
+
+    public String getAddtional_image1() {
+        return addtional_image1;
+    }
+
+    public void setAddtional_image1(String addtional_image1) {
+        this.addtional_image1 = addtional_image1;
+    }
+
+    public String getAddtional_image2() {
+        return addtional_image2;
+    }
+
+    public void setAddtional_image2(String addtional_image2) {
+        this.addtional_image2 = addtional_image2;
+    }
+
+    public String getAddtional_image3() {
+        return addtional_image3;
+    }
+
+    public void setAddtional_image3(String addtional_image3) {
+        this.addtional_image3 = addtional_image3;
+    }
+
+    public String getAddtional_image4() {
+        return addtional_image4;
+    }
+
+    public void setAddtional_image4(String addtional_image4) {
+        this.addtional_image4 = addtional_image4;
+    }
+
+    public String getAddtional_image5() {
+        return addtional_image5;
+    }
+
+    public void setAddtional_image5(String addtional_image5) {
+        this.addtional_image5 = addtional_image5;
+    }
+
+    public String getHtml() {
+        return html;
+    }
+
+    public void setHtml(String html) {
+        this.html = html;
     }
 }

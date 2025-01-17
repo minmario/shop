@@ -43,6 +43,10 @@
             text-align: center;
             height: 20px;
         }
+        thead tr{
+            background-color: #222222;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -70,7 +74,7 @@
             </div>
         </div>
     </form>
-    <div class="table-container">
+    <div class="table-container ">
         <table class="table table-bordered">
             <colgroup>
                 <col width="50px">

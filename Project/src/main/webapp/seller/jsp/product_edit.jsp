@@ -1,9 +1,14 @@
+<%@ page import="comm.vo.ProductVO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     request.setCharacterEncoding("UTF-8");
     String nickname = (String) session.getAttribute("nickname");
-    boolean isLoggedIn = (nickname != null);
+    Object obj = request.getAttribute("vo");
+    if(obj!=null){
+        ProductVO vo = (ProductVO)obj;
+    }
+
 %>
 
 <html>
@@ -34,7 +39,7 @@
         }
 
         .form-container {
-            width: 100%;
+            width: 50%;
             margin: 0 auto;
             text-align: left;
         }
@@ -71,7 +76,7 @@
     <div style="flex-grow: 1;">
         <div class="mb-4">
             <label for="prod_name" class="form-label">상품명</label>
-            <input type="text" class="form-control" id="prod_name" name="prod_name" value="${product.prod_name}" style="width: 100%;">
+            <input type="text" class="form-control" id="prod_name" name="prod_name" value="${vo.name}" style="width: 100%;">
         </div>
         <hr/>
         <!-- 상품 옵션 -->
@@ -79,7 +84,7 @@
             <label class="form-label">상품 옵션</label>
             <div id="productOptionsContainer">
                 <div class="option-group">
-                    <input type="text" class="form-control" name="prod_option[]" placeholder="옵션을 입력하세요">
+                    <input type="text" class="form-control" name="prod_option[]" value="${vo.size}">
                 </div>
             </div>
             <button type="button" class="btn btn-outline-success mt-2" onclick="addOption()">옵션 추가</button>
@@ -89,7 +94,7 @@
             <label for="prod_color" class="form-label">상품 색상</label>
             <select id="prod_color" name="prod_color" class="form-control"
                     onchange="changeColor()" style="height: 40px; width:60px;">
-                <option value="" disabled selected>선택</option>
+                <option value="${vo.color}" style="background-color:${vo.color};" selected></option>
                 <option value="red" style="background-color: red;"></option>
                 <option value="blue" style="background-color: blue; "></option>
                 <option value="green" style="background-color: green;"></option>
@@ -116,14 +121,14 @@
         <!-- 가격 -->
         <div class="mb-3">
             <label for="price" class="form-label">판매가</label><br/>
-            <input type="number" class="form-control" id="price" name="price" value="${product.price}" style="width: 50%;display: inline-block;">
+            <input type="number" class="form-control" id="price" name="price" value="${vo.price}" style="width: 50%;display: inline-block;">
             <span>원</span>
         </div>
         <hr/>
         <!-- 할인 -->
         <div class="mb-3">
             <label for="sale_price" class="form-label">할인</label><br/>
-            <input type="number" class="form-control" id="sale_price" name="sale_price" value="${product.sale_price}" style="width: 50%; display: inline-block;">
+            <input type="number" class="form-control" id="sale_price" name="sale_price" value="${vo.sale}" style="width: 50%; display: inline-block;">
             <span>원</span>
         </div>
         <div class="mb-3" id="discountedPriceContainer">
@@ -134,7 +139,7 @@
         <div>
             <div id="mainImageContainer" class="image-container">
                 <span class="placeholder">+</span>
-                <img id="mainImagePreview" src="" alt="대표 이미지 미리보기" style="display: none;"/>
+                <img id="mainImagePreview" src="${vo.prod_image}" alt="대표 이미지 미리보기" style="display: none;"/>
             </div>
         </div>
         <button type="button" class="btn btn-outline-primary mt-2" onclick="document.getElementById('mainImageInput').click();">대표 이미지 선택</button>
@@ -157,6 +162,7 @@
         </div>
         <button type="button" class="btn btn-outline-success mt-3" onclick="addAdditionalImage()">이미지 추가</button>
     </div>
+    <hr/>
     <!-- 추가 이미지 아래에 HTML 에디터 추가 -->
     <div class="mb-3" style="margin-top: 30px;">
         <label for="content">상세 설명(HTML)</label>

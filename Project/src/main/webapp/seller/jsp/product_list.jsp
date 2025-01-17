@@ -17,6 +17,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        #nav_product{
+            background-color:#dddddd;
+        }
         #table th{
             border: 1px solid black;
             border-collapse: collapse;
@@ -72,45 +75,29 @@
     <div id="search">
     </div>
     <div id="content" class="table-container">
+        <form method="post" action="Controller">
+            <div class="filter-section">
+                <div class="form-row flex">
+                    <div class="form-group col-md-3">
+                        <label for="category">카테고리</label>
+                        <select id="category" name="category" class="form-control">
+                            <option value="0">전체</option>
+                            <option value="1">상의</option>
+                            <option value="2">하의</option>
+                            <option value="3">아우터</option>
+                            <option value="4">신발</option>
+                            <option value="5">악세사리</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3" >
+                        <label for="prod_name">검색어</label>
+                        <input type="text" class="form-control" id="prod_name" name="prod_name">
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-4 search" onclick="searchProduct(this.form)">조회</button>
+                </div>
+            </div>
+        </form>
         <table id="table" class="table table-bordered">
-            <tfoot>
-            <tr>
-                <td colspan="7">
-                    <ol class="paging">
-            <c:if test="${requestScope.page ne null}">
-                <c:set var="pvo" value="${requestScope.page}"/>
-                <c:if test="${pvo.startPage<pvo.pagePerBlock}">
-                    <li class="disable"><</li>
-                </c:if>
-                <c:if test="${pvo.startPage >= pvo.pagePerBlock }">
-                    <li><a href="Controller?type=list&cPage=${pvo.startPage - pvo.pagePerBlock }">&lt;</a></li>
-                </c:if>
-                <c:forEach begin="${pvo.startPage }" end="${pvo.endPage }"
-                           varStatus="st">
-                    <c:if test="${st.index eq pvo.nowPage }">
-                        <li class="now">${st.index }</li>
-                    </c:if>
-                    <c:if test="${st.index ne pvo.nowPage }">
-                        <li>
-                            <a href="Controller?type=list&cPage=${st.index }">${st.index }</a>
-                        </li>
-                    </c:if>
-                </c:forEach>
-                <c:if test="${pvo.endPage < pvo.totalPage }">
-                    <li><a href="Controller?type=list&cPage=${pvo.startPage+pvo.pagePerBlock }">&gt;</a></li>
-                </c:if>
-                <c:if test="${pvo.endPage >= pvo.totalPage }">
-                    <li class="disable">&gt;</li>
-                </c:if>
-            </c:if>
-                    </ol>
-                </td>
-                <td>
-                    <input type="button" value="상품추가"
-                           onclick="javascript:location.href='Controller?type=productEdit'"/>
-                </td>
-            </tr>
-            </tfoot>
             <colgroup>
                 <col width="90px">
                 <col width="100px">
@@ -132,10 +119,14 @@
                 <th>활성화</th>
                 <th>삭제</th>
             </tr>
+            </thead>
+            <tbody>
+
+
             <tr>
                 <td>10</td>
                 <td><img src="${pageContext.request.contextPath}/seller/images/product1.jpg" class="card-img-top product-image" alt="Product Image"></td>
-                <td><a href="">Sunground Hoody - 4COL</a></td>
+                <td><a href="Controller?type=productEdit&prod_no=3&cPage=1">Sunground Hoody - 4COL</a></td>
                 <td>80,000원</td>
                 <td>60,000원</td>
                 <td>
@@ -170,31 +161,6 @@
                     </select>
                 </td>
                 <td><button type="button" onclick="deleteRecord(this)">삭제</button></td>
-            </tr>
-            </thead>
-            <tbody>
-            <form method="post" action="Controller">
-                <div class="filter-section">
-                    <div class="form-row flex">
-                        <div class="form-group col-md-3">
-                            <label for="category">카테고리</label>
-                            <select id="category" name="category" class="form-control">
-                                <option value="0">전체</option>
-                                <option value="1">상의</option>
-                                <option value="2">하의</option>
-                                <option value="3">아우터</option>
-                                <option value="4">신발</option>
-                                <option value="5">악세사리</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-3" >
-                            <label for="prod_name">검색어</label>
-                            <input type="text" class="form-control" id="prod_name" name="prod_name">
-                        </div>
-                        <button type="submit" class="btn btn-primary mb-4 search" onclick="searchProduct(this.form)">조회</button>
-                    </div>
-                </div>
-            </form>
             <c:forEach var="vo" items="${ar }" varStatus="vs">
                 <tr>
                     <td>${vo.prod_no}</td>
@@ -227,6 +193,44 @@
             </c:if>
 
             </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="7">
+                    <ol class="paging">
+                        <c:if test="${requestScope.page ne null}">
+                            <c:set var="pvo" value="${requestScope.page}"/>
+                            <c:if test="${pvo.startPage<pvo.pagePerBlock}">
+                                <li class="disable"><</li>
+                            </c:if>
+                            <c:if test="${pvo.startPage >= pvo.pagePerBlock }">
+                                <li><a href="Controller?type=list&cPage=${pvo.startPage - pvo.pagePerBlock }">&lt;</a></li>
+                            </c:if>
+                            <c:forEach begin="${pvo.startPage }" end="${pvo.endPage }"
+                                       varStatus="st">
+                                <c:if test="${st.index eq pvo.nowPage }">
+                                    <li class="now">${st.index }</li>
+                                </c:if>
+                                <c:if test="${st.index ne pvo.nowPage }">
+                                    <li>
+                                        <a href="Controller?type=list&cPage=${st.index }">${st.index }</a>
+                                    </li>
+                                </c:if>
+                            </c:forEach>
+                            <c:if test="${pvo.endPage < pvo.totalPage }">
+                                <li><a href="Controller?type=list&cPage=${pvo.startPage+pvo.pagePerBlock }">&gt;</a></li>
+                            </c:if>
+                            <c:if test="${pvo.endPage >= pvo.totalPage }">
+                                <li class="disable">&gt;</li>
+                            </c:if>
+                        </c:if>
+                    </ol>
+                </td>
+                <td>
+                    <input type="button" value="상품추가"
+                           onclick="javascript:location.href='Controller?type=productNew'"/>
+                </td>
+            </tr>
+            </tfoot>
         </table>
     </div>
 </div>
@@ -300,7 +304,7 @@
         // 카테고리와 검색어 가져오기
         const category = frm.category.value;
         const prod_name = frm.prod_name.value;
-
+        console.log("${pageContext.request.contextPath}/seller/images/product1.jpg");
         let param = "type=searchProduct&category="+encodeURIComponent(category)+"&prod_name="+encodeURIComponent(prod_name);
         // Ajax 요청 보내기
         $.ajax({

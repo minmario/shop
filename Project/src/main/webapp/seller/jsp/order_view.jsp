@@ -139,8 +139,8 @@
     </td>
     <td>
         <select>
-            <option value="1" ${product.active === 1 ? 'selected' : ''}>판매</option>
-            <option value="2" ${product.active === 2 ? 'selected' : ''}>판매중지</option>
+            <option value="1" ${product.active == 1 ? 'selected' : ''}>판매</option>
+            <option value="2" ${product.active == 2 ? 'selected' : ''}>판매중지</option>
         </select>
     </td>
     <td>

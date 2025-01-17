@@ -50,12 +50,12 @@
             </c:choose>
         </div>
 
-        <!-- 중앙: 바로접속 ~ 고객센터 -->
+        <!-- 중앙: 상품 관리 ~ 브랜드 관리-->
         <div class="d-flex gap-3 align-items-center justify-content-center flex-grow-1">
-            <a href="Controller?type=productList" class="text-decoration-none text-dark">상품/재고관리</a>
+            <a href="Controller?type=productList" id="nav_product" class="text-decoration-none text-dark">상품 관리</a>
             <a href="Controller?type=orderList" class="text-decoration-none text-dark">주문/배송</a>
             <a href="Controller?type=question" class="text-decoration-none text-dark">문의</a>
-            <a href="#" class="text-decoration-none text-dark">매출/정산</a>
+            <a href="#" class="text-decoration-none text-dark">정산</a>
 
             <a href="#" class="text-decoration-none text-dark">쿠폰관리</a>
             <a href="#" class="text-decoration-none text-dark">브랜드 관리</a>
