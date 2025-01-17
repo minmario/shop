@@ -26,16 +26,17 @@
     padding: 10px;
 }
 
-#custom-input{
+#refund-input, #custom-input{
     display: none;
 }
 
 .bold{
     font-weight: bold;
     padding: 5px 0;
+    margin-top: 5px;
 }
 
-.toggle{
+#refund-input>.toggle, .refund-account>.toggle{
     margin-top: 5px;
     width: 100%;
 }
@@ -49,12 +50,25 @@
     background-size: 100px 100px;
     width: 100px;
     height: 100px;
+    margin-right: 10px;
 }
 
 .option-text{
     margin-top: 10px;
     color: #a3a4a5;
     font-size: 9pt;
+}
+
+.product-detail{
+    margin-top: 10px;
+}
+
+.select{
+    margin: 5px 0;
+}
+
+#shop-delivery{
+    margin: 10px 0px;
 }
 
 /**********주소선택 css*************/
@@ -171,14 +185,92 @@
     color: #555;
 }
 
-/* 수정 버튼 */
-.edit-button {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 12px;
-    color: #333;
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+
+/***************배송지 추가 모달 css***************/
+
+/* modal */
+.modal-table-info {
+    background-color: #ffffff;
+    color: #555;
+    text-align: center;
+}
+
+.asterisk {
+    background: url("../../images/asterisk_img.png") no-repeat;
+    background-size: 5px 5px;
+    width: 5px;
+    height: 5px;
+    display: inline-block;
+    position: relative;
+    bottom: 4px;
+}
+
+.modal-table {
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.modal-table > caption {
+    text-indent: -9999px;
+    line-height: 0px;
+}
+
+.modal-table tr {
+    border-top: 1px solid #a3a4a5;
+    border-bottom: 1px solid #a3a4a5;
+}
+
+.modal-table th {
+    width: 200px;
+}
+
+.modal-table td {
+    padding: 5px;
+}
+
+.modal-table tr:first-child {
+    width: 190px;
+}
+
+.modal-table tr:nth-child(2) {
+    width: auto;
+}
+
+.modal-title {
+    font-weight: bold;
+}
+
+.modal-footer {
+    position: relative;
+}
+
+.modal-footer-left {
+    float: left;
+    text-align: left;
+    position: absolute;
+    left: 0;
+    margin-left: 33px !important;
+}
+
+.modal-footer-right {
+    float: right;
+    text-align: right;
+}
+
+input.text {
+    height: 30px;
+    width: 350px;
+    margin: 5px 10px;
+}
+
+input.addr1 {
+    height: 30px;
+    width: 200px;
+    margin: 5px 10px;
+}
+
+input.addr2, #custom-input>input.toggle, #request-select {
+    height: 30px;
+    width: 500px;
+    margin: 5px 10px;
 }
