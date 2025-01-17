@@ -1,0 +1,276 @@
+#wrap{
+    padding: 50px;
+}
+
+.wrap-title{
+    width: 40%;
+    height: 40px;
+    margin: 10px auto;
+    font-weight: bold;
+    border-bottom: 1px solid #a3a4a5;
+}
+
+.wrap-title>span{
+    padding: 10px 10px;
+}
+
+.left{
+    float: left;
+    text-align: left;
+}
+
+.box{
+    width: 40%;
+    height: auto;
+    margin: 0 auto 40px auto;
+    padding: 10px;
+}
+
+#exchange-option-input, #exchange-reason-input, #custom-input{
+    display: none;
+}
+
+.bold{
+    font-weight: bold;
+    padding: 5px 0;
+    margin-top: 5px;
+}
+
+#refund-input>.toggle, .refund-account>.toggle{
+    margin-top: 5px;
+    width: 100%;
+}
+
+.wrap-product, .product-content{
+    display: flex;
+}
+
+.thisisnever_img{
+    background: url("../../images/thisisnever_img.png") no-repeat;
+    background-size: 100px 100px;
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+}
+
+.option-text{
+    margin-top: 10px;
+    color: #a3a4a5;
+    font-size: 9pt;
+}
+
+.product-detail{
+    margin-top: 10px;
+}
+
+.select{
+    margin: 5px 0;
+}
+
+#shop-delivery{
+    margin: 10px 0px;
+}
+
+/**********주소선택 css*************/
+
+.add-address-button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.add-address-button:hover {
+    background-color: #f5f5f5;
+}
+
+/* 배송지 박스 */
+.address-box {
+    display: flex;
+    align-items: flex-start;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+/* 기본 배송지 라벨 */
+.address-details {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.name {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.default {
+    font-size: 12px;
+    color: #007aff;
+    margin-left: 5px;
+}
+
+.address {
+    font-size: 13px;
+    color: #555;
+    margin: 5px 0;
+    line-height: 1.4;
+}
+
+.phone {
+    font-size: 13px;
+    color: #555;
+}
+
+/***********환불계좌 등록 css************/
+
+/* 배송지 추가하기 버튼 */
+.add-address-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.add-address-button:hover {
+    background-color: #f5f5f5;
+}
+
+/* 배송지 박스 */
+.address-box {
+    display: flex;
+    align-items: flex-start;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+/* 기본 배송지 라벨 */
+.address-details {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.name {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.default {
+    font-size: 12px;
+    color: #007aff;
+    margin-left: 5px;
+}
+
+.address {
+    font-size: 13px;
+    color: #555;
+    margin: 5px 0;
+    line-height: 1.4;
+}
+
+.phone {
+    font-size: 13px;
+    color: #555;
+}
+
+
+/***************배송지 추가 모달 css***************/
+
+/* modal */
+.modal-table-info {
+    background-color: #ffffff;
+    color: #555;
+    text-align: center;
+}
+
+.asterisk {
+    background: url("../../images/asterisk_img.png") no-repeat;
+    background-size: 5px 5px;
+    width: 5px;
+    height: 5px;
+    display: inline-block;
+    position: relative;
+    bottom: 4px;
+}
+
+.modal-table {
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.modal-table > caption {
+    text-indent: -9999px;
+    line-height: 0px;
+}
+
+.modal-table tr {
+    border-top: 1px solid #a3a4a5;
+    border-bottom: 1px solid #a3a4a5;
+}
+
+.modal-table th {
+    width: 200px;
+}
+
+.modal-table td {
+    padding: 5px;
+}
+
+.modal-table tr:first-child {
+    width: 190px;
+}
+
+.modal-table tr:nth-child(2) {
+    width: auto;
+}
+
+.modal-title {
+    font-weight: bold;
+}
+
+.modal-footer {
+    position: relative;
+}
+
+.modal-footer-left {
+    float: left;
+    text-align: left;
+    position: absolute;
+    left: 0;
+    margin-left: 33px !important;
+}
+
+.modal-footer-right {
+    float: right;
+    text-align: right;
+}
+
+input.text {
+    height: 30px;
+    width: 350px;
+    margin: 5px 10px;
+}
+
+input.addr1 {
+    height: 30px;
+    width: 200px;
+    margin: 5px 10px;
+}
+
+input.addr2, #custom-input>input.toggle, #request-select {
+    height: 30px;
+    width: 500px;
+    margin: 5px 10px;
+}
