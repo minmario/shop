@@ -374,18 +374,6 @@
             });
         });
 
-        // 배송 조회 모달 열기
-        function onShowDeliveryModal() {
-            let modal = new bootstrap.Modal(document.getElementById('deliveryModal'));
-            modal.show();
-        }
-
-        // 배송지 추가 > 모달
-        function onShowAddAddrModal() {
-            let modal = new bootstrap.Modal(document.getElementById('addrModal'));
-            modal.show();
-        }
-
         // 배송지 모달 > 요청 사항 필드 추가
         function addInput() {
             let selectValue = document.getElementById("request-select").value;

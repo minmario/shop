@@ -55,7 +55,7 @@
                 <a href="">주문 상세</a>
             </td>
             <td>
-                <button type="button" class="btn btn-outline-secondary" onclick="onShowDeliveryModal()">배송 조회</button>
+                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#deliveryModal">배송 조회</button>
             </td>
             <%--<c:if test="${requestScope.is_review ne null and requestScope.is_review}">
                 <td>

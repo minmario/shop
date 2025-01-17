@@ -77,7 +77,7 @@
                                                     <div class="prod_option_left">옵션&nbsp;:&nbsp;</div>
                                                     <div class="prod_option_center">RED&nbsp;/&nbsp;1 Size</div>
                                                     <div class="prod_option_right">
-                                                        <button type="button" class="btn btn-outline-dark" onclick="onShowOption()">옵션 변경</button>
+                                                        <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#optionModal">옵션 변경</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -204,12 +204,6 @@
                 $("#cart-table #cart-all").prop("checked", allCheck);
             });
         });
-
-        // 옵션 변경 모달 열기
-        function onShowOption() {
-            let modal = new bootstrap.Modal(document.getElementById('optionModal'));
-            modal.show();
-        }
     </script>
 </body>
 </html>

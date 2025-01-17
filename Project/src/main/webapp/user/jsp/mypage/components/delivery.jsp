@@ -37,7 +37,7 @@
         <button type="button" class="btn btn-sm btn-outline-danger" onclick="">선택 배송지 삭제</button>
     </span>
     <span class="delivery-buttons-right">
-        <button type="button" class="btn btn-primary btn-sm" onclick="onShowAddAddrModal()">배송지 추가</button>
+        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addrModal">배송지 추가</button>
     </span>
 </div>
 <br/><br/>
