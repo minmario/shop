@@ -1,9 +1,17 @@
-#wrap{
-    padding: 50px;
+.wrap {
+    overflow: hidden auto;
+}
+
+.row {
+    padding: 20px;
+}
+
+.container {
+    width: 800px !important;
+    margin: 0 auto;
 }
 
 .wrap-title{
-    width: 40%;
     height: 40px;
     margin: 10px auto;
     font-weight: bold;
@@ -14,13 +22,17 @@
     padding: 10px 10px;
 }
 
+.wrap-reason>.bold{
+    font-weight: bold;
+    margin: 10px 0;
+}
+
 .left{
     float: left;
     text-align: left;
 }
 
 .box{
-    width: 40%;
     height: auto;
     margin: 0 auto 40px auto;
     padding: 10px;
@@ -32,13 +44,19 @@
 
 .bold{
     font-weight: bold;
-    padding: 5px 0;
     margin-top: 5px;
 }
 
-#refund-input>.toggle, .refund-account>.toggle{
+#refund-input>.toggle, .refund-account input.toggle{
     margin-top: 5px;
-    width: 100%;
+    width: 45%;
+    height: 30px;
+}
+
+input#account-number.toggle, input#account-holder.toggle{
+    margin: 5px 0;
+    width: 45%;
+    height: 30px;
 }
 
 .wrap-product, .product-content{
@@ -65,10 +83,18 @@
 
 .select{
     margin: 5px 0;
+    width: 45%;
+    height: 30px;
 }
 
 #shop-delivery{
     margin: 10px 0px;
+}
+
+.margin{
+    padding: 10px 0;
+    margin: 10px 0;
+    height: 60px;
 }
 
 /**********주소선택 css*************/
