@@ -87,7 +87,7 @@
                 <div class="points-container">
                     <div class="points-left">
                         <h3>보유 적립금 사용</h3>
-                        <span class="svg-icon" onclick="onShowPoints()">
+                        <span class="svg-icon" data-toggle="modal" data-target="#pointsModal">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
                                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                 <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
@@ -105,7 +105,7 @@
                 <div class="reward-container">
                     <div class="reward-top">
                         <h3>구매 적립/선할인</h3>
-                        <span class="svg-icon" onclick="onShowReward()">
+                        <span class="svg-icon" data-toggle="modal" data-target="#rewardModal">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
                                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                 <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
@@ -215,7 +215,7 @@
                 <div class="reward-benefits-container">
                     <div class="reward-benefits-top">
                         <h3>적립 혜택</h3>
-                        <span class="svg-icon" onclick="onShowRewardBenefits()">
+                        <span class="svg-icon" data-toggle="modal" data-target="#rewardBenefitsModal">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
                                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                 <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
@@ -243,7 +243,7 @@
                     <div class="order-benefits-top">
                         <div class="benefits-left">
                             <h5>이번 주문으로 받을 혜택</h5>
-                            <span class="svg-icon" onclick="onShowBenefits()">
+                            <span class="svg-icon" data-toggle="modal" data-target="#benefitsModal">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                     <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
@@ -498,30 +498,6 @@
             const selectGroup = document.querySelector('.select-group');
             buttonGroup.style.display = show ? 'grid' : 'none';
             selectGroup.style.display = show ? 'flex' : 'none';
-        }
-
-        // 포인트 안내 모달 열기
-        function onShowPoints() {
-            let modal = new bootstrap.Modal(document.getElementById('pointsModal'));
-            modal.show();
-        }
-
-        // 리워드 안내 모달 열기
-        function onShowReward() {
-            let modal = new bootstrap.Modal(document.getElementById('rewardModal'));
-            modal.show();
-        }
-
-        // 적립 혜택 안내 모달 열기
-        function onShowRewardBenefits() {
-            let modal = new bootstrap.Modal(document.getElementById('rewardBenefitsModal'));
-            modal.show();
-        }
-
-        // 혜택 안내 모달 열기
-        function onShowBenefits() {
-            let modal = new bootstrap.Modal(document.getElementById('benefitsModal'));
-            modal.show();
         }
     </script>
 </body>
