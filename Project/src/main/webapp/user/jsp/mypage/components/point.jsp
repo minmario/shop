@@ -35,50 +35,169 @@
 </div>
 <div id="tables">
     <table id="table-all" class="table" style="display: table;">
-        <thead>
-            <tr>
-                <th>전체</th>
-            </tr>
-        </thead>
         <tbody>
             <tr>
-                <td>전체 내역 1</td>
+                <td>
+                    <div class="custom-points-item">
+                        <div class="custom-points-title-container">
+                            <p class="custom-points-title">주문 적립</p>
+                            <p class="custom-points-amount">+712원</p>
+                        </div>
+                        <p class="custom-points-description">[2PACK] 클 코튼 티셔츠 블랙+화이트</p>
+                        <p class="custom-points-status">예정</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="custom-points-item">
+                        <div class="custom-points-title-container">
+                            <p class="custom-points-title">적립금 결제</p>
+                            <p class="custom-points-amount custom-negative">-2,373원</p>
+                        </div>
+                        <p class="custom-points-description">2025.01.17</p>
+                        <p class="custom-points-status">사용</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="custom-points-item">
+                        <div class="custom-points-title-container">
+                            <p class="custom-points-title">주문 적립</p>
+                            <p class="custom-points-amount">+372원</p>
+                        </div>
+                        <p class="custom-points-description">VAMOS LABEL CREWNECK BLACK</p>
+                        <p class="custom-points-status">적립・2024.10.29 (2029.10.28 소멸 예정)</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="custom-points-item">
+                        <div class="custom-points-title-container">
+                            <p class="custom-points-title">주문 적립</p>
+                            <p class="custom-points-amount">+544원</p>
+                        </div>
+                        <p class="custom-points-description">[2PACK] 170g 에어+ 그림 반팔티 (JP5TSU152BK)</p>
+                        <p class="custom-points-status">적립・2024.10.04 (2029.10.03 소멸 예정)</p>
+                    </div>
+                </td>
             </tr>
         </tbody>
     </table>
     <table id="table-earned" class="table" style="display: none;">
-        <thead>
-            <tr>
-                <th>적립</th>
-            </tr>
-        </thead>
         <tbody>
             <tr>
-                <td>적립 내역 1</td>
+                <td>
+                    <div class="custom-points-item">
+                        <div class="custom-points-title-container">
+                            <p class="custom-points-title">랜덤뽑기 - 참여/혜택 적립</p>
+                            <p class="custom-points-amount">+100원</p>
+                        </div>
+                        <p class="custom-points-status">적립・2025.01.17 (2025.01.23 소멸 예정)</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="custom-points-item">
+                        <div class="custom-points-title-container">
+                            <p class="custom-points-title">주문 적립</p>
+                            <p class="custom-points-amount">+372원</p>
+                        </div>
+                        <p class="custom-points-description">VAMOS LABEL CREWNECK BLACK</p>
+                        <p class="custom-points-status">적립・2024.10.29 (2029.10.28 소멸 예정)</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="custom-points-item">
+                        <div class="custom-points-title-container">
+                            <p class="custom-points-title">주문 적립</p>
+                            <p class="custom-points-amount">+540원</p>
+                        </div>
+                        <p class="custom-points-description">[2PACK] 170g 에어+ 그램 반팔티 (JP5TSU152BK)</p>
+                        <p class="custom-points-status">적립・2024.10.04 (2029.10.03 소멸 예정)</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="custom-points-item">
+                        <div class="custom-points-title-container">
+                            <p class="custom-points-title">주문 적립</p>
+                            <p class="custom-points-amount">+754원</p>
+                        </div>
+                        <p class="custom-points-description">PHYPS® 2PACK LEATHER LABEL  LONG SLEEVE WHITE / NAVY</p>
+                        <p class="custom-points-status">적립・2024.08.06 (2029.08.05 소멸 예정)</p>
+                    </div>
+                </td>
             </tr>
         </tbody>
     </table>
     <table id="table-used" class="table" style="display: none;">
-        <thead>
-            <tr>
-                <th>사용</th>
-            </tr>
-        </thead>
         <tbody>
             <tr>
-                <td>사용 내역 1</td>
+                <td>
+                    <div class="custom-points-item">
+                        <div class="custom-points-title-container">
+                            <p class="custom-points-title">적립금 결제</p>
+                            <p class="custom-points-amount custom-negative">-2,373원</p>
+                        </div>
+                        <p class="custom-points-status">사용・2025.01.17</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="custom-points-item">
+                        <div class="custom-points-title-container">
+                            <p class="custom-points-title">적립금 결제</p>
+                            <p class="custom-points-amount custom-negative">-3,780원</p>
+                        </div>
+                        <p class="custom-points-status">사용・2024.02.02</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="custom-points-item">
+                        <div class="custom-points-title-container">
+                            <p class="custom-points-title">적립금 결제</p>
+                            <p class="custom-points-amount custom-negative">-2,500원</p>
+                        </div>
+                        <p class="custom-points-status">사용・2024.01.28</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="custom-points-item">
+                        <div class="custom-points-title-container">
+                            <p class="custom-points-title">적립금 결제</p>
+                            <p class="custom-points-amount custom-negative">-706원</p>
+                        </div>
+                        <p class="custom-points-status">사용・2023.12.13</p>
+                    </div>
+                </td>
             </tr>
         </tbody>
     </table>
     <table id="table-upcoming" class="table" style="display: none;">
-        <thead>
-            <tr>
-                <th>예정</th>
-            </tr>
-        </thead>
         <tbody>
             <tr>
-                <td>예정 내역 1</td>
+                <td>
+                    <div class="custom-points-item">
+                        <div class="custom-points-title-container">
+                            <p class="custom-points-title">주문 적립</p>
+                            <p class="custom-points-amount">+712원</p>
+                        </div>
+                        <p class="custom-points-description">[2PACK] 클 코튼 티셔츠 블랙+화이트</p>
+                        <p class="custom-points-status">예정</p>
+                    </div>
+                </td>
             </tr>
         </tbody>
     </table>

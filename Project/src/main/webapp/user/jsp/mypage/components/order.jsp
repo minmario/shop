@@ -1,99 +1,55 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="order-section">
-    <div class="order-header">
-        <span class="order-title">주문 목록</span>
+<div class="custom-order-container">
+    <!-- 첫 번째 주문 -->
+    <div class="custom-order">
+        <div class="custom-order-header">
+            <div class="custom-header-row">
+                <span class="custom-order-date">24.10.20</span>
+                <a href="#" class="custom-details-link">주문 상세</a>
+            </div>
+            <span class="custom-order-status">구매확정</span>
+        </div>
+        <div class="custom-order-content">
+            <div class="custom-product-image">
+                <img src="./user/images/product6.jpg" alt="크루넥 이미지">
+            </div>
+            <div class="custom-product-details">
+                <p class="custom-product-name">팀코믹스</p>
+                <p class="custom-product-description">VAMOS LABEL CREWNECK BLACK</p>
+                <p class="custom-product-size">M / 1개</p>
+                <p class="custom-product-price">17,700원</p>
+            </div>
+        </div>
+        <button type="button" class="btn btn-outline-dark custom-review-button">후기 작성 (최대 52,500원 적립)</button>
+        <div class="custom-product-actions">
+            <button type="button" class="btn btn-outline-dark custom-action-button">배송 조회</button>
+            <button type="button" class="btn btn-outline-dark custom-action-button">재구매</button>
+        </div>
+    </div>
+
+    <!-- 두 번째 주문 -->
+    <div class="custom-order">
+        <div class="custom-order-header">
+            <div class="custom-header-row">
+                <span class="custom-order-date">25.01.17</span>
+                <a href="#" class="custom-details-link">주문 상세</a>
+            </div>
+            <span class="custom-order-status">결제완료</span>
+        </div>
+        <div class="custom-order-content">
+            <div class="custom-product-image">
+                <img src="./user/images/product7.jpg" alt="티셔츠 이미지">
+            </div>
+            <div class="custom-product-details">
+                <p class="custom-product-name">커버낫</p>
+                <p class="custom-product-description">[2PACK] 클 코튼 티셔츠 블랙+화이트</p>
+                <p class="custom-product-size">M / 1개</p>
+                <p class="custom-product-price">28,137원</p>
+            </div>
+        </div>
+        <div class="custom-product-actions">
+            <button type="button" class="btn btn-outline-dark custom-action-button">배송 조회</button>
+            <button type="button" class="btn btn-outline-dark custom-action-button">재구매</button>
+        </div>
     </div>
 </div>
-<table id="order-table" class="table">
-    <thead>
-        <tr>
-            <th>상품 정보</th>
-            <th>주문 일자</th>
-            <th>주문 상태</th>
-            <th>주문 상세</th>
-            <th>배송 조회</th>
-            <%--<c:if test="${requestScope.is_review ne null and requestScope.is_review}">
-                <th>후기 작성</th>
-            </c:if>
-            <c:if test="${requestScope.is_review ne null and requestScope.is_review ne false}">
-                <th>스냅 보기</th>
-            </c:if>--%>
-            <th>후기 작성</th>
-            <th>스냅 보기</th>
-            <th>재구매</th>
-        </tr>
-    </thead>
-    <tbody>
-    <c:set var="cnt" value="5"/>
-    <c:forEach begin="1" end="${cnt}" varStatus="st">
-        <tr>
-            <td class="product-info">
-                <div class="prod_info">
-                    <div class="prod_img">
-                        <img src="./user/images/product${st.index}.jpg"/>
-                    </div>
-                    <div class="prod_details">
-                        <div class="prod_brand">
-                            [페이퍼리즘]
-                        </div>
-                        <div class="prod_name">
-                            ZIGGY LIGHTING 3/4 SLV T-SHIRT
-                        </div>
-                        <div class="prod_option">
-                            L&nbsp;/&nbsp;${st.index}
-                        </div>
-                        <div class="prod_price">
-                            17,700원
-                        </div>
-                    </div>
-                </div>
-            </td>
-            <td>2025-01-${st.index + 5}</td>
-            <td>구매 확정</td>
-            <td>
-                <a href="">주문 상세</a>
-            </td>
-            <td>
-                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#deliveryModal">배송 조회</button>
-            </td>
-            <%--<c:if test="${requestScope.is_review ne null and requestScope.is_review}">
-                <td>
-                    <button type="button" class="btn btn-outline-secondary text-blue">후기 작성 (최대 2,500원 적립)</button>
-                </td>
-            </c:if>
-            <c:if test="${requestScope.is_review ne null and requestScope.is_review ne false}">
-                <td>
-                    <button type="button" class="btn btn-outline-secondary">스냅 보기</button>
-                </td>
-            </c:if>--%>
-            <td>
-                <button type="button" class="btn btn-outline-secondary text-blue">후기 작성 (최대 2,500원 적립)</button>
-            </td>
-            <td>
-                <button type="button" class="btn btn-outline-secondary">스냅 보기</button>
-            </td>
-            <td>
-                <button type="button" class="btn btn-outline-secondary">재구매</button>
-            </td>
-        </tr>
-    </c:forEach>
-    </tbody>
-</table>
-<nav aria-label="Page navigation" class="navigation">
-    <ul class="pagination">
-        <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
-</nav>

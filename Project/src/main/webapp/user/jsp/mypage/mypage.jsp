@@ -88,8 +88,6 @@
                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                         <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-order" autocomplete="off">
                         <label class="btn btn-outline-secondary" for="btnradio-order">주문내역</label>
-                        <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-likes" autocomplete="off">
-                        <label class="btn btn-outline-secondary" for="btnradio-likes">좋아요</label>
                         <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-reviews" autocomplete="off">
                         <label class="btn btn-outline-secondary" for="btnradio-reviews">구매후기</label>
                         <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-questions" autocomplete="off">
@@ -107,7 +105,7 @@
 
                 <!-- Order Section -->
                 <div class="order-section-container" id="order-article">
-                    <jsp:include page="./components/order.jsp"/>
+                    <jsp:include page="components/order.jsp"/>
                 </div>
 
                 <!-- Review Section -->
@@ -318,7 +316,6 @@
 
             const tabActions = {
                 "#btnradio-order": "#order-article",
-                //"#btnradio-likes": "#likes-article",
                 "#btnradio-reviews": "#review-article",
                 //"#btnradio-questions": "#questions-article",
                 //"#btnradio-inquiry": "#inquiry-article",
