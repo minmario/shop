@@ -91,7 +91,7 @@
                 <!-- '회수해 주세요'을 선택할 때만 보이는 필드 -->
                 <div class="custom-addr">
                     <div class="wrap-addrList">
-                        <button type="button" class="btn btn-outline-secondary add-address-button" onclick="onShowAddAddrBtn()">배송지 추가하기</button>
+                        <button type="button" class="btn btn-outline-secondary add-address-button" data-toggle="modal" data-target="#addrModalCenter">배송지 추가하기</button>
                         <div class="address-box">
                             <input type="radio" id="default-address" name="address" checked>
                             <label for="default-address">
@@ -132,6 +132,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addrModalCenterTitle">배송지 추가</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <div class="modal-table-container">
@@ -198,7 +201,7 @@
                     <label for="chkDefault">기본 배송지로 설정</label>
                 </div>
                 <div class="modal-footer-right">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">닫기</button>
                     <button type="button" class="btn btn-outline-primary" onclick="save()">등록</button>
                 </div>
             </div>
@@ -206,7 +209,12 @@
     </div>
 </div>
 
+<%-- JQuery --%>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+<%-- Bootstrap --%>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
     //교환 사유 필드 추가
     function addReasonInput() {
@@ -245,18 +253,6 @@
         } else {
             customAddr.style.display = "none"; // 숨김
         }
-    }
-
-    // 배송지 추가 > 모달
-    function onShowAddAddrBtn() {
-        let modal = new bootstrap.Modal(document.getElementById('addrModalCenter'));
-        modal.show();
-    }
-
-    // 배송지 추가 모달 닫기
-    function onHideAddAddrBtn() {
-        let modal = new bootstrap.Modal(document.getElementById('addrModalCenter'));
-        modal.hide();
     }
 </script>
 </body>
