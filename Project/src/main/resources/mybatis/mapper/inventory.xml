@@ -7,8 +7,8 @@
 
   <update id="updateStock" parameterType="Map">
     UPDATE inventory
-    SET count += #{stock}
-    WHERE prod_no =#{id}
+    SET count = #{stock}
+    WHERE prod_no =#{prod_no}
   </update>
   <insert id="addStock" parameterType="Map">
     INSERT INTO inventory(prod_no, count)

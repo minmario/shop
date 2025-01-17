@@ -1,7 +1,42 @@
 package comm.vo;
 
 public class ProductVO {
-    private String id, category_no, seller_no, name, desc, color, size, length, shoulder, chest, sleeve, waist, hip, thigh, rise, hem, foot_length, foot_width, ankle_height, heel_height, price, add_date, view_count, is_del;
+    private String id, category_no, seller_no, name, desc, color,
+            size, length, shoulder, chest, sleeve, waist, hip, thigh, rise, hem, foot_length,
+            foot_width, ankle_height, heel_height, price, add_date, view_count, is_del,
+            prod_image,sale,inventory,active;
+
+    public String getActive() {
+        return active;
+    }
+
+    public void setActive(String active) {
+        this.active = active;
+    }
+
+    public String getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(String inventory) {
+        this.inventory = inventory;
+    }
+
+    public String getSale() {
+        return sale;
+    }
+
+    public void setSale(String sale) {
+        this.sale = sale;
+    }
+
+    public String getProd_image() {
+        return prod_image;
+    }
+
+    public void setProd_image(String prod_image) {
+        this.prod_image = prod_image;
+    }
 
     public String getId() {
         return id;
