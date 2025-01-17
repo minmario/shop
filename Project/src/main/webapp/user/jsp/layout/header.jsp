@@ -8,8 +8,12 @@
 %>
 <html>
 <header>
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <%-- CSS --%>
+    <link href="./user/css/common/common.css" rel="stylesheet" type="text/css">
     <link href="./user/css/common/header.css" rel="stylesheet" type="text/css">
 
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
