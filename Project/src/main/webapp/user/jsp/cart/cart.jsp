@@ -6,6 +6,9 @@
     <link rel="icon" href="./user/images/share_musinsa.png">
     <title>Musinsa</title>
 
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <%-- CSS --%>
     <link rel="stylesheet" type="text/css" href="./user/css/common/common.css"/>
     <link rel="stylesheet" type="text/css" href="./user/css/cart/cart.css"/>
@@ -54,46 +57,46 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:set var="cnt" value="5"/>
-                        <c:forEach begin="1" end="${cnt}" varStatus="st">
-                            <tr>
-                                <td class="order-id">${st.index}</td>
-                                <td class="product-info">
-                                    <div class="prod_info">
-                                        <div class="prod_img">
-                                            <img src="./user/images/product2.jpg"/>
-                                        </div>
-                                        <div class="prod_details">
-                                            <div class="prod_brand">
-                                                [페이퍼리즘]
+                            <c:set var="cnt" value="5"/>
+                            <c:forEach begin="1" end="${cnt}" varStatus="st">
+                                <tr>
+                                    <td class="order-id">${st.index}</td>
+                                    <td class="product-info">
+                                        <div class="prod_info">
+                                            <div class="prod_img">
+                                                <img src="./user/images/product2.jpg"/>
                                             </div>
-                                            <div class="prod_name">
-                                                ZIGGY LIGHTING 3/4 SLV T-SHIRT
-                                            </div>
-                                            <div class="prod_option">
-                                                <div class="prod_option_left">옵션&nbsp;:&nbsp;</div>
-                                                <div class="prod_option_center">RED&nbsp;/&nbsp;1 Size</div>
-                                                <div class="prod_option_right">
-                                                    <button type="button" class="btn btn-outline-dark" onclick="onShowOption()">옵션 변경</button>
+                                            <div class="prod_details">
+                                                <div class="prod_brand">
+                                                    [페이퍼리즘]
+                                                </div>
+                                                <div class="prod_name">
+                                                    ZIGGY LIGHTING 3/4 SLV T-SHIRT
+                                                </div>
+                                                <div class="prod_option">
+                                                    <div class="prod_option_left">옵션&nbsp;:&nbsp;</div>
+                                                    <div class="prod_option_center">RED&nbsp;/&nbsp;1 Size</div>
+                                                    <div class="prod_option_right">
+                                                        <button type="button" class="btn btn-outline-dark" onclick="onShowOption()">옵션 변경</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td class="product-price">
-                                    <del class="default-price">59,000원</del>
-                                    <div class="sale-price">39,900원</div>
-                                </td>
-                                <td class="cart-count">
-                                    <button type="button" class="btn btn-secondary">-</button>
-                                    <span>5</span>
-                                    <button type="button" class="btn btn-secondary">+</button>
-                                </td>
-                                <td>
-                                    <input type="checkbox" name="chk-cart"/>
-                                </td>
-                            </tr>
-                        </c:forEach>
+                                    </td>
+                                    <td class="product-price">
+                                        <del class="default-price">59,000원</del>
+                                        <div class="sale-price">39,900원</div>
+                                    </td>
+                                    <td class="cart-count">
+                                        <button type="button" class="btn btn-secondary btn-minus">-</button>
+                                        <span class="cart-count-value">5</span>
+                                        <button type="button" class="btn btn-secondary btn-plus">+</button>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="chk-cart"/>
+                                    </td>
+                                </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
                     <div class="cart-notice">
@@ -128,6 +131,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">옵션 변경</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <select class="color-select" id="color">
@@ -142,26 +148,67 @@
                     </select>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-dark" onclick="onHideOption()">취소</button>
-                    <button type="button" class="btn btn-outline-dark">변경하기</button>
+                    <button type="button" class="btn btn-outline-dark" data-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-outline-dark">변경</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <%-- JQuery --%>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
+    <%-- Bootstrap --%>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
-        // 옵션 변경 모달 닫기
+        $(function () {
+            $(".cart-count").each(function () {
+                const cartCountElement = $(this);
+                const minusButton = cartCountElement.find(".btn-minus");
+                const plusButton = cartCountElement.find(".btn-plus");
+                const spanElement = cartCountElement.find(".cart-count-value");
+
+                // - 버튼 클릭 이벤트
+                minusButton.on("click", function () {
+                    let count = parseInt(spanElement.text(), 10);
+                    if (count > 0) {
+                        count -= 1;
+                        spanElement.text(count);
+                    }
+                });
+
+                // + 버튼 클릭 이벤트
+                plusButton.on("click", function () {
+                    let count = parseInt(spanElement.text(), 10);
+                    count += 1;
+                    spanElement.text(count);
+                });
+            });
+
+            // 배송지 체크 박스 전체 선택 / 해제 기능
+            $("#cart-table #cart-all").on("click", function () {
+                let ar = $("#cart-table > tbody").find(":checkbox");
+                ar.prop("checked", this.checked);
+            });
+
+            // 배송지 체크 박스 개별 선택 / 해제 기능
+            $("#cart-table > tbody").find(":checkbox").on("click", function () {
+                let allCheck = true;
+                $("#cart-table > tbody").find(":checkbox").not("#cart-table #cart-all").each(function () {
+                    if (!this.checked) {
+                        allCheck = false;
+                        return allCheck;
+                    }
+                });
+                $("#cart-table #cart-all").prop("checked", allCheck);
+            });
+        });
+
+        // 옵션 변경 모달 열기
         function onShowOption() {
             let modal = new bootstrap.Modal(document.getElementById('optionModal'));
             modal.show();
-        }
-
-        // 옵션 변경 모달 닫기
-        function onHideOption() {
-            let modal = new bootstrap.Modal(document.getElementById('optionModal'));
-            modal.hide();
         }
     </script>
 </body>

@@ -9,6 +9,7 @@
     <title>Musinsa</title>
 
     <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <%-- CSS --%>
     <link rel="stylesheet" type="text/css" href="./user/css/common/common.css"/>
@@ -99,141 +100,34 @@
                         <label class="btn btn-outline-secondary" for="btnradio-points">적립금</label>
                         <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-coupons" autocomplete="off">
                         <label class="btn btn-outline-secondary" for="btnradio-coupons">쿠폰</label>
-                        <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-address" autocomplete="off">
-                        <label class="btn btn-outline-secondary" for="btnradio-address">배송지</label>
+                        <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-delivery" autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="btnradio-delivery">배송지</label>
                     </div>
+                </div>
+
+                <!-- Order Section -->
+                <div class="order-section-container" id="order-article">
+                    <jsp:include page="./components/order.jsp"/>
                 </div>
 
                 <!-- Review Section -->
                 <div class="review-section-container" id="review-article">
-                    <div class="review-section">
-                        <div class="review-header">
-                            <span class="review-title">상품평 작성</span>
-                        </div>
-                        <div class="review-buttons">
-                            <div class="btn-group" role="group">
-                                <input type="radio" class="btn-check" name="btnradioreview" id="btnradio10" autocomplete="off" checked>
-                                <label class="btn btn-outline-secondary" for="btnradio10">후기 내역</label>
-                                <input type="radio" class="btn-check" name="btnradioreview" id="btnradio11" autocomplete="off">
-                                <label class="btn btn-outline-secondary" for="btnradio11">후기 작성</label>
-                            </div>
-                        </div>
-                    </div>
-                    <table id="review-table" class="table">
-                        <thead>
-                        <tr>
-                            <th>번호</th>
-                            <th>상품정보</th>
-                            <th>구매일자</th>
-                            <th>일반 후기</th>
-                            <th>스타일 후기</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:set var="cnt" value="2"/>
-                        <c:forEach begin="1" end="${cnt}" varStatus="st">
-                            <tr>
-                                <td class="order-id">${st.index}</td>
-                                <td class="product-info">
-                                    <div class="prod_info">
-                                        <div class="prod_img">
-                                            <img src="./user/images/product1.jpg"/>
-                                        </div>
-                                        <div class="prod_details">
-                                            <div class="prod_brand">
-                                                [페이퍼리즘]
-                                            </div>
-                                            <div class="prod_name">
-                                                ZIGGY LIGHTING 3/4 SLV T-SHIRT
-                                            </div>
-                                            <div class="prod_color">
-                                                [GRAY]
-                                            </div>
-                                            <div class="prod_option">
-                                                옵션&nbsp;:&nbsp;L&nbsp;/&nbsp;수량&nbsp;:&nbsp;${st.index}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="purchase-date">2025-01-14</td>
-                                <td class="general-review">
-                                    <button type="button" class="btn btn-outline-secondary">작성하기</button>
-                                </td>
-                                <td class="style-review">
-                                    <button type="button" class="btn btn-outline-secondary">작성하기</button>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-                    <nav aria-label="Page navigation" class="navigation">
-                        <ul class="pagination">
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <jsp:include page="./components/review.jsp"/>
+                </div>
+
+                <!-- Point Section -->
+                <div class="point-section-container" id="point-article">
+                    <jsp:include page="./components/point.jsp"/>
+                </div>
+
+                <!-- Coupon Section -->
+                <div class="coupon-section-container" id="coupon-article">
+                    <jsp:include page="./components/coupon.jsp"/>
                 </div>
 
                 <%-- Delivery Section --%>
                 <div class="delivery-section-container" id="delivery-article">
-                    <div class="delivery-section">
-                        <div class="delivery-header">
-                            <span class="delivery-title">배송지 목록</span>
-                        </div>
-                    </div>
-                    <table id="delivery-table" class="table">
-                        <thead>
-                        <tr>
-                            <th><input type="checkbox" id="delivery-all"/></th>
-                            <th>번호</th>
-                            <th>이름</th>
-                            <th>연락처</th>
-                            <th>주소</th>
-                            <th>관리</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:set var="cnt" value="3"/>
-                        <c:forEach begin="1" end="${cnt}" varStatus="st">
-                            <tr>
-                                <td><input type="checkbox" name="chk-delivery"/></td>
-                                <td>${st.index}</td>
-                                <td>OOO</td>
-                                <td>010-0000-0000</td>
-                                <td>서울특별시 동작구 보라매로5길 15</td>
-                                <td>
-                                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=editAddr'">수정</button>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-                    <div class="delivery-buttons">
-                    <span class="delivery-buttons-left">
-                        <button type="button" class="btn btn-sm btn-outline-danger" onclick="">선택 배송지 삭제</button>
-                    </span>
-                        <span class="delivery-buttons-right">
-                        <button type="button" class="btn btn-primary btn-sm" onclick="onShowAddAddrBtn()">배송지 추가</button>
-                    </span>
-                    </div>
-                    <br/><br/>
-                    <div class="delivery-notice">
-                        <ol>
-                            <li>배송 주소록은 최대 3개까지 등록할 수 있으며, 별도로 등록하지 않을 경우 최근 배송 주소록 기준으로 자동 업데이트 됩니다.</li>
-                            <li>기본 배송지는 1개만 저장됩니다. 다른 배송지를 기본 배송지로 설정하시면 기본 배송지가 변경됩니다.</li>
-                        </ol>
-                    </div>
+                    <jsp:include page="./components/delivery.jsp"/>
                 </div>
             </div>
         </div>
@@ -242,68 +136,71 @@
     <%-- footer --%>
     <jsp:include page="../layout/footer.jsp"></jsp:include>
 
-    <!-- Modal -->
-    <div class="modal fade" id="addrModalCenter" tabindex="-1" role="dialog" aria-labelledby="addrModalCenterTitle" aria-hidden="true">
+    <!-- 배송지 추가 Modal -->
+    <div class="modal fade" id="addrModal" tabindex="-1" role="dialog" aria-labelledby="addrModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addrModalCenterTitle">배송지 추가</h5>
+                    <h5 class="modal-title" id="addrModalTitle">배송지 추가</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="modal-table-container">
                         <table class="modal-table">
                             <caption>배송지 정보 입력 테이블</caption>
                             <tbody>
-                                <tr>
-                                    <th class="modal-table-info">
-                                        <span>이름</span>
-                                        <span class="asterisk"></span>
-                                    </th>
-                                    <td>
-                                        <input type="text" class="text" name="name" placeholder="받는 분의 이름을 입력하세요"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="modal-table-info">
-                                        <span>연락처</span>
-                                        <span class="asterisk"></span>
-                                    </th>
-                                    <td>
-                                        <input type="text" class="text" name="phone" placeholder="받는 분의 연락처를 입력하세요"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="modal-table-info">
-                                        <span>주소</span>
-                                        <span class="asterisk"></span>
-                                    </th>
-                                    <td>
-                                        <input type="text" class="addr1" name="pos_code" placeholder="우편번호"/>
-                                        <button class="btn btn-primary" type="submit">주소검색</button><br/>
-                                        <input type="text" class="addr2" name="addr1" placeholder="주소"/><br/>
-                                        <input type="text" class="addr2" name="addr2" placeholder="상세주소"/><br/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="modal-table-info">
-                                        <span>배송 요청사항 (선택)</span>
-                                    </th>
-                                    <td>
-                                        <select id="request-select" name="select" onchange="addInput()">
-                                            <option selected="selected">:: 배송 요청사항을 선택하세요 ::</option> <!--가장 먼저 작성하는 것이 선택되기 때문에 selected로 지정한다. -->
-                                            <option value="1">문 앞에 놔주세요</option>
-                                            <option value="2">경비실에 맡겨주세요</option>
-                                            <option value="3">택배함에 넣어주세요</option>
-                                            <option value="4">배송 전에 연락주세요</option>
-                                            <option value="5">직접 입력</option>
-                                        </select>
-                                        <br/>
-                                        <!-- '직접 입력'을 선택할 때만 보이는 새로운 입력 필드 -->
-                                        <div id="custom-input">
-                                            <input type="text" class="toggle" name="deli_request" placeholder="배송 요청 사항을 직접 입력하세요"/>
-                                        </div>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <th class="modal-table-info">
+                                    <span>이름</span>
+                                    <span class="asterisk"></span>
+                                </th>
+                                <td>
+                                    <input type="text" class="text" name="name" placeholder="받는 분의 이름을 입력하세요"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="modal-table-info">
+                                    <span>연락처</span>
+                                    <span class="asterisk"></span>
+                                </th>
+                                <td>
+                                    <input type="text" class="text" name="phone" placeholder="받는 분의 연락처를 입력하세요"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="modal-table-info">
+                                    <span>주소</span>
+                                    <span class="asterisk"></span>
+                                </th>
+                                <td>
+                                    <input type="text" class="addr1" name="pos_code" placeholder="우편번호"/>
+                                    <button class="btn btn-primary" type="submit">주소검색</button><br/>
+                                    <input type="text" class="addr2" name="addr1" placeholder="주소"/><br/>
+                                    <input type="text" class="addr2" name="addr2" placeholder="상세주소"/><br/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="modal-table-info">
+                                    <span>배송 요청사항 (선택)</span>
+                                </th>
+                                <td>
+                                    <select id="request-select" name="select" onchange="addInput()">
+                                        <option selected="selected">:: 배송 요청사항을 선택하세요 ::</option> <!--가장 먼저 작성하는 것이 선택되기 때문에 selected로 지정한다. -->
+                                        <option value="1">문 앞에 놔주세요</option>
+                                        <option value="2">경비실에 맡겨주세요</option>
+                                        <option value="3">택배함에 넣어주세요</option>
+                                        <option value="4">배송 전에 연락주세요</option>
+                                        <option value="5">직접 입력</option>
+                                    </select>
+                                    <br/>
+                                    <!-- '직접 입력'을 선택할 때만 보이는 새로운 입력 필드 -->
+                                    <div id="custom-input">
+                                        <input type="text" class="toggle" name="deli_request" placeholder="배송 요청 사항을 직접 입력하세요"/>
+                                    </div>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -314,7 +211,7 @@
                         <label for="chkDefault">기본 배송지로 설정</label>
                     </div>
                     <div class="modal-footer-right">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">닫기</button>
                         <button type="button" class="btn btn-outline-primary" onclick="save()">등록</button>
                     </div>
                 </div>
@@ -322,7 +219,31 @@
         </div>
     </div>
 
+    <!-- 배송조회 모달 -->
+    <div class="modal fade" id="deliveryModal" tabindex="-1" role="dialog" aria-labelledby="deliveryModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deliveryModalTitle">배송 조회</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>배송 조회 내용을 여기에 표시합니다.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%-- JQuery --%>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <%-- Bootstrap --%>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         const selectedCategoryDiv = document.getElementById('selectedCategoryDiv');
@@ -355,6 +276,9 @@
         });
 
         $(function () {
+            // 초기 상태 설정 - 주문 내역 선택
+            $('#btnradio-order').prop('checked', true);
+
             // 장바구니 체크 박스 전체 선택 / 해제 기능
             $("#cart-table #cart-all").on("click", function () {
                 console.log("click");
@@ -393,29 +317,73 @@
             });
 
             const tabActions = {
-                "#btnradio-reviews": ["#delivery-article", "#review-article"],
-                "#btnradio-address": ["#review-article", "#delivery-article"]
+                "#btnradio-order": "#order-article",
+                //"#btnradio-likes": "#likes-article",
+                "#btnradio-reviews": "#review-article",
+                //"#btnradio-questions": "#questions-article",
+                //"#btnradio-inquiry": "#inquiry-article",
+                "#btnradio-points": "#point-article",
+                "#btnradio-coupons": "#coupon-article",
+                "#btnradio-delivery": "#delivery-article"
             };
 
-            Object.keys(tabActions).forEach((selector) => {
-                $(selector).on("click", function () {
-                    const [toHide, toShow] = tabActions[selector];
-                    $(toHide).hide();
-                    $(toShow).show();
-                });
+            const allTabs = Object.values(tabActions);
+
+            // 초기 상태 설정 - 주문 내역만 보이도록
+            allTabs.forEach((tab) => {
+                document.querySelector(".user-action-buttons .btn-group")
+                const element = document.querySelector(tab);
+                if (element) {
+                    element.style.display = tab === "#order-article" ? "block" : "none";
+                }
+            });
+
+            // 버튼 클릭 이벤트 설정
+            Object.keys(tabActions).forEach((buttonSelector) => {
+                const button = document.querySelector(buttonSelector);
+                if (button) {
+                    button.addEventListener("click", function () {
+                        allTabs.forEach((tab) => {
+                            const element = document.querySelector(tab);
+                            if (element) {
+                                element.style.display = "none";
+                            }
+                        });
+
+                        const toShow = tabActions[buttonSelector];
+                        const showElement = document.querySelector(toShow);
+                        if (showElement) {
+                            showElement.style.display = "block";
+                        }
+                    });
+                } else {
+                    console.error(`Button with selector '${buttonSelector}' not found.`);
+                }
+            });
+
+            // 적립금 탭 클릭 이벤트
+            $(".nav-link").on("click", function (event) {
+                event.preventDefault();
+
+                $(".nav-link").removeClass("active");
+                $(this).addClass("active");
+
+                $("#tables table").hide();
+                const targetTable = $(this).data("target");
+                $(targetTable).show();
             });
         });
 
-        // 배송지 추가 > 모달
-        function onShowAddAddrBtn() {
-            let modal = new bootstrap.Modal(document.getElementById('addrModalCenter'));
+        // 배송 조회 모달 열기
+        function onShowDeliveryModal() {
+            let modal = new bootstrap.Modal(document.getElementById('deliveryModal'));
             modal.show();
         }
-        
-        // 배송지 추가 모달 닫기
-        function onHideAddAddrBtn() {
-            let modal = new bootstrap.Modal(document.getElementById('addrModalCenter'));
-            modal.hide();
+
+        // 배송지 추가 > 모달
+        function onShowAddAddrModal() {
+            let modal = new bootstrap.Modal(document.getElementById('addrModal'));
+            modal.show();
         }
 
         // 배송지 모달 > 요청 사항 필드 추가
@@ -423,11 +391,10 @@
             let selectValue = document.getElementById("request-select").value;
             let customInput = document.getElementById("custom-input");
 
-            // 선택된 값이 '5'이면 input 필드를 표시하고, 아니면 숨긴다.
             if (selectValue == "5") {
-                customInput.style.display = "block";  // 새로운 input 필드를 보이게 한다.
+                customInput.style.display = "block";
             } else {
-                customInput.style.display = "none";   // 새로운 input 필드를 숨긴다.
+                customInput.style.display = "none";
             }
         }
     </script>
