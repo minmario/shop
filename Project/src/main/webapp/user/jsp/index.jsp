@@ -9,6 +9,11 @@
     <link rel="icon" href="./user/images/share_musinsa.png">
     <title>Musinsa</title>
 
+    <%-- Google Font : Gothic A1 --%>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
+
     <%-- CSS --%>
     <link rel="stylesheet" type="text/css" href="./user/css/common/common.css"/>
     <link rel="stylesheet" type="text/css" href="./user/css/index/index.css"/>
