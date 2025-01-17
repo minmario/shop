@@ -1,8 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="../../css/mypage/refundRequest.css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./user/images/share_musinsa.png">
+    <title>Musinsa</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <%-- CSS --%>
+    <link rel="stylesheet" type="text/css" href="./user/css/common/common.css"/>
+    <link rel="stylesheet" type="text/css" href="./user/css/mypage/exchangeRequest.css"/>
 </head>
 <body>
 <!-- header -->
@@ -10,100 +19,107 @@
 
 <!-- content -->
 <div class="wrap">
-    <div class="wrap-title">
-        <span class="left">교환요청</span>
-    </div>
+    <div class="row">
+        <div class="container">
 
-    <!-- 전체 틀 -->
-    <div class="box">
-
-        <!-- 교환 상품 정보 -->
-        <section class="wrap-product">
-            <div class="product-content">
-                <div class="thisisnever_img"></div>
-                <div class="product-detail">
-                    <span>[thisisnever]</span><br/>
-                    Mesh Football Jersey Navy
-                    <div class="option-text">옵션 : M / 수량 : 1</div>
-                </div>
+            <div class="wrap-title">
+                <span class="left bold">교환요청</span>
             </div>
-        </section>
-        <hr/>
 
-        <div class="wrap-option">
-            <span class="bold">교환옵션</span><br/>
-            <select class="select" id="select-option" name="select" onchange="addReasonInput()">
-                <option selected="selected">:: 환불 사유를 선택하세요 ::</option>
-                <option value="1">단순 변심</option>
-                <option value="2">상품 불량</option>
-                <option value="3">오배송</option>
-                <option value="4">상품정보와 상이</option>
-                <option value="5">직접 입력</option>
-            </select>
+            <!-- 전체 틀 -->
+            <div class="box">
 
-            <!-- 교환 옵션 중 '직접 입력'을 선택할 때만 보이는 새로운 입력 필드 -->
-            <div id="exchange-option-input">
-                <input type="text" class="toggle" name="request-reason" placeholder="환불 사유를 입력해주세요"/>
-            </div><hr/>
-        </div>
-
-        <!-- 교환 사유 선택 -->
-        <div class="wrap-reason">
-            <span class="bold">교환사유</span><br/>
-            <select class="select" id="select-reason" name="select" onchange="addReasonInput()">
-                <option selected="selected">:: 환불 사유를 선택하세요 ::</option>
-                <option value="1">단순 변심</option>
-                <option value="2">상품 불량</option>
-                <option value="3">오배송</option>
-                <option value="4">상품정보와 상이</option>
-                <option value="5">직접 입력</option>
-            </select>
-
-            <!-- 교환 사유 중 '직접 입력'을 선택할 때만 보이는 새로운 입력 필드 -->
-            <div id="exchange-reason-input">
-                <input type="text" class="toggle" name="request-reason" placeholder="환불 사유를 입력해주세요"/>
-            </div><hr/>
-        </div>
-
-        <!-- 교환 방법 선택 -->
-        <div>
-            <span class="bold">반품 방법 선택</span><br/>
-            <input type="radio" id="shop-delivery" name="delivery" value="1" onclick="selectAddr()" checked/>
-            <label for="shop-delivery">쇼핑몰 지정 교환(CJ대한통운)</label><br/>
-            <input type="radio" id="direct" name="delivery" value="2" onclick="selectAddr()"/>
-            <label for="direct">직접발송</label>
-        </div>
-
-        <!-- '쇼핑몰 지정 교환'을 선택할 때만 보이는 필드 -->
-        <div class="custom-addr">
-            <div class="wrap-addrList">
-                <button type="button" class="btn btn-outline-secondary add-address-button" onclick="onShowAddAddrBtn()">배송지 추가하기</button>
-                <div class="address-box">
-                    <input type="radio" id="default-address" name="address" checked>
-                    <label for="default-address">
-                        <div class="address-details">
-                            <p class="name">홍길동 <span class="default">기본 배송지</span></p>
-                            <p class="address">서울특별시 동작구 보라매로5길 15<br>1층 108호</p>
-                            <p class="phone">010-1234-1234</p>
+                <!-- 교환 상품 정보 -->
+                <section class="wrap-product">
+                    <div class="product-content">
+                        <div class="thisisnever_img"></div>
+                        <div class="product-detail">
+                            <span>[thisisnever]</span><br/>
+                            Mesh Football Jersey Navy
+                            <div class="option-text">옵션 : M / 수량 : 1</div>
                         </div>
-                    </label>
+                    </div>
+                </section>
+                <hr/>
+
+                <!-- 교환 사유 선택 -->
+                <div class="wrap-reason">
+                    <span class="bold">교환사유</span><br/>
+                    <select class="select" id="select-reason" name="select" onchange="addReasonInput()">
+                        <option selected="selected">:: 교환 사유를 선택하세요 ::</option>
+                        <option value="1">단순 변심(스타일)</option>
+                        <option value="2">상품 불량</option>
+                        <option value="3">오배송</option>
+                        <option value="4">상품정보와 상이</option>
+                        <option value="5">직접 입력</option>
+                    </select>
+
+                    <!-- 교환 사유 중 '직접 입력'을 선택할 때만 보이는 새로운 입력 필드 -->
+                    <div id="exchange-input">
+                        <input type="text" class="toggle" name="select-reason" placeholder="교환 사유를 입력해주세요"/>
+                    </div><hr/>
                 </div>
-                <div class="address-box">
-                    <input type="radio" id="etc-address" name="address" checked>
-                    <label for="etc-address">
-                        <div class="address-details">
-                            <p class="name">홍길동</p>
-                            <p class="address">서울특별시 동작구 보라매로5길 15<br>1층 108호</p>
-                            <p class="phone">010-1234-1234</p>
+
+                <div class="wrap-option">
+                    <span class="bold">변경옵션</span><br/>
+                    <select class="select" id="option-size" name="option-size">
+                        <option selected="selected">:: 사이즈 ::</option>
+                        <option value="1">S</option>
+                        <option value="2">M</option>
+                        <option value="3">L</option>
+                        <option value="4">XL</option>
+                    </select>&nbsp;
+
+                    <select class="select" id="option-color" name="option-color">
+                        <option selected="selected">:: 색상 ::</option>
+                        <option value="1">블랙</option>
+                        <option value="2">화이트</option>
+                        <option value="3">다크그린</option>
+                        <option value="4">차콜</option>
+                    </select>
+                </div><hr/>
+
+                <!-- 교환 방법 선택 -->
+                <div>
+                    <span class="bold">교환 방법 선택</span><br/>
+                    <input type="radio" id="shop-delivery" name="delivery" value="1" onclick="selectAddr()" checked/>
+                    <label for="shop-delivery">회수해 주세요</label><br/>
+                    <input type="radio" id="direct" name="delivery" value="2" onclick="selectAddr()"/>
+                    <label for="direct">직접 보낼게요</label>
+                </div>
+
+                <!-- '회수해 주세요'을 선택할 때만 보이는 필드 -->
+                <div class="custom-addr">
+                    <div class="wrap-addrList">
+                        <button type="button" class="btn btn-outline-secondary add-address-button" onclick="onShowAddAddrBtn()">배송지 추가하기</button>
+                        <div class="address-box">
+                            <input type="radio" id="default-address" name="address" checked>
+                            <label for="default-address">
+                                <div class="address-details">
+                                    <p class="name">홍길동 <span class="default">기본 배송지</span></p>
+                                    <p class="address">서울특별시 동작구 보라매로5길 15<br>1층 108호</p>
+                                    <p class="phone">010-1234-1234</p>
+                                </div>
+                            </label>
                         </div>
-                    </label>
+                        <div class="address-box">
+                            <input type="radio" id="etc-address" name="address" checked>
+                            <label for="etc-address">
+                                <div class="address-details">
+                                    <p class="name">홍길동</p>
+                                    <p class="address">서울특별시 동작구 보라매로5길 15<br>1층 108호</p>
+                                    <p class="phone">010-1234-1234</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
                 </div>
+                <hr/>
+
+                <!-- 환불요청 버튼-->
+                <button type="button" class="btn btn-outline-secondary add-address-button">환불 신청</button>
             </div>
         </div>
-        <hr/>
-
-        <!-- 환불요청 버튼-->
-        <button type="button" class="btn btn-outline-secondary add-address-button">환불 신청</button>
     </div>
 </div>
 
@@ -192,16 +208,16 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script>
-    //환불 사유 필드 추가
+    //교환 사유 필드 추가
     function addReasonInput() {
-        let selectValue = document.getElementById("select").value;
-        let refundInput = document.getElementById("refund-input");
+        let selectValue = document.getElementById("select-reason").value;
+        let exchangeInput = document.getElementById("exchange-input");
 
         // 선택된 값이 '5'이면 input 필드를 표시하고, 아니면 숨긴다.
         if (selectValue == "5") {
-            refundInput.style.display = "block";  // 새로운 input 필드를 보이게 한다.
+            exchangeInput.style.display = "block";  // 새로운 input 필드를 보이게 한다.
         } else {
-            refundInput.style.display = "none";   // 새로운 input 필드를 숨긴다.
+            exchangeInput.style.display = "none";   // 새로운 input 필드를 숨긴다.
         }
     }
 
@@ -219,11 +235,11 @@
     }
 
     function selectAddr(){
-        // 반품 방법 라디오 버튼 값 가져오기
+        // 교환 방법 라디오 버튼 값 가져오기
         const shopDelivery = document.getElementById("shop-delivery");
         const customAddr = document.querySelector(".custom-addr");
 
-        // 쇼핑몰 지정 반품 택배를 선택했을 때만 custom-addr 보이기
+        // '회수해 주세요'를 선택했을 때만 custom-addr 보이기
         if (shopDelivery.checked) {
             customAddr.style.display = "block"; // 표시
         } else {
