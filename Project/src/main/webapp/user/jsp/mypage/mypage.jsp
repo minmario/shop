@@ -17,8 +17,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <%-- CSS --%>
-    <link href="./user/css/common/common.css" rel="stylesheet" type="text/css">
-    <link href="./user/css/mypage/mypage.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="./user/css/mypage/mypage.css"/>
+    <link rel="stylesheet" type="text/css" href="./user/css/mypage/components/coupon.css"/>
+    <link rel="stylesheet" type="text/css" href="./user/css/mypage/components/delivery.css"/>
+    <link rel="stylesheet" type="text/css" href="./user/css/mypage/components/order.css"/>
+    <link rel="stylesheet" type="text/css" href="./user/css/mypage/components/point.css"/>
+    <link rel="stylesheet" type="text/css" href="./user/css/mypage/components/review.css"/>
 </head>
 <body>
     <%-- header --%>
@@ -32,79 +36,77 @@
     <div class="wrap">
         <div class="row">
             <div class="container">
-                <!-- Breadcrumb Section -->
-                <div class="breadcrumb-container">
-                    <span>무신사 스토어 > 장바구니</span>
-                </div>
-
-                <!-- My Page Section -->
+                <!-- Title Section -->
                 <div class="text-title">
-                    <div class="title-left">
-                        <h3>My Page</h3>
-                    </div>
-                    <div class="title-right">
-                        <span class="current">장바구니</span>
-                        <span>&gt;</span>
-                        <span>주문서</span>
-                        <span>&gt;</span>
-                        <span>주문완료</span>
+                    <h3>My Page</h3>
+                </div>
+
+                <!-- Profile Section -->
+                <div class="profile-container">
+                    <div class="profile-row">
+                        <div class="profile-header">
+                            <div class="profile-left">
+                                <div class="profile-image">
+                                    <img src="./user/images/blank-profile.png" alt="User Profile Image">
+                                </div>
+                                <div class="profile-info">
+                                    <div class="profile-name">터키플랫슈즈</div>
+                                    <div class="profile-level">LV.5 실버 · 2% 적립</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-stats">
+                            <div class="stats-item">
+                                <div class="stats-label">적립금</div>
+                                <div class="stats-value">7,023원</div>
+                            </div>
+                            <div class="stats-item">
+                                <div class="stats-label">쿠폰</div>
+                                <div class="stats-value">107장</div>
+                            </div>
+                            <div class="stats-item">
+                                <div class="stats-label">후기 작성</div>
+                                <div class="stats-value">1건</div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-outline-secondary profile-button">스냅 프로필</button>
                     </div>
                 </div>
 
-                <!-- User Info Section -->
-                <div class="user-info-table">
-                    <table id="user-table">
-                        <tbody>
-                        <tr>
-                            <td>
-                                <div class="profile"></div>
-                            </td>
-                            <td>
-                                <div>
-                                    <span class="grade">실버</span>
-                                    <span class="userName">${user.cus_name}</span>
+                <!-- Order Section -->
+                <div class="order-container">
+                    <div class="order-status">
+                        <h2 class="order-title">진행 중 주문 현황</h2>
+                        <div class="order-item">
+                            <img src="./user/images/product5.jpg" alt="Product Image" class="product-image">
+                            <div class="order-details">
+                                <div class="payment-status">결제완료</div>
+                                <div class="product-name">커버낫</div>
+                                <div class="product-description">
+                                    [2PACK] 쿨 코튼 티셔츠 블랙+화이트<br>사이즈: M
                                 </div>
-                                <div>
-                                    <a href="" class="user-info-change">[회원정보변경]</a>
-                                </div>
-                            <td>
-                                <div class="point-info">
-                                    적립금
-                                </div>
-                                <div class="point-value">
-                                    000점
-                                </div>
-                            </td>
-                            <td>
-                                <div class="coupon-info">
-                                    쿠폰
-                                </div>
-                                <div class="coupon-value">
-                                    00장
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Action Buttons Section -->
                 <div class="user-action-buttons">
                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                         <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-order" autocomplete="off">
-                        <label class="btn btn-outline-secondary" for="btnradio-order">주문내역</label>
+                        <label class="btn btn-outline-dark" for="btnradio-order">주문내역</label>
                         <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-reviews" autocomplete="off">
-                        <label class="btn btn-outline-secondary" for="btnradio-reviews">구매후기</label>
+                        <label class="btn btn-outline-dark" for="btnradio-reviews">구매후기</label>
                         <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-questions" autocomplete="off">
-                        <label class="btn btn-outline-secondary" for="btnradio-questions">상품문의</label>
+                        <label class="btn btn-outline-dark" for="btnradio-questions">상품문의</label>
                         <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-inquiry" autocomplete="off">
-                        <label class="btn btn-outline-secondary" for="btnradio-inquiry">1:1문의</label>
+                        <label class="btn btn-outline-dark" for="btnradio-inquiry">1:1문의</label>
                         <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-points" autocomplete="off">
-                        <label class="btn btn-outline-secondary" for="btnradio-points">적립금</label>
+                        <label class="btn btn-outline-dark" for="btnradio-points">적립금</label>
                         <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-coupons" autocomplete="off">
-                        <label class="btn btn-outline-secondary" for="btnradio-coupons">쿠폰</label>
+                        <label class="btn btn-outline-dark" for="btnradio-coupons">쿠폰</label>
                         <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-delivery" autocomplete="off">
-                        <label class="btn btn-outline-secondary" for="btnradio-delivery">배송지</label>
+                        <label class="btn btn-outline-dark" for="btnradio-delivery">배송지</label>
                     </div>
                 </div>
 
@@ -134,10 +136,10 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <%-- footer --%>
-    <jsp:include page="../layout/footer.jsp"></jsp:include>
+        <%-- footer --%>
+        <jsp:include page="../layout/footer.jsp"></jsp:include>
+    </div>
 
     <!-- 배송지 추가 Modal -->
     <div class="modal fade" id="addrModal" tabindex="-1" role="dialog" aria-labelledby="addrModalTitle" aria-hidden="true">

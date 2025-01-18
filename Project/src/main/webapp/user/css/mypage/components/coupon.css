@@ -1,0 +1,16 @@
+.coupon-section-container .coupon-header {
+    float: left;
+}
+
+.coupon-section-container .coupon-sort {
+    float: right;
+}
+
+.coupon-section-container .coupon-sort .coupon-sort-options {
+    width: 80px;
+    float: right;
+}
+
+.coupon-section-container #coupon-table tbody tr td:last-child a {
+    border-bottom: 1px solid #8d8d88;
+}

@@ -2,15 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="review-section">
     <div class="review-header">
-        <span class="review-title">상품평 작성</span>
-    </div>
-    <div class="review-buttons">
-        <div class="btn-group" role="group">
-            <input type="radio" class="btn-check" name="btnradioreview" id="btnradio10" autocomplete="off" checked>
-            <label class="btn btn-outline-secondary" for="btnradio10">후기 내역</label>
-            <input type="radio" class="btn-check" name="btnradioreview" id="btnradio11" autocomplete="off">
-            <label class="btn btn-outline-secondary" for="btnradio11">후기 작성</label>
-        </div>
+        <span class="review-title">상품평</span>
     </div>
 </div>
 <table id="review-table" class="table">

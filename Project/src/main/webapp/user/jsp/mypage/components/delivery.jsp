@@ -6,10 +6,8 @@
         <button type="button" class="btn btn-outline-primary add-address-button" data-toggle="modal" data-target="#addrModal">배송지 추가</button>
     </div>
 </div>
-
 <div class="custom-addr">
     <div class="wrap-addrList">
-
         <!-- 배송지 정보-->
         <div class="address-box">
             <input type="radio" id="default-address" name="address" checked>

@@ -2,10 +2,6 @@
 
 @import "reset.css";
 
-.wrap {
-    height: 85%;
-}
-
 .wrap::-webkit-scrollbar {
     width: 5px;
     height: 5px;
@@ -18,14 +14,6 @@
 
 .wrap::-webkit-scrollbar-track {
     background: transparent;
-}
-
-footer {
-    margin-top: auto;
-    background-color: rgb(33 37 41);
-    padding: 10px 20px;
-    text-align: center;
-    color: #8d8d88;
 }
 
 /**************

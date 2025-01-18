@@ -67,12 +67,12 @@
     width: 250px;
 }
 
-.product-img{
+.product-img {
     line-height: 150px;
     margin-right: 10px;
 }
 
-.product-content{
+.product-content {
     position: absolute;
     text-align: left;
     margin-top: 28px;

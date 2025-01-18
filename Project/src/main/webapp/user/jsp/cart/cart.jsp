@@ -15,7 +15,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <%-- CSS --%>
-    <link rel="stylesheet" type="text/css" href="./user/css/common/common.css"/>
     <link rel="stylesheet" type="text/css" href="./user/css/cart/cart.css"/>
 </head>
 <body>
@@ -30,23 +29,9 @@
     <div class="wrap">
         <div class="row">
             <div class="container">
-                <!-- Breadcrumb Section -->
-                <div class="breadcrumb-container">
-                    <span>무신사 스토어 > 장바구니</span>
-                </div>
-
                 <!-- My Page Section -->
                 <div class="text-title">
-                    <div class="title-left">
-                        <h3>장바구니</h3>
-                    </div>
-                    <div class="title-right">
-                        <span class="current">장바구니</span>
-                        <span>&gt;</span>
-                        <span>주문서</span>
-                        <span>&gt;</span>
-                        <span>주문완료</span>
-                    </div>
+                    <h3>장바구니</h3>
                 </div>
 
                 <!-- Cart Section -->
@@ -82,7 +67,7 @@
                                                     <div class="prod_option_left">옵션&nbsp;:&nbsp;</div>
                                                     <div class="prod_option_center">RED&nbsp;/&nbsp;1 Size</div>
                                                     <div class="prod_option_right">
-                                                        <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#optionModal">옵션 변경</button>
+                                                        <button type="button" class="btn btn-outline-secondary option-change-btn" data-toggle="modal" data-target="#optionModal">옵션 변경</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -125,10 +110,10 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <%-- footer --%>
-    <jsp:include page="../layout/footer.jsp"></jsp:include>
+        <%-- footer --%>
+        <jsp:include page="../layout/footer.jsp"></jsp:include>
+    </div>
 
     <%-- modal --%>
     <div class="modal fade" id="optionModal" tabindex="-1" role="dialog" aria-labelledby="optionModalCenterTitle" aria-hidden="true">

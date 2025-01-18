@@ -1,4 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<div class="order-section">
+    <div class="order-header">
+        <div class="order-title">주문 목록</div>
+    </div>
+</div>
 <div class="custom-order-container">
     <!-- 첫 번째 주문 -->
     <div class="custom-order">
@@ -20,10 +25,10 @@
                 <p class="custom-product-price">17,700원</p>
             </div>
         </div>
-        <button type="button" class="btn btn-outline-dark custom-review-button">후기 작성 (최대 52,500원 적립)</button>
+        <button type="button" class="btn btn-outline-secondary custom-review-button">후기 작성 (최대 52,500원 적립)</button>
         <div class="custom-product-actions">
-            <button type="button" class="btn btn-outline-dark custom-action-button">배송 조회</button>
-            <button type="button" class="btn btn-outline-dark custom-action-button">재구매</button>
+            <button type="button" class="btn btn-outline-secondary custom-action-button">배송 조회</button>
+            <button type="button" class="btn btn-outline-secondary custom-action-button">재구매</button>
         </div>
     </div>
 
@@ -48,8 +53,8 @@
             </div>
         </div>
         <div class="custom-product-actions">
-            <button type="button" class="btn btn-outline-dark custom-action-button">배송 조회</button>
-            <button type="button" class="btn btn-outline-dark custom-action-button">재구매</button>
+            <button type="button" class="btn btn-outline-secondary custom-action-button">배송 조회</button>
+            <button type="button" class="btn btn-outline-secondary custom-action-button">재구매</button>
         </div>
     </div>
 </div>
