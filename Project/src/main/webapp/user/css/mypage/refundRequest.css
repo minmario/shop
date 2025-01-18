@@ -1,69 +1,60 @@
-.wrap {
-    overflow: hidden auto;
-}
-
-.row {
-    padding: 20px;
-}
-
 .container {
     width: 800px !important;
-    margin: 0 auto;
 }
 
-.wrap-title{
+.wrap-title {
     height: 40px;
     margin: 10px auto;
     font-weight: bold;
     border-bottom: 1px solid #a3a4a5;
 }
 
-.wrap-title>span{
+.wrap-title>span {
     padding: 10px 10px;
 }
 
-.wrap-reason>.bold{
+.wrap-reason>.bold {
     font-weight: bold;
     margin: 10px 0;
 }
 
-.left{
+.left {
     float: left;
     text-align: left;
 }
 
-.box{
+.box {
     height: auto;
     margin: 0 auto 40px auto;
     padding: 10px;
 }
 
-#refund-input, #custom-input{
+#refund-input, #custom-input {
     display: none;
 }
 
-.bold{
+.bold {
     font-weight: bold;
     margin-top: 5px;
 }
 
-#refund-input>.toggle, .refund-account input.toggle{
+#refund-input > .toggle, .refund-account input.toggle {
     margin-top: 5px;
     width: 45%;
     height: 30px;
 }
 
-input#account-number.toggle, input#account-holder.toggle{
+input#account-number.toggle, input#account-holder.toggle {
     margin: 5px 0;
     width: 45%;
     height: 30px;
 }
 
-.wrap-product, .product-content{
+.wrap-product, .product-content {
     display: flex;
 }
 
-.thisisnever_img{
+.thisisnever_img {
     background: url("../../images/thisisnever_img.png") no-repeat;
     background-size: 100px 100px;
     width: 100px;
@@ -71,27 +62,27 @@ input#account-number.toggle, input#account-holder.toggle{
     margin-right: 10px;
 }
 
-.option-text{
+.option-text {
     margin-top: 10px;
     color: #a3a4a5;
     font-size: 9pt;
 }
 
-.product-detail{
+.product-detail {
     margin-top: 10px;
 }
 
-.select{
+.select {
     margin: 5px 0;
     width: 45%;
     height: 30px;
 }
 
-#shop-delivery{
+#shop-delivery {
     margin: 10px 0px;
 }
 
-.margin{
+.margin {
     padding: 10px 0;
     margin: 10px 0;
     height: 60px;

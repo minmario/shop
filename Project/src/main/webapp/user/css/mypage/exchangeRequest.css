@@ -1,14 +1,5 @@
-.wrap {
-    overflow: hidden auto;
-}
-
-.row {
-    padding: 20px;
-}
-
 .container {
     width: 800px !important;
-    margin: 0 auto;
 }
 
 .wrap-title{
