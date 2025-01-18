@@ -2,16 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="delivery-section">
     <div class="delivery-header">
-        <span class="delivery-title">배송지 목록</span>
+        <div class="delivery-title">배송지 목록</div>
+        <button type="button" class="btn btn-outline-primary add-address-button" data-toggle="modal" data-target="#addrModal">배송지 추가</button>
     </div>
 </div>
 
 <div class="custom-addr">
     <div class="wrap-addrList">
-        <!-- 배송지 추가 버튼 -->
-        <div class="wrap-button">
-            <button type="button" class="btn btn-outline-primary add-address-button" data-toggle="modal" data-target="#addrModal">배송지 추가</button>
-        </div><br/>
 
         <!-- 배송지 정보-->
         <div class="address-box">
@@ -25,10 +22,9 @@
                     <button type="button" class="btn btn-outline-danger">삭제</button>
                 </div>
             </label>
-        </div><hr/>
-
+        </div>
         <div class="address-box">
-            <input type="radio" id="etc-address" name="address" checked>
+            <input type="radio" id="etc-address" name="address">
             <label for="etc-address">
                 <div class="address-details">
                     <p class="name">홍길동</p>

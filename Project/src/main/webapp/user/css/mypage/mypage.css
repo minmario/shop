@@ -151,11 +151,11 @@ table th, table td {
     margin-top: 20px !important;
 }
 
-.review-section, .delivery-section, .coupon-section, .point-section, .order-section {
+.review-section, .coupon-section, .point-section, .order-section {
     height: 35px;
 }
 
-.review-header, .delivery-header, .coupon-header, .point-header, .order-header {
+.review-header, .coupon-header, .point-header, .order-header {
     line-height: 35px;
     float: left;
 }
@@ -626,9 +626,13 @@ table th, table td {
 }
 
 /*****************배송지 목록 css*******************/
+.delivery-section{
+    height: 70px; !important;
+}
+
 .add-address-button {
     display: block;
-    width: 100%;
+    width: 20%;
     margin: 10px 0;
 }
 
@@ -676,15 +680,12 @@ table th, table td {
     color: #555;
 }
 
-/*.wrap-button{*/
-/*    height: 35px;*/
-/*    float: right;*/
-/*    width: 20%;*/
-/*}*/
-
-.add-address-button{
-    display: block;
+.delivery-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* 세로 정렬 */
 }
+
 /************************************/
 
 
