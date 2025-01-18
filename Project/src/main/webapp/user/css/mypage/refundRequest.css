@@ -148,8 +148,6 @@ input#account-number.toggle, input#account-holder.toggle {
     color: #555;
 }
 
-/***********환불계좌 등록 css************/
-
 /* 배송지 추가하기 버튼 */
 .add-address-button {
     display: block;
@@ -257,4 +255,13 @@ input.addr2, #custom-input>input.toggle, #request-select {
     height: 30px;
     width: 500px;
     margin: 5px 10px;
+}
+
+/***************배송 방법 정보 모달******************/
+.modal .modal-body ul {
+    list-style: disc;
+}
+
+.modal .modal-body ul li {
+    padding: 3px;
 }

@@ -68,9 +68,22 @@
                     <div>
                         <span class="bold">반품 방법 선택</span><br/>
                         <input type="radio" id="shop-delivery" name="delivery" value="1" onclick="selectAddr()" checked/>
-                        <label for="shop-delivery">회수해 주세요</label><br/>
+                        <label for="shop-delivery">회수해 주세요</label>
+                        <span class="svg-icon" data-toggle="modal" data-target="#retrieveModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
+                            </svg>
+                        </span>
+                        <br/>
                         <input type="radio" id="direct" name="delivery" value="2" onclick="selectAddr()"/>
                         <label for="direct">직접 보낼게요</label>
+                        <span class="svg-icon" data-toggle="modal" data-target="#retrieveModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
+                            </svg>
+                        </span>
                     </div>
 
                     <!-- '회수해 주세요'을 선택할 때만 보이는 필드 -->
@@ -144,6 +157,52 @@
     </div>
 
     <!-- Modal -->
+    <!-- 회수해주세요 설명 모달 -->
+    <div class="modal fade" id="retrieveModal" tabindex="-1" role="dialog" aria-labelledby="retrieveModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="retrieveModalLabel">'회수해 주세요' 반품 방법</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <ul>
+                            <li>이 옵션을 선택하면 무신사에서 배송 업체와 조율하여 회수 일정을 잡고, 상품을 집 앞에 두면 자동으로 수거됩니다.</li>
+                            <li>교환할 상품을 보내지 않았다면 ‘회수해 주세요’를 선택해 주세요. 택배사에 접수하지 않아도 업체 지정 택배사에서 교환 상품을 직접 회수합니다.
+                                (일부 업체의 경우, 자동 회수를 제공하지 않습니다.)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 직접보낼게요 설명 모달 -->
+    <div class="modal fade" id="personallyModal" tabindex="-1" role="dialog" aria-labelledby="personallyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="personallyModalLabel">'직접 보낼게요' 반품 방법</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <ul>
+                            <li>고객이 직접 택배를 예약하여 반품하는 방법입니다. 이 경우, 반품 배송비가 추가로 발생할 수 있습니다.</li>
+                            <li>이미 교환 상품을 보냈다면 ‘직접 발송했어요’를 선택하고 반송장 정보를 입력해 주세요.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 배송지 추가 모달 -->
     <div class="modal fade" id="addrModal" tabindex="-1" role="dialog" aria-labelledby="addrModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
