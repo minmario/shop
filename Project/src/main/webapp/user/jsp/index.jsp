@@ -15,10 +15,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
 
     <%-- CSS --%>
-    <link rel="stylesheet" type="text/css" href="./user/css/common/common.css"/>
     <link rel="stylesheet" type="text/css" href="./user/css/index/index.css"/>
 </head>
 <body>
+    <%-- header --%>
     <jsp:include page="layout/header.jsp"></jsp:include>
 
     <div class="wrap">
@@ -135,8 +135,9 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <jsp:include page="./layout/footer.jsp"></jsp:include>
+        <%-- footer --%>
+        <jsp:include page="./layout/footer.jsp"></jsp:include>
+    </div>
 </body>
 </html>

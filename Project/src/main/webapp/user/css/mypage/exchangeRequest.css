@@ -82,7 +82,6 @@
 }
 
 /**********주소선택 css*************/
-
 .add-address-button {
     display: block;
     width: 100%;
@@ -99,15 +98,23 @@
     align-items: flex-start;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 10px;
+    padding: 15px;
     margin-bottom: 10px;
     position: relative;
+}
+
+.address-box label {
+    margin-bottom: 0 !important;
 }
 
 /* 기본 배송지 라벨 */
 .address-details {
     flex: 1;
     margin-left: 10px;
+}
+
+.address-details p:last-child {
+    margin-bottom: 0 !important;
 }
 
 .name {
@@ -154,47 +161,6 @@
 .add-address-button:hover {
     background-color: #f5f5f5;
 }
-
-/* 배송지 박스 */
-.address-box {
-    display: flex;
-    align-items: flex-start;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 10px;
-    margin-bottom: 10px;
-    position: relative;
-}
-
-/* 기본 배송지 라벨 */
-.address-details {
-    flex: 1;
-    margin-left: 10px;
-}
-
-.name {
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.default {
-    font-size: 12px;
-    color: #007aff;
-    margin-left: 5px;
-}
-
-.address {
-    font-size: 13px;
-    color: #555;
-    margin: 5px 0;
-    line-height: 1.4;
-}
-
-.phone {
-    font-size: 13px;
-    color: #555;
-}
-
 
 /***************배송지 추가 모달 css***************/
 

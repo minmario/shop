@@ -15,7 +15,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <%-- CSS --%>
-    <link rel="stylesheet" type="text/css" href="./user/css/common/common.css"/>
     <link rel="stylesheet" type="text/css" href="./user/css/payment/payment.css"/>
 </head>
 <body>
@@ -30,23 +29,9 @@
     <div class="wrap">
         <div class="row">
             <div class="container">
-                <!-- Breadcrumb Section -->
-                <div class="breadcrumb-container">
-                    <span>무신사 스토어 > 주문서</span>
-                </div>
-
                 <!-- My Page Section -->
                 <div class="text-title">
-                    <div class="title-left">
-                        <h3>주문서</h3>
-                    </div>
-                    <div class="title-right">
-                        <span>장바구니</span>
-                        <span>&gt;</span>
-                        <span class="current">주문서</span>
-                        <span>&gt;</span>
-                        <span>주문완료</span>
-                    </div>
+                    <h3>주문서</h3>
                 </div>
 
                 <!-- 배송 정보 -->
@@ -272,10 +257,10 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <%-- footer --%>
-    <jsp:include page="../layout/footer.jsp"></jsp:include>
+        <%-- footer --%>
+        <jsp:include page="../layout/footer.jsp"></jsp:include>
+    </div>
 
     <%-- 보유 적립금 모달 --%>
     <div class="modal fade" id="pointsModal" tabindex="-1" role="dialog" aria-labelledby="pointsModalTitle" aria-hidden="true">

@@ -1,18 +1,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./user/images/share_musinsa.png">
+    <title>Musinsa</title>
+
     <%-- Google Font : Gothic A1 --%>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
 
-    <title>Title</title>
-
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <%-- CSS --%>
-    <link rel="stylesheet" type="text/css" href="./user/css/common/common.css"/>
     <link rel="stylesheet" type="text/css" href="./user/css/mypage/refundRequest.css"/>
 </head>
 <body>
@@ -46,7 +48,7 @@
                     <!-- 반품 사유 선택 -->
                     <div class="wrap-reason">
                         <span class="bold">반품사유</span><br/>
-                        <select class="select" id="select" name="select" onchange="addReasonInput()">
+                        <select class="form-select select" id="select" name="select" onchange="addReasonInput()">
                             <option selected="selected">:: 반품 사유를 선택하세요 ::</option>
                             <option value="1">단순 변심</option>
                             <option value="2">상품 불량</option>
@@ -108,7 +110,7 @@
                         <!-- 은행 선택 -->
                         <div class="margin">
                         <label for="bank-select" class="bold">은행 선택</label><br>
-                            <select class="select" id="bank-select" name="bank">
+                            <select class="form-select select" id="bank-select" name="bank">
                                 <option value="" selected disabled>:: 은행을 선택하세요 ::</option>
                                 <option value="kbank">KB국민은행</option>
                                 <option value="shinhan">신한은행</option>
@@ -136,10 +138,10 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- footer -->
-    <jsp:include page="../layout/footer.jsp"></jsp:include>
+        <!-- footer -->
+        <jsp:include page="../layout/footer.jsp"></jsp:include>
+    </div>
 
     <!-- Modal -->
     <div class="modal fade" id="addrModal" tabindex="-1" role="dialog" aria-labelledby="addrModalTitle" aria-hidden="true">
@@ -192,7 +194,7 @@
                                     <span>배송 요청사항 (선택)</span>
                                 </th>
                                 <td>
-                                    <select id="request-select" name="select" onchange="addInputRequest()">
+                                    <select class="form-select" id="request-select" name="select" onchange="addInputRequest()">
                                         <option selected="selected">:: 배송 요청사항을 선택하세요 ::</option>
                                         <!--가장 먼저 작성하는 것이 선택되기 때문에 selected로 지정한다. -->
                                         <option value="1">문 앞에 놔주세요</option>
@@ -204,8 +206,7 @@
                                     <br/>
                                     <!-- '직접 입력'을 선택할 때만 보이는 새로운 입력 필드 -->
                                     <div id="custom-input">
-                                        <input type="text" class="toggle" name="deli_request"
-                                               placeholder="배송 요청 사항을 직접 입력하세요"/>
+                                        <input type="text" class="toggle" name="deli_request" placeholder="배송 요청 사항을 직접 입력하세요"/>
                                     </div>
                                 </td>
                             </tr>
