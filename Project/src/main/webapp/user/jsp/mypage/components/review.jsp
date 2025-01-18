@@ -1,77 +1,46 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="review-section">
-    <div class="review-header">
-        <span class="review-title">상품평</span>
+<div class="earnings-section">
+    <span class="earnings-title">후기</span>
+</div>
+<div class="earnings-summary">
+    <div class="earnings-info">
+        <span class="earnings-possible">적립가능 금액</span>
+        <span class="earnings-amount">2,500원</span>
+    </div>
+    <a href="#" class="earnings-guide">작성 안내</a>
+</div>
+<div class="earnings-container">
+    <div class="earnings-content">
+        <div class="product-item">
+            <img src="./user/images/product6.jpg" alt="Product Image" class="product-thumbnail">
+            <div class="product-info-details">
+                <p class="max-reward">최대적립금 <span class="reward-highlight">2,500원</span></p>
+                <p class="item-name">팀코믹스</p>
+                <p class="item-description">VAMOS LABEL CREWNECK BLACK</p>
+                <p class="item-size">M / 2024.10.29 구매 확정</p>
+            </div>
+        </div>
+        <div class="action-buttons">
+            <button class="btn btn-outline-secondary custom-btn">후기 작성</button>
+            <button class="btn btn-outline-secondary custom-btn">한달후기 작성</button>
+            <button class="btn btn-outline-secondary custom-btn">스타일 후기 작성</button>
+        </div>
+    </div>
+    <div class="earnings-content">
+        <div class="product-item">
+            <img src="./user/images/product5.jpg" alt="Product Image" class="product-thumbnail">
+            <div class="product-info-details">
+                <p class="max-reward">최대적립금 <span class="reward-highlight">2,500원</span></p>
+                <p class="item-name">팀코믹스</p>
+                <p class="item-description">VAMOS LABEL CREWNECK BLACK</p>
+                <p class="item-size">M / 2024.10.29 구매 확정</p>
+            </div>
+        </div>
+        <div class="action-buttons">
+            <button class="btn btn-outline-secondary custom-btn disabled">후기 기간만료</button>
+            <button class="btn btn-outline-secondary custom-btn">한달후기 작성</button>
+            <button class="btn btn-outline-secondary custom-btn">스타일 후기 작성</button>
+        </div>
     </div>
 </div>
-<table id="review-table" class="table">
-    <thead>
-        <tr>
-            <th>번호</th>
-            <th>상품정보</th>
-            <th>구매일자</th>
-            <th>일반 후기</th>
-            <th>스타일 후기</th>
-        </tr>
-    </thead>
-    <tbody>
-        <c:set var="cnt" value="2"/>
-        <c:forEach begin="1" end="${cnt}" varStatus="st">
-            <tr>
-                <td class="order-id">${st.index}</td>
-                <td class="product-info">
-                    <div class="prod_info">
-                        <div class="prod_img">
-                            <img src="./user/images/product1.jpg"/>
-                        </div>
-                        <div class="prod_details">
-                            <div class="prod_brand">
-                                [페이퍼리즘]
-                            </div>
-                            <div class="prod_name">
-                                ZIGGY LIGHTING 3/4 SLV T-SHIRT
-                            </div>
-                            <div class="prod_color">
-                                [GRAY]
-                            </div>
-                            <div class="prod_option">
-                                옵션&nbsp;:&nbsp;L&nbsp;/&nbsp;수량&nbsp;:&nbsp;${st.index}
-                            </div>
-                        </div>
-                    </div>
-                </td>
-                <td class="purchase-date">2025-01-14</td>
-                <td class="general-review">
-                    <button type="button" class="btn btn-outline-secondary">작성하기</button>
-                </td>
-                <td class="style-review">
-                    <button type="button" class="btn btn-outline-secondary">작성하기</button>
-                </td>
-            </tr>
-        </c:forEach>
-    </tbody>
-</table>
-<nav aria-label="Page navigation" class="navigation">
-    <ul class="pagination">
-        <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#">1</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#">2</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#">3</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
-</nav>
