@@ -8,8 +8,10 @@
 html, body {
     height: 100%;
     margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 html, body, div, span, em, p, address, pre,
