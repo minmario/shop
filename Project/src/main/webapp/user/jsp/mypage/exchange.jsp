@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Title</title>
@@ -12,7 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <%-- CSS --%>
-    <link rel="stylesheet" type="text/css" href="../../css/mypage/exchange.css"/>
+    <link rel="stylesheet" type="text/css" href="./user/css/mypage/exchange.css"/>
 </head>
 <body>
     <!-- header -->
@@ -20,107 +21,64 @@
 
     <!-- content-->
     <div class="wrap">
-        <div class="wrap-title">
-            <span class="left">교환</span>
-        </div>
+        <div class="row">
+            <div class="container">
 
-        <div class="wrap-table">
-            <table id="table">
-                <caption>교환 내역 테이블</caption>
-                <tbody>
-                    <tr>
-                        <th class="num">번호</th>
-                        <th>상품정보(옵션/수량)</th>
-                        <th>교환일자</th>
-                        <th>주문번호</th>
-                        <th>배송조회</th>
-                        <th>교환취소</th>
-                    </tr>
-                    <tr class="table-child">
-                        <td>1</td>
-                        <td class="product-info">
-                            <div class="product-content">
-                                <div class="product-img">
-                                    <span class="thisisnever_img"></span>
-                                </div>
-                                <div class="product-detail">
-                                    <a href="#">[thisisnever]</a><br/>
-                                    Mesh Football Jersey Navy
-                                    <div class="option-text">옵션 : M / 수량 : 1</div>
-                                </div>
+                <div>
+                    <span class="exchange-title">교환내역</span>
+                </div>
+
+                <div class="wrap-exchange-list">
+                    <div class="exchange-summary">
+                        <div class="exchange-header">
+                            <div class="exchange-date">22.05.16</div>
+                            <div class="exchange-details-link">
+                                <a href="#">주문 상세</a>
                             </div>
-                        </td>
-                        <td>2025-01-15</td>
-                        <td><a href="">2025011500001234</a></td>
-                        <td>
-                            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#deliveryModal">배송 조회</button>
-                        </td>
-                        <td>
-                            <button class="btn btn-outline-secondary" type="button">교환 취소</button>
-                        </td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="6" class="height">1페이지 중 1페이지</td>
-                    </tr>
-                    <tr>
-                        <td colspan="6">
-                            <nav aria-label="Page navigation example" class="wrap-pagination">
-                                <ul class="pagination">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-    </div>
+                        </div>
+                        <div class="exchange-status">교환완료</div>
+                        <div class="order-product">
+                            <div class="product-image"></div>
+                            <div class="product-info">
+                                <p class="product-brand">thisisnever</p>
+                                <p class="product-name">Mesh Football Jersey Navy</p>
+                                <p class="product-options">M / 1개</p>
+                                <p class="product-price">25,770원</p>
+                            </div>
+                        </div>
+                        <div class="wrap-buttons">
+                            <button type="button" class="btn btn-outline-secondary">교환 상세</button>
+                            <button type="button" class="btn btn-outline-secondary">교환 배송 조회</button>
+                            <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
+                        </div>
+                    </div><hr/>
 
-    <!-- footer -->
-    <jsp:include page="../layout/footer.jsp"></jsp:include>
-
-    <!-- 배송조회 모달 -->
-    <div class="modal fade" id="deliveryModal" tabindex="-1" role="dialog" aria-labelledby="deliveryModalTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deliveryModalTitle">교환 배송 조회</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <h4>회수지 정보</h4>
-                    <br>
-                    <div class="wrap-modal-title">
-                        <span class="left">홍길동</span>
-                        <a href="#" class="right">회수지 변경</a>
+                    <div class="exchange-summary">
+                        <div class="exchange-header">
+                            <div class="exchange-date">22.05.16</div>
+                            <div class="exchange-details-link"><a href="#">주문 상세</a></div>
+                        </div>
+                        <div class="exchange-status">교환완료</div>
+                        <div class="order-product">
+                            <div class="product-image"></div>
+                            <div class="product-info">
+                                <p class="product-brand">thisisnever</p>
+                                <p class="product-name">Mesh Football Jersey Navy</p>
+                                <p class="product-options">M / 1개</p>
+                                <p class="product-price">25,770원</p>
+                            </div>
+                        </div>
+                        <div class="wrap-buttons">
+                            <button type="button" class="btn btn-outline-secondary">교환 상세</button>
+                            <button type="button" class="btn btn-outline-secondary">교환 배송 조회</button>
+                            <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
+                        </div>
                     </div>
-                    <p>
-                        <span class="option-text">010-1111-2222</span><br/>
-                        <span>서울특별시 동작구 보라매로5길 15 1층 101호</span>
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
+        <!-- footer -->
+        <jsp:include page="../layout/footer.jsp"></jsp:include>
     </div>
 
     <%-- JQuery --%>
