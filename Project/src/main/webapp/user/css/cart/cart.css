@@ -67,8 +67,13 @@
     margin-top: 15px;
 }
 
-.cart-section-container .cart-button button {
+.cart-section-container .cart-button .order-btn {
     width: 150px;
+}
+
+.cart-section-container .cart-button .order-btn:hover {
+    background-color: #000 !important;
+    color: #fff !important;
 }
 
 #cart-table thead tr {
@@ -142,6 +147,7 @@
     width: 100%;
     height: 35px;
     background-color: #ededed;
+    border-radius: 5px;
     padding: 10px;
     position: absolute;
     top: 66px;
@@ -208,7 +214,7 @@
 }
 
 .option-change-btn:hover {
-    background-color: #fff !important;
+    background-color: transparent !important;
     color: #6c757d !important;
 }
 
@@ -223,4 +229,9 @@
 
 #optionModal .modal-body .color-select {
     margin-bottom: 10px;
+}
+
+#optionModal .cancel-btn:hover, #optionModal .confirm-btn:hover {
+    background-color: #fff !important;
+    color: #6c757d !important;
 }

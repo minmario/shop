@@ -25,20 +25,16 @@
         <c:set var="user" value="${requestScope.userInfo}"/>
     </c:if>
 
-    <%-- content --%>
     <div class="wrap">
         <div class="row">
             <div class="container">
-                <!-- My Page Section -->
                 <div class="text-title">
                     <h3>주문서</h3>
                 </div>
-
-                <!-- 배송 정보 -->
                 <div class="delivery-info-container">
                     <div class="header">
                         <h3>테스트 <span class="badge">기본 배송지</span></h3>
-                        <button class="change-address-btn">배송지 변경</button>
+                        <button class="btn btn-outline-secondary btn-sm change-address-btn" data-toggle="modal" data-target="#deliveryModal">배송지 변경</button>
                     </div>
                     <p class="address">서울특별시 강남구 강남대로 113 8층 801호</p>
                     <p class="phone">010-1234-5678</p>
@@ -54,8 +50,6 @@
                     <textarea class="delivery-message" id="delivery-message" maxlength="50" placeholder="최대 50자까지 입력 가능합니다."></textarea>
                     <p class="char-count" id="char-count">0&nbsp;/&nbsp;50</p>
                 </div>
-
-                <%-- 주문 상품 --%>
                 <div class="order-product-container">
                     <h3>주문 상품 1개</h3>
                     <div class="product-info">
@@ -72,8 +66,6 @@
                     </div>
                     <button type="button" class="btn btn-outline-dark coupon-btn">쿠폰 사용</button>
                 </div>
-
-                <!-- 보유 적립금 사용 -->
                 <div class="points-container">
                     <div class="points-left">
                         <h3>보유 적립금 사용</h3>
@@ -86,12 +78,10 @@
                     </div>
                     <div class="points-input">
                         <input type="text"/>
-                        <button type="button" class="btn btn-outline-dark">사용 취소</button>
+                        <button type="button" class="btn btn-outline-dark cancel-btn">사용 취소</button>
                     </div>
                     <p class="points-info">적용한도(7%) 8,064원 / 보유 9,296원</p>
                 </div>
-
-                <!-- 구매 적립/선할인 -->
                 <div class="reward-container">
                     <div class="reward-top">
                         <h3>구매 적립/선할인</h3>
@@ -108,8 +98,6 @@
                     </div>
                     <p class="reward-info">선할인 제한 상품이에요.</p>
                 </div>
-
-                <!-- 즉시 할인 -->
                 <div class="instant-discount-container">
                     <h3>즉시 할인</h3>
                     <div class="checkbox-container">
@@ -142,8 +130,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- 결제 수단 -->
                 <div class="payment-methods-container">
                     <h3>결제 수단</h3>
                     <div class="radio-group">
@@ -173,8 +159,6 @@
                         </select>
                     </div>
                 </div>
-
-                <!-- 결제 금액 -->
                 <div class="payment-details-container">
                     <h3>결제 금액</h3>
                     <ul>
@@ -200,8 +184,6 @@
                         </li>
                     </ul>
                 </div>
-
-                <!-- 적립 혜택 -->
                 <div class="reward-benefits-container">
                     <div class="reward-benefits-top">
                         <h3>적립 혜택</h3>
@@ -227,8 +209,6 @@
                         </li>
                     </ul>
                 </div>
-
-                <!-- 주문으로 받을 혜택 -->
                 <div class="order-benefits-container">
                     <div class="order-benefits-top">
                         <div class="benefits-left">
@@ -250,16 +230,56 @@
                         <p class="small-text">무신사는 통신판매중개자로, 업체 배송 상품의 상품/상품정보/거래 등에 대한 책임은 무신사가 아닌 판매자에게 있습니다.</p>
                     </div>
                 </div>
-
-                <!-- 결제하기 버튼 -->
                 <div class="payment-button-container">
-                    <button type="button" class="btn btn-dark">107,136원 결제하기</button>
+                    <button type="button" class="btn btn-dark payment-button">107,136원 결제하기</button>
                 </div>
             </div>
         </div>
 
         <%-- footer --%>
         <jsp:include page="../layout/footer.jsp"></jsp:include>
+    </div>
+
+    <%-- 배송지 변경 모달 --%>
+    <div class="modal fade" id="deliveryModal" tabindex="-1" role="dialog" aria-labelledby="deliveryModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deliveryModalTitle">배송지 정보</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <button class="btn btn-outline-dark add-address-btn">배송지 추가하기</button>
+                    <div class="address-item">
+                        <input type="radio" id="address1" name="deliveryAddress" checked>
+                        <label for="address1">
+                            <span class="address-name">홍길동</span>
+                            <span class="default-label">기본 배송지</span>
+                            <p class="address-detail">서울 강남구 도산대로 12-5 3층<br>010-1234-5678</p>
+                            <div class="action-buttons">
+                                <button class="btn btn-outline-dark edit-btn">수정</button>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="address-item">
+                        <input type="radio" id="address2" name="deliveryAddress">
+                        <label for="address2">
+                            <span class="address-name">일지매</span>
+                            <p class="address-detail">경기도 가평시 가평대로 22길 5층 505호<br>010-6325-1478</p>
+                            <div class="action-buttons">
+                                <button class="btn btn-outline-dark edit-btn">수정</button>
+                                <button class="btn btn-outline-dark delete-btn">삭제</button>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-dark confirm-btn">변경하기</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <%-- 보유 적립금 모달 --%>
