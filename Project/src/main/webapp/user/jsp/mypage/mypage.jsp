@@ -25,6 +25,8 @@
     <link rel="stylesheet" type="text/css" href="./user/css/mypage/components/review.css"/>
     <link rel="stylesheet" type="text/css" href="./user/css/mypage/components/inquiry.css"/>
     <link rel="stylesheet" type="text/css" href="./user/css/mypage/components/question.css"/>
+    <link rel="stylesheet" type="text/css" href="./user/css/mypage/components/refund.css"/>
+    <link rel="stylesheet" type="text/css" href="./user/css/mypage/components/exchange.css"/>
 </head>
 <body>
     <%-- header --%>
@@ -97,6 +99,8 @@
                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                         <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-order" autocomplete="off">
                         <label class="btn btn-outline-dark" for="btnradio-order">주문내역</label>
+                        <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-refund" autocomplete="off">
+                        <label class="btn btn-outline-dark" for="btnradio-refund">취소/반품/교환</label>
                         <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-review" autocomplete="off">
                         <label class="btn btn-outline-dark" for="btnradio-review">구매후기</label>
                         <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-inquiry" autocomplete="off">
@@ -115,6 +119,11 @@
                 <!-- Order Section -->
                 <div class="order-section-container" id="order-article">
                     <jsp:include page="components/order.jsp"/>
+                </div>
+
+                <!-- Refund Section -->
+                <div class="refund-section-container" id="refund-article">
+                    <jsp:include page="components/refund.jsp"/>
                 </div>
 
                 <!-- Review Section -->
@@ -335,6 +344,7 @@
 
             const tabActions = {
                 "#btnradio-order": "#order-article",
+                "#btnradio-refund": "#refund-article",
                 "#btnradio-review": "#review-article",
                 "#btnradio-inquiry": "#inquiry-article",
                 "#btnradio-question": "#question-article",
@@ -376,6 +386,19 @@
                     console.error(`Button with selector '${buttonSelector}' not found.`);
                 }
             });
+
+            // 반품/취소/교환 탭 클릭 이벤트
+            $(".nav-link").on("click", function (event) {
+                event.preventDefault();
+
+                $(".nav-link").removeClass("active");
+                $(this).addClass("active");
+
+                $("#list .list").hide();
+                const targetTable = $(this).data("target");
+                $(targetTable).show();
+            });
+
 
             // 적립금 탭 클릭 이벤트
             $(".nav-link").on("click", function (event) {

@@ -261,18 +261,18 @@ table th, table td {
 
 .user-action-buttons, .review-section-container, .delivery-section-container,
 .coupon-section-container, .point-section-container, .order-section-container,
-.inquiry-section-container, .question-section-container {
+.refund-section-container, .inquiry-section-container, .question-section-container {
     margin: 0 auto;
 }
 
 .user-action-buttons, .user-action-buttons .btn-group, .review-section-container,
 .delivery-section-container, .coupon-section-container, .point-section-container,
-.order-section-container, .inquiry-section-container, .question-section-container {
+.order-section-container, .refund-section-container, .inquiry-section-container, .question-section-container {
     width: 100% !important;
 }
 
 .review-section-container, .delivery-section-container, .coupon-section-container,
-.point-section-container, .order-section-container, .inquiry-section-container, .question-section-container {
+.point-section-container, .order-section-container, .refund-section-container, .inquiry-section-container, .question-section-container {
     margin-top: 20px !important;
 }
 
