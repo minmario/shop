@@ -1,18 +1,21 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./user/images/share_musinsa.png">
+    <title>Musinsa</title>
 
     <%-- Google Font : Gothic A1 --%>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
 
-    <%-- Bootstrap CSS --%>
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <%-- CSS --%>
-    <link rel="stylesheet" type="text/css" href="../../css/mypage/exchangeDetails.css"/>
+    <link rel="stylesheet" type="text/css" href="./user/css/mypage/exchangeDetails.css"/>
 </head>
 <body>
     <!-- header -->
@@ -34,7 +37,7 @@
                         <div class="order-date">2024.12.18 19:54</div>
                         <div class="wrap-order-details">
                             <div class="order-number">주문번호 202012161492200002</div>
-                            <div class="order-details-link"><a href="#">주문 상세</a></div>
+                            <div class="order-details-link"><a href="Controller?type=orderDetails">주문 상세</a></div>
                         </div>
                     </div>
                     <hr/>
@@ -56,13 +59,13 @@
 
                     <%-- 버튼 --%>
                     <div class="wrap-buttons">
-                        <button class="btn btn-outline-secondary">교환 배송 조회</button>
-                        <button class="btn btn-outline-secondary">회수 배송 조회</button>
+                        <button class="btn btn-outline-secondary button">교환 배송 조회</button>
+                        <button class="btn btn-outline-secondary button">회수 배송 조회</button>
                     </div><hr/>
 
                     <%-- 교환 신청 정보 --%>
                     <div class="request-info">
-                        <h2 class="section-title">교환 신청 정보</h2>
+                        <h2 class="subtitle">교환 신청 정보</h2>
                         <ul class="info-list">
                             <li>
                                 <span class="info-label">신청 일시</span>
@@ -106,7 +109,7 @@
 
                     <!-- 교환 배송비 결제 정보 -->
                     <div class="payment-info">
-                        <h2 class="section-title">교환배송비 결제정보</h2>
+                        <h2 class="subtitle">교환배송비 결제정보</h2>
                         <div class="wrap-p">
                             <p class="payment-method">결제내역</p>
                             <p class="payment-expected">0원</p>

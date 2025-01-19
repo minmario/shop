@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="wrap-buttons">
-                    <button type="button" class="btn btn-outline-secondary">취소 상세</button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=cancelDetails'">취소 상세</button>
                     <button type="button" class="btn btn-outline-secondary">재구매</button>
                 </div>
             </div><hr/>
@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <div class="wrap-buttons">
-                    <button type="button" class="btn btn-outline-secondary">반품 상세</button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=refundDetails'">반품 상세</button>
                     <button type="button" class="btn btn-outline-secondary">재구매</button>
                     <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
                 </div>
@@ -85,7 +85,7 @@
                     </div>
                 </div>
                 <div class="wrap-buttons">
-                    <button type="button" class="btn btn-outline-secondary">교환 상세</button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=exchangeDetails'">교환 상세</button>
                     <button type="button" class="btn btn-outline-secondary">교환 배송 조회</button>
                     <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
                 </div>
@@ -116,7 +116,7 @@
                     </div>
                 </div>
                 <div class="wrap-buttons">
-                    <button type="button" class="btn btn-outline-secondary">취소 상세</button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=cancelDetails'">취소 상세</button>
                     <button type="button" class="btn btn-outline-secondary">재구매</button>
                 </div>
             </div><hr/>
@@ -137,7 +137,7 @@
                     </div>
                 </div>
                 <div class="wrap-buttons">
-                    <button type="button" class="btn btn-outline-secondary">반품 상세</button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=refundDetails'">반품 상세</button>
                     <button type="button" class="btn btn-outline-secondary">재구매</button>
                     <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
                 </div>
@@ -148,7 +148,7 @@
 
     <%-- 교환 조회 --%>
     <div id="list-exchange" class="list" style="display: none;">
-        <div class="wrap-exchange-list">
+        <div class="wrap-refund-list">
 
             <div class="exchange-summary">
                 <div class="exchange-header">
@@ -168,7 +168,7 @@
                     </div>
                 </div>
                 <div class="wrap-buttons">
-                    <button type="button" class="btn btn-outline-secondary">교환 상세</button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=exchangeDetails'">교환 상세</button>
                     <button type="button" class="btn btn-outline-secondary">교환 배송 조회</button>
                     <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
                 </div>
@@ -190,7 +190,7 @@
                     </div>
                 </div>
                 <div class="wrap-buttons">
-                    <button type="button" class="btn btn-outline-secondary">교환 상세</button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=exchangeDetails'">교환 상세</button>
                     <button type="button" class="btn btn-outline-secondary">교환 배송 조회</button>
                     <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
                 </div>
@@ -199,4 +199,3 @@
         </div>
     </div>
 </div>
-

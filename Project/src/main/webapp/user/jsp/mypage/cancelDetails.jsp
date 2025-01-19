@@ -15,7 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <%-- CSS --%>
-    <link rel="stylesheet" type="text/css" href="./user/css/mypage/refundDetails.css"/>
+    <link rel="stylesheet" type="text/css" href="./user/css/mypage/cancelDetails.css"/>
 </head>
 <body>
     <!-- header -->
@@ -27,10 +27,10 @@
             <div class="container">
 
                 <div class="wrap-title">
-                    <span class="title">반품 상세내역</span>
+                    <span class="title">취소 상세내역</span>
                 </div>
 
-                <div class="refund-details">
+                <div class="cancel-details">
 
                     <%-- 주문 정보 --%>
                     <div class="order-info">
@@ -42,10 +42,10 @@
                     </div>
                     <hr/>
 
-                    <%-- 반품 상품 정보 --%>
-                    <div class="refund-product">
-                        <h2>반품 상품 1개</h2>
-                        <span class="refund-status">반품완료</span>
+                    <%-- 취소 상품 정보 --%>
+                    <div class="cancel-product">
+                        <h2>취소 상품 1개</h2>
+                        <span class="cancel-status">취소완료</span>
                         <div class="product-details">
                             <div class="product-image"></div>
                             <div class="product-info">
@@ -60,12 +60,11 @@
                     <%-- 버튼 --%>
                     <div class="wrap-buttons">
                         <button class="btn btn-outline-secondary button" data-toggle="modal" data-target="#repurchaseModal">재구매</button>
-                        <button class="btn btn-outline-secondary button">회수 배송 조회</button>
                     </div><hr/>
 
-                    <%-- 반품 신청 정보 --%>
-                    <div class="request-info">
-                        <h2 class="subtitle">반품 신청 정보</h2>
+                    <%-- 취소 신청 정보 --%>
+                    <div class="cancel-info">
+                        <h2 class="subtitle">취소 신청 정보</h2>
                         <ul class="info-list">
                             <li>
                                 <span class="info-label">신청 일시</span>
@@ -76,26 +75,8 @@
                                 <span class="info-value">2024-12-23 14:25:24</span>
                             </li>
                             <li>
-                                <span class="info-label">반품 사유</span>
-                                <span class="info-value">상품 불량</span>
-                            </li>
-                            <li>
-                                <span class="info-label">수거 방법</span>
-                                <span class="info-value">회수해 주세요</span>
-                            </li>
-                            <li>
-                                <span class="info-label">반품 회수지</span>
-                                <span class="info-value">
-                                    홍**동 / 010-****-1234<br>
-                                    (12345) 서울특별시 동작구 보라매로5길 1 ****
-                                </span>
-                            </li>
-                            <li>
-                                <span class="info-label">반송지 주소</span>
-                                <span class="info-value">
-                                    (04782) 서울 성동구 연무장5가길 7<br>
-                                    (성수역 현대테라스타워) w609호
-                                </span>
+                                <span class="info-label">취소 사유</span>
+                                <span class="info-value">고객 오류</span>
                             </li>
                         </ul>
                     </div><hr/>
@@ -133,9 +114,8 @@
 
                     <!-- 환불 예정 금액 -->
                     <div class="refund-amount">
-                        <h3 class="subtitle">환불 예정 금액</h3>
                         <div class="wrap-p">
-                            <p class="refund-method">카드 - 농협카드(일시불)</p>
+                            <h3 class="subtitle">환불 예정 금액</h3>
                             <p class="refund-expected">33,117원</p>
                         </div>
                     </div>
@@ -143,7 +123,6 @@
                     <%-- 안내사항 --%>
                     <div class="notice">* 주문 시 사용한 적립금 및 할인쿠폰은 취소완료 즉시 반환됩니다.</div>
                 </div>
-
             </div>
         </div>
 
@@ -177,6 +156,5 @@
 
     <%-- Bootstrap --%>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>

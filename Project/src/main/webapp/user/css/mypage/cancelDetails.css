@@ -2,7 +2,7 @@
     width: 900px !important;
 }
 
-.refund-details {
+.cancel-details {
     width: 100%;
     margin: 0 auto;
     background-color: #fff;
@@ -39,7 +39,7 @@
     color: #333;
 }
 
-.wrap-order-details{
+.wrap-order-details {
     display: flex;
     justify-content: space-between;
     margin: 10px 0;
@@ -52,18 +52,18 @@
 }
 
 /* 상품 정보 */
-.refund-product {
+.cancel-product {
     margin-bottom: 20px;
 }
 
-.refund-product h2 {
+.cancel-product h2 {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
     color: #333;
 }
 
-.refund-status {
+.cancel-status {
     display: inline-block;
     font-size: 14px;
     font-weight: bold;
@@ -176,6 +176,7 @@
     display: flex;
     justify-content: space-between;
 }
+
 /**************************************/
 
 /* 서브타이틀 */
@@ -227,13 +228,6 @@
     font-size: 18px;
     font-weight: bold;
     color: #e74c3c;
-}
-
-.refund-method {
-    font-size: 14px;
-    font-weight: bold;
-    color: #555;
-    margin-top: 5px;
 }
 
 /* 공지 */
