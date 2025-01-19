@@ -9,7 +9,7 @@
         <div class="custom-order-header">
             <div class="custom-header-row">
                 <span class="custom-order-date">24.10.20</span>
-                <a href="#" class="custom-details-link">주문 상세</a>
+                <a href="Controller?type=orderDetails" class="custom-details-link">주문 상세</a>
             </div>
             <span class="custom-order-status">구매확정</span>
         </div>
@@ -34,7 +34,7 @@
         <div class="custom-order-header">
             <div class="custom-header-row">
                 <span class="custom-order-date">25.01.17</span>
-                <a href="#" class="custom-details-link">주문 상세</a>
+                <a href="Controller?type=orderDetails" class="custom-details-link">주문 상세</a>
             </div>
             <span class="custom-order-status">결제완료</span>
         </div>

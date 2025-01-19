@@ -100,12 +100,12 @@
                             </ol>
                         </div>
                         <div class="cart-notice-right">
-                            <button type="button" class="btn btn-outline-dark">전체 삭제</button>
-                            <button type="button" class="btn btn-outline-dark">선택 삭제</button>
+                            <button type="button" class="btn btn-outline-dark delete-all-btn">전체 삭제</button>
+                            <button type="button" class="btn btn-outline-dark delete-selected-btn">선택 삭제</button>
                         </div>
                     </div>
                     <div class="cart-button">
-                        <button type="button" class="btn btn-dark" onclick="location.href='Controller?type=payment'">주문하기</button>
+                        <button type="button" class="btn btn-dark order-btn" onclick="location.href='Controller?type=payment'">주문하기</button>
                     </div>
                 </div>
             </div>
@@ -126,20 +126,20 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <select class="color-select" id="color">
+                    <select class="form-select color-select" id="color">
                         <option>검정</option>
                         <option>네이비</option>
                         <option>아이보리</option>
                     </select>
-                    <select class="size-select" id="size">
+                    <select class="form-select size-select" id="size">
                         <option>S</option>
                         <option>M</option>
                         <option>L</option>
                     </select>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-dark" data-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-outline-dark">변경</button>
+                    <button type="button" class="btn btn-outline-secondary cancel-btn" data-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-outline-secondary confirm-btn">변경</button>
                 </div>
             </div>
         </div>
