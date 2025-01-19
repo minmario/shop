@@ -83,6 +83,11 @@
     font-size: 16px;
 }
 
+.profile-name button {
+    border: none !important;
+    background-color: transparent !important;
+}
+
 .profile-level {
     color: #888;
     font-size: 13px;
@@ -132,12 +137,20 @@
     cursor: pointer;
 }
 
-.profile-button {
+.profile-buttons {
+    display: flex;
+    gap: 10px;
+    margin-right: 10px;
+}
+
+.profile-button,
+.snap-profile-button {
+    white-space: nowrap;
     padding: 5px 10px;
     flex-shrink: 0;
 }
 
-.profile-button:hover {
+.profile-button:hover, .snap-profile-button:hover {
     background-color: #fff !important;
     color: #6c757d !important;
 }
@@ -178,6 +191,7 @@
 
 .order-details {
     flex: 1;
+    padding: 10px;
 }
 
 .payment-status {
@@ -415,4 +429,27 @@ input.addr2, input.toggle, #request-select {
 
 #custom-input {
     display: none;
+}
+
+/* 프로필 변경 모달 */
+.profile-settings-form {
+    padding: 20px;
+}
+
+.profile-image-preview {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #ddd;
+}
+
+.profile-settings-form .form-group:last-child {
+    margin-top: 25px;
+    margin-bottom: 0 !important;
+}
+
+#profileSettingModal .close-modal-btn:hover, #profileSettingModal .save-changes-btn:hover {
+    background-color: #fff !important;
+    color: #6c757d !important;
 }

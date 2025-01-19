@@ -54,7 +54,7 @@
                                     <img src="./user/images/blank-profile.png" alt="User Profile Image">
                                 </div>
                                 <div class="profile-info">
-                                    <div class="profile-name">터키플랫슈즈</div>
+                                    <div class="profile-name">터키플랫슈즈 <button type="button" data-toggle="modal" data-target="#profileSettingModal"><i class="bi bi-gear"></i></button></div>
                                     <div class="profile-level">LV.5 실버 · 2% 적립</div>
                                 </div>
                             </div>
@@ -73,7 +73,10 @@
                                 <div class="stats-value">1건</div>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-outline-secondary profile-button">스냅 프로필</button>
+                        <div class="profile-buttons">
+                            <button type="button" class="btn btn-outline-secondary btn-sm profile-button" onclick="location.href='Controller?type=pwConfirm'">프로필</button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm snap-profile-button">스냅 프로필</button>
+                        </div>
                     </div>
                 </div>
 
@@ -160,6 +163,39 @@
 
         <%-- footer --%>
         <jsp:include page="../layout/footer.jsp"></jsp:include>
+    </div>
+
+    <%-- 프로필 변경 모달 --%>
+    <div class="modal fade" id="profileSettingModal" tabindex="-1" role="dialog" aria-labelledby="profileSettingModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profileSettingModalTitle">프로필 변경</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="profile-settings-form">
+                        <div class="form-group">
+                            <label for="newProfileImage" class="form-label">프로필 사진</label>
+                            <div class="d-flex align-items-center">
+                                <img src="./user/images/blank-profile.png" alt="프로필 사진" class="profile-image-preview mr-3"/>
+                                <input type="file" class="form-control-file" id="newProfileImage"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="newNickname" class="form-label">닉네임</label>
+                            <input type="text" class="form-control" id="newNickname" placeholder="새 닉네임 입력"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary close-modal-btn" data-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-outline-secondary save-changes-btn" data-dismiss="modal">변경</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- 배송지 추가 Modal -->
