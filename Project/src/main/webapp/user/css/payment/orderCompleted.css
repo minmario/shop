@@ -1,0 +1,23 @@
+.container {
+    width: 800px !important;
+}
+
+.redirect-message {
+    font-size: 14px;
+    color: #666;
+}
+
+.order-completed {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    position: relative;
+}
+
+.completed-text {
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+    color: #000;
+}

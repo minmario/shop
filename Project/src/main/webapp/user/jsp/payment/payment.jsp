@@ -64,7 +64,7 @@
                             </p>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-outline-dark coupon-btn">쿠폰 사용</button>
+                    <button type="button" class="btn btn-outline-secondary coupon-btn" data-toggle="modal" data-target="#couponModal">쿠폰 사용</button>
                 </div>
                 <div class="points-container">
                     <div class="points-left">
@@ -78,7 +78,7 @@
                     </div>
                     <div class="points-input">
                         <input type="text"/>
-                        <button type="button" class="btn btn-outline-dark cancel-btn">사용 취소</button>
+                        <button type="button" class="btn btn-outline-secondary cancel-btn">사용 취소</button>
                     </div>
                     <p class="points-info">적용한도(7%) 8,064원 / 보유 9,296원</p>
                 </div>
@@ -277,6 +277,53 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-dark confirm-btn">변경하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%-- 쿠폰 사용 모달 --%>
+    <div class="modal fade" id="couponModal" tabindex="-1" role="dialog" aria-labelledby="couponModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">쿠폰 사용</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="coupon-list">
+                        <div class="coupon-item">
+                            <input type="radio" id="coupon1" name="coupon" class="coupon-radio">
+                            <label for="coupon1" class="coupon-label">
+                                <p class="discount">2,592원 할인</p>
+                                <p class="description">
+                                    <span class="highlight">[최대 할인 쿠폰]</span> 1월 무신사 회원 정기 쿠폰 실버등급
+                                </p>
+                                <p class="expiry">2025.01.31까지</p>
+                            </label>
+                        </div>
+                        <div class="coupon-item">
+                            <input type="radio" id="coupon2" name="coupon" class="coupon-radio">
+                            <label for="coupon2" class="coupon-label">
+                                <p class="discount">1,440원 할인</p>
+                                <p class="description">1월 무신사 회원 정기 쿠폰 실버등급</p>
+                                <p class="expiry">2025.01.31까지</p>
+                            </label>
+                        </div>
+                        <div class="coupon-item">
+                            <input type="radio" id="coupon3" name="coupon" class="coupon-radio">
+                            <label for="coupon3" class="coupon-label">
+                                <p class="discount">1,440원 할인</p>
+                                <p class="description">1월 무신사 회원 정기 쿠폰 실버등급</p>
+                                <p class="expiry">2025.01.31까지</p>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark btn-block">적용하기</button>
                 </div>
             </div>
         </div>
