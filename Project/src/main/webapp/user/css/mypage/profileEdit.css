@@ -1,0 +1,92 @@
+.container {
+    width: 800px !important;
+}
+
+.profile-container {
+    margin: 20px auto;
+    max-width: 600px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.profile-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.profile-table th {
+    text-align: left;
+    padding: 10px 15px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+    width: 120px;
+    background-color: #f9f9f9;
+}
+
+.profile-table td {
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #555;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.button-container .btn {
+    flex: 1;
+}
+
+.button-container .btn:hover {
+    background-color: #fff !important;
+    color: #6c757d !important;
+}
+
+/* 이메일 변경 모달 */
+.email-change-form {
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.email-input {
+    flex: 1;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.verification-input {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.request-btn {
+    white-space: nowrap;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+.modal-footer .btn-dark {
+    width: 100%;
+}
+
+.modal-footer .btn-dark:hover {
+    background-color: #000 !important;
+    color: #fff !important;
+}

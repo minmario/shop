@@ -1,14 +1,5 @@
-.wrap {
-    overflow: hidden auto;
-}
-
-.row {
-    padding: 20px;
-}
-
 .container {
     width: 800px !important;
-    margin: 0 auto;
 }
 
 .header-option, .text-title {
@@ -64,7 +55,7 @@
     cursor: pointer;
 }
 
-.change-address-btn:hover {
+.change-address-btn:hover, .coupon-btn:hover, .cancel-btn:hover {
     background-color: #fff !important;
     color: #6c757d !important;
 }
@@ -227,11 +218,6 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     margin-right: 10px;
-}
-
-.cancel-btn:hover {
-    background-color: #fff !important;
-    color: #000 !important;
 }
 
 .points-info {
@@ -660,4 +646,75 @@
 .confirm-btn:hover {
     background-color: #000 !important;
     color: #fff !important;
+}
+
+/* 쿠폰 사용 모달 */
+#couponModal h5 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#couponModal .modal-body {
+    padding: 20px;
+}
+
+#couponModal .coupon-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#couponModal .coupon-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+#couponModal .coupon-radio {
+    margin-top: 5px;
+}
+
+#couponModal .coupon-label {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-bottom: 0 !important;
+}
+
+#couponModal .discount {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+#couponModal .description {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+#couponModal .highlight {
+    color: #007bff;
+    font-weight: bold;
+}
+
+#couponModal .expiry {
+    font-size: 12px;
+    color: #888;
+    margin-top: 3px;
+    margin-bottom: 0 !important;
+}
+
+#couponModal .modal-footer {
+    padding: 15px;
+}
+
+#couponModal .btn-block {
+    width: 100%;
+    font-weight: bold;
 }
