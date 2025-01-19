@@ -5,7 +5,6 @@
     </div>
 </div>
 <div class="custom-order-container">
-    <!-- 첫 번째 주문 -->
     <div class="custom-order">
         <div class="custom-order-header">
             <div class="custom-header-row">
@@ -31,8 +30,6 @@
             <button type="button" class="btn btn-outline-secondary custom-action-button">재구매</button>
         </div>
     </div>
-
-    <!-- 두 번째 주문 -->
     <div class="custom-order">
         <div class="custom-order-header">
             <div class="custom-header-row">

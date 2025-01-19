@@ -8,7 +8,6 @@
 </div>
 <div class="custom-addr">
     <div class="wrap-addrList">
-        <!-- 배송지 정보-->
         <div class="address-box">
             <input type="radio" id="default-address" name="address" checked>
             <label for="default-address">
@@ -33,10 +32,8 @@
                 </div>
             </label>
         </div>
-
     </div>
 </div>
-
 <div class="delivery-notice">
     <ol>
         <li>배송 주소록은 최대 3개까지 등록할 수 있으며, 별도로 등록하지 않을 경우 최근 배송 주소록 기준으로 자동 업데이트 됩니다.</li>

@@ -260,31 +260,36 @@ table th, table td {
 }
 
 .user-action-buttons, .review-section-container, .delivery-section-container,
-.coupon-section-container, .point-section-container, .order-section-container {
+.coupon-section-container, .point-section-container, .order-section-container,
+.inquiry-section-container, .question-section-container {
     margin: 0 auto;
 }
 
 .user-action-buttons, .user-action-buttons .btn-group, .review-section-container,
 .delivery-section-container, .coupon-section-container, .point-section-container,
-.order-section-container {
+.order-section-container, .inquiry-section-container, .question-section-container {
     width: 100% !important;
 }
 
 .review-section-container, .delivery-section-container, .coupon-section-container,
-.point-section-container, .order-section-container {
+.point-section-container, .order-section-container, .inquiry-section-container, .question-section-container {
     margin-top: 20px !important;
 }
 
-.review-section, .coupon-section, .point-section, .order-section, .order-section, .delivery-section {
+.review-section, .coupon-section, .point-section, .order-section,
+.order-section, .delivery-section, .inquiry-section, .question-section {
     height: 35px;
 }
 
-.review-header, .coupon-header, .point-header, .order-section .order-header {
+.review-header, .coupon-header, .point-header,
+.order-section .order-header, .inquiry-header, .question-header {
     line-height: 35px;
     float: left;
 }
 
-.review-title, .delivery-title, .coupon-title, .point-title, .order-section .order-header .order-title, .order-title {
+.review-title, .delivery-title, .coupon-title, .point-title,
+.order-section .order-header .order-title, .order-title,
+.inquiry-title, .question-title {
     font-weight: bold;
     font-size: 18px;
 }

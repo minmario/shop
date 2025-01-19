@@ -23,6 +23,8 @@
     <link rel="stylesheet" type="text/css" href="./user/css/mypage/components/order.css"/>
     <link rel="stylesheet" type="text/css" href="./user/css/mypage/components/point.css"/>
     <link rel="stylesheet" type="text/css" href="./user/css/mypage/components/review.css"/>
+    <link rel="stylesheet" type="text/css" href="./user/css/mypage/components/inquiry.css"/>
+    <link rel="stylesheet" type="text/css" href="./user/css/mypage/components/question.css"/>
 </head>
 <body>
     <%-- header --%>
@@ -95,16 +97,16 @@
                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                         <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-order" autocomplete="off">
                         <label class="btn btn-outline-dark" for="btnradio-order">주문내역</label>
-                        <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-reviews" autocomplete="off">
-                        <label class="btn btn-outline-dark" for="btnradio-reviews">구매후기</label>
-                        <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-questions" autocomplete="off">
-                        <label class="btn btn-outline-dark" for="btnradio-questions">상품문의</label>
+                        <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-review" autocomplete="off">
+                        <label class="btn btn-outline-dark" for="btnradio-review">구매후기</label>
                         <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-inquiry" autocomplete="off">
                         <label class="btn btn-outline-dark" for="btnradio-inquiry">1:1문의</label>
-                        <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-points" autocomplete="off">
-                        <label class="btn btn-outline-dark" for="btnradio-points">적립금</label>
-                        <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-coupons" autocomplete="off">
-                        <label class="btn btn-outline-dark" for="btnradio-coupons">쿠폰</label>
+                        <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-question" autocomplete="off">
+                        <label class="btn btn-outline-dark" for="btnradio-question">상품문의</label>
+                        <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-point" autocomplete="off">
+                        <label class="btn btn-outline-dark" for="btnradio-point">적립금</label>
+                        <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-coupon" autocomplete="off">
+                        <label class="btn btn-outline-dark" for="btnradio-coupon">쿠폰</label>
                         <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-delivery" autocomplete="off">
                         <label class="btn btn-outline-dark" for="btnradio-delivery">배송지</label>
                     </div>
@@ -123,6 +125,16 @@
                 <!-- Point Section -->
                 <div class="point-section-container" id="point-article">
                     <jsp:include page="./components/point.jsp"/>
+                </div>
+
+                <!-- Inquiry Section -->
+                <div class="inquiry-section-container" id="inquiry-article">
+                    <jsp:include page="./components/inquiry.jsp"/>
+                </div>
+
+                <!-- Question Section -->
+                <div class="question-section-container" id="question-article">
+                    <jsp:include page="./components/question.jsp"/>
                 </div>
 
                 <!-- Coupon Section -->
@@ -323,11 +335,11 @@
 
             const tabActions = {
                 "#btnradio-order": "#order-article",
-                "#btnradio-reviews": "#review-article",
-                //"#btnradio-questions": "#questions-article",
-                //"#btnradio-inquiry": "#inquiry-article",
-                "#btnradio-points": "#point-article",
-                "#btnradio-coupons": "#coupon-article",
+                "#btnradio-review": "#review-article",
+                "#btnradio-inquiry": "#inquiry-article",
+                "#btnradio-question": "#question-article",
+                "#btnradio-point": "#point-article",
+                "#btnradio-coupon": "#coupon-article",
                 "#btnradio-delivery": "#delivery-article"
             };
 
