@@ -42,7 +42,7 @@
             <div class="container">
                 <!-- Title Section -->
                 <div class="text-title">
-                    <h3>My Page</h3>
+                    <h3>마이 페이지</h3>
                 </div>
 
                 <!-- Profile Section -->
