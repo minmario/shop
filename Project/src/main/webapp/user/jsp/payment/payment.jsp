@@ -231,7 +231,7 @@
                     </div>
                 </div>
                 <div class="payment-button-container">
-                    <button type="button" class="btn btn-dark payment-button">107,136원 결제하기</button>
+                    <button type="button" class="btn btn-dark payment-button" onclick="location.href='Controller?type=orderCompleted'">107,136원 결제하기</button>
                 </div>
             </div>
         </div>

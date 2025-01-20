@@ -173,7 +173,7 @@
 
                     <div class="product-list d-flex flex-wrap">
                         <c:forEach begin="1" end="9" varStatus="st">
-                            <div class="product-item">
+                            <div class="product-item" onclick="location.href='Controller?type=productDetails'">
                                 <img src="./user/images/product${st.index}.jpg" alt="상품 이미지" class="product-image">
                                 <div class="product-info">
                                     <p class="product-brand"><strong>브랜드명</strong></p>
