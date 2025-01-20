@@ -4,11 +4,11 @@
 
 .wrap-title{
     padding: 5px 10px;
-    margin: 20px auto 0 auto;
+    margin: 20px auto;
 }
 
 .title {
-    font-size: 18px;
+    font-size: 22px;
     padding: 10px 0;
     margin: 10px auto 20px auto;
     font-weight: bold;
@@ -86,12 +86,14 @@
 .order-details {
     font-size: 14px;
     color: #555;
+    text-decoration: underline !important;
 }
 
 .order-details:hover, .order-details:focus,
 .order-details:visited {
     font-size: 14px;
     color: #555;
+    text-decoration: underline;
 }
 
 .product-info {
@@ -185,12 +187,14 @@
     font-size: 14px;
     color: #555;
     margin-right: 5px;
+    text-decoration: underline !important;
 }
 
 .tracking-number:hover, .tracking-number:focus,
 .tracking-number:visited {
     font-size: 14px;
     color: #555;
+    text-decoration: underline;
 }
 
 .copy-button {
