@@ -2,9 +2,17 @@
     width: 800px !important;
 }
 
+.edit-header {
+    padding: 20px;
+}
+
+.edit-header h2 {
+    font-size: 22px;
+    font-weight: bold;
+}
+
 .profile-container {
-    margin: 20px auto;
-    max-width: 600px;
+    margin: 0 20px;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -48,6 +56,22 @@
     color: #6c757d !important;
 }
 
+.retired-link-container {
+    margin: 300px 20px 0 20px;
+    text-align: left;
+}
+
+.retired-link-container {
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: underline;
+    display: inline-block;
+}
+
+.retired-link-container a:hover, .retired-link-container a:focus, .retired-link-container a:active {
+    text-decoration: none;
+}
+
 /* 이메일 변경 모달 */
 .email-change-form {
     padding: 20px;
@@ -76,10 +100,14 @@
 
 .request-btn {
     white-space: nowrap;
-    border: 1px solid #ddd;
     padding: 10px 15px;
     font-size: 14px;
     border-radius: 4px;
+}
+
+.request-btn:hover {
+    background-color: #fff !important;
+    color: #6c757d !important;
 }
 
 .modal-footer .btn-dark {

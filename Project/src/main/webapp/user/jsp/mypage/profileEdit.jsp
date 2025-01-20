@@ -24,6 +24,9 @@
     <div class="wrap">
         <div class="row">
             <div class="container">
+                <div class="edit-header">
+                    <h2>회원 정보 변경</h2>
+                </div>
                 <div class="profile-container">
                     <table class="profile-table">
                         <tbody>
@@ -49,6 +52,9 @@
                         <button type="button" class="btn btn-outline-secondary">회원정보 변경</button>
                         <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#emailModal">이메일 변경</button>
                     </div>
+                </div>
+                <div class="retired-link-container">
+                    <a href="Controller?type=retired">회원탈퇴</a>
                 </div>
             </div>
         </div>
