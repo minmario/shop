@@ -1,0 +1,16 @@
+.container {
+    width: 800px !important;
+}
+
+.alarm-header {
+    padding: 20px;
+}
+
+.alarm-header h2 {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.alarm-tabs, .tab-content {
+    padding: 0 20px;
+}
