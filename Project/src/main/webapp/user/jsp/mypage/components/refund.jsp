@@ -26,7 +26,7 @@
                 <div class="refund-header">
                     <div class="refund-date">24.12.16</div>
                     <div class="refund-details-link">
-                        <a href="#">주문 상세</a>
+                        <a href="Controller?type=orderDetails">주문 상세</a>
                     </div>
                 </div>
                 <div class="refund-status">취소완료</div>
@@ -41,14 +41,14 @@
                 </div>
                 <div class="wrap-buttons">
                     <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=cancelDetails'">취소 상세</button>
-                    <button type="button" class="btn btn-outline-secondary">재구매</button>
+                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#repurchaseModal">재구매</button>
                 </div>
             </div><hr/>
 
             <div class="refund-summary">
                 <div class="refund-header">
                     <div class="refund-date">24.12.16</div>
-                    <div class="refund-details-link"><a href="#">주문 상세</a></div>
+                    <div class="refund-details-link"><a href="Controller?type=orderDetails">주문 상세</a></div>
                 </div>
                 <div class="refund-status">반품완료</div>
                 <div class="order-product">
@@ -62,7 +62,7 @@
                 </div>
                 <div class="wrap-buttons">
                     <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=refundDetails'">반품 상세</button>
-                    <button type="button" class="btn btn-outline-secondary">재구매</button>
+                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#repurchaseModal">재구매</button>
                     <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
                 </div>
             </div><hr/>
@@ -71,7 +71,7 @@
                 <div class="exchange-header">
                     <div class="exchange-date">22.05.16</div>
                     <div class="exchange-details-link">
-                        <a href="#">주문 상세</a>
+                        <a href="Controller?type=orderDetails">주문 상세</a>
                     </div>
                 </div>
                 <div class="exchange-status">교환완료</div>
@@ -117,7 +117,7 @@
                 </div>
                 <div class="wrap-buttons">
                     <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=cancelDetails'">취소 상세</button>
-                    <button type="button" class="btn btn-outline-secondary">재구매</button>
+                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#repurchaseModal">재구매</button>
                 </div>
             </div><hr/>
 
@@ -138,11 +138,55 @@
                 </div>
                 <div class="wrap-buttons">
                     <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=refundDetails'">반품 상세</button>
-                    <button type="button" class="btn btn-outline-secondary">재구매</button>
+                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#repurchaseModal">재구매</button>
+                    <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
+                </div>
+            </div><hr/>
+
+            <div class="refund-summary">
+                <div class="refund-header">
+                    <div class="refund-date">24.12.16</div>
+                    <div class="refund-details-link"><a href="#">주문 상세</a></div>
+                </div>
+                <div class="refund-status">반품신청완료</div>
+                <div class="order-product">
+                    <div class="product-image"></div>
+                    <div class="product-info">
+                        <p class="product-brand">thisisnever</p>
+                        <p class="product-name">Mesh Football Jersey Navy</p>
+                        <p class="product-options">M / 1개</p>
+                        <p class="product-price">25,770원</p>
+                    </div>
+                </div>
+                <div class="wrap-buttons">
+                    <button type="button" class="btn btn-outline-secondary">환불 취소</button>
+                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#returnModal">반송장 입력</button>
+                    <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
+                </div>
+            </div><hr/>
+
+            <div class="refund-summary">
+                <div class="refund-header">
+                    <div class="refund-date">24.12.16</div>
+                    <div class="refund-details-link"><a href="#">주문 상세</a></div>
+                </div>
+                <div class="refund-status">반품신청완료</div>
+                <div class="order-product">
+                    <div class="product-image"></div>
+                    <div class="product-info">
+                        <p class="product-brand">thisisnever</p>
+                        <p class="product-name">Mesh Football Jersey Navy</p>
+                        <p class="product-options">M / 1개</p>
+                        <p class="product-price">25,770원</p>
+                    </div>
+                </div>
+                <div class="wrap-buttons">
+                    <button type="button" class="btn btn-outline-secondary">환불 취소</button>
+                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#returnModal">반송장 수정</button>
+                    <button type="button" class="btn btn-outline-secondary">반송 조회</button>
                     <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
                 </div>
             </div>
-
         </div>
     </div>
 

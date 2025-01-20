@@ -301,6 +301,117 @@
         </div>
     </div>
 
+    <!-- 재구매 모달 -->
+    <div class="modal fade" id="repurchaseModal" tabindex="-1" role="dialog" aria-labelledby="repurchaseModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="repurchaseModalLabel">동일한 옵션/수량으로 재구매 하시겠습니까?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>다른 옵션/수량으로 구매하려면 장바구니에 담은 후 변경해 보세요.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark button">장바구니 담기</button>
+                    <button type="button" class="btn btn-dark button">구매하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 후기 작성 모달 -->
+    <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reviewModalLabel">동일한 옵션/수량으로 재구매 하시겠습니까?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul class="review-list">
+                        <li>
+                            <div class="review-item" onclick="location.href='Controller?type=writeReview'">
+                                <span class="review-title">후기</span>
+                                <span class="review-subtitle">적립금 최대 0원 지급</span>
+                                <span class="arrow-icon">&gt;</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="review-item" onclick="location.href='Controller?type=writeReview'">
+                                <span class="review-title">한달 후기</span>
+                                <span class="review-subtitle">적립금 최대 1,000원 지급</span>
+                                <span class="arrow-icon">&gt;</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="review-item" onclick="location.href='Controller?type=writeReview'">
+                                <span class="review-title">스타일 후기</span>
+                                <span class="review-subtitle">적립금 최대 1,500원 지급</span>
+                                <span class="arrow-icon">&gt;</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 반송 운송장 모달 -->
+    <div class="modal fade" id="returnModal" tabindex="-1" role="dialog" aria-labelledby="returnModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="returnModalLabel">반송 운송장 입력</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <!-- 택배사 -->
+                        <div class="form-group">
+                            <label for="option-color" class="form-label">택배사</label>
+                            <select class="form-select select" id="option-color" name="option-color">
+                                <option selected>CJ대한통운</option>
+                                <option>한진택배</option>
+                                <option>로젠택배</option>
+                                <option>우체국택배</option>
+                            </select>
+                        </div>
+                        <!-- 송장번호 -->
+                        <div class="form-group">
+                            <label for="trackingNumber" class="form-label">송장번호</label>
+                            <input type="text" id="trackingNumber" class="form-control" placeholder="송장번호를 입력하세요">
+                            <div class="form-check mt-2">
+                                <input type="checkbox" class="form-check-input" id="unknownTracking">
+                                <label class="form-check-label" for="unknownTracking">송장번호 모름</label>
+                            </div>
+                        </div>
+                        <!-- 반송인 -->
+                        <div class="form-group">
+                            <label for="senderName" class="form-label">반송인</label>
+                            <input type="text" id="senderName" class="form-control" placeholder="반송인을 입력하세요">
+                        </div>
+                        <!-- 안내 메시지 -->
+                        <div class="info-message">
+                            <p>- 보내신 반품의 운송장 정보를 기입해주세요.</p>
+                            <p>- 배송정보가 업데이트되면 반품의 배송 상태를 확인할 수 있습니다.</p>
+                            <p>- 배송완료가 되었다더라도 입고 및 검수까지 3일 이상 소요될 수 있습니다.</p>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark button">입력 완료</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <%-- JQuery --%>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 

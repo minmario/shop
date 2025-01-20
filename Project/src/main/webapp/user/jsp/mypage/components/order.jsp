@@ -24,10 +24,10 @@
                 <p class="custom-product-price">17,700원</p>
             </div>
         </div>
-        <button type="button" class="btn btn-outline-secondary custom-review-button">후기 작성 (최대 52,500원 적립)</button>
+        <button type="button" class="btn btn-outline-secondary custom-review-button" data-toggle="modal" data-target="#reviewModal">후기 작성 (최대 52,500원 적립)</button>
         <div class="custom-product-actions">
             <button type="button" class="btn btn-outline-secondary custom-action-button">배송 조회</button>
-            <button type="button" class="btn btn-outline-secondary custom-action-button">재구매</button>
+            <button type="button" class="btn btn-outline-secondary custom-action-button" data-toggle="modal" data-target="#repurchaseModal">재구매</button>
         </div>
     </div>
     <div class="custom-order">
@@ -51,7 +51,7 @@
         </div>
         <div class="custom-product-actions">
             <button type="button" class="btn btn-outline-secondary custom-action-button">배송 조회</button>
-            <button type="button" class="btn btn-outline-secondary custom-action-button">재구매</button>
+            <button type="button" class="btn btn-outline-secondary custom-action-button" data-toggle="modal" data-target="#repurchaseModal">재구매</button>
         </div>
     </div>
 </div>

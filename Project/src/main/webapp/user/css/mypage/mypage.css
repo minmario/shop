@@ -453,3 +453,115 @@ input.addr2, input.toggle, #request-select {
     background-color: #fff !important;
     color: #6c757d !important;
 }
+/**************재구매 모달**************/
+.modal-title{
+    font-weight: bold;
+    color: #333;
+    border: none;
+}
+
+.modal-body>p{
+    margin: 10px 0;
+}
+
+.modal-footer>button:first-child:hover {
+    background-color: #fff !important;
+    color: #000000 !important;
+}
+
+.button {
+    flex: 1;
+    padding: 10px 0;
+    font-size: 14px;
+}
+/*************리뷰 작성 모달************/
+
+.modal-content {
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.modal-header {
+    border-bottom: none;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-body {
+    padding: 0;
+}
+
+
+.review-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.review-list li {
+    border-bottom: 1px solid #ddd;
+}
+
+.review-list li:last-child {
+    border-bottom: none;
+}
+
+.review-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    cursor: pointer;
+}
+
+.review-item:hover {
+    background-color: #f9f9f9;
+}
+
+.review-title {
+    width: 30%;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.review-subtitle {
+    font-size: 14px;
+    color: #888;
+}
+
+.arrow-icon {
+    font-size: 18px;
+    color: #ccc;
+}
+/***********반송장 입력 모달(취소/반품 탭)************/
+.form-label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.form-control {
+    border: 1px solid red;
+    border-radius: 4px;
+}
+
+.form-check-label {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #555;
+}
+
+.info-message {
+    font-size: 12px;
+    color: #888;
+    margin-top: 15px;
+}
+
+.info-message p {
+    margin: 0 0 5px;
+}

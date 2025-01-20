@@ -8,7 +8,6 @@
         <span class="earnings-possible">적립가능 금액</span>
         <span class="earnings-amount">2,500원</span>
     </div>
-    <a href="#" class="earnings-guide">작성 안내</a>
 </div>
 <div class="earnings-container">
     <div class="earnings-content">
@@ -22,8 +21,8 @@
             </div>
         </div>
         <div class="action-buttons">
-            <button class="btn btn-outline-secondary custom-btn">후기 작성</button>
-            <button class="btn btn-outline-secondary custom-btn">한달후기 작성</button>
+            <button class="btn btn-outline-secondary custom-btn" onclick="location.href='Controller?type=writeReview'">후기 작성</button>
+            <button class="btn btn-outline-secondary custom-btn" onclick="location.href='Controller?type=writeMonth'">한달후기 작성</button>
             <button class="btn btn-outline-secondary custom-btn">스타일 후기 작성</button>
         </div>
     </div>
@@ -39,7 +38,7 @@
         </div>
         <div class="action-buttons">
             <button class="btn btn-outline-secondary custom-btn disabled">후기 기간만료</button>
-            <button class="btn btn-outline-secondary custom-btn">한달후기 작성</button>
+            <button class="btn btn-outline-secondary custom-btn" onclick="location.href='Controller?type=writeMonth'">한달후기 작성</button>
             <button class="btn btn-outline-secondary custom-btn">스타일 후기 작성</button>
         </div>
     </div>

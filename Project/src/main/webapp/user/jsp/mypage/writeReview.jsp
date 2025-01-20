@@ -15,7 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <%-- CSS --%>
-    <link rel="stylesheet" type="text/css" href="../../css/mypage/writeReview.css"/>
+    <link rel="stylesheet" type="text/css" href="./user/css/mypage/writeReview.css"/>
 </head>
 <body>
     <!-- header -->
@@ -29,10 +29,10 @@
 
                     <div class="review-header">
                         <div class="review-info">
-                            <span class="review-title">상품 후기 작성</span>
+                            <span class="review-title">후기 작성</span>
                             <div class="wrap-notice">
-                                <span class="review-notice">작성시 유의사항</span>
-                                <i class="arrow-icon">&gt;</i>
+                                <span class="review-notice" data-toggle="modal" data-target="#noticeModal">작성 시 유의사항</span>
+                                <span class="arrow-icon" data-toggle="modal" data-target="#noticeModal">&gt;</span>
                             </div>
                         </div>
                     </div>
@@ -47,11 +47,11 @@
                     <div class="review-rating">
                         <p class="section-title">이 상품 어떠셨나요?</p>
                         <div class="rating-stars">
-                            <i class="star">&#9734;</i>
-                            <i class="star">&#9734;</i>
-                            <i class="star">&#9734;</i>
-                            <i class="star">&#9734;</i>
-                            <i class="star">&#9734;</i>
+                            <span class="star" data-value="1">&#9734;</span>
+                            <span class="star" data-value="2">&#9734;</span>
+                            <span class="star" data-value="3">&#9734;</span>
+                            <span class="star" data-value="4">&#9734;</span>
+                            <span class="star" data-value="5">&#9734;</span>
                         </div>
                     </div>
                     <div class="review-comment">
@@ -76,12 +76,14 @@
                     <div class="body-info">
                         <p class="section-title">내 체형정보를 입력해주세요 (필수)</p>
                         <div class="gender-selection">
-                            <label>
-                                <input type="radio" name="gender" value="female" checked> 여성
-                            </label>
-                            <label>
-                                <input type="radio" name="gender" value="male"> 남성
-                            </label>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-outline-secondary active">
+                                    <input type="radio" name="options" id="option1" autocomplete="off" checked>남성
+                                </label>
+                                <label class="btn btn-outline-secondary">
+                                    <input type="radio" name="options" id="option2" autocomplete="off">여성
+                                </label>
+                            </div>
                         </div>
                         <div class="input-group">
                             <input type="text" placeholder="키를 입력해주세요" />
@@ -99,7 +101,7 @@
                     </div>
                     <!-- 등록 버튼 -->
                     <div class="action-buttons">
-                        <span class="reward-points">예상 적립금: <strong>0/1,000점</strong></span>
+                        <span class="reward-points">예상 적립금: <span class="strong">0 / 1,000점</span></span>
                         <button type="button" class="btn btn-dark">등록하기</button>
                     </div>
 
@@ -113,10 +115,61 @@
         <jsp:include page="../layout/footer.jsp"></jsp:include>
     </div>
 
+    <%-- Modal --%>
+
+    <!-- 작성 유의사항 모달 -->
+    <div class="modal fade" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="noticeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="noticeModalLabel">작성 시 유의사항</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <ul>
+                            <li>구매 확정일로부터 30일 이내에 리뷰를 작성해야 합니다.</li>
+                            <li>리뷰는 텍스트나 사진으로 작성할 수 있습니다.</li>
+                            <li>텍스트만 작성할 경우 500원, 텍스트와 사진을 함께 작성할 경우 1,000원의 적립금을 받을 수 있습니다.</li>
+                            <li>후기 작성일 이후 영업일 기준 1~2일 내에 적립금이 지급됩니다.</li>
+                            <li>후기 개수가 많을 경우 적립금 지급이 다소 지연될 수 있습니다.</li>
+                            <li>마이 페이지에서 작성한 후기의 적립금 지급 여부를 확인할 수 있습니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <%-- JQuery --%>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
     <%-- Bootstrap --%>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    //리뷰 별점 기능
+    document.addEventListener('DOMContentLoaded', function () {
+        const stars = document.querySelectorAll('.rating-stars .star');
+
+        stars.forEach(star => {
+            star.addEventListener('click', function () {
+                // 모든 별의 selected 클래스 제거
+                stars.forEach(s => s.classList.remove('selected'));
+
+                // 클릭한 별과 그 이전 별까지 selected 클래스 추가
+                const value = parseInt(this.getAttribute('data-value'));
+                stars.forEach(s => {
+                    if (parseInt(s.getAttribute('data-value')) <= value) {
+                        s.classList.add('selected');
+                    }
+                });
+            });
+        });
+    });
+
+</script>
 </body>
 </html>
