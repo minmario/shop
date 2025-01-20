@@ -90,7 +90,7 @@
                                 <div class="payment-status">결제완료</div>
                                 <div class="product-name">커버낫</div>
                                 <div class="product-description">
-                                    [2PACK] 쿨 코튼 티셔츠 블랙+화이트<br>사이즈: M
+                                    [2PACK] 쿨 코튼 티셔츠 블랙+화이트<br/>M
                                 </div>
                             </div>
                         </div>

@@ -1,22 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const tabs = document.querySelectorAll(".alarm-tabs .nav-link");
-    const tables = document.querySelectorAll(".tab-content .table");
+    const alarmToggle = document.getElementById("alarm-toggle");
+    const alarmContainer = document.querySelector(".alarm-container");
 
-    tabs.forEach((tab) => {
-        tab.addEventListener("click", function (e) {
-            e.preventDefault();
+    alarmToggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        alarmContainer.classList.toggle("d-none");
+    });
 
-            tabs.forEach((t) => t.classList.remove("active"));
-
-            this.classList.add("active");
-
-            tables.forEach((table) => table.classList.remove("show", "active"));
-
-            const targetId = this.getAttribute("href").substring(1);
-            const targetTable = document.getElementById(targetId);
-            if (targetTable) {
-                targetTable.classList.add("show", "active");
-            }
-        });
+    document.addEventListener("click", function (e) {
+        if (!alarmContainer.contains(e.target) && !alarmToggle.contains(e.target)) {
+            alarmContainer.classList.add("d-none");
+        }
     });
 });
