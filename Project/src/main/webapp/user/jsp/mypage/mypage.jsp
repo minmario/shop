@@ -303,7 +303,7 @@
 
     <!-- 재구매 모달 -->
     <div class="modal fade" id="repurchaseModal" tabindex="-1" role="dialog" aria-labelledby="repurchaseModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="repurchaseModalLabel">동일한 옵션/수량으로 재구매 하시겠습니까?</h5>
@@ -315,8 +315,8 @@
                     <p>다른 옵션/수량으로 구매하려면 장바구니에 담은 후 변경해 보세요.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-dark button">장바구니 담기</button>
-                    <button type="button" class="btn btn-dark button">구매하기</button>
+                    <button type="button" class="btn btn-outline-dark button" onclick="location.href='Controller?type=cart'">장바구니 담기</button>
+                    <button type="button" class="btn btn-dark button" onclick="location.href='Controller?type=payment'">구매하기</button>
                 </div>
             </div>
         </div>
