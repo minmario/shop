@@ -44,7 +44,7 @@
     display: flex;
 }
 
-.thisisnever_img{
+.product-img{
     background: url("../../images/thisisnever_img.png") no-repeat;
     background-size: 100px 100px;
     width: 100px;

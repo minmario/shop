@@ -36,7 +36,7 @@
                     <!-- 교환 상품 정보 -->
                     <section class="wrap-product">
                         <div class="product-content">
-                            <div class="thisisnever_img"></div>
+                            <div class="product-img"></div>
                             <div class="product-detail">
                                 <span>[thisisnever]</span><br/>
                                 Mesh Football Jersey Navy
