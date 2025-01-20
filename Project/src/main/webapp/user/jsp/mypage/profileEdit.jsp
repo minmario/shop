@@ -54,7 +54,7 @@
                     </div>
                 </div>
                 <div class="retired-link-container">
-                    <a href="Controller?type=retired">회원탈퇴</a>
+                    <a href="Controller?type=retiredReason">회원탈퇴</a>
                 </div>
             </div>
         </div>
