@@ -66,11 +66,10 @@
 }
 
 .coupon-title {
-    font-size: 14px;
+    font-size: 18px;
     font-weight: bold;
     margin-top: 10px;
     margin-bottom: 5px;
-    color: #333;
 }
 
 .coupon-expiry {
