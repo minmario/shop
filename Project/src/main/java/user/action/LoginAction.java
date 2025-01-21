@@ -13,35 +13,27 @@ public class LoginAction  implements Action {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        String viewpath = null;
         CustomerVO vo = new CustomerVO();
         vo.setCus_id(username);
         vo.setCus_pw(password);
 
-        CustomerVO loginResult = CustomerDAO.login(vo); // 로그인 정보 가져오기
+        // 로그인 정보 가져오기
+        CustomerVO loginResult = CustomerDAO.login(vo);
 
+        HttpSession session = request.getSession();
+        if (loginResult != null) {
+            // 로그인 정보 저장
+            session.setAttribute("isLoggedIn", true);
+            session.setAttribute("customer_info", loginResult);
 
-        //customer cusid 세션에 저장하는값
-        String nickname = loginResult.getNickname();
+            return "/user/jsp/index.jsp";
+        } else {
+            // 실패 시에만 isLoggedIn 설정
+            if (username != null && password != null) {
+                session.setAttribute("isLoggedIn", false);
+            }
 
-        //customer cusid 세션에 저장하는값
-        int customer_id = CustomerDAO.getId(nickname);
-
-
-
-        if(loginResult != null){
-            HttpSession session = request.getSession();
-            session.setAttribute("cus_id", customer_id);
-            System.out.println("현제접속중인 cus_id:"+customer_id);
-            session.setAttribute("nickname", loginResult.getNickname());
-            request.setAttribute("isLoggedIn", true);
-            request.setAttribute("nickname", loginResult.getNickname());
-            viewpath="/user/jsp/index.jsp";
+            return "/user/jsp/login/login.jsp";
         }
-        else{
-            viewpath="/user/jsp/layout/header.jsp";
-        }
-        return viewpath;
     }
 }
-

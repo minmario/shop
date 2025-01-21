@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -85,8 +86,15 @@
                             <p><i class="bi bi-dash"></i> 적립금 최대 <span class="points"><strong>384원</strong></span></p>
                         </div>
                         <div class="actions">
-                            <button class="btn btn-dark add-to-cart" onclick="location.href='Controller?type=cart'">장바구니 담기</button>
-                            <button class="btn btn-dark buy-now" onclick="location.href='Controller?type=payment'">구매하기</button>
+                            <c:if test="${empty sessionScope.isLoggedIn}">
+                                <div class="alert alert-danger" role="alert">
+                                    로그인 시 구매 가능합니다.
+                                </div>
+                            </c:if>
+                            <c:if test="${sessionScope.isLoggedIn}">
+                                <button class="btn btn-dark add-to-cart" onclick="location.href='Controller?type=cart'">장바구니 담기</button>
+                                <button class="btn btn-dark buy-now" onclick="location.href='Controller?type=payment'">구매하기</button>
+                            </c:if>
                         </div>
                     </div>
                 </div>

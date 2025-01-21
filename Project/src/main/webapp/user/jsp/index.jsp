@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,101 +26,29 @@
         <div class="row">
             <div class="container">
                 <div id="accordion" class="product-menu">
-                    <!-- 인기 -->
-                    <div class="card">
-                        <div class="card-header" id="popularHeading">
-                            <button class="btn btn-link d-flex justify-content-between align-items-center toggle-btn" data-toggle="collapse" data-target="#popularCollapse" aria-expanded="true" aria-controls="popularCollapse">
-                                <span class="text-left">인기 <span class="badge badge-secondary">Best</span></span>
-                                <i class="bi bi-dash"></i>
-                            </button>
-                        </div>
-                        <div id="popularCollapse" class="collapse show" aria-labelledby="popularHeading" data-parent="#accordion">
-                            <div class="card-body">
-                                <ul class="list-unstyled">
-                                    <li><button class="unstyled-btn" data-value="데님 팬츠">데님 팬츠 <span class="badge badge-secondary">(10,420)</span></button></li>
-                                    <li><button class="unstyled-btn" data-value="캔버스/탄화">캔버스/탄화 <span class="badge badge-secondary">(3,516)</span></button></li>
-                                    <li><button class="unstyled-btn" data-value="긴팔 티셔츠">긴팔 티셔츠 <span class="badge badge-secondary">(27,810)</span></button></li>
-                                    <li><button class="unstyled-btn" data-value="코튼 팬츠">코튼 팬츠 <span class="badge badge-secondary">(4,461)</span></button></li>
-                                </ul>
+                    <c:forEach var="major" items="${sessionScope.categories}">
+                        <c:if test="${major.name ne null}">
+                            <div class="card">
+                                <div class="card-header" id="${major.ename}Heading">
+                                    <button class="btn btn-link d-flex justify-content-between align-items-center toggle-btn" data-toggle="collapse" data-target="#${major.ename}Collapse" aria-expanded="false" aria-controls="${major.ename}Collapse">
+                                        <span class="text-left">${major.name} <span class="badge badge-secondary">${major.ename}</span></span>
+                                        <i class="bi bi-plus"></i>
+                                    </button>
+                                </div>
+                                <div id="${major.ename}Collapse" class="collapse" aria-labelledby="${major.ename}Heading" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <ul class="list-unstyled">
+                                            <c:forEach var="middle" items="${major.middleCategories}">
+                                                <c:if test="${middle.major_no eq major.id}">
+                                                    <li><button class="unstyled-btn" data-name="${middle.ename}" data-value="${middle.id}">${middle.ename}</button></li>
+                                                </c:if>
+                                            </c:forEach>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- 상의 -->
-                    <div class="card">
-                        <div class="card-header" id="topsHeading">
-                            <button class="btn btn-link d-flex justify-content-between align-items-center toggle-btn" data-toggle="collapse" data-target="#topsCollapse" aria-expanded="false" aria-controls="topsCollapse">
-                                <span class="text-left">상의 <span class="badge badge-secondary">Top</span></span>
-                                <i class="bi bi-plus"></i>
-                            </button>
-                        </div>
-                        <div id="topsCollapse" class="collapse" aria-labelledby="topsHeading" data-parent="#accordion">
-                            <div class="card-body">
-                                <ul class="list-unstyled">
-                                    <li><button class="unstyled-btn" data-value="티셔츠">티셔츠 <span class="badge badge-secondary">(10,420)</span></button></li>
-                                    <li><button class="unstyled-btn" data-value="셔츠">셔츠 <span class="badge badge-secondary">(3,516)</span></button></li>
-                                    <li><button class="unstyled-btn" data-value="니트">니트 <span class="badge badge-secondary">(27,810)</span></button></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 아우터 -->
-                    <div class="card">
-                        <div class="card-header" id="outerHeading">
-                            <button class="btn btn-link d-flex justify-content-between align-items-center toggle-btn" data-toggle="collapse" data-target="#outerCollapse" aria-expanded="false" aria-controls="outerCollapse">
-                                <span class="text-left">아우터 <span class="badge badge-secondary">Outer</span></span>
-                                <i class="bi bi-plus"></i>
-                            </button>
-                        </div>
-                        <div id="outerCollapse" class="collapse" aria-labelledby="outerHeading" data-parent="#accordion">
-                            <div class="card-body">
-                                <ul class="list-unstyled">
-                                    <li><button class="unstyled-btn" data-value="코트">코트 <span class="badge badge-secondary">(27,810)</span></button></li>
-                                    <li><button class="unstyled-btn" data-value="자켓">자켓 <span class="badge badge-secondary">(4,461)</span></button></li>
-                                    <li><button class="unstyled-btn" data-value="점퍼">점퍼 <span class="badge badge-secondary">(3,516)</span></button></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 바지 -->
-                    <div class="card">
-                        <div class="card-header" id="pantsHeading">
-                            <button class="btn btn-link d-flex justify-content-between align-items-center toggle-btn" data-toggle="collapse" data-target="#pantsCollapse" aria-expanded="false" aria-controls="pantsCollapse">
-                                <span class="text-left">바지 <span class="badge badge-secondary">Pants</span></span>
-                                <i class="bi bi-plus"></i>
-                            </button>
-                        </div>
-                        <div id="pantsCollapse" class="collapse" aria-labelledby="pantsHeading" data-parent="#accordion">
-                            <div class="card-body">
-                                <ul class="list-unstyled">
-                                    <li><button class="unstyled-btn" data-value="슬랙스">슬랙스 <span class="badge badge-secondary">(10,420)</span></button></li>
-                                    <li><button class="unstyled-btn" data-value="청바지">청바지 <span class="badge badge-secondary">(10,420)</span></button></li>
-                                    <li><button class="unstyled-btn" data-value="트레이닝 바지">트레이닝 바지 <span class="badge badge-secondary">(10,420)</span></button></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 신발 -->
-                    <div class="card">
-                        <div class="card-header" id="shoesHeading">
-                            <button class="btn btn-link d-flex justify-content-between align-items-center toggle-btn" data-toggle="collapse" data-target="#shoesCollapse" aria-expanded="false" aria-controls="shoesCollapse">
-                                <span class="text-left">신발 <span class="badge badge-secondary">Shoes</span></span>
-                                <i class="bi bi-plus"></i>
-                            </button>
-                        </div>
-                        <div id="shoesCollapse" class="collapse" aria-labelledby="shoesHeading" data-parent="#accordion">
-                            <div class="card-body">
-                                <ul class="list-unstyled">
-                                    <li><button class="unstyled-btn" data-value="운동화">운동화 <span class="badge badge-secondary">(10,420)</span></button></li>
-                                    <li><button class="unstyled-btn" data-value="구두">구두 <span class="badge badge-secondary">(10,420)</span></button></li>
-                                    <li><button class="unstyled-btn" data-value="샌들">샌들 <span class="badge badge-secondary">(10,420)</span></button></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                        </c:if>
+                    </c:forEach>
                 </div>
 
                 <div class="product-section">

@@ -1,22 +1,25 @@
 package user.action;
 
+import user.dao.CategoryDAO;
+import user.vo.MajorCategoryVO;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 public class IndexAction implements Action {
       @Override
       public String execute(HttpServletRequest request, HttpServletResponse response) {
-           HttpSession session = request.getSession();
+          HttpSession session = request.getSession();
+          
+          // 카테고리
+          List<MajorCategoryVO> categories = CategoryDAO.getCategory();
 
-           String  nickname = (String) session.getAttribute("nickname");
+          if (categories != null && categories.size() > 0) {
+              session.setAttribute("categories", categories);
+          }
 
-
-           if(nickname == null){
-
-             request.setAttribute("isLoggedIn", false);
-           }
-
-            return "/user/jsp/index.jsp";
+          return "/user/jsp/index.jsp";
       }
 }

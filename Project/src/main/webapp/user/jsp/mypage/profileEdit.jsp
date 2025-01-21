@@ -39,7 +39,7 @@
                                 <td>2001.**.**</td>
                             </tr>
                             <tr>
-                                <th>휴대폰번호</th>
+                                <th>휴대폰 번호</th>
                                 <td>010-****-1234</td>
                             </tr>
                             <tr>
@@ -49,8 +49,7 @@
                         </tbody>
                     </table>
                     <div class="button-container">
-                        <button type="button" class="btn btn-outline-secondary">회원정보 변경</button>
-                        <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#emailModal">이메일 변경</button>
+                        <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#editModal">회원정보 변경</button>
                     </div>
                 </div>
                 <div class="retired-link-container">
@@ -63,24 +62,25 @@
         <jsp:include page="../layout/footer.jsp"></jsp:include>
     </div>
 
-    <%-- 이메일 변경 모달 --%>
-    <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModalTitle" aria-hidden="true">
+    <%-- 회원정보 변경 모달 --%>
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">이메일 변경</h5>
+                    <h5 class="modal-title">회원정보 변경</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="email-change-form">
-                        <div class="form-group d-flex align-items-center">
-                            <input type="email" class="form-control email-input" placeholder="이메일" />
-                            <button type="button" class="btn btn-outline-secondary request-btn">인증요청</button>
+                        <div class="form-group">
+                            <label>이메일</label>
+                            <input type="email" class="form-control email-input" placeholder="이메일"/>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control verification-input" placeholder="인증번호" />
+                            <label>휴대폰 번호</label>
+                            <input type="text" class="form-control verification-input" placeholder="휴대폰 번호"/>
                         </div>
                     </div>
                 </div>

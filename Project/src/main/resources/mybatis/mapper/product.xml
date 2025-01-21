@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="product">
+    <!-- 카테고리를 인자로 받는 상품 목록 가져오기 -->
+    <select id="select_product" resultType="user.vo.ProductVO" parameterType="String">
+        SELECT * FROM product
+        WHERE category_no = #{category_no}
+    </select>
+</mapper>

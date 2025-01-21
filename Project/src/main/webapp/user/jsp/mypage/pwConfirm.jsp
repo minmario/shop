@@ -6,7 +6,9 @@
     <link rel="icon" href="./user/images/share_musinsa.png">
     <title>Musinsa</title>
 
-    <!-- Google Font -->
+    <%-- Google Font : Gothic A1 --%>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
 
     <!-- Bootstrap CSS -->
@@ -29,12 +31,6 @@
                     <p class="password-instruction">정보를 안전하게 보호하기 위해 비밀번호를 다시 한 번 입력해주세요</p>
                     <div class="input-group password-input-container">
                         <input type="password" class="form-control password-input" placeholder="비밀번호 입력" id="passwordInput">
-                        <div class="input-buttons">
-                            <button class="clear-btn" id="clearInput">&times;</button>
-                            <button class="visibility-btn" id="togglePassword">
-                                <i class="bi bi-eye-slash"></i>
-                            </button>
-                        </div>
                     </div>
                     <small id="errorMessage" class="error-message">4자 이상 입력해 주십시오</small>
                     <div class="confirm-button-container">

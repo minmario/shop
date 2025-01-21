@@ -17,5 +17,7 @@
     <mappers>
         <mapper resource="mybatis/mapper/customer.xml"/>
         <mapper resource="mybatis/mapper/delivery.xml"/>
+        <mapper resource="mybatis/mapper/category.xml"/>
+        <mapper resource="mybatis/mapper/product.xml"/>
     </mappers>
 </configuration>

@@ -37,5 +37,5 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
     <%-- CSS --%>
-    <link href="./user/css/common/footer.css" rel="stylesheet" type="text/css">
+    <link href="./user/css/layout/footer.css" rel="stylesheet" type="text/css">
 </footer>

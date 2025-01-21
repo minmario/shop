@@ -7,6 +7,6 @@ const countdownInterval = setInterval(() => {
         redirectMessage.textContent = `${countdown}초 뒤에 메인 페이지로 돌아갑니다`;
     } else {
         clearInterval(countdownInterval);
-        window.location.href = 'Controller?type=index';
+        window.location.href = 'Controller';
     }
 }, 1000);

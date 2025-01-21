@@ -32,7 +32,6 @@ document.querySelectorAll('.dropdown-item').forEach(item => {
 // selected
 document.addEventListener("DOMContentLoaded", () => {
     const listItems = document.querySelectorAll(".list-unstyled .unstyled-btn");
-    const selectedItemsContainer = document.querySelector(".selected-items");
     let activeItem = null;
 
     listItems.forEach((item) => {
@@ -45,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
             item.classList.add("active");
             activeItem = item;
 
-            const itemText = item.dataset.value;
+            const itemText = item.dataset.name;
 
             const selectedButton = document.querySelector(".selected-item");
             selectedButton.querySelector(".item-text").textContent = itemText;
@@ -65,4 +64,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-
+$(function () {
+    $.ajax({
+        url: 'Controller?type=' + $("#")
+    });
+})

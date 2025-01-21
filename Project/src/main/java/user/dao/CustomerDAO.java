@@ -29,15 +29,6 @@ public class CustomerDAO {
         return cnt;
     }
 
-    // 회원 정보
-    public static CustomerVO cusInfo(CustomerVO vo) {
-        SqlSession ss = FactoryService.getFactory().openSession();
-        CustomerVO cvo = ss.selectOne("customer.cusSelect", vo);
-        ss.close();
-
-        return cvo;
-    }
-
     public  static int getId(String nickname){
         SqlSession ss = FactoryService.getFactory().openSession();
 
@@ -46,7 +37,5 @@ public class CustomerDAO {
         } finally {
             ss.close(); // 세션은 반드시 닫아야 합니다.
         }
-
     }
-
 }

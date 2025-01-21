@@ -18,26 +18,18 @@ public class SignupAction implements Action {
         String cusBirth = request.getParameter("cus_birth");
         String cusPhone = request.getParameter("cus_phone");
         String cusEmail = request.getParameter("cus_email");
-        String height = request.getParameter("height");
-        String weight = request.getParameter("weight");
-        String is_del = "0";
 
         CustomerVO vo = new CustomerVO();
         vo.setCus_id(cusId);
         vo.setCus_pw(cusPw);
-        vo.setCus_name(cusName);
-        vo.setCus_nickname(cusNickname);
-        vo.setCus_gender(cusGender);
-        vo.setCus_birth(cusBirth);
-        vo.setCus_phone(cusPhone);
-        vo.setCus_email(cusEmail);
-        vo.setHeight(height);
-        vo.setWeight(weight);
-        vo.setIs_del(is_del);
+        vo.setName(cusName);
+        vo.setNickname(cusNickname);
+        vo.setGender(cusGender);
+        vo.setBirth_date(cusBirth);
+        vo.setPhone(cusPhone);
+        vo.setEmail(cusEmail);
 
         int cnt = CustomerDAO.cusadd(vo);
-        System.out.println("cnt:" + cnt);
-
 
         // 성공 시 로그인 페이지로 이동
         if (cnt > 0) {

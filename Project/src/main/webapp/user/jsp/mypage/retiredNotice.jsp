@@ -88,7 +88,7 @@
                     </p>
                     <div class="modal-actions d-flex justify-content-between">
                         <button type="button" class="btn btn-outline-dark" data-dismiss="modal">취소</button>
-                        <button type="button" class="btn btn-dark" onclick="location.href='Controller?type=index'">확인</button>
+                        <button type="button" class="btn btn-dark" onclick="location.href='Controller'">확인</button>
                     </div>
                 </div>
             </div>

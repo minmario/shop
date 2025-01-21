@@ -1,0 +1,53 @@
+package user.vo;
+
+public class PointVO {
+    private String id, cus_no, amount, save_date, expire_date, p_type;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCus_no() {
+        return cus_no;
+    }
+
+    public void setCus_no(String cus_no) {
+        this.cus_no = cus_no;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public String getSave_date() {
+        return save_date;
+    }
+
+    public void setSave_date(String save_date) {
+        this.save_date = save_date;
+    }
+
+    public String getExpire_date() {
+        return expire_date;
+    }
+
+    public void setExpire_date(String expire_date) {
+        this.expire_date = expire_date;
+    }
+
+    public String getP_type() {
+        return p_type;
+    }
+
+    public void setP_type(String p_type) {
+        this.p_type = p_type;
+    }
+}
