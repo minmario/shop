@@ -1,7 +1,26 @@
 package user.vo;
 
+import java.util.List;
+
 public class DeliveryVO {
-    private String id, cus_no, name, pos_code, address, phone, deli_request, is_default;
+    private String id, cus_no, name, pos_code, address, phone, request, is_default;
+    private List<DeliveryVO> list;
+
+    public List<DeliveryVO> getList() {
+        return list;
+    }
+
+    public void setList(List<DeliveryVO> list) {
+        this.list = list;
+    }
+
+    public String getRequest() {
+        return request;
+    }
+
+    public void setRequest(String request) {
+        this.request = request;
+    }
 
     public String getId() {
         return id;
@@ -49,14 +68,6 @@ public class DeliveryVO {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getDeli_request() {
-        return deli_request;
-    }
-
-    public void setDeli_request(String deli_request) {
-        this.deli_request = deli_request;
     }
 
     public String getIs_default() {

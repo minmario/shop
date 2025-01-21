@@ -3,9 +3,29 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="delivery">
-    <!-- 인자로 카테고리 값을 받아 검색하는 기능 -->
 
-    <select id="deliverySelect" parameterType="user.vo.DeliveryVO" resultType="user.vo.DeliveryVO">
-
+    <!-- 배송지 정보를 가져오는 select -->
+    <select id="deliInfoSelect" parameterType="map" resultType="user.vo.DeliveryVO">
+        SELECT * FROM delivery
+        WHERE cus_no = #{cus_no}
     </select>
+
+    <!-- 배송지 입력 시 저장되는 insert -->
+    <insert id="deliInfoInsert" parameterType="user.vo.DeliveryVO">
+        INSERT INTO delivery(name, pos_code, address, phone, request, is_default)
+        VALUES(#{name}, #{pos_code}, #{address}, #{phone}, #{request}, #{is_default})
+    </insert>
+
+    <!-- 배송지 정보 수정 update -->
+    <update id="deliInfoUpdate" parameterType="user.vo.DeliveryVO">
+        UPDATE delivery
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="is_default != null">is_default = #{is_default},</if>
+            <if test="request != null">request = #{request},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
 </mapper>
