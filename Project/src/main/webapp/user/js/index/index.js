@@ -63,9 +63,3 @@ document.addEventListener("DOMContentLoaded", () => {
         selectedButton.classList.add("d-none");
     });
 });
-
-$(function () {
-    $.ajax({
-        url: 'Controller?type=' + $("#")
-    });
-})

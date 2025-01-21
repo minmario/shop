@@ -10,8 +10,14 @@ public class CategoryDAO {
     public static List<MajorCategoryVO> getCategory() {
         List<MajorCategoryVO> categories = null;
         SqlSession ss = FactoryService.getFactory().openSession();
-        categories = ss.selectList("category.select_major_category");
-        ss.close();
+
+        try {
+            categories = ss.selectList("category.select_major_category");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
 
         return categories;
     }

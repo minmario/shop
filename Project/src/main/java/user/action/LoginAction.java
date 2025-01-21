@@ -13,12 +13,19 @@ public class LoginAction  implements Action {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        CustomerVO vo = new CustomerVO();
-        vo.setCus_id(username);
-        vo.setCus_pw(password);
 
-        // 로그인 정보 가져오기
-        CustomerVO loginResult = CustomerDAO.login(vo);
+        CustomerVO loginResult = null;
+
+        try {
+            CustomerVO vo = new CustomerVO();
+            vo.setCus_id(username);
+            vo.setCus_pw(password);
+
+            // 로그인 정보 가져오기
+            loginResult = CustomerDAO.login(vo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         HttpSession session = request.getSession();
         if (loginResult != null) {

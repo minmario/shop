@@ -11,13 +11,17 @@ import java.util.List;
 public class IndexAction implements Action {
       @Override
       public String execute(HttpServletRequest request, HttpServletResponse response) {
-          HttpSession session = request.getSession();
-          
-          // 카테고리
-          List<MajorCategoryVO> categories = CategoryDAO.getCategory();
+          try {
+              HttpSession session = request.getSession();
 
-          if (categories != null && categories.size() > 0) {
-              session.setAttribute("categories", categories);
+              // 카테고리
+              List<MajorCategoryVO> categories = CategoryDAO.getCategory();
+
+              if (categories != null && categories.size() > 0) {
+                  session.setAttribute("categories", categories);
+              }
+          } catch (Exception e) {
+              e.printStackTrace();
           }
 
           return "/user/jsp/index.jsp";

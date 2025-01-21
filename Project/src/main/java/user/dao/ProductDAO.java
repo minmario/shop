@@ -10,8 +10,14 @@ public class ProductDAO {
     public static List<ProductVO> getProducts() {
         List<ProductVO> products = null;
         SqlSession ss= FactoryService.getFactory().openSession();
-        products = ss.selectList("product.select_product");
-        ss.close();
+
+        try {
+            products = ss.selectList("product.select_product");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
 
         return products;
     }

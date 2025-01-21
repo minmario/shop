@@ -14,8 +14,10 @@ public class PointDAO {
 
         try {
             points = ss.selectList("customer.select_point", cusno);
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
-            ss.close(); // 세션은 반드시 닫아야 합니다.
+            ss.close();
         }
 
         return points;

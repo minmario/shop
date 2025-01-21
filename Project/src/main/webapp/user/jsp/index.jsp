@@ -40,7 +40,7 @@
                                         <ul class="list-unstyled">
                                             <c:forEach var="middle" items="${major.middleCategories}">
                                                 <c:if test="${middle.major_no eq major.id}">
-                                                    <li><button class="unstyled-btn" data-name="${middle.ename}" data-value="${middle.id}">${middle.ename}</button></li>
+                                                    <li><button class="unstyled-btn" data-name="${middle.name}" data-value="${middle.id}">${middle.name}</button></li>
                                                 </c:if>
                                             </c:forEach>
                                         </ul>
