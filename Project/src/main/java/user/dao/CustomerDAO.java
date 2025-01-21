@@ -4,9 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import service.FactoryService;
 import user.vo.CustomerVO;
 
-import java.util.HashMap;
-
-public class CustomerDao {
+public class CustomerDAO {
     // 로그인
     public static CustomerVO login(CustomerVO vo) {
         SqlSession ss = FactoryService.getFactory().openSession();

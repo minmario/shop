@@ -1,6 +1,6 @@
 package user.action;
 
-import user.dao.CustomerDao;
+import user.dao.CustomerDAO;
 import user.vo.CustomerVO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,14 +18,14 @@ public class LoginAction  implements Action {
         vo.setCus_id(username);
         vo.setCus_pw(password);
 
-        CustomerVO loginResult = CustomerDao.login(vo); // 로그인 정보 가져오기
+        CustomerVO loginResult = CustomerDAO.login(vo); // 로그인 정보 가져오기
 
 
         //customer cusid 세션에 저장하는값
         String nickname = loginResult.getNickname();
 
         //customer cusid 세션에 저장하는값
-        int customer_id = CustomerDao.getId(nickname);
+        int customer_id = CustomerDAO.getId(nickname);
 
 
 

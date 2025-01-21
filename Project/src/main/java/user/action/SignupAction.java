@@ -1,6 +1,6 @@
 package user.action;
 
-import user.dao.CustomerDao;
+import user.dao.CustomerDAO;
 import user.vo.CustomerVO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +35,7 @@ public class SignupAction implements Action {
         vo.setWeight(weight);
         vo.setIs_del(is_del);
 
-        int cnt = CustomerDao.cusadd(vo);
+        int cnt = CustomerDAO.cusadd(vo);
         System.out.println("cnt:" + cnt);
 
 

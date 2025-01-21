@@ -1,6 +1,6 @@
 package user.action;
 
-import user.dao.CustomerDao;
+import user.dao.CustomerDAO;
 import user.vo.CustomerVO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +18,7 @@ public class MyPageAction implements Action {
             cvo.setCus_id(loginResult.getId());
             cvo.setCus_pw(loginResult.getCus_pw());
 
-            CustomerVO userInfo = CustomerDao.cusInfo(cvo);
+            CustomerVO userInfo = CustomerDAO.cusInfo(cvo);
 
             session.setAttribute("userInfo", userInfo);
         }
