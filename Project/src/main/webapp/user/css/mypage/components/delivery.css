@@ -92,7 +92,7 @@
     line-height: 1.4;
 }
 
-.phone {
+.phone, .request {
     font-size: 13px;
     color: #555;
 }
