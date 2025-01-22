@@ -34,7 +34,7 @@
                     </div>
                     <small id="errorMessage" class="error-message">4자 이상 입력해 주십시오</small>
                     <div class="confirm-button-container">
-                        <button class="btn btn-dark" onclick="location.href='Controller?type=profileEdit'">완료</button>
+                        <button class="btn btn-dark" id="btn-confirm">완료</button>
                     </div>
                 </div>
             </div>

@@ -2,6 +2,11 @@
     width: 800px !important;
 }
 
+.password-confirm-container {
+    position: relative;
+    height: 200px;
+}
+
 .password-confirm-header {
     display: flex;
     justify-content: space-between;
@@ -59,13 +64,10 @@
 }
 
 .error-message {
-    color: red;
+    color: #d9534f;
     font-size: 12px;
     margin-top: 5px;
     display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
 }
 
 .error-message.visible {
@@ -75,6 +77,9 @@
 .confirm-button-container {
     margin-top: 40px;
     text-align: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 .btn-dark {

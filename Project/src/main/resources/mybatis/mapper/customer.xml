@@ -12,8 +12,7 @@
     <!-- 로그인 검증 -->
     <select id="loginSelect" parameterType="user.vo.CustomerVO" resultType="user.vo.CustomerVO">
         SELECT * FROM customer
-        WHERE cus_id = #{cus_id} AND
-        cus_pw = #{cus_pw}
+        WHERE cus_id = #{cus_id} AND cus_pw = #{cus_pw}
     </select>
 
     <!-- 적립금 내역 가져오기 -->
