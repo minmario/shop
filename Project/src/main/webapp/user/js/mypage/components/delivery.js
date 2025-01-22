@@ -52,8 +52,6 @@ function onSendDeliveryInfo() {
         action = "edit";
     }
 
-    console.log("action : " + action);
-
     const formData = {
         id: $("#addr_id").val(), // 배송지 ID (수정 시 필요)
         name: $("#name").val(),
@@ -78,9 +76,10 @@ function onSendDeliveryInfo() {
         data: formData,
         success: function (response) {
             $("#addrModal").modal("hide"); // 모달 닫기
+
+            $("#addrModal").find(".btn.btn-outline-secondary").click();
+
             alert(action === "add" ? "배송지 정보가 추가되었습니다." : "배송지 정보가 수정되었습니다.");
-
-
             $(".delivery-section").html(response); // 새로고침 없이 내용 갱신
         },
         error: function () {
@@ -88,8 +87,6 @@ function onSendDeliveryInfo() {
         }
     });
 }
-
-
 
 // //배송지 추가
 // function sendDeliInfo() {
