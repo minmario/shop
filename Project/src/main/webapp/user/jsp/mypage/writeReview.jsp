@@ -26,7 +26,6 @@
         <div class="row">
             <div class="container">
                 <div class="review-container">
-
                     <div class="review-header">
                         <div class="review-info">
                             <span class="review-title">후기 작성</span>
@@ -104,18 +103,13 @@
                         <span class="reward-points">예상 적립금: <span class="strong">0 / 1,000점</span></span>
                         <button type="button" class="btn btn-dark">등록하기</button>
                     </div>
-
                 </div>
-
-
             </div>
         </div>
 
         <!-- footer -->
         <jsp:include page="../layout/footer.jsp"></jsp:include>
     </div>
-
-    <%-- Modal --%>
 
     <!-- 작성 유의사항 모달 -->
     <div class="modal fade" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="noticeModalLabel" aria-hidden="true">
@@ -149,27 +143,26 @@
     <%-- Bootstrap --%>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<script>
-    //리뷰 별점 기능
-    document.addEventListener('DOMContentLoaded', function () {
-        const stars = document.querySelectorAll('.rating-stars .star');
+    <script>
+        //리뷰 별점 기능
+        document.addEventListener('DOMContentLoaded', function () {
+            const stars = document.querySelectorAll('.rating-stars .star');
 
-        stars.forEach(star => {
-            star.addEventListener('click', function () {
-                // 모든 별의 selected 클래스 제거
-                stars.forEach(s => s.classList.remove('selected'));
+            stars.forEach(star => {
+                star.addEventListener('click', function () {
+                    // 모든 별의 selected 클래스 제거
+                    stars.forEach(s => s.classList.remove('selected'));
 
-                // 클릭한 별과 그 이전 별까지 selected 클래스 추가
-                const value = parseInt(this.getAttribute('data-value'));
-                stars.forEach(s => {
-                    if (parseInt(s.getAttribute('data-value')) <= value) {
-                        s.classList.add('selected');
-                    }
+                    // 클릭한 별과 그 이전 별까지 selected 클래스 추가
+                    const value = parseInt(this.getAttribute('data-value'));
+                    stars.forEach(s => {
+                        if (parseInt(s.getAttribute('data-value')) <= value) {
+                            s.classList.add('selected');
+                        }
+                    });
                 });
             });
         });
-    });
-
-</script>
+    </script>
 </body>
 </html>

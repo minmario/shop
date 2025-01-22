@@ -24,23 +24,23 @@
     margin-bottom: 15px;
 }
 
-.tab-content {
+.alarm-container .tab-content {
     padding: 0 10px;
     overflow-y: auto;
     height: 500px;
 }
 
-.tab-content::-webkit-scrollbar {
+.alarm-container .tab-content::-webkit-scrollbar {
     width: 5px;
     height: 5px;
 }
 
-.tab-content::-webkit-scrollbar-thumb {
+.alarm-container .tab-content::-webkit-scrollbar-thumb {
     background: #555;
     border-radius: 12px 12px 12px 12px;
 }
 
-.tab-content::-webkit-scrollbar-track {
+.alarm-container .tab-content::-webkit-scrollbar-track {
     background: transparent;
 }
 
@@ -49,7 +49,6 @@
     align-items: center;
     justify-content: space-between;
     padding: 10px 0;
-    border-bottom: 1px solid #eaeaea;
 }
 
 .alarm-content {

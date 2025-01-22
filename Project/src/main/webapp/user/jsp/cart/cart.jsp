@@ -21,11 +21,6 @@
     <%-- header --%>
     <jsp:include page="../layout/header.jsp"></jsp:include>
 
-    <c:if test="${requestScope.userInfo ne null}">
-        <c:set var="user" value="${requestScope.userInfo}"/>
-    </c:if>
-
-    <%-- content --%>
     <div class="wrap">
         <div class="row">
             <div class="container">
