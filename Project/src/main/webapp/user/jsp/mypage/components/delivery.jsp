@@ -20,13 +20,13 @@
                     <input type="radio" id="default-address" name="address" checked>
                     <label for="default-address">
                         <div class="address-details">
-                            <p class="name">${dvo.name} <span class="default">${dvo.is_default == '1' ? '기본 배송지' : ''}</span></p>
-                            <p class="address">(${dvo.pos_code})&nbsp;${dvo.address}</p>
+                            <p class="name">${dvo.name}</p>
+                            <span class="default">${dvo.is_default == '1' ? '기본 배송지' : ''}</span>
+                            <p class="address">(<span class="pos_code">${dvo.pos_code}</span>) &nbsp;<span class="addr1">${dvo.addr1}</span> ${dvo.addr2}</p>
                             <p class="phone">${dvo.phone}</p>
                             <p class="request">${dvo.request}</p>
                             <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#addrModal"
-                                    onclick="editDeliInfo('${dvo.id}', '${dvo.name}', '${dvo.phone}', '${dvo.pos_code}', '${dvo.addr1}',
-                                            '${dvo.addr2}', '${dvo.request}', '${dvo.is_default}')">수정</button>
+                                    onclick="handleDeliInfo(this)">수정</button>
                             <button type="button" class="btn btn-outline-danger">삭제</button>
                         </div>
                     </label>

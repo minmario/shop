@@ -33,7 +33,8 @@ public class DeliveryDAO {
         vo.setName(name);
         vo.setPhone(phone);
         vo.setPos_code(pos_code);
-        vo.setAddress(addr1 + " " + addr2);
+        vo.setAddr1(addr1);
+        vo.setAddr2(addr2);
         vo.setIs_default(chkDefault);
         vo.setRequest(deli_request);
 
@@ -58,11 +59,12 @@ public class DeliveryDAO {
                                      String chkDefault, String deli_request){
         DeliveryVO vo = new DeliveryVO();
         vo.setId(id);
-        vo.setCus_no("3");
+        vo.setCus_no(cus_no);
         vo.setName(name);
         vo.setPhone(phone);
         vo.setPos_code(pos_code);
-        vo.setAddress(addr1 + " " + addr2);
+        vo.setAddr1(addr1);
+        vo.setAddr2(addr2);
         vo.setIs_default(chkDefault);
         vo.setRequest(deli_request);
 

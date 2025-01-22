@@ -1,6 +1,7 @@
 package user.action;
 
 import user.dao.DeliveryDAO;
+import user.vo.CustomerVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,8 +14,7 @@ public class EditDeliveryAction implements Action {
 
         //파라미터 받기
         String id = request.getParameter("id");
-        String cus_no = (String) session.getAttribute("customer_info.id");
-        System.out.println("cus_no" + cus_no);
+        CustomerVO cvo = (CustomerVO) session.getAttribute("customer_info");
         String name = request.getParameter("name");
         String phone = request.getParameter("phone");
         String pos_code = request.getParameter("pos_code");
@@ -25,27 +25,18 @@ public class EditDeliveryAction implements Action {
 
         int cnt = 0;
         try {
-            cnt = DeliveryDAO.updateDeliInfo(id, cus_no, name, phone, pos_code, addr1, addr2, chkDefault, deli_request);
+            cnt = DeliveryDAO.updateDeliInfo(id, cvo.getId(), name, phone, pos_code, addr1, addr2, chkDefault, deli_request);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-
         // 결과 처리
         if (cnt > 0) {
             request.setAttribute("success", true);
-
-            // log -> target
-            // 배송지 정보가 성공적으로 추가되었습니다.
-
         } else {
             request.setAttribute("success", false);
-
-            // log -> target
-            // 배송지 추가에 실패했습니다. 다시 시도해주세요.
         }
 
-
-        return "/user/jsp/mypage/mypage.jsp";
+        return "/user/jsp/mypage/components/delivery.jsp";
     }
 }
