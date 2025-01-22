@@ -57,6 +57,7 @@ public class DeliveryDAO {
     public static int updateDeliInfo(String id, String cus_no, String name, String phone, String pos_code, String addr1, String addr2,
                                      String chkDefault, String deli_request){
         DeliveryVO vo = new DeliveryVO();
+        vo.setId(id);
         vo.setCus_no("3");
         vo.setName(name);
         vo.setPhone(phone);

@@ -518,39 +518,6 @@
 
         });
 
-        function viewDelivery() {
-            // AJAX 요청으로 ViewDeliveryAction 호출
-            $.ajax({
-                url: "Controller?type=viewDelivery",
-                type: "POST",
-                success: function (response) {
-                    // 배송지 섹션만 표시하고 다른 섹션은 숨김
-                    const allSections = [
-                        "#order-article",
-                        "#refund-article",
-                        "#review-article",
-                        "#inquiry-article",
-                        "#question-article",
-                        "#point-article",
-                        "#coupon-article",
-                        "#delivery-article"
-                    ];
-                    allSections.forEach((section) => {
-                        if (section === "#delivery-article") {
-                            $(section).show();
-                        } else {
-                            $(section).hide();
-                        }
-                    });
-
-                    // 응답 데이터를 #delivery-article에 렌더링
-                    $("#delivery-article").html(response);
-                },
-                error: function (status, error) {
-                    console.error("배송지 정보를 가져오는 데 실패했습니다.", error);
-                }
-            });
-        }
 
 
     </script>
