@@ -24,7 +24,9 @@
                             <p class="address">(${dvo.pos_code})&nbsp;${dvo.address}</p>
                             <p class="phone">${dvo.phone}</p>
                             <p class="request">${dvo.request}</p>
-                            <button type="button" class="btn btn-outline-primary">수정</button>
+                            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#addrModal"
+                                    onclick="editDeliInfo('${dvo.id}', '${dvo.name}', '${dvo.phone}', '${dvo.pos_code}', '${dvo.addr1}',
+                                            '${dvo.addr2}', '${dvo.request}', '${dvo.is_default}')">수정</button>
                             <button type="button" class="btn btn-outline-danger">삭제</button>
                         </div>
                     </label>
