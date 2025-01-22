@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import service.FactoryService;
 import user.vo.DeliveryVO;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,12 +12,15 @@ public class DeliveryDAO {
 
     //배송지 정보 가져오기
     public static List<DeliveryVO> searchDeliInfo(String cus_no){
-        HashMap<String, String> map = new HashMap<>();
-        map.put("cus_no", cus_no);
-
         SqlSession ss = FactoryService.getFactory().openSession();
-        List<DeliveryVO> list = ss.selectList("delivery.deliInfoSelect", map);
-        ss.close();
+        List<DeliveryVO> list = new ArrayList<DeliveryVO>();
+        try {
+            list = ss.selectList("delivery.deliInfoSelect", cus_no);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
 
         return list;
     }
@@ -50,13 +54,19 @@ public class DeliveryDAO {
     }
 
     //배송지 수정하기
-    public static int updateDeliInfo(String cus_no, String is_default){
-        HashMap<String, String> map = new HashMap<>();
-        map.put("cus_no", cus_no);
-        map.put("is_default", is_default);
+    public static int updateDeliInfo(String id, String cus_no, String name, String phone, String pos_code, String addr1, String addr2,
+                                     String chkDefault, String deli_request){
+        DeliveryVO vo = new DeliveryVO();
+        vo.setCus_no("3");
+        vo.setName(name);
+        vo.setPhone(phone);
+        vo.setPos_code(pos_code);
+        vo.setAddress(addr1 + " " + addr2);
+        vo.setIs_default(chkDefault);
+        vo.setRequest(deli_request);
 
         SqlSession ss = FactoryService.getFactory().openSession();
-        int cnt = ss.update("delivery.deliInfoUpdate", map);
+        int cnt = ss.update("delivery.deliInfoUpdate", vo);
 
         if (cnt > 0)
             ss.commit();

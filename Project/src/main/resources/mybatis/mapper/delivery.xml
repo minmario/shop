@@ -5,7 +5,7 @@
 <mapper namespace="delivery">
 
     <!-- 배송지 정보를 가져오는 select -->
-    <select id="deliInfoSelect" parameterType="map" resultType="user.vo.DeliveryVO">
+    <select id="deliInfoSelect" parameterType="String" resultType="user.vo.DeliveryVO">
         SELECT * FROM delivery
         WHERE cus_no = #{cus_no}
     </select>
@@ -19,13 +19,17 @@
     <!-- 배송지 정보 수정 update -->
     <update id="deliInfoUpdate" parameterType="user.vo.DeliveryVO">
         UPDATE delivery
-        <set>
-            <if test="name != null">name = #{name},</if>
-            <if test="address != null">address = #{address},</if>
-            <if test="phone != null">phone = #{phone},</if>
-            <if test="is_default != null">is_default = #{is_default},</if>
-            <if test="request != null">request = #{request},</if>
-        </set>
+        <trim prefix="SET" suffixOverrides=",">
+            cus_no = #{cus_no},
+            name = #{name},
+            phone = #{phone},
+            pos_code = #{pos_code},
+            address = #{address},
+            is_default = #{is_default},
+            <if test="request != null">
+                request = #{request},
+            </if>
+        </trim>
         WHERE id = #{id}
     </update>
 </mapper>

@@ -6,17 +6,17 @@
         <button type="button" class="btn btn-outline-primary add-address-button" data-toggle="modal" data-target="#addrModal">배송지 추가</button>
     </div>
 </div>
-<c:if test="${requestScope.dvo eq null}">
+<c:if test="${requestScope.d_list eq null}">
     <div>
         <span>입력된 정보가 없습니다.</span>
     </div>
 </c:if>
-<c:if test="${requestScope.dvo ne null}">
-    <c:set var="dvo" value="${requestScope.dvo}"/>
+<c:if test="${requestScope.d_list ne null}">
+    <c:set var="d_list" value="${requestScope.d_list}"/>
     <div class="custom-addr">
         <div class="wrap-addrList">
-            <c:if test="${dvo.is_default = 1}">
-                <div class="address-box">
+            <c:forEach var="dvo" items="${d_list}">
+                <div class="address-box" data-value="${dvo.id}">
                     <input type="radio" id="default-address" name="address" checked>
                     <label for="default-address">
                         <div class="address-details">
@@ -29,23 +29,7 @@
                         </div>
                     </label>
                 </div>
-            </c:if>
-            <c:if test="${dvo.is_default = 0}">
-            <c:forEach var="dvo" items="${dvo.list}">
-                <div class="address-box">
-                    <input type="radio" id="etc-address" name="address">
-                    <label for="etc-address">
-                        <div class="address-details">
-                            <p class="name">홍길동</p>
-                            <p class="address">서울특별시 동작구 보라매로5길 15<br>1층 108호</p>
-                            <p class="phone">010-1234-1234</p>
-                            <button type="button" class="btn btn-outline-primary">수정</button>
-                            <button type="button" class="btn btn-outline-danger">삭제</button>
-                        </div>
-                    </label>
-                </div>
             </c:forEach>
-            </c:if>
         </div>
     </div>
 </c:if>
