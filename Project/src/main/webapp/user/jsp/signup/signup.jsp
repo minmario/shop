@@ -81,7 +81,7 @@
                 <input type="email" class="form-control" id="cus_email" name="cus_email" placeholder="이메일을 입력하세요" maxlength="100" required>
             </div>
 
-            <%--<!-- 키 -->
+            <!-- 키 -->
             <div class="mb-3">
                 <label for="height" class="form-label">키</label>
                 <input type="number" class="form-control" id="height" name="height" placeholder="키(cm)를 입력하세요">
@@ -91,7 +91,7 @@
             <div class="mb-3">
                 <label for="weight" class="form-label">몸무게</label>
                 <input type="number" class="form-control" id="weight" name="weight" placeholder="몸무게(kg)를 입력하세요">
-            </div>--%>
+            </div>
 
             <!-- 회원가입 버튼 -->
             <button type="submit" class="btn btn-dark w-100">회원가입</button>
