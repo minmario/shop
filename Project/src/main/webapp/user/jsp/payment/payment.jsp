@@ -1,10 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="./user/images/share_musinsa.png">
-    <title>Musinsa</title>
+    <title>무신사</title>
 
     <%-- Google Font : Gothic A1 --%>
     <link rel="preconnect" href="https://fonts.googleapis.com">

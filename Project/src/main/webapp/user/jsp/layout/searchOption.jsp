@@ -1,10 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="./user/images/share_musinsa.png">
-    <title>Musinsa</title>
+    <title>무신사</title>
 </head>
 <body>
 <div class="col-md-2" style="padding-left: 0">
