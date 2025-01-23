@@ -3,41 +3,29 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="delivery">
-
     <!-- 배송지 정보를 가져오는 select -->
-    <select id="deliInfoSelect" parameterType="String" resultType="user.vo.DeliveryVO">
+    <select id="select_delivery" parameterType="String" resultType="user.vo.DeliveryVO">
         SELECT * FROM delivery
         WHERE cus_no = #{cus_no} AND is_del = 0
     </select>
 
     <!-- 배송지 입력 시 저장되는 insert -->
-    <insert id="deliInfoInsert" parameterType="user.vo.DeliveryVO">
-        INSERT INTO delivery(name, pos_code, addr1, addr2, phone, request, is_default)
-        VALUES(#{name}, #{pos_code}, #{address}, #{phone}, #{request}, #{is_default})
+    <insert id="insert_delivery" parameterType="user.vo.DeliveryVO">
+        INSERT INTO delivery(cus_no, name, pos_code, addr1, addr2, phone, is_default, request)
+        VALUES(#{cus_no}, #{name}, #{pos_code}, #{addr1}, #{addr2}, #{phone}, #{is_default}, #{request})
     </insert>
 
     <!-- 배송지 정보 수정 update -->
-    <update id="deliInfoUpdate" parameterType="user.vo.DeliveryVO">
+    <update id="update_delivery" parameterType="user.vo.DeliveryVO">
         UPDATE delivery
-        <trim prefix="SET" suffixOverrides=",">
-            cus_no = #{cus_no},
-            name = #{name},
-            phone = #{phone},
-            pos_code = #{pos_code},
-            addr1 = #{addr1},
-            addr2 = #{addr2},
-            is_default = #{is_default},
-            <if test="request != null">
-                request = #{request},
-            </if>
-        </trim>
+        SET name = #{name}, phone = #{phone}, pos_code = #{pos_code}, addr1 = #{addr1}, addr2 = #{addr2}, is_default = #{is_default}, request = #{request}
         WHERE id = #{id}
     </update>
 
     <!-- 배송지 삭제 update -->
-    <update id="deliInfoDelete" parameterType="user.vo.DeliveryVO">
+    <update id="delete_delivery" parameterType="user.vo.DeliveryVO">
         UPDATE delivery
         SET is_del = 1
-        WHERE id = #{id} AND cus_no = #{cus_no}
+        WHERE id = #{id}
     </update>
 </mapper>
