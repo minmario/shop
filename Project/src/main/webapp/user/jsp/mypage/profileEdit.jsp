@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -18,83 +19,94 @@
     <link rel="stylesheet" type="text/css" href="./user/css/mypage/profileEdit.css"/>
 </head>
 <body>
-    <!-- header -->
-    <jsp:include page="../layout/header.jsp"></jsp:include>
+    <c:choose>
+        <c:when test="${not empty sessionScope.customer_info}">
+            <!-- header -->
+            <jsp:include page="../layout/header.jsp"></jsp:include>
 
-    <div class="wrap">
-        <div class="row">
-            <div class="container">
-                <div class="edit-header">
-                    <h2>회원 정보 변경</h2>
-                </div>
-                <div class="profile-container">
-                    <table class="profile-table">
-                        <tbody>
-                            <tr>
-                                <th>이름</th>
-                                <td>홍길동</td>
-                            </tr>
-                            <tr>
-                                <th>생년월일</th>
-                                <td>2001.**.**</td>
-                            </tr>
-                            <tr>
-                                <th>휴대폰 번호</th>
-                                <td>010-****-1234</td>
-                            </tr>
-                            <tr>
-                                <th>이메일</th>
-                                <td>test****@*****.com</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="button-container">
-                        <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#editModal">회원정보 변경</button>
-                    </div>
-                </div>
-                <div class="retired-link-container">
-                    <a href="Controller?type=retiredReason">회원탈퇴</a>
-                </div>
-            </div>
-        </div>
-
-        <%-- footer --%>
-        <jsp:include page="../layout/footer.jsp"></jsp:include>
-    </div>
-
-    <%-- 회원정보 변경 모달 --%>
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">회원정보 변경</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="email-change-form">
-                        <div class="form-group">
-                            <label>이메일</label>
-                            <input type="email" class="form-control email-input" placeholder="이메일"/>
+            <div class="wrap">
+                <div class="row">
+                    <div class="container">
+                        <div class="edit-header">
+                            <h2>회원 정보 변경</h2>
                         </div>
-                        <div class="form-group">
-                            <label>휴대폰 번호</label>
-                            <input type="text" class="form-control verification-input" placeholder="휴대폰 번호"/>
+                        <div class="profile-container">
+                            <table class="profile-table">
+                                <tbody>
+                                <tr>
+                                    <th>이름</th>
+                                    <td>${sessionScope.customer_info.name}</td>
+                                </tr>
+                                <tr>
+                                    <th>생년월일</th>
+                                    <td>${sessionScope.customer_info.birth_date}</td>
+                                </tr>
+                                <tr>
+                                    <th>이메일</th>
+                                    <td>${sessionScope.customer_info.email}</td>
+                                </tr>
+                                <tr>
+                                    <th>휴대폰 번호</th>
+                                    <td>${sessionScope.customer_info.phone}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="button-container">
+                                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#editModal">회원정보 변경</button>
+                            </div>
+                        </div>
+                        <div class="retired-link-container">
+                            <a href="Controller?type=retiredReason">회원탈퇴</a>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-dark">변경</button>
+
+                    <%-- footer --%>
+                <jsp:include page="../layout/footer.jsp"></jsp:include>
+            </div>
+
+            <%-- 회원정보 변경 모달 --%>
+            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">회원정보 변경</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="email-change-form">
+                                <div class="form-group">
+                                    <label>이메일</label>
+                                    <input type="email" class="form-control email-input" id="email" name="email" placeholder="이메일" autoComplete="off" value="${sessionScope.customer_info.email}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>휴대폰 번호</label>
+                                    <input type="text" class="form-control verification-input" id="phone" name="phone" placeholder="휴대폰 번호" autoComplete="off" value="${sessionScope.customer_info.phone}"/>
+                                </div>
+                                <div class="change-button-container">
+                                    <button type="button" class="btn btn-dark" id="btn-change">변경</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </c:when>
+        <c:otherwise>
+            <script>
+                window.location.href = "Controller?type=error";
+            </script>
+        </c:otherwise>
+    </c:choose>
 
     <%-- JQuery --%>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
     <%-- Bootstrap --%>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="./user/js/mypage/profileEdit.js"></script>
 </body>
 </html>

@@ -1,0 +1,17 @@
+.container {
+    width: 900px !important;
+}
+
+.error-message {
+    line-height: 500px;
+    font-size: 50px;
+}
+
+.error-message i {
+    line-height: 500px;
+}
+
+.error-text {
+    line-height: 500px;
+    font-size: 50px;
+}

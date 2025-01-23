@@ -110,11 +110,10 @@
     color: #6c757d !important;
 }
 
-.modal-footer .btn-dark {
-    width: 100%;
+.change-button-container {
+    margin-top: 35px;
 }
 
-.modal-footer .btn-dark:hover {
-    background-color: #000 !important;
-    color: #fff !important;
+.change-button-container button {
+    width: 100%;
 }

@@ -29,7 +29,7 @@ public class SignupAction implements Action {
         vo.setPhone(cusPhone);
         vo.setEmail(cusEmail);
 
-        int cnt = CustomerDAO.cusadd(vo);
+        int cnt = CustomerDAO.cusInsert(vo);
 
         // 성공 시 로그인 페이지로 이동
         if (cnt > 0) {

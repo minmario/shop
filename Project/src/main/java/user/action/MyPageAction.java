@@ -15,14 +15,8 @@ public class MyPageAction implements Action {
         HttpSession session = request.getSession();
         CustomerVO loginResult = (CustomerVO) session.getAttribute("customer_info");
 
-        List<PointVO> points = null;
-
-        try {
-            // 적립금 내역 가져오기
-            points = PointDAO.getPoint(loginResult.getId());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // 적립금 내역 가져오기
+        List<PointVO> points = PointDAO.getPoint(loginResult.getId());
 
         if (loginResult != null) {
             session.setAttribute("points", points);

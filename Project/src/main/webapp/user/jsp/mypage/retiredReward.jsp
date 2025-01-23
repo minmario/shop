@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -18,42 +19,51 @@
     <link rel="stylesheet" type="text/css" href="./user/css/mypage/retiredReward.css"/>
 </head>
 <body>
-    <!-- header -->
-    <jsp:include page="../layout/header.jsp"></jsp:include>
+    <c:choose>
+        <c:when test="${not empty sessionScope.customer_info}">
+            <!-- header -->
+            <jsp:include page="../layout/header.jsp"></jsp:include>
 
-    <div class="wrap">
-        <div class="row">
-            <div class="container">
-                <div class="retired-header">
-                    <h2>회원 탈퇴</h2>
-                </div>
-                <div class="retired-content">
-                    <h4 class="notice-title">지금 탈퇴하시면, 아래 혜택이 모두 사라져요!</h4>
-                    <ul class="benefit-list">
-                        <li>
-                            <span class="benefit-title">회원 등급</span>
-                            <span class="benefit-value">LV.3 멤버</span>
-                        </li>
-                        <li>
-                            <span class="benefit-title">적립금</span>
-                            <span class="benefit-value">903원</span>
-                        </li>
-                        <li>
-                            <span class="benefit-title">쿠폰</span>
-                            <span class="benefit-value">106장</span>
-                        </li>
-                    </ul>
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-light" onclick="location.href='Controller?type=retiredNotice'">다음</button>
-                        <button type="button" class="btn btn-dark" onclick="location.href='Controller?type=myPage'">탈퇴 그만두기</button>
+            <div class="wrap">
+                <div class="row">
+                    <div class="container">
+                        <div class="retired-header">
+                            <h2>회원 탈퇴</h2>
+                        </div>
+                        <div class="retired-content">
+                            <h4 class="notice-title">지금 탈퇴하시면, 아래 혜택이 모두 사라져요!</h4>
+                            <ul class="benefit-list">
+                                <li>
+                                    <span class="benefit-title">회원 등급</span>
+                                    <span class="benefit-value">LV.3 멤버</span>
+                                </li>
+                                <li>
+                                    <span class="benefit-title">적립금</span>
+                                    <span class="benefit-value">903원</span>
+                                </li>
+                                <li>
+                                    <span class="benefit-title">쿠폰</span>
+                                    <span class="benefit-value">106장</span>
+                                </li>
+                            </ul>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-light" onclick="location.href='Controller?type=retiredNotice'">다음</button>
+                                <button type="button" class="btn btn-dark" onclick="location.href='Controller?type=myPage'">탈퇴 그만두기</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <%-- footer --%>
-        <jsp:include page="../layout/footer.jsp"></jsp:include>
-    </div>
+                    <%-- footer --%>
+                <jsp:include page="../layout/footer.jsp"></jsp:include>
+            </div>
+        </c:when>
+        <c:otherwise>
+            <script>
+                window.location.href = "Controller?type=error";
+            </script>
+        </c:otherwise>
+    </c:choose>
 
     <%-- JQuery --%>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
