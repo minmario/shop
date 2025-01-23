@@ -18,20 +18,24 @@ public class AddDeliveryAction implements Action{
         String deli_request = request.getParameter("deli_request");
 
         //DAO 호출
-        int cnt = 0;
-        try {
-            cnt = DeliveryDAO.insertDeliInfo(name, phone, pos_code, addr1, addr2, chkDefault, deli_request);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        int cnt = cnt = DeliveryDAO.insertDeliInfo(name, phone, pos_code, addr1, addr2, chkDefault, deli_request);
 
         // 결과 처리
         if (cnt > 0) {
             request.setAttribute("success", true);
+
+            //로그 DAO호출 추가
+            // log -> target
+            // 배송지 정보가 성공적으로 추가되었습니다.
+
         } else {
             request.setAttribute("success", false);
+
+            //로그 DAO호출 추가
+            // log -> target
+            // 배송지 추가에 실패했습니다. 다시 시도해주세요.
         }
 
-        return "/user/jsp/mypage/components/delivery.jsp";
+        return "/user/jsp/mypage/mypage.jsp";
     }
 }
