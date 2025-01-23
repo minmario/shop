@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -18,26 +19,35 @@
     <link rel="stylesheet" type="text/css" href="./user/css/payment/orderCompleted.css"/>
 </head>
 <body>
-    <!-- header -->
-    <jsp:include page="../layout/header.jsp"></jsp:include>
+    <c:choose>
+        <c:when test="${not empty sessionScope.customer_info}">
+            <!-- header -->
+            <jsp:include page="../layout/header.jsp"></jsp:include>
 
-    <div class="wrap">
-        <div class="row">
-            <div class="container">
-                <div class="redirect-message" id="redirectMessage">
-                    5초 뒤에 메인 페이지로 돌아갑니다
-                </div>
-                <div class="order-completed">
-                    <div class="completed-text">
-                        주문완료
+            <div class="wrap">
+                <div class="row">
+                    <div class="container">
+                        <div class="redirect-message" id="redirectMessage">
+                            5초 뒤에 메인 페이지로 돌아갑니다
+                        </div>
+                        <div class="order-completed">
+                            <div class="completed-text">
+                                주문완료
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <%-- footer --%>
-        <jsp:include page="../layout/footer.jsp"></jsp:include>
-    </div>
+                    <%-- footer --%>
+                <jsp:include page="../layout/footer.jsp"></jsp:include>
+            </div>
+        </c:when>
+        <c:otherwise>
+            <script>
+                window.location.href = "Controller?type=error";
+            </script>
+        </c:otherwise>
+    </c:choose>
 
     <%-- JQuery --%>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>

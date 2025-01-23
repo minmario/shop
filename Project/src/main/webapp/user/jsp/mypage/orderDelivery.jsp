@@ -19,58 +19,62 @@
     <link rel="stylesheet" type="text/css" href="./user/css/mypage/orderDelivery.css"/>
 </head>
 <body>
-    <%-- header --%>
-    <jsp:include page="../layout/header.jsp"></jsp:include>
+    <c:choose>
+        <c:when test="${not empty sessionScope.customer_info}">
+            <%-- header --%>
+            <jsp:include page="../layout/header.jsp"></jsp:include>
 
-    <!-- content -->
-    <div class="wrap">
-        <div class="row">
-            <div class="container">
+            <!-- content -->
+            <div class="wrap">
+                <div class="row">
+                    <div class="container">
 
-                <!-- Order Section -->
-                <div class="order-container">
-                    <div class="order-status">
-                        <h2 class="order-title">진행 중 주문 현황</h2>
-                        <div class="wrap-order-item">
-                            <div class="order-item" onclick="location.href='Controller?type=deliveryStatus'">
-                                <img src="./user/images/product5.jpg" alt="Product Image" class="product-image">
-                                <div class="order-details">
-                                    <div class="payment-status">결제완료</div>
-                                    <div class="product-name">커버낫</div>
-                                    <div class="product-description">
-                                        [2PACK] 쿨 코튼 티셔츠 블랙+화이트<br>M
+                        <!-- Order Section -->
+                        <div class="order-container">
+                            <div class="order-status">
+                                <h2 class="order-title">진행 중 주문 현황</h2>
+                                <div class="wrap-order-item">
+                                    <div class="order-item" onclick="location.href='Controller?type=deliveryStatus'">
+                                        <img src="./user/images/product5.jpg" alt="Product Image" class="product-image">
+                                        <div class="order-details">
+                                            <div class="payment-status">결제완료</div>
+                                            <div class="product-name">커버낫</div>
+                                            <div class="product-description">
+                                                [2PACK] 쿨 코튼 티셔츠 블랙+화이트<br>M
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="order-item" onclick="location.href='Controller?type=deliveryStatus'">
-                                <img src="./user/images/product5.jpg" alt="Product Image" class="product-image">
-                                <div class="order-details">
-                                    <div class="payment-status">결제완료</div>
-                                    <div class="product-name">커버낫</div>
-                                    <div class="product-description">
-                                        [2PACK] 쿨 코튼 티셔츠 블랙+화이트<br>M
+                                    <div class="order-item" onclick="location.href='Controller?type=deliveryStatus'">
+                                        <img src="./user/images/product5.jpg" alt="Product Image" class="product-image">
+                                        <div class="order-details">
+                                            <div class="payment-status">결제완료</div>
+                                            <div class="product-name">커버낫</div>
+                                            <div class="product-description">
+                                                [2PACK] 쿨 코튼 티셔츠 블랙+화이트<br>M
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="order-item" onclick="location.href='Controller?type=deliveryStatus'">
-                                <img src="./user/images/product5.jpg" alt="Product Image" class="product-image">
-                                <div class="order-details">
-                                    <div class="payment-status">결제완료</div>
-                                    <div class="product-name">커버낫</div>
-                                    <div class="product-description">
-                                        [2PACK] 쿨 코튼 티셔츠 블랙+화이트<br>M
+                                    <div class="order-item" onclick="location.href='Controller?type=deliveryStatus'">
+                                        <img src="./user/images/product5.jpg" alt="Product Image" class="product-image">
+                                        <div class="order-details">
+                                            <div class="payment-status">결제완료</div>
+                                            <div class="product-name">커버낫</div>
+                                            <div class="product-description">
+                                                [2PACK] 쿨 코튼 티셔츠 블랙+화이트<br>M
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <%-- footer --%>
-        <jsp:include page="../layout/footer.jsp"></jsp:include>
-    </div>
+                    <%-- footer --%>
+                <jsp:include page="../layout/footer.jsp"></jsp:include>
+            </div>
+        </c:when>
+    </c:choose>
 
     <%-- JQuery --%>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>

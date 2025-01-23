@@ -25,7 +25,6 @@
 }
 
 .alarm-container .tab-content {
-    padding: 0 10px;
     overflow-y: auto;
     height: 500px;
 }

@@ -13,7 +13,7 @@ public class PointDAO {
         SqlSession ss = FactoryService.getFactory().openSession();
 
         try {
-            points = ss.selectList("customer.select_point", cusno);
+            points = ss.selectList("point.select_point", cusno);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

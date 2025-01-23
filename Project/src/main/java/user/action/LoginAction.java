@@ -16,16 +16,12 @@ public class LoginAction  implements Action {
 
         CustomerVO loginResult = null;
 
-        try {
-            CustomerVO vo = new CustomerVO();
-            vo.setCus_id(username);
-            vo.setCus_pw(password);
+        CustomerVO vo = new CustomerVO();
+        vo.setCus_id(username);
+        vo.setCus_pw(password);
 
-            // 로그인 정보 가져오기
-            loginResult = CustomerDAO.login(vo);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // 로그인 정보 가져오기
+        loginResult = CustomerDAO.login(vo);
 
         HttpSession session = request.getSession();
         if (loginResult != null) {

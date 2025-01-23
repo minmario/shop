@@ -3,6 +3,22 @@
     <div class="order-header">
         <div class="order-title">주문 목록</div>
     </div>
+    <div class="search-bar">
+        <label for="date-range">기간 조회</label>
+        <select class="form-select" id="date-range" name="date-range">
+            <option value="1-year">최대 5년</option>
+            <option value="1-week">1주일</option>
+            <option value="1-month">1개월</option>
+            <option value="3-months">3개월</option>
+        </select>
+
+        <div class="date-picker" id="custom-date-picker">
+            <input type="date" class="form-control" id="start-date" name="start-date"> ~
+            <input type="date" class="form-control" id="end-date" name="end-date">
+        </div>
+
+        <button type="button" class="btn btn-outline-primary search-button">검색</button>
+    </div>
 </div>
 <div class="custom-order-container">
     <div class="custom-order">

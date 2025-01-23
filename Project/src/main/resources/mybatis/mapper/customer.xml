@@ -4,20 +4,27 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="customer">
     <!-- 회원 가입 -->
-    <insert id="signupInsert" parameterType="user.vo.CustomerVO">
+    <insert id="insert_customer" parameterType="user.vo.CustomerVO">
         INSERT INTO customer (id, grade_code, cus_id, cus_pw, name, nickname, gender, birth_date, phone, email, is_del)
         VALUES (#{cus_id}, #{cus_pw}, #{name}, #{nickname}, #{gender}, #{birth_date}, #{phone}, #{email}, "0")
     </insert>
 
     <!-- 로그인 검증 -->
-    <select id="loginSelect" parameterType="user.vo.CustomerVO" resultType="user.vo.CustomerVO">
+    <select id="login" parameterType="user.vo.CustomerVO" resultType="user.vo.CustomerVO">
         SELECT * FROM customer
         WHERE cus_id = #{cus_id} AND cus_pw = #{cus_pw}
     </select>
 
-    <!-- 적립금 내역 가져오기 -->
-    <select id="select_point" resultType="user.vo.PointVO" parameterType="String">
-        SELECT * FROM point
-        WHERE cus_no = #{cus_no};
+    <!-- 회원 정보 수정 -->
+    <update id="update_customer" parameterType="user.vo.CustomerVO">
+        UPDATE customer
+        SET email = #{email}, phone = #{phone}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 회원 정보 보기 -->
+    <select id="select_customer" resultType="user.vo.CustomerVO" parameterType="String">
+        SELECT * FROM customer
+        WHERE id = #{id}
     </select>
 </mapper>

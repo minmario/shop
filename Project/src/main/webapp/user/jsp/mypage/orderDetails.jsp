@@ -19,96 +19,105 @@
     <link rel="stylesheet" type="text/css" href="./user/css/mypage/orderDetails.css"/>
 </head>
 <body>
-    <%-- header --%>
-    <jsp:include page="../layout/header.jsp"></jsp:include>
+    <c:choose>
+        <c:when test="${not empty sessionScope.customer_info}">
+            <%-- header --%>
+            <jsp:include page="../layout/header.jsp"></jsp:include>
 
-    <div class="wrap">
-        <div class="row">
-            <div class="container">
-                <div class="order-details-title">주문 상세 내역</div>
-                <div class="order-header">
-                    <p>2025.01.17 10:51</p>
-                    <p>주문번호 202501171049450001</p>
-                </div>
-                <div class="delivery-info">
-                    <div class="info-header">
-                        <p class="name">홍길동</p>
-                        <button class="btn btn-outline-secondary btn-sm change-address-button" data-toggle="modal" data-target="#deliveryModal">배송지 변경</button>
-                    </div>
-                    <p class="phone">010-1234-5678</p>
-                    <div class="address-row">
-                        <p class="address">(04956) 서울 강남구 도산대로 12-5 3층</p>
-                        <p class="request">문 앞에 놓아주세요.</p>
-                    </div>
-                </div>
-                <div class="product-section">
-                    <h5>주문 상품 1개</h5>
-                    <p class="payment-status">결제완료</p>
-                    <div class="product-item">
-                        <img src="./user/images/product8.jpg" alt="상품 이미지" class="product-img">
-                        <div class="product-details">
-                            <div class="product-header">
-                                <p class="product-brand"><strong>커버낫</strong></p>
-                                <a href="#" class="product-link">판매자 정보</a>
+            <div class="wrap">
+                <div class="row">
+                    <div class="container">
+                        <div class="order-details-title">주문 상세 내역</div>
+                        <div class="order-header">
+                            <p>2025.01.17 10:51</p>
+                            <p>주문번호 202501171049450001</p>
+                        </div>
+                        <div class="delivery-info">
+                            <div class="info-header">
+                                <p class="name">홍길동</p>
+                                <button class="btn btn-outline-secondary btn-sm change-address-button" data-toggle="modal" data-target="#deliveryModal">배송지 변경</button>
                             </div>
-                            <p class="product-name">[2PACK] 쿨 코튼 티셔츠 블랙+화이트<br>M / 1개</p>
-                            <div class="product-price-row">
-                                <p class="product-price">28,137원</p>
-                                <button class="btn btn-outline-secondary btn-sm product-link">스냅 보기</button>
+                            <p class="phone">010-1234-5678</p>
+                            <div class="address-row">
+                                <p class="address">(04956) 서울 강남구 도산대로 12-5 3층</p>
+                                <p class="request">문 앞에 놓아주세요.</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="product-actions">
-                        <button class="btn btn-outline-secondary cancel-button" onclick="location.href='Controller?type=cancelOrder'">주문 취소</button>
-                        <button class="btn btn-outline-secondary option-button" data-toggle="modal" data-target="#optionModal">옵션 변경</button>
-                    </div>
-                </div>
-                <div class="payment-info">
-                    <h5>결제 정보</h5>
-                    <div class="payment-header">
-                        <a href="#" class="view-link">영수증 보기</a>
-                        <a href="#" class="view-link">거래 명세서</a>
-                    </div>
-                    <ul class="payment-list">
-                        <li><span>상품 금액</span> <span class="item-price">49,000원</span></li>
-                        <li><span>할인 금액</span> <span class="discount">-18,490원</span></li>
-                        <li><span>적립금</span> <span class="points-amount">-2,373원</span></li>
-                        <li><span>배송비</span> <span class="shipping-fee">무료</span></li>
-                        <li class="total">
-                            <span class="payment-price">결제 금액</span>
-                            <span class="final-price">
+                        <div class="product-section">
+                            <h5>주문 상품 1개</h5>
+                            <p class="payment-status">결제완료</p>
+                            <div class="product-item">
+                                <img src="./user/images/product8.jpg" alt="상품 이미지" class="product-img">
+                                <div class="product-details">
+                                    <div class="product-header">
+                                        <p class="product-brand"><strong>커버낫</strong></p>
+                                        <a href="#" class="product-link">판매자 정보</a>
+                                    </div>
+                                    <p class="product-name">[2PACK] 쿨 코튼 티셔츠 블랙+화이트<br>M / 1개</p>
+                                    <div class="product-price-row">
+                                        <p class="product-price">28,137원</p>
+                                        <button class="btn btn-outline-secondary btn-sm product-link">스냅 보기</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-outline-secondary cancel-button" onclick="location.href='Controller?type=cancelOrder'">주문 취소</button>
+                                <button class="btn btn-outline-secondary option-button" data-toggle="modal" data-target="#optionModal">옵션 변경</button>
+                            </div>
+                        </div>
+                        <div class="payment-info">
+                            <h5>결제 정보</h5>
+                            <div class="payment-header">
+                                <a href="#" class="view-link">영수증 보기</a>
+                                <a href="#" class="view-link">거래 명세서</a>
+                            </div>
+                            <ul class="payment-list">
+                                <li><span>상품 금액</span> <span class="item-price">49,000원</span></li>
+                                <li><span>할인 금액</span> <span class="discount">-18,490원</span></li>
+                                <li><span>적립금</span> <span class="points-amount">-2,373원</span></li>
+                                <li><span>배송비</span> <span class="shipping-fee">무료</span></li>
+                                <li class="total">
+                                    <span class="payment-price">결제 금액</span>
+                                    <span class="final-price">
                                 <span class="discount-percent">43%</span>
                                 <span class="payment-amount">28,137원</span>
                             </span>
-                        </li>
-                        <li><span>결제 수단</span> <span class="payment-method">카드-농협카드(일시불)</span></li>
-                    </ul>
-                </div>
-                <div class="benefits-info">
-                    <div class="benefits-header">
-                        <h5>이번 주문으로 받은 혜택</h5>
-                        <span class="svg-icon" data-toggle="modal" data-target="#benefitsModal">
+                                </li>
+                                <li><span>결제 수단</span> <span class="payment-method">카드-농협카드(일시불)</span></li>
+                            </ul>
+                        </div>
+                        <div class="benefits-info">
+                            <div class="benefits-header">
+                                <h5>이번 주문으로 받은 혜택</h5>
+                                <span class="svg-icon" data-toggle="modal" data-target="#benefitsModal">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
                                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
                                 <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z" />
                             </svg>
                         </span>
+                            </div>
+                            <ul class="benefits-list">
+                                <li><span>총 할인 금액</span> <span>20,863원</span></li>
+                                <li><span>LV. 5 실버 2% 적립</span> <span>678원</span></li>
+                                <li><span>구매 추가 적립</span> <span>34원</span></li>
+                                <li><span>배송비</span> <span>무료</span></li>
+                                <li><span>후기 적립</span> <span>최대 3,500원</span></li>
+                                <li class="total-benefits"><span class="result-benefits">받은 총 혜택</span> <span class="result-price">25,075원</span></li>
+                            </ul>
+                        </div>
                     </div>
-                    <ul class="benefits-list">
-                        <li><span>총 할인 금액</span> <span>20,863원</span></li>
-                        <li><span>LV. 5 실버 2% 적립</span> <span>678원</span></li>
-                        <li><span>구매 추가 적립</span> <span>34원</span></li>
-                        <li><span>배송비</span> <span>무료</span></li>
-                        <li><span>후기 적립</span> <span>최대 3,500원</span></li>
-                        <li class="total-benefits"><span class="result-benefits">받은 총 혜택</span> <span class="result-price">25,075원</span></li>
-                    </ul>
                 </div>
-            </div>
-        </div>
 
-        <%-- footer --%>
-        <jsp:include page="../layout/footer.jsp"></jsp:include>
-    </div>
+                    <%-- footer --%>
+                <jsp:include page="../layout/footer.jsp"></jsp:include>
+            </div>
+        </c:when>
+        <c:otherwise>
+            <script>
+                window.location.href = "Controller?type=error";
+            </script>
+        </c:otherwise>
+    </c:choose>
 
     <%-- 혜택 안내 모달 --%>
     <div class="modal fade" id="benefitsModal" tabindex="-1" role="dialog" aria-labelledby="benefitsModalTitle" aria-hidden="true">
