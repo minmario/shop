@@ -276,7 +276,7 @@
                     <div class="modal-footer">
 
                         <div class="modal-footer-right">
-                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">닫기</button>
+                            <button type="button" class="btn btn-outline-secondary closemodal" data-dismiss="modal" onclick="closemodal()">닫기</button>
                             <button type="button" class="btn btn-outline-primary" onclick="sendDeliInfo(document.getElementById('addrForm'))">등록</button>
                         </div>
                     </div>

@@ -1,6 +1,7 @@
 package user.action;
 
 import user.dao.DeliveryDAO;
+import user.vo.CustomerVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +13,7 @@ public class EditDeliveryAction implements Action {
         HttpSession session = request.getSession();
 
         //파라미터 받기
+        CustomerVO cvo = (CustomerVO) session.getAttribute("customer_info");
         String id = request.getParameter("id");
         String cus_no = (String) session.getAttribute("customer_info.id");
         System.out.println("cus_no" + cus_no);
@@ -38,6 +40,8 @@ public class EditDeliveryAction implements Action {
             // log -> target
             // 배송지 추가에 실패했습니다. 다시 시도해주세요.
         }
+
+        request.setAttribute("cvo", cvo);
 
         return "/user/jsp/mypage/mypage.jsp";
     }

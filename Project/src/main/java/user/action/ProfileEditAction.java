@@ -30,10 +30,8 @@ public class ProfileEditAction implements Action {
                     int cnt = CustomerDAO.cusUpdate(uvo);
 
                     if (cnt > 0) {
-                        session.setAttribute("response", true);
                         request.setAttribute("response", true);
                     } else {
-                        session.setAttribute("response", false);
                         request.setAttribute("response", false);
                     }
 

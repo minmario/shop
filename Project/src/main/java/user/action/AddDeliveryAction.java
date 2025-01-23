@@ -1,14 +1,19 @@
 package user.action;
 
 import user.dao.DeliveryDAO;
+import user.vo.CustomerVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class AddDeliveryAction implements Action{
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+
         //파라미터 받기
+        CustomerVO cvo = (CustomerVO) session.getAttribute("customer_info");
         String name = request.getParameter("name");
         String phone = request.getParameter("phone");
         String pos_code = request.getParameter("pos_code");
@@ -18,7 +23,7 @@ public class AddDeliveryAction implements Action{
         String deli_request = request.getParameter("deli_request");
 
         //DAO 호출
-        int cnt = cnt = DeliveryDAO.insertDeliInfo(name, phone, pos_code, addr1, addr2, chkDefault, deli_request);
+        int cnt = DeliveryDAO.insertDeliInfo(name, phone, pos_code, addr1, addr2, chkDefault, deli_request);
 
         // 결과 처리
         if (cnt > 0) {
@@ -35,6 +40,8 @@ public class AddDeliveryAction implements Action{
             // log -> target
             // 배송지 추가에 실패했습니다. 다시 시도해주세요.
         }
+
+        request.setAttribute("cvo", cvo);
 
         return "/user/jsp/mypage/mypage.jsp";
     }

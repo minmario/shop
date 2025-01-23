@@ -79,4 +79,22 @@ public class DeliveryDAO {
 
         return cnt;
     }
+
+    //배송지 삭제하기
+    public static int deleteDeliInfo(String id, String cus_no){
+        DeliveryVO vo = new DeliveryVO();
+        vo.setId(id);
+        vo.setCus_no(cus_no);
+
+        SqlSession ss = FactoryService.getFactory().openSession();
+        int cnt = ss.update("delivery.deliInfoDelete", vo);
+
+        if (cnt > 0)
+            ss.commit();
+        else
+            ss.rollback();
+        ss.close();
+
+        return cnt;
+    }
 }
