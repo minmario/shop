@@ -3,9 +3,37 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="point">
-    <!-- 적립금 내역 가져오기 -->
+    <!-- 적립금 전체 내역 가져오기 -->
     <select id="select_point" resultType="user.vo.PointVO" parameterType="String">
         SELECT * FROM point
         WHERE cus_no = #{cus_no};
+        ORDER BY id DESC
     </select>
+
+    <!-- 적립금 적립 내역 가져오기 -->
+    <select id="select_point_earned" resultType="user.vo.PointVO" parameterType="String">
+        SELECT * FROM point
+        WHERE cus_no = #{cus_no} AND p_type = 0;
+        ORDER BY id DESC
+    </select>
+
+    <!-- 적립금 사용 내역 가져오기 -->
+    <select id="select_point_used" resultType="user.vo.PointVO" parameterType="String">
+        SELECT * FROM point
+        WHERE cus_no = #{cus_no} AND p_type = 1;
+        ORDER BY id DESC
+    </select>
+
+    <!-- 적립금 적립예정 내역 가져오기 -->
+    <select id="select_point_upcoming" resultType="user.vo.PointVO" parameterType="String">
+        SELECT * FROM point
+        WHERE cus_no = #{cus_no} AND p_type = 0;
+        ORDER BY id DESC
+    </select>
+
+    <!-- select : select_point -->
+    <!-- select : select_point_by_id -->
+    <!-- insert : insert_point -->
+    <!-- update : update_point -->
+    <!-- delete : delete_point -> update 태그 -->
 </mapper>

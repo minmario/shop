@@ -1,7 +1,27 @@
 package user.vo;
 
+import java.util.List;
+
 public class PointVO {
-    private String id, cus_no, amount, save_date, expire_date, p_type;
+    private String id, cus_no, amount, save_date, expire_date, order_code, p_type;
+
+    public String getOrder_code() {
+        return order_code;
+    }
+
+    public void setOrder_code(String order_code) {
+        this.order_code = order_code;
+    }
+
+    List<PointVO> list;
+
+    public List<PointVO> getList() {
+        return list;
+    }
+
+    public void setList(List<PointVO> list) {
+        this.list = list;
+    }
 
     public String getId() {
         return id;

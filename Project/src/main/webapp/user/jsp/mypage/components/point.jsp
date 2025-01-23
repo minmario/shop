@@ -43,14 +43,19 @@
                             <div class="custom-points-title-container">
                                 <p class="custom-points-title">주문 적립</p>
                                 <c:if test="${item.p_type eq '0'}">
-                                    <p class="custom-points-amount">+712원</p>
+                                    <p class="custom-points-amount">+${item.amount}</p>
                                 </c:if>
                                 <c:if test="${item.p_type eq '1'}">
-                                    <p class="custom-points-amount custom-negative">+712원</p>
+                                    <p class="custom-points-amount custom-negative">-${item.amount}</p>
                                 </c:if>
                             </div>
-                            <p class="custom-points-description">[2PACK] 클 코튼 티셔츠 블랙+화이트</p>
-                            <p class="custom-points-status">예정</p>
+                            <p class="custom-points-description">${item.order_code}</p>
+                            <c:if test="${item.p_type eq '0'}">
+                                <p class="custom-points-status">적립</p>
+                            </c:if>
+                            <c:if test="${item.p_type eq '1'}">
+                                <p class="custom-points-status">사용</p>
+                            </c:if>
                         </div>
                     </td>
                 </tr>
