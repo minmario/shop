@@ -7,7 +7,7 @@
     <!-- 배송지 정보를 가져오는 select -->
     <select id="deliInfoSelect" parameterType="String" resultType="user.vo.DeliveryVO">
         SELECT * FROM delivery
-        WHERE cus_no = #{cus_no}
+        WHERE cus_no = #{cus_no} AND is_del = 0
     </select>
 
     <!-- 배송지 입력 시 저장되는 insert -->
@@ -32,5 +32,12 @@
             </if>
         </trim>
         WHERE id = #{id}
+    </update>
+
+    <!-- 배송지 삭제 update -->
+    <update id="deliInfoDelete" parameterType="user.vo.DeliveryVO">
+        UPDATE delivery
+        SET is_del = 1
+        WHERE id = #{id} AND cus_no = #{cus_no}
     </update>
 </mapper>

@@ -21,13 +21,15 @@
                     <label for="default-address">
                         <div class="address-details">
                             <p class="name">${dvo.name}</p>
-                            <span class="default">${dvo.is_default == '1' ? '기본 배송지' : ''}</span>
+                            <span class="default">
+                                    <c:if test="${dvo.is_default == '1'}">기본 배송지</c:if>
+                            </span>
                             <p class="address">(<span class="pos_code">${dvo.pos_code}</span>) &nbsp;<span class="addr1">${dvo.addr1}</span> ${dvo.addr2}</p>
                             <p class="phone">${dvo.phone}</p>
                             <p class="request">${dvo.request}</p>
                             <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#addrModal"
                                     onclick="handleDeliInfo(this)">수정</button>
-                            <button type="button" class="btn btn-outline-danger">삭제</button>
+                            <button type="button" class="btn btn-outline-danger" onclick="deleteDeliInfo(${dvo.id})">삭제</button>
                         </div>
                     </label>
                 </div>

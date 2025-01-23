@@ -18,12 +18,7 @@ public class ViewDeliveryAction implements Action {
         //파라미터 받기
         CustomerVO cvo = (CustomerVO) session.getAttribute("customer_info");
 
-        List<DeliveryVO> d_list = null;
-        try {
-            d_list = DeliveryDAO.searchDeliInfo(cvo.getId());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        List<DeliveryVO> d_list = DeliveryDAO.searchDeliInfo(cvo.getId());
 
         request.setAttribute("d_list", d_list);
 
