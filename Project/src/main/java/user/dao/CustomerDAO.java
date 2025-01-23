@@ -22,7 +22,7 @@ public class CustomerDAO {
     }
 
     // 회원 가입
-    public static int cusInsert(CustomerVO vo) {
+    public static int insertCustomer(CustomerVO vo) {
         int cnt = 0;
         SqlSession ss = FactoryService.getFactory().openSession();
 
@@ -44,7 +44,7 @@ public class CustomerDAO {
     }
 
     // 회원 정보 보기
-    public static CustomerVO selectById(String id) {
+    public static CustomerVO selectCustomerById(String id) {
         CustomerVO vo = null;
         SqlSession ss = FactoryService.getFactory().openSession();
 
@@ -60,7 +60,7 @@ public class CustomerDAO {
     }
 
     // 회원 정보 수정
-    public static int cusUpdate(CustomerVO vo) {
+    public static int updateCustomer(CustomerVO vo) {
         int cnt = 0;
         SqlSession ss = FactoryService.getFactory().openSession();
 

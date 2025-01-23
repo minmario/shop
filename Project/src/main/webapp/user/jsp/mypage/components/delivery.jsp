@@ -3,7 +3,7 @@
 <div class="delivery-section">
     <div class="delivery-header">
         <div class="delivery-title">배송지 목록</div>
-        <button type="button" class="btn btn-outline-primary add-address-button" data-toggle="modal" data-target="#addrModal">배송지 추가</button>
+        <button type="button" class="btn btn-outline-primary add-address-button" data-toggle="modal" data-target="#addrModal" onclick="insertDeliveryModal()">배송지 추가</button>
     </div>
 </div>
 <c:if test="${requestScope.d_list eq null}">
@@ -15,23 +15,21 @@
     <c:set var="d_list" value="${requestScope.d_list}"/>
     <div class="custom-addr">
         <div class="wrap-addrList">
-            <c:forEach var="dvo" items="${d_list}">
+            <c:forEach var="dvo" items="${d_list}" varStatus="st">
                 <div class="address-box" data-value="${dvo.id}">
-                    <input type="radio" id="default-address" name="address" checked>
-                    <label for="default-address">
-                        <div class="address-details">
-                            <p class="name">${dvo.name}</p>
+                    <div class="address-details">
+                        <p class="name">${dvo.name}</p>
+                        <c:if test="${dvo.is_default == '1'}">
                             <span class="default">
-                                    <c:if test="${dvo.is_default == '1'}">기본 배송지</c:if>
+                                기본 배송지
                             </span>
-                            <p class="address">(<span class="pos_code">${dvo.pos_code}</span>) &nbsp;<span class="addr1">${dvo.addr1}</span> ${dvo.addr2}</p>
-                            <p class="phone">${dvo.phone}</p>
-                            <p class="request">${dvo.request}</p>
-                            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#addrModal"
-                                    onclick="handleDeliInfo(this)">수정</button>
-                            <button type="button" class="btn btn-outline-danger" onclick="deleteDeliInfo(${dvo.id})">삭제</button>
-                        </div>
-                    </label>
+                        </c:if>
+                        <p class="address">(<span class="pos_code">${dvo.pos_code}</span>) &nbsp;<span class="addr1">${dvo.addr1}</span> <span class="addr2">${dvo.addr2}</span></p>
+                        <p class="phone">${dvo.phone}</p>
+                        <p class="request">${dvo.request}</p>
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#addrModal" onclick="updateDeliveryModal(this)">수정</button>
+                        <button type="button" class="btn btn-outline-danger" onclick="deleteDelivery(${dvo.id})">삭제</button>
+                    </div>
                 </div>
             </c:forEach>
         </div>

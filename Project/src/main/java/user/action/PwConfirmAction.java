@@ -12,9 +12,6 @@ public class PwConfirmAction implements Action {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String action = request.getParameter("action");
 
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-
         String viewPage = null;
         if (action != null) {
             switch (action) {

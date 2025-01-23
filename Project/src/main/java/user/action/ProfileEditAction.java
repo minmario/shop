@@ -27,7 +27,7 @@ public class ProfileEditAction implements Action {
                     uvo.setPhone(phone);
 
                     // 호출
-                    int cnt = CustomerDAO.cusUpdate(uvo);
+                    int cnt = CustomerDAO.updateCustomer(uvo);
 
                     if (cnt > 0) {
                         request.setAttribute("response", true);
@@ -37,7 +37,7 @@ public class ProfileEditAction implements Action {
 
                     break;
                 case "select":
-                    CustomerVO svo = CustomerDAO.selectById(id);
+                    CustomerVO svo = CustomerDAO.selectCustomerById(id);
                     session.setAttribute("customer_info", svo);
                     break;
             }

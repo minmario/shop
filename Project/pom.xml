@@ -36,12 +36,6 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.jdom/jdom -->
-        <dependency>
-            <groupId>org.jdom</groupId>
-            <artifactId>jdom</artifactId>
-            <version>2.0.2</version>
-        </dependency>
         <!--  https://mvnrepository.com/artifact/org.mybatis/mybatis  -->
         <dependency>
             <groupId>org.mybatis</groupId>
@@ -60,18 +54,23 @@
             <artifactId>json</artifactId>
             <version>20240303</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jdom/jdom2 -->
+        <dependency>
+            <groupId>org.jdom</groupId>
+            <artifactId>jdom2</artifactId>
+            <version>2.0.6.1</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.taglibs/tagliabs-standard-impl -->
+        <!-- https://mvnrepository.com/artifact/taglibs/standard -->
         <dependency>
-            <groupId>org.apache.taglibs</groupId>
-            <artifactId>taglibs-standard-impl</artifactId>
-            <version>1.2.5</version>
-            <scope>runtime</scope>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <version>1.1.2</version>
         </dependency>
     </dependencies>
     <build>

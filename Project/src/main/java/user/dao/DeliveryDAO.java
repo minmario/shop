@@ -9,13 +9,13 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DeliveryDAO {
-
     //배송지 정보 가져오기
-    public static List<DeliveryVO> searchDeliInfo(String cus_no){
+    public static List<DeliveryVO> selectDelivery(String cus_no){
         SqlSession ss = FactoryService.getFactory().openSession();
-        List<DeliveryVO> list = new ArrayList<DeliveryVO>();
+
+        List<DeliveryVO> list = null;
         try {
-            list = ss.selectList("delivery.deliInfoSelect", cus_no);
+            list = ss.selectList("delivery.select_delivery", cus_no);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -26,10 +26,11 @@ public class DeliveryDAO {
     }
 
     //배송지 정보 입력하기
-    public static int insertDeliInfo(String name, String phone, String pos_code, String addr1, String addr2,
-                                     String chkDefault, String deli_request){
+    public static int insertDelivery(String cus_no, String name, String phone, String pos_code, String addr1, String addr2, String chkDefault, String deli_request){
+        SqlSession ss = FactoryService.getFactory().openSession();
 
         DeliveryVO vo = new DeliveryVO();
+        vo.setCus_no(cus_no);
         vo.setName(name);
         vo.setPhone(phone);
         vo.setPos_code(pos_code);
@@ -38,10 +39,10 @@ public class DeliveryDAO {
         vo.setIs_default(chkDefault);
         vo.setRequest(deli_request);
 
-        SqlSession ss = FactoryService.getFactory().openSession();
         int cnt = 0;
         try {
-            cnt = ss.insert("delivery.deliInfoInsert", vo);
+            cnt = ss.insert("delivery.insert_delivery", vo);
+
             if (cnt > 0)
                 ss.commit();
             else
@@ -55,11 +56,11 @@ public class DeliveryDAO {
     }
 
     //배송지 수정하기
-    public static int updateDeliInfo(String id, String cus_no, String name, String phone, String pos_code, String addr1, String addr2,
-                                     String chkDefault, String deli_request){
+    public static int updateDelivery(String id, String name, String phone, String pos_code, String addr1, String addr2, String chkDefault, String deli_request){
+        SqlSession ss = FactoryService.getFactory().openSession();
+
         DeliveryVO vo = new DeliveryVO();
         vo.setId(id);
-        vo.setCus_no(cus_no);
         vo.setName(name);
         vo.setPhone(phone);
         vo.setPos_code(pos_code);
@@ -68,32 +69,40 @@ public class DeliveryDAO {
         vo.setIs_default(chkDefault);
         vo.setRequest(deli_request);
 
-        SqlSession ss = FactoryService.getFactory().openSession();
-        int cnt = ss.update("delivery.deliInfoUpdate", vo);
+        int cnt = 0;
+        try {
+            cnt = ss.update("delivery.update_delivery", vo);
 
-        if (cnt > 0)
-            ss.commit();
-        else
-            ss.rollback();
-        ss.close();
+            if (cnt > 0)
+                ss.commit();
+            else
+                ss.rollback();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
 
         return cnt;
     }
 
     //배송지 삭제하기
-    public static int deleteDeliInfo(String id, String cus_no){
-        DeliveryVO vo = new DeliveryVO();
-        vo.setId(id);
-        vo.setCus_no(cus_no);
-
+    public static int deleteDelivery(String id){
         SqlSession ss = FactoryService.getFactory().openSession();
-        int cnt = ss.update("delivery.deliInfoDelete", vo);
 
-        if (cnt > 0)
-            ss.commit();
-        else
-            ss.rollback();
-        ss.close();
+        int cnt = 0;
+        try {
+            cnt = ss.update("delivery.delete_delivery", id);
+
+            if (cnt > 0)
+                ss.commit();
+            else
+                ss.rollback();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
 
         return cnt;
     }

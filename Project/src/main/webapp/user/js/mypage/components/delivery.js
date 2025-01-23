@@ -1,66 +1,80 @@
-//delivery 관련 js
-
 // 배송지 모달 > 요청 사항 필드 추가
 function addInput() {
     let selectValue = document.getElementById("request-select").value;
     let customInput = document.getElementById("custom-input");
 
-    if (selectValue == "직접 입력") {
-        customInput.style.display = "block";
-    } else {
-        customInput.style.display = "none";
-    }
+    customInput.style.display = selectValue === "직접 입력" ? "block" : "none";
+}
+
+// 추가 모달 열기
+function insertDeliveryModal() {
+    $("#addrModalTitle").text("배송지 추가");
+    $(".btn-delivery-event").text("추가");
+
+    // 입력란 비우기
+    $("#addrModal #name").val("");
+    $("#addrModal #phone").val("");
+    $("#addrModal #pos_code").val("");
+    $("#addrModal #addr1").val("");
+    $("#addrModal #addr2").val("");
+    $("#addrModal #request-select").val("0");
+    $("#addrModal #chkDefault").prop("checked", false);
+    $("#addrModal #addr_id").val("");
 }
 
 // 수정 모달 열기
-function handleDeliInfo(obj) {
+function updateDeliveryModal(obj) {
+    $("#addrModalTitle").text("배송지 수정");
+    $(".btn-delivery-event").text("수정");
+
     // 기존 데이터를 입력란에 채우기
-    $("#name").val($(obj).closest(".address-details").find(".name").text());
-    $("#phone").val($(obj).closest(".address-details").find(".phone").text());
-    $("#pos_code").val($(obj).closest(".address-details").find(".pos_code").text());
-    $("#addr1").val($(obj).closest(".address-details").find(".addr1").text());
-    $("#addr2").val($(obj).closest(".address-details").find(".addr2").text());
+    $("#addrModal #name").val($(obj).closest(".address-details").find(".name").text());
+    $("#addrModal #phone").val($(obj).closest(".address-details").find(".phone").text());
+    $("#addrModal #pos_code").val($(obj).closest(".address-details").find(".pos_code").text());
+    $("#addrModal #addr1").val($(obj).closest(".address-details").find(".addr1").text());
+    $("#addrModal #addr2").val($(obj).closest(".address-details").find(".addr2").text());
     const request = $(obj).closest(".address-details").find(".request").text();
-    $("#deli_request").val(request);
+    $("#addrModal #deli_request").val(request);
     let is_default = $(obj).closest(".address-details").find(".default").length > 0;
 
     // 요청 사항 select 박스와 직접 입력 동기화
     if (["문 앞에 놔주세요", "경비실에 맡겨주세요", "택배함에 넣어주세요", "배송 전에 연락주세요"].includes(request)) {
-        $("#request-select").val(request);
-        $("#custom-input").hide();
+        $("#addrModal #request-select").val(request);
+        $("#addrModal #custom-input").hide();
+    } else if (request.length == 0) {
+        $("#addrModal #request-select").val("0");
+        $("#addrModal #custom-input").hide();
     } else {
-        $("#request-select").val("직접 입력");
-        $("#custom-input").show();
-        $("#deli_request").val(request);
+        $("#addrModal #request-select").val("직접 입력");
+        $("#addrModal #custom-input").show();
+        $("#addrModal #deli_request").val(request);
     }
 
     // 기본 배송지 설정 체크박스
-    $("#chkDefault").prop("checked", is_default);
+    $("#addrModal #chkDefault").prop("checked", is_default);
 
-    // 모달 열기
-    $("#addrModal").modal("show");
-
-    $("#addrModal").find("#addr_id").val($(obj).closest(".address-box").data("value"));
+    $("#addrModal #addr_id").val($(obj).closest(".address-box").data("value"));
 }
 
 // 추가 및 수정
 function onSendDeliveryInfo() {
-    const deli_request = $("#deli_request").val() || ($("#request-select option:selected").text() !== ":: 배송 요청사항을 선택하세요 ::" ? $("#request-select option:selected").text() : "");
-
-    let action = "add";
-    if ($("#addrModal").find("#addr_id").val()) {
-        action = "edit";
+    const regPhone = /^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
+    if(!regPhone.test($("#phone").val())) {
+        alert('핸드폰 번호를 확인하세요.');
+        $("#phone").val("");
+        $("#phone").focus();
+        return;
     }
 
     const formData = {
-        id: $("#addr_id").val(), // 배송지 ID (수정 시 필요)
-        name: $("#name").val(),
-        phone: $("#phone").val(),
-        pos_code: $("#pos_code").val(),
-        addr1: $("#addr1").val(),
-        addr2: $("#addr2").val(),
-        deli_request: deli_request,
-        chkDefault: $("#chkDefault").is(":checked") ? "1" : "0"
+        id: $("#addrModal #addr_id").val(), // 배송지 ID (수정 시 필요)
+        name: $("#addrModal #name").val(),
+        phone: $("#addrModal #phone").val(),
+        pos_code: $("#addrModal #pos_code").val(),
+        addr1: $("#addrModal #addr1").val(),
+        addr2: $("#addrModal #addr2").val(),
+        deli_request: $("select[name=request-select] option:selected").val() != "0" ? $("select[name=request-select] option:selected").text() : null,
+        chkDefault: $("#addrModal #chkDefault").is(":checked") ? "1" : "0"
     };
 
     // 유효성 검사
@@ -69,57 +83,63 @@ function onSendDeliveryInfo() {
         return;
     }
 
+    let action = "insert";
+    if ($("#addrModal").find("#addr_id").val()) {
+        action = "update";
+    }
+
     // Ajax 요청
     $.ajax({
-        url: action === "add" ? "Controller?type=addDelivery" : "Controller?type=editDelivery",
+        url: action === "insert" ? "Controller?type=delivery&action=insert" : "Controller?type=delivery&action=update",
         method: "POST",
         data: formData,
         success: function (response) {
-            $("#addrModal").modal("hide"); // 모달 닫기
-
+            // 모달 닫기
             $("#addrModal").find(".btn.btn-outline-secondary").click();
-
-            alert(action === "add" ? "배송지 정보가 추가되었습니다." : "배송지 정보가 수정되었습니다.");
-            $(".delivery-section-container").html(response); // 새로고침 없이 내용 갱신
+            
+            // 메세지
+            alert(action === "insert" ? "배송지 정보가 추가되었습니다." : "배송지 정보가 수정되었습니다.");
+            
+            // 배송지 목록
+            selectDelivery();
         },
         error: function () {
-            alert(action === "add" ? "배송지 추가 중 오류가 발생했습니다." : "배송지 수정 중 오류가 발생했습니다. 다시 시도해주세요.");
+            // 모달 닫기
+            $("#addrModal").find(".btn.btn-outline-secondary").click();
+            
+            // 메세지
+            alert(action === "insert" ? "배송지 추가 중 오류가 발생했습니다." : "배송지 수정 중 오류가 발생했습니다. 다시 시도해주세요.");
         }
     });
 }
 
-//모달 닫기
-function closemodal() {
-    $("#addrModal").modal("hide"); // 모달 닫기
-
-    $("#addrModal").find(".closemodal").click();
-}
-
-function deleteDeliInfo(id) {
+// 배송지 삭제
+function deleteDelivery(id) {
     if (!confirm("정말 삭제하시겠습니까?"))
         return;
 
     $.ajax({
-        url: "Controller?type=deleteDelivery",
+        url: "Controller?type=delivery&action=delete",
         method: "POST",
-        data: { id },
+        data: {
+            id: id
+        },
         success: function (response) {
             alert("배송지가 삭제되었습니다.");
-            $(".delivery-section-container").html(response); // 새로고침 없이 내용 갱신
+
+            // 배송지 목록
+            selectDelivery();
         },
         error: function () {
             alert("삭제 중 오류가 발생했습니다. 다시 시도해주세요.");
         }
     });
-
-
 }
 
-//배송지 조회
-function viewDelivery() {
-    // AJAX 요청으로 ViewDeliveryAction 호출
+// 배송지 조회
+function selectDelivery() {
     $.ajax({
-        url: "Controller?type=viewDelivery",
+        url: "Controller?type=delivery&action=select",
         type: "POST",
         success: function (response) {
             // 배송지 섹션만 표시하고 다른 섹션은 숨김
@@ -148,4 +168,25 @@ function viewDelivery() {
             console.error("배송지 정보를 가져오는 데 실패했습니다.", error);
         }
     });
+}
+
+// 우편 번호 검색
+function getPostcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            let addr = '';
+
+            if (data.userSelectedType === 'R') {
+                addr = data.roadAddress;
+            } else {
+                addr = data.jibunAddress;
+            }
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            document.getElementById('pos_code').value = data.zonecode;
+            document.getElementById("addr1").value = addr;
+            // 커서를 상세주소 필드로 이동한다.
+            document.getElementById("addr2").focus();
+        }
+    }).open();
 }
