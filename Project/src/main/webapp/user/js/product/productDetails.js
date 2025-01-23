@@ -94,3 +94,39 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+$(function () {
+    $(".cart-count").each(function () {
+        const cartCountElement = $(this);
+        const minusButton = cartCountElement.find(".btn-minus");
+        const plusButton = cartCountElement.find(".btn-plus");
+        const spanElement = cartCountElement.find(".cart-count-value");
+
+        // - 버튼 클릭 이벤트
+        minusButton.on("click", function () {
+            let count = parseInt(spanElement.text(), 10);
+            if (count > 0) {
+                count -= 1;
+                spanElement.text(count);
+            }
+        });
+
+        // + 버튼 클릭 이벤트
+        plusButton.on("click", function () {
+            let count = parseInt(spanElement.text(), 10);
+            count += 1;
+            spanElement.text(count);
+        });
+    });
+
+    $("#add-to-cart").on('click', function () {
+         $.ajax({
+             url: "Controller?type=cart&action=insert",
+             method: 'POST',
+             data: {
+                 prod_id: "",
+                 count: $("#cart-count-value").val()
+             },
+         })
+    });
+});

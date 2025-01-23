@@ -10,14 +10,10 @@
         <label for="status">처리 상태</label>
         <select class="form-select" id="status" name="status">
             <option value="all">전체 보기</option>
-            <option value="waiting">답변 대기</option>
-            <option value="received">접수</option>
-            <option value="inquiry">업체 문의 중</option>
-            <option value="confirmed">물품 도착 확인</option>
-            <option value="exchange">교환 상품 발송</option>
-            <option value="completed">답변 완료</option>
+            <option value="">답변 대기</option>
+            <option value="">답변 확인 중</option>
+            <option value="">답변 완료</option>
         </select>
-
         <label for="date-range">기간 조회</label>
         <select class="form-select" id="date-range" name="date-range">
             <option value="all">전체 시기</option>
@@ -26,12 +22,10 @@
             <option value="3-months">3개월</option>
             <option value="custom">기간 설정</option>
         </select>
-
         <div class="date-picker" id="custom-date-picker">
             <input type="date" class="form-control" id="start-date" name="start-date"> ~
             <input type="date" class="form-control" id="end-date" name="end-date">
         </div>
-
         <button type="button" class="btn btn-outline-primary search-button">검색</button>
     </div>
 </div>

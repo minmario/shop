@@ -35,55 +35,54 @@
                         <div class="cart-section-container" id="cart-article">
                             <table id="cart-table" class="table">
                                 <thead>
-                                <tr>
-                                    <th>번호</th>
-                                    <th>상품정보</th>
-                                    <th>개별 판매가</th>
-                                    <th>수량</th>
-                                    <th><input type="checkbox" id="cart-all"/></th>
-                                </tr>
+                                    <tr>
+                                        <th>번호</th>
+                                        <th>상품정보</th>
+                                        <th>개별 판매가</th>
+                                        <th>수량</th>
+                                        <th><input type="checkbox" id="cart-all"/></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <c:set var="cnt" value="5"/>
-                                <c:forEach begin="1" end="${cnt}" varStatus="st">
-                                    <tr>
-                                        <td class="order-id">${st.index}</td>
-                                        <td class="product-info">
-                                            <div class="prod_info">
-                                                <div class="prod_img">
-                                                    <img src="./user/images/product2.jpg"/>
-                                                </div>
-                                                <div class="prod_details">
-                                                    <div class="prod_brand">
-                                                        [페이퍼리즘]
+                                    <c:forEach begin="1" end="5" varStatus="st">
+                                        <tr>
+                                            <td class="order-id">${st.index}</td>
+                                            <td class="product-info">
+                                                <div class="prod_info">
+                                                    <div class="prod_img">
+                                                        <img src="./user/images/product2.jpg"/>
                                                     </div>
-                                                    <div class="prod_name">
-                                                        ZIGGY LIGHTING 3/4 SLV T-SHIRT
-                                                    </div>
-                                                    <div class="prod_option">
-                                                        <div class="prod_option_left">옵션&nbsp;:&nbsp;</div>
-                                                        <div class="prod_option_center">RED&nbsp;/&nbsp;1 Size</div>
-                                                        <div class="prod_option_right">
-                                                            <button type="button" class="btn btn-outline-secondary option-change-btn" data-toggle="modal" data-target="#optionModal">옵션 변경</button>
+                                                    <div class="prod_details">
+                                                        <div class="prod_brand">
+                                                            [페이퍼리즘]
+                                                        </div>
+                                                        <div class="prod_name">
+                                                            ZIGGY LIGHTING 3/4 SLV T-SHIRT
+                                                        </div>
+                                                        <div class="prod_option">
+                                                            <div class="prod_option_left">옵션&nbsp;:&nbsp;</div>
+                                                            <div class="prod_option_center">RED&nbsp;/&nbsp;1 Size</div>
+                                                            <div class="prod_option_right">
+                                                                <button type="button" class="btn btn-outline-secondary option-change-btn" data-toggle="modal" data-target="#optionModal">옵션 변경</button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td class="product-price">
-                                            <del class="default-price">59,000원</del>
-                                            <div class="sale-price">39,900원</div>
-                                        </td>
-                                        <td class="cart-count">
-                                            <button type="button" class="btn btn-secondary btn-minus">-</button>
-                                            <span class="cart-count-value">5</span>
-                                            <button type="button" class="btn btn-secondary btn-plus">+</button>
-                                        </td>
-                                        <td>
-                                            <input type="checkbox" name="chk-cart"/>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
+                                            </td>
+                                            <td class="product-price">
+                                                <del class="default-price">59,000원</del>
+                                                <div class="sale-price">39,900원</div>
+                                            </td>
+                                            <td class="cart-count">
+                                                <button type="button" class="btn btn-secondary btn-minus">-</button>
+                                                <span class="cart-count-value">0</span>
+                                                <button type="button" class="btn btn-secondary btn-plus">+</button>
+                                            </td>
+                                            <td>
+                                                <input type="checkbox" name="chk-cart"/>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
                                 </tbody>
                             </table>
                             <div class="cart-notice">
