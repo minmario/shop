@@ -3,7 +3,15 @@ package user.vo;
 import java.util.List;
 
 public class PointVO {
-    private String id, cus_no, amount, save_date, expire_date, order_code, p_type;
+    private String id, cus_no, amount, save_date, expire_date, use_date, order_code, p_type;
+
+    public String getUse_date() {
+        return use_date;
+    }
+
+    public void setUse_date(String use_date) {
+        this.use_date = use_date;
+    }
 
     public String getOrder_code() {
         return order_code;
