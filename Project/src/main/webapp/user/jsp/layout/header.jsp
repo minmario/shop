@@ -19,7 +19,7 @@
 <html>
 <header>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-<%--    <link rel="stylesheet" href="css/styles.css">--%>
+    <%--    <link rel="stylesheet" href="css/styles.css">--%>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
@@ -91,14 +91,14 @@
                     </c:when>
                     <c:otherwise>
                         <button type="button" class="btn btn-outline-primary"
-                                onclick="location.href='../user/jsp/login/login.jsp';">로그인</button>
+                                onclick="location.href='./user/jsp/login/login.jsp';">로그인</button>
                     </c:otherwise>
                 </c:choose>
             </div>
 
             <div class="d-flex gap-3 align-items-center">
                 <a href="#" class="text-decoration-none text-dark">바로접속 ON</a>
-                <a href="../mypage/mypage.jsp" class="text-decoration-none text-dark">마이페이지</a>
+                <a href="./user/jsp/mypage/mypage.jsp" class="text-decoration-none text-dark">마이페이지</a>
                 <a href="#" class="text-decoration-none text-dark">최근 본 상품</a>
                 <a href="#" class="text-decoration-none text-danger">좋아요</a>
                 <a href="#" class="text-decoration-none text-dark position-relative">

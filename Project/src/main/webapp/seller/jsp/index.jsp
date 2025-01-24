@@ -10,7 +10,7 @@
 
 </head>
 <body>
-<jsp:include page="./layout/header.jsp"></jsp:include>
+<jsp:include page="header.jsp"></jsp:include>
 <!-- 네비게이션 아래 메뉴바 페이지 -->
 <!-- d-flex justify-content-between align-items-center: 좌우정렬과 가운데정렬을 하는 부트스트랩기능-->
 
