@@ -6,34 +6,53 @@
     <!-- 적립금 전체 내역 가져오기 -->
     <select id="select_point" resultType="user.vo.PointVO" parameterType="String">
         SELECT * FROM point
-        WHERE cus_no = #{cus_no};
+        WHERE cus_no = #{cus_no}
         ORDER BY id DESC
     </select>
 
     <!-- 적립금 적립 내역 가져오기 -->
     <select id="select_point_earned" resultType="user.vo.PointVO" parameterType="String">
         SELECT * FROM point
-        WHERE cus_no = #{cus_no} AND p_type = 0;
+        WHERE cus_no = #{cus_no} AND p_type = 0
         ORDER BY id DESC
     </select>
 
     <!-- 적립금 사용 내역 가져오기 -->
     <select id="select_point_used" resultType="user.vo.PointVO" parameterType="String">
         SELECT * FROM point
-        WHERE cus_no = #{cus_no} AND p_type = 1;
+        WHERE cus_no = #{cus_no} AND p_type = 1
         ORDER BY id DESC
     </select>
 
     <!-- 적립금 적립예정 내역 가져오기 -->
-    <select id="select_point_upcoming" resultType="user.vo.PointVO" parameterType="String">
-        SELECT * FROM point
-        WHERE cus_no = #{cus_no} AND p_type = 0;
-        ORDER BY id DESC
+    <select id="select_point_upcoming" resultType="String" parameterType="String">
+        SELECT p.amount FROM point p
+        INNER JOIN order o
+        ON p.id = o.point_no
+        WHERE p.cus_no = #{cus_no}
+        AND p.p_type = 0 AND o.status = 2
+        ORDER BY p.id DESC
     </select>
 
-    <!-- select : select_point -->
-    <!-- select : select_point_by_id -->
-    <!-- insert : insert_point -->
-    <!-- update : update_point -->
-    <!-- delete : delete_point -> update 태그 -->
+    <!-- 소멸 예정 적립금 구하기 -->
+    <select id="select_expire_days_left" resultType="user.vo.PointVO" parameterType="String">
+        SELECT id, cus_no, amount, save_date, expire_date, DATEDIFF(expire_date, NOW()) AS days_left
+        FROM point
+        WHERE cus_no = #{cus_no} AND p_type = 0
+        AND expire_date NOT NULL
+        AND DATEDIFF(expire_date, NOW()) AS days_left &lt;= 30
+        AND DATEDIFF(expire_date, NOW()) AS days_left &gt;= 0
+        ORDER BY expire_date
+    </select>
+
+    <!-- 소멸 예정 적립금 총 합 -->
+    <select id="select_point_expire_total" resultType="String" parameterType="String">
+        SELECT SUM(amount) AS total_expiring_points
+        FROM point
+        WHERE cus_no = #{cus_no} AND p_type = 0
+        AND expire_date IS NOT NULL
+        AND DATEDIFF(expire_date, NOW()) &lt;= 30
+        AND DATEDIFF(expire_date, NOW()) AS days_left &gt;>= 0
+        GROUP BY cus_no
+    </select>
 </mapper>

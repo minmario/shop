@@ -16,10 +16,10 @@ public class MyPageAction implements Action {
         CustomerVO loginResult = (CustomerVO) session.getAttribute("customer_info");
 
         // 적립금 내역 가져오기
-        List<PointVO> points = PointDAO.getPoint(loginResult.getId());
+        List<PointVO> all = PointDAO.selectAll(loginResult.getId());
 
         if (loginResult != null) {
-            session.setAttribute("points", points);
+            session.setAttribute("all", all);
 
             return "/user/jsp/mypage/mypage.jsp";
         } else {
