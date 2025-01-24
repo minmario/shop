@@ -104,7 +104,7 @@
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-review" autocomplete="off">
                                 <label class="btn btn-outline-dark" for="btnradio-review">구매후기</label>
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-inquiry" autocomplete="off">
-                                <label class="btn btn-outline-dark" for="btnradio-inquiry">1:1문의</label>
+                                <label class="btn btn-outline-dark" for="btnradio-inquiry" onclick="selectInquiry()">1:1문의</label>
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-question" autocomplete="off">
                                 <label class="btn btn-outline-dark" for="btnradio-question">상품문의</label>
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-point" autocomplete="off">
