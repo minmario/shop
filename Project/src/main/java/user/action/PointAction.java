@@ -13,38 +13,43 @@ import java.util.List;
 public class PointAction implements Action{
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        String action = request.getParameter("action");
         HttpSession session = request.getSession();
         CustomerVO cvo = (CustomerVO) session.getAttribute("customer_info");
-        String id = cvo.getId();
-        String action = request.getParameter("action");
+
+        // 적립 예정 금액
+        String upcomingTotal = PointDAO.selectUpcomingTotal(cvo.getId());
+        request.setAttribute("upcomingTotal", upcomingTotal);
+
+        // 소멸 예정 금액
+        String expireTotal = PointDAO.selectExpireTotal(cvo.getId());
+        request.setAttribute("expireTotal", expireTotal);
+
         if (action != null) {
             switch (action) {
                 case "all":
-                    List<PointVO> all = PointDAO.selectAll(id);
-                    session.setAttribute("all", all);
+                    // 전체
+                    List<PointVO> all = PointDAO.selectAll(cvo.getId());
+                    request.setAttribute("all", all);
                     break;
-
                 case "earned":
-                    List<PointVO> earned = PointDAO.selectEarned(id);
-                    session.setAttribute("earned", earned);
+                    // 적립
+                    List<PointVO> earned = PointDAO.selectEarned(cvo.getId());
+                    request.setAttribute("earned", earned);
                     break;
-
                 case "used":
-                    List<PointVO> used = PointDAO.selectUsed(id);
-                    session.setAttribute("used", used);
+                    // 사용
+                    List<PointVO> used = PointDAO.selectUsed(cvo.getId());
+                    request.setAttribute("used", used);
                     break;
-
                 case "upcoming":
-                    String upcoming = PointDAO.selectUpcoming(id);
-                    session.setAttribute("upcoming", upcoming);
-                    break;
-
-                case "expireTotal":
-                    String expireTotal = PointDAO.selectExpireTotal(id);
-                    session.setAttribute("expireTotal", expireTotal);
+                    // 예정
+                    List<PointVO> upcoming = PointDAO.selectUpcoming(cvo.getId());
+                    request.setAttribute("upcoming", upcoming);
                     break;
             }
         }
+
         return "/user/jsp/mypage/components/point.jsp";
     }
 }
