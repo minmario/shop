@@ -31,7 +31,7 @@
                 <input type="text" class="form-control" id="username" name="username" placeholder="아이디">
             </div>
             <div class="mb-3">
-                <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
+                <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호" autocomplete="off">
             </div>
             <button type="submit" class="btn btn-dark w-100 mb-2">로그인</button>
             <button type="button" class="btn btn-warning w-100 text-dark kakao-login-btn" onclick="location.href='https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=274018667b4194489ad21f128fe91165&redirect_uri=http://localhost:8080/Controller?type=kakaoCallback'">

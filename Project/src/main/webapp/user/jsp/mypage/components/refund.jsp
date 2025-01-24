@@ -5,7 +5,7 @@
     </div>
 </div>
 <div class="refund-tabs">
-    <ul class="nav nav-tabs" id="nav-tabs">
+    <ul class="nav nav-tabs" id="refund-nav-tabs">
         <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#" data-target="#list-all">전체</a>
         </li>
@@ -17,11 +17,10 @@
         </li>
     </ul>
 </div>
-<div id="list">
+<div id="refund-list">
     <%-- 전체 조회 --%>
     <div id="list-all" class="list">
         <div class="wrap-refund-list">
-
             <div class="refund-summary">
                 <div class="refund-header">
                     <div class="refund-date">24.12.16</div>
@@ -90,14 +89,12 @@
                     <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
                 </div>
             </div>
-
         </div>
     </div>
 
     <%-- 반품/취소 조회 --%>
     <div id="list-cancelRefund" class="list" style="display: none;">
         <div class="wrap-refund-list">
-
             <div class="refund-summary">
                 <div class="refund-header">
                     <div class="refund-date">24.12.16</div>
@@ -120,7 +117,6 @@
                     <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#repurchaseModal">재구매</button>
                 </div>
             </div><hr/>
-
             <div class="refund-summary">
                 <div class="refund-header">
                     <div class="refund-date">24.12.16</div>
@@ -142,7 +138,6 @@
                     <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
                 </div>
             </div><hr/>
-
             <div class="refund-summary">
                 <div class="refund-header">
                     <div class="refund-date">24.12.16</div>
@@ -164,7 +159,6 @@
                     <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
                 </div>
             </div><hr/>
-
             <div class="refund-summary">
                 <div class="refund-header">
                     <div class="refund-date">24.12.16</div>
@@ -239,7 +233,6 @@
                     <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

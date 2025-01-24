@@ -108,7 +108,7 @@
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-question" autocomplete="off">
                                 <label class="btn btn-outline-dark" for="btnradio-question">상품문의</label>
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-point" autocomplete="off">
-                                <label class="btn btn-outline-dark" for="btnradio-point">적립금</label>
+                                <label class="btn btn-outline-dark" for="btnradio-point" onclick="selectPoint('all')">적립금</label>
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-coupon" autocomplete="off">
                                 <label class="btn btn-outline-dark" for="btnradio-coupon">쿠폰</label>
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-delivery" autocomplete="off">
@@ -429,6 +429,8 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
     <script src="./user/js/mypage/components/delivery.js"></script>
+    <script src="./user/js/mypage/components/point.js"></script>
+    <script src="./user/js/mypage/components/inquiry.js"></script>
 
     <script>
         $(function () {
@@ -476,7 +478,7 @@
                 }
             });
 
-            // 버튼 클릭 이벤트 설정
+            // 마이페이지 클릭 이벤트 설정
             Object.keys(tabActions).forEach((buttonSelector) => {
                 const button = document.querySelector(buttonSelector);
                 if (button) {
@@ -500,26 +502,13 @@
             });
 
             // 반품/취소/교환 탭 클릭 이벤트
-            $(".nav-link").on("click", function (event) {
+            $("#refund-nav-tabs .nav-item .nav-link").on("click", function (event) {
                 event.preventDefault();
 
-                $(".nav-link").removeClass("active");
+                $("#refund-nav-tabs .nav-item .nav-link").removeClass("active");
                 $(this).addClass("active");
 
-                $("#list .list").hide();
-                const targetTable = $(this).data("target");
-                $(targetTable).show();
-            });
-
-
-            // 적립금 탭 클릭 이벤트
-            $(".nav-link").on("click", function (event) {
-                event.preventDefault();
-
-                $(".nav-link").removeClass("active");
-                $(this).addClass("active");
-
-                $("#tables table").hide();
+                $("#refund-list .list").hide();
                 const targetTable = $(this).data("target");
                 $(targetTable).show();
             });
