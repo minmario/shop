@@ -21,5 +21,6 @@
         <mapper resource="mybatis/mapper/product.xml"/>
         <mapper resource="mybatis/mapper/point.xml"/>
         <mapper resource="mybatis/mapper/log.xml"/>
+        <mapper resource="mybatis/mapper/board.xml"/>
     </mappers>
 </configuration>
