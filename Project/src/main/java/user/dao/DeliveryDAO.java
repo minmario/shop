@@ -10,7 +10,7 @@ import java.util.List;
 
 public class DeliveryDAO {
     //배송지 정보 가져오기
-    public static List<DeliveryVO> selectDelivery(String cus_no){
+    public static List<DeliveryVO> selectDelivery(String cus_no) {
         SqlSession ss = FactoryService.getFactory().openSession();
 
         List<DeliveryVO> list = null;
@@ -25,8 +25,24 @@ public class DeliveryDAO {
         return list;
     }
 
+    // 배송지 상세 조회
+    public static DeliveryVO selectDeliveryById(String id) {
+        DeliveryVO vo = null;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            vo = ss.selectOne("delivery.select_delivery_by_id", id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return vo;
+    }
+
     //배송지 정보 입력하기
-    public static int insertDelivery(String cus_no, String name, String phone, String pos_code, String addr1, String addr2, String chkDefault, String deli_request){
+    public static int insertDelivery(String cus_no, String name, String phone, String pos_code, String addr1, String addr2, String chkDefault, String deli_request) {
         SqlSession ss = FactoryService.getFactory().openSession();
 
         DeliveryVO vo = new DeliveryVO();
@@ -56,7 +72,7 @@ public class DeliveryDAO {
     }
 
     //배송지 수정하기
-    public static int updateDelivery(String id, String name, String phone, String pos_code, String addr1, String addr2, String chkDefault, String deli_request){
+    public static int updateDelivery(String id, String name, String phone, String pos_code, String addr1, String addr2, String chkDefault, String deli_request) {
         SqlSession ss = FactoryService.getFactory().openSession();
 
         DeliveryVO vo = new DeliveryVO();
@@ -87,7 +103,7 @@ public class DeliveryDAO {
     }
 
     //배송지 삭제하기
-    public static int deleteDelivery(String id){
+    public static int deleteDelivery(String id) {
         SqlSession ss = FactoryService.getFactory().openSession();
 
         int cnt = 0;
@@ -105,5 +121,23 @@ public class DeliveryDAO {
         }
 
         return cnt;
+    }
+
+    // 모든 배송지의 is_default를 false로 설정
+    public static void updateIsDefault(String cus_no) {
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            int cnt = ss.update("delivery.update_delivery_is_default", cus_no);
+
+            if (cnt > 0)
+                ss.commit();
+            else
+                ss.rollback();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
     }
 }

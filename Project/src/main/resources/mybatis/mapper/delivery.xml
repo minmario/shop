@@ -4,9 +4,15 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="delivery">
     <!-- 배송지 정보를 가져오는 select -->
-    <select id="select_delivery" parameterType="String" resultType="user.vo.DeliveryVO">
+    <select id="select_delivery" resultType="user.vo.DeliveryVO" parameterType="String" >
         SELECT * FROM delivery
         WHERE cus_no = #{cus_no} AND is_del = 0
+    </select>
+
+    <!-- 배송지 상세 조회 -->
+    <select id="select_delivery_by_id" resultType="user.vo.DeliveryVO" parameterType="String">
+        SELECT * FROM delivery
+        WHERE id = #{id}
     </select>
 
     <!-- 배송지 입력 시 저장되는 insert -->
@@ -27,5 +33,12 @@
         UPDATE delivery
         SET is_del = 1
         WHERE id = #{id}
+    </update>
+
+    <!-- 모든 배송지의 is_default를 false로 설정 -->
+    <update id="update_delivery_is_default">
+        UPDATE delivery
+        SET is_default = false
+        WHERE is_default = true AND cus_no = #{cus_no}
     </update>
 </mapper>

@@ -1,9 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div class="delivery-section">
     <div class="delivery-header">
         <div class="delivery-title">배송지 목록</div>
-        <button type="button" class="btn btn-outline-primary add-address-button" data-toggle="modal" data-target="#addrModal" onclick="insertDeliveryModal()">배송지 추가</button>
+        <c:choose>
+            <c:when test="${fn:length(requestScope.d_list) ge 3}">
+                <button type="button" class="btn btn-outline-primary add-address-button disabled" data-toggle="modal" data-target="#addrModal" onclick="insertDeliveryModal()">배송지 추가</button>
+            </c:when>
+            <c:otherwise>
+                <button type="button" class="btn btn-outline-primary add-address-button" data-toggle="modal" data-target="#addrModal" onclick="insertDeliveryModal()">배송지 추가</button>
+            </c:otherwise>
+        </c:choose>
     </div>
 </div>
 <c:if test="${requestScope.d_list eq null}">
@@ -19,7 +27,7 @@
                 <div class="address-box" data-value="${dvo.id}">
                     <div class="address-details">
                         <p class="name">${dvo.name}</p>
-                        <c:if test="${dvo.is_default == '1'}">
+                        <c:if test="${dvo.is_default eq '1'}">
                             <span class="default">
                                 기본 배송지
                             </span>
@@ -28,7 +36,14 @@
                         <p class="phone">${dvo.phone}</p>
                         <p class="request">${dvo.request}</p>
                         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#addrModal" onclick="updateDeliveryModal(this)">수정</button>
-                        <button type="button" class="btn btn-outline-danger" onclick="deleteDelivery(${dvo.id})">삭제</button>
+                        <c:choose>
+                            <c:when test="${dvo.is_default eq '1'}">
+                                <button type="button" class="btn btn-outline-danger disabled" onclick="deleteDelivery(${dvo.id})">삭제</button>
+                            </c:when>
+                            <c:otherwise>
+                                <button type="button" class="btn btn-outline-danger" onclick="deleteDelivery(${dvo.id})">삭제</button>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
             </c:forEach>
