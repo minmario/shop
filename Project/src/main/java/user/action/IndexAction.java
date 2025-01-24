@@ -17,8 +17,8 @@ public class IndexAction implements Action {
 
      request.setAttribute("isLoggedIn", false);
    }
+      return "/user/jsp/test.jsp";
 
-    return "/user/jsp/index.jsp";
   }
 
 }

@@ -26,10 +26,10 @@ public class LoginAction  implements Action {
       session.setAttribute("nickname", loginResult.getCus_nickname());
       request.setAttribute("isLoggedIn", true);
       request.setAttribute("nickname", loginResult.getCus_nickname());
-      viewpath="/user/jsp/index.jsp";
+      viewpath="/user/jsp/test.jsp";
     }
     else{
-      viewpath="/user/jsp/login/login.jsp";
+      viewpath="/user/jsp/login/header.jsp";
     }
     return viewpath;
 }

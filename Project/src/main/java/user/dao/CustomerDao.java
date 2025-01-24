@@ -24,8 +24,9 @@ public class CustomerDao {
 
     if(cnt>0){
       ss.commit();
-      ss.close();
+
     }
+    ss.close();
     return cnt;
 
 
