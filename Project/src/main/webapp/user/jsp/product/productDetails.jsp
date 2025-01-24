@@ -289,7 +289,7 @@
                     </div>
                     <div id="inquiry" class="tab-panel">
                         <div class="inquiry-button-container">
-                            <button type="button" class="btn btn-outline-dark" onclick="location.href='Controller?type=writeInquiry'">
+                            <button type="button" class="btn btn-outline-dark" onclick="location.href='Controller?type=writeQuestion'">
                                 판매자에게 문의하기
                             </button>
                         </div>

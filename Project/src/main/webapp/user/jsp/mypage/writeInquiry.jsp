@@ -32,7 +32,7 @@
                 <div class="row">
                     <div class="container">
                         <div class="inquiry-title">
-                            <h2 class="title">판매자에게 문의하기</h2>
+                            <h2 class="title">1:1 문의</h2>
                         </div>
                         <div class="tab-navigation">
                             <button class="btn btn-outline-secondary tab-button active">배송</button>

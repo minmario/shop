@@ -28,6 +28,9 @@
         </div>
         <button type="button" class="btn btn-outline-primary search-button">검색</button>
     </div>
+    <div>
+        <button type="button" class="btn btn-outline-primary" onclick="location.href='Controller?type=writeInquiry'">문의 등록</button>
+    </div>
 </div>
 <div class="inquiry-container">
     <div class="inquiry">
