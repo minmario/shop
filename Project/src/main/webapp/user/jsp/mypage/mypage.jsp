@@ -106,7 +106,7 @@
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-inquiry" autocomplete="off">
                                 <label class="btn btn-outline-dark" for="btnradio-inquiry" onclick="selectInquiry()">1:1문의</label>
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-question" autocomplete="off">
-                                <label class="btn btn-outline-dark" for="btnradio-question">상품문의</label>
+                                <label class="btn btn-outline-dark" for="btnradio-question" onclick="selectQuestion()">상품문의</label>
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-point" autocomplete="off">
                                 <label class="btn btn-outline-dark" for="btnradio-point" onclick="selectPoint('all')">적립금</label>
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-coupon" autocomplete="off">
@@ -431,6 +431,7 @@
     <script src="./user/js/mypage/components/delivery.js"></script>
     <script src="./user/js/mypage/components/point.js"></script>
     <script src="./user/js/mypage/components/inquiry.js"></script>
+    <script src="./user/js/mypage/components/question.js"></script>
 
     <script>
         $(function () {
