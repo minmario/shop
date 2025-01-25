@@ -1,8 +1,5 @@
 package user.action;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import user.dao.BoardDAO;
 import user.dao.LogDAO;
 import user.vo.BoardVO;
@@ -94,35 +91,35 @@ public class BoardAction implements Action {
 //                        ex.printStackTrace();
 //                    }
 
-                    String uploadPath = "https://my-home-shoppingmall-bucket.s3.amazonaws.com/inquiry";
-
-                    try {
-                        // DiskFileItemFactory 및 ServletFileUpload 설정
-                        DiskFileItemFactory factory = new DiskFileItemFactory();
-                        ServletFileUpload upload = new ServletFileUpload(factory);
-
-                        System.out.println("request : " + request);
-
-                        // 요청에서 파일 항목 파싱
-                        List<FileItem> formItems = upload.parseRequest(request);
-
-                        if (formItems != null && formItems.size() > 0) {
-                            for (FileItem item : formItems) {
-                                if (!item.isFormField()) { // 파일인 경우 처리
-                                    String fileName = new File(item.getName()).getName();
-                                    String filePath = uploadPath + File.separator + fileName;
-                                    File storeFile = new File(filePath);
-
-                                    // 파일 저장
-                                    item.write(storeFile);
-
-                                    request.setAttribute("fileUrls", filePath);
-                                }
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+//                    String uploadPath = "https://my-home-shoppingmall-bucket.s3.amazonaws.com/inquiry";
+//
+//                    try {
+//                        // DiskFileItemFactory 및 ServletFileUpload 설정
+//                        DiskFileItemFactory factory = new DiskFileItemFactory();
+//                        ServletFileUpload upload = new ServletFileUpload(factory);
+//
+//                        System.out.println("request : " + request);
+//
+//                        // 요청에서 파일 항목 파싱
+//                        List<FileItem> formItems = upload.parseRequest(request);
+//
+//                        if (formItems != null && formItems.size() > 0) {
+//                            for (FileItem item : formItems) {
+//                                if (!item.isFormField()) { // 파일인 경우 처리
+//                                    String fileName = new File(item.getName()).getName();
+//                                    String filePath = uploadPath + File.separator + fileName;
+//                                    File storeFile = new File(filePath);
+//
+//                                    // 파일 저장
+//                                    item.write(storeFile);
+//
+//                                    request.setAttribute("fileUrls", filePath);
+//                                }
+//                            }
+//                        }
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
 
                     break;
                 case "insert":
