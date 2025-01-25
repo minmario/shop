@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="question-section">
     <div class="question-header">
         <div class="question-title">상품 문의 내역</div>
@@ -6,77 +7,52 @@
 </div>
 <div class="search-container">
     <div class="search-bar">
-        <label for="status">처리 상태</label>
-        <select class="form-select" id="status" name="status">
+        <label for="question-status">처리 상태</label>
+        <select class="form-select" id="question-status" name="question-status">
             <option value="all">전체 보기</option>
-            <option value="">답변 대기</option>
-            <option value="">답변 확인 중</option>
-            <option value="">답변 완료</option>
+            <option value="wait">답변 대기</option>
+            <option value="checking">답변 확인 중</option>
+            <option value="complete">답변 완료</option>
         </select>
-        <label for="date-range">기간 조회</label>
-        <select class="form-select" id="date-range" name="date-range">
-            <option value="all">전체 시기</option>
-            <option value="1-week">1주일</option>
-            <option value="1-month">1개월</option>
-            <option value="3-months">3개월</option>
-            <option value="custom">기간 설정</option>
-        </select>
-        <div class="date-picker" id="custom-date-picker">
-            <input type="date" class="form-control" id="start-date" name="start-date"> ~
-            <input type="date" class="form-control" id="end-date" name="end-date">
+        <label for="question-custom-date-picker">기간 조회</label>
+        <div class="date-picker" id="question-custom-date-picker">
+            <input type="date" class="form-control" id="question-start-date" name="question-start-date"> ~
+            <input type="date" class="form-control" id="question-end-date" name="question-end-date">
         </div>
-        <button type="button" class="btn btn-outline-primary search-button">검색</button>
+        <button type="button" class="btn btn-outline-primary search-button" onclick="searchQuestion()">검색</button>
     </div>
 </div>
 <div class="question-container">
-    <div class="inquiry">
-        <div class="question">
-            <p><strong>Q</strong> 배송</p>
-            <p>언제 배송되나요?<br/>안녕하세요.<br/>해당 제품을 구매했는데 배송이 언제쯤 되는지 알 수 있을까요?</p>
-            <p class="date">2022-05-17</p>
+    <c:if test="${requestScope.list eq null}">
+        <div class="wrap-question">
+            <span>작성한 상품문의가 없습니다.</span>
         </div>
-        <div class="answer">
-            <p><strong>A</strong> 라퍼지스토어 담당자</p>
-            <p>안녕하세요 고객님 라퍼지스토어입니다.<br/>
-                상품 주문해주시면 평일 1~2일내로 출고되는 상품으로<br/>
-                월요일 주문건은 화~수요일 중으로 출고 예정입니다~!<br/>
-                고객님 주문건 금일 출고 예정 확인됩니다.<br/>
-                운송장은 저녁에 입력등록되니 참고 부탁드립니다.<br/>
-                감사합니다.</p>
-        </div>
-        <div class="product-info">
-            <a href="#" class="product-link">
-                <img src="./user/images/product7.jpg" alt="상품 이미지" class="product-image">
-                <div class="product-details">
-                    <p><strong>[라퍼지스토어]</strong></p>
-                    <p class="product-name">헤비 코튼 오버 럭비 맨투맨_Melange Gray</p>
+    </c:if>
+    <c:if test="${requestScope.list ne null}">
+        <c:forEach var="item" items="${requestScope.list}">
+        <div class="wrap-question">
+            <div class="question">
+                <p><strong>Q</strong> [배송] ${item.title}</p>
+                <p>${item.content}</p>
+                <p class="date">${item.write_date}</p>
+            </div>
+            <c:if test="${item.r_content ne null}">
+                <div class="answer">
+                    <p><strong>A</strong> ${item.s_name}</p>
+                    <p>${item.r_content}</p>
+                    <p class="date">${item.r_write_date}</p>
                 </div>
-            </a>
+            </c:if>
+            <div class="product-info">
+                <a href="#" class="product-link">
+                    <img src="./user/images/product7.jpg" alt="상품 이미지" class="product-image">
+                    <div class="product-details">
+                        <p><strong>[라퍼지스토어]</strong></p>
+                        <p class="product-name">헤비 코튼 오버 럭비 맨투맨_Melange Gray</p>
+                    </div>
+                </a>
+            </div>
         </div>
-    </div>
-    <div class="inquiry">
-        <div class="question">
-            <p><strong>Q</strong> 배송</p>
-            <p>언제 배송되나요?<br/>안녕하세요.<br/>해당 제품을 구매했는데 배송이 언제쯤 되는지 알 수 있을까요?</p>
-            <p class="date">2022-05-17</p>
-        </div>
-        <div class="answer">
-            <p><strong>A</strong> 라퍼지스토어 담당자</p>
-            <p>안녕하세요 고객님 라퍼지스토어입니다.<br/>
-                상품 주문해주시면 평일 1~2일내로 출고되는 상품으로<br/>
-                월요일 주문건은 화~수요일 중으로 출고 예정입니다~!<br/>
-                고객님 주문건 금일 출고 예정 확인됩니다.<br/>
-                운송장은 저녁에 입력등록되니 참고 부탁드립니다.<br/>
-                감사합니다.</p>
-        </div>
-        <div class="product-info">
-            <a href="#" class="product-link">
-                <img src="./user/images/product4.jpg" alt="상품 이미지" class="product-image">
-                <div class="product-details">
-                    <p><strong>[라퍼지스토어]</strong></p>
-                    <p class="product-name">헤비 코튼 오버 럭비 맨투맨_Melange Gray</p>
-                </div>
-            </a>
-        </div>
-    </div>
+        </c:forEach>
+    </c:if>
 </div>

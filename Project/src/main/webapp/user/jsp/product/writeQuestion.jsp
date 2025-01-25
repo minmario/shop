@@ -15,9 +15,6 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <%-- SummerNote CSS --%>
-    <link rel="stylesheet" type="text/css" href="./user/css/summernote-lite.css"/>
-
     <%-- CSS --%>
     <link rel="stylesheet" type="text/css" href="./user/css/product/writeQuestion.css"/>
 </head>
@@ -42,31 +39,33 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inquiry-type" class="form-label">문의 유형 (필수)</label>
-                            <select id="inquiry-type" class="form-control">
-                                <option>문의 유형을 선택해주세요</option>
-                                <option>배송</option>
-                                <option>상품</option>
-                                <option>환불</option>
+                            <label for="question-type" class="form-label">문의 유형 (필수)</label>
+                            <select id="question-type" name="question-type" class="form-control">
+                                <option value="selected" selected>문의 유형을 선택해주세요</option>
+                                <option value="19">사이즈</option>
+                                <option value="20">배송</option>
+                                <option value="21">재입고</option>
+                                <option value="22">상품상세문의</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="product-option" class="form-label">문의 상품 옵션</label>
-                            <select id="product-option" class="form-control">
-                                <option>옵션을 선택해주세요</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="title" class="form-label">제목 (필수)</label>
-                            <input type="text" id="title" class="form-control" placeholder="30자 이내로 입력해주세요">
+                            <label for="question-title" class="form-label">제목 (필수)</label>
+                            <input type="text" id="question-title" name="question-title" class="form-control" placeholder="30자 이내로 입력해주세요">
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" id="private-check" class="form-check-input">
-                            <label for="private-check" class="form-check-label">비밀글</label>
+                            <input type="checkbox" id="question-private-check" name="question-private-check" class="form-check-input">
+                            <label for="question-private-check" class="form-check-label">비밀글</label>
                         </div>
                         <div class="form-group">
-                            <label for="content" class="form-label">내용 (필수)</label>
-                            <textarea id="content" name="content" cols="50" rows="8"></textarea>
+                            <label for="question-content" class="form-label">내용 (필수)</label>
+                            <textarea id="question-content" name="question-content" cols="135" rows="8"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="file" id="question-image" style="display: none;" />
+                            <label for="question-image" class="form-label">사진</label>
+                            <div class="upload-box" onclick="openFileExplorer()">
+                                <span class="plus-sign">+</span>
+                            </div>
                         </div>
                         <div class="notice">
                             <p>* 상품문의는 재입고, 사이즈, 배송 등 상품에 대하여 브랜드 담당자에게 문의하는 게시판입니다.</p>
@@ -74,8 +73,8 @@
                             <p>* 주문번호, 연락처, 계좌번호 등의 개인 정보는 공개되지 않도록 비밀글로 문의해 주시기 바랍니다. 공개 게시판은 비밀글로 설정할 수 있으며, 개인 정보 노출로 인한 피해는 무신사 스토어가 책임지지 않습니다.</p>
                         </div>
                         <div class="action-buttons">
-                            <button class="btn btn btn-secondary cancel-btn">취소</button>
-                            <button class="btn btn-dark submit-btn">등록</button>
+                            <button class="btn btn btn-secondary cancel-btn" onclick="location.href='Controller?type=productDetails'">취소</button>
+                            <button class="btn btn-dark submit-btn" onclick="insertQuestion()">등록</button>
                         </div>
                     </div>
                 </div>
@@ -96,10 +95,6 @@
 
     <%-- Bootstrap --%>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <%-- SummerNote JS --%>
-    <script src="./user/js/summernote-lite.js"></script>
-    <script src="./user/js/lang/summernote-ko-KR.js"></script>
 
     <script src="./user/js/product/writeQuestion.js"></script>
 </body>
