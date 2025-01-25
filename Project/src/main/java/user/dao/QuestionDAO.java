@@ -7,25 +7,23 @@ import user.vo.BoardVO;
 import java.util.HashMap;
 import java.util.List;
 
-public class BoardDAO {
-    // 1:1문의 전체 조회
+public class QuestionDAO {
+
     public static List<BoardVO> selectAll(String cus_no) {
         SqlSession ss = FactoryService.getFactory().openSession();
         List<BoardVO> list = null;
 
         try{
-            list = ss.selectList("inquiry.select_all", cus_no);
+            list = ss.selectList("question.select_all", cus_no);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            ss.close();
         }
+        ss.close();
 
         return list;
     }
 
-    // 1:1문의 검색 조건 조회
-    public static List<BoardVO> selectSearch(String cus_no, String status, String startDate, String endDate) {
+    public static List<BoardVO> selectOption(String cus_no, String status, String startDate, String endDate){
         HashMap<String, String> map = new HashMap<>();
         map.put("cus_no", cus_no);
         map.put("status", status);
@@ -36,29 +34,34 @@ public class BoardDAO {
         List<BoardVO> list = null;
 
         try{
-            list = ss.selectList("inquiry.select_search", map);
+            list = ss.selectList("question.select_option", map);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            ss.close();
         }
+        ss.close();
 
         return list;
     }
 
-    // 1:1문의 등록
-    public static int insertInquiry(BoardVO vo) {
-        int cnt = 0;
+    public static int insertQuestion(String cus_no, String prod_no, String title, String content, String type, String is_private){
+        BoardVO vo = new BoardVO();
+        vo.setCus_no(cus_no);
+        vo.setProd_no(prod_no);
+        vo.setTitle(title);
+        vo.setContent(content);
+        vo.setType(type);
+        vo.setIs_private(is_private);
+
         SqlSession ss = FactoryService.getFactory().openSession();
+        int cnt = 0;
 
-        try {
-            cnt = ss.insert("inquiry.insert_inquiry", vo);
+        try{
+            cnt = ss.insert("question.insert_question", vo);
 
-            if (cnt > 0) {
+            if (cnt > 0)
                 ss.commit();
-            } else {
+            else
                 ss.rollback();
-            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

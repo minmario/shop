@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -26,17 +27,14 @@
             <div class="wrap">
                 <div class="row">
                     <div class="container">
-                        <!-- My Page Section -->
                         <div class="text-title">
                             <h3>장바구니</h3>
                         </div>
-
-                        <!-- Cart Section -->
                         <div class="cart-section-container" id="cart-article">
                             <table id="cart-table" class="table">
                                 <thead>
                                     <tr>
-                                        <th>번호</th>
+                                        <th>제품 번호</th>
                                         <th>상품정보</th>
                                         <th>개별 판매가</th>
                                         <th>수량</th>
@@ -44,24 +42,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach begin="1" end="5" varStatus="st">
+                                    <c:forEach var="item" items="${requestScope.cart_list}" varStatus="st">
+                                        <input id="cart-prod-id" type="hidden" value="${item.id}"/>
                                         <tr>
-                                            <td class="order-id">${st.index}</td>
+                                            <td class="order-id">${st.index + 1}</td>
                                             <td class="product-info">
                                                 <div class="prod_info">
                                                     <div class="prod_img">
-                                                        <img src="./user/images/product2.jpg"/>
+                                                        <img src="${item.prod_image}"/>
                                                     </div>
                                                     <div class="prod_details">
-                                                        <div class="prod_brand">
-                                                            [페이퍼리즘]
-                                                        </div>
-                                                        <div class="prod_name">
-                                                            ZIGGY LIGHTING 3/4 SLV T-SHIRT
-                                                        </div>
+                                                        <div class="prod_brand">${item.s_name}</div>
+                                                        <div class="prod_name">${item.p_name}</div>
                                                         <div class="prod_option">
-                                                            <div class="prod_option_left">옵션&nbsp;:&nbsp;</div>
-                                                            <div class="prod_option_center">RED&nbsp;/&nbsp;1 Size</div>
+                                                            <div class="prod_option_left">옵션&nbsp;:</div>
+                                                            <div class="prod_option_center" id="cart-prod-size">${item.size}</div>
                                                             <div class="prod_option_right">
                                                                 <button type="button" class="btn btn-outline-secondary option-change-btn" data-toggle="modal" data-target="#optionModal">옵션 변경</button>
                                                             </div>
@@ -70,16 +65,16 @@
                                                 </div>
                                             </td>
                                             <td class="product-price">
-                                                <del class="default-price">59,000원</del>
-                                                <div class="sale-price">39,900원</div>
+                                                <del class="default-price"><fmt:formatNumber value="${item.price}"/>원</del>
+                                                <div class="sale-price"><fmt:formatNumber value="${item.saled_price}"/>원</div>
                                             </td>
                                             <td class="cart-count">
-                                                <button type="button" class="btn btn-secondary btn-minus">-</button>
-                                                <span class="cart-count-value">0</span>
-                                                <button type="button" class="btn btn-secondary btn-plus">+</button>
+                                                <button type="button" class="btn btn-secondary btn-minus" onclick="minusCount()">-</button>
+                                                <span class="cart-count-value" id="cart-count-value">${item.count}</span>
+                                                <button type="button" class="btn btn-secondary btn-plus" onclick="plusCount()">+</button>
                                             </td>
                                             <td>
-                                                <input type="checkbox" name="chk-cart"/>
+                                                <input type="checkbox" name="chk-cart" class="cart-checkbox" data-item-id="${item.id}"/>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -96,8 +91,8 @@
                                     </ol>
                                 </div>
                                 <div class="cart-notice-right">
-                                    <button type="button" class="btn btn-outline-dark delete-all-btn">전체 삭제</button>
-                                    <button type="button" class="btn btn-outline-dark delete-selected-btn">선택 삭제</button>
+                                    <button type="button" class="btn btn-outline-dark delete-all-btn" onclick="deleteAllCart()">전체 삭제</button>
+                                    <button type="button" class="btn btn-outline-dark delete-selected-btn" onclick="deleteCart()">선택 삭제</button>
                                 </div>
                             </div>
                             <div class="cart-button">
@@ -153,6 +148,8 @@
 
     <%-- Bootstrap --%>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="./user/js/cart/cart.js"></script>
 
     <script>
         $(function () {

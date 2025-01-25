@@ -112,6 +112,7 @@
 
 #cart-table tbody .product-info .prod_details {
     width: 370px;
+    padding: 17px 0;
 }
 
 #cart-table tbody .product-price .default-price {
@@ -130,7 +131,7 @@
 }
 
 #cart-table tbody .product-info .prod_details .prod_option .prod_option_left {
-    width: 50px;
+    width: 40px;
 }
 
 #cart-table tbody .product-info .prod_details .prod_option .prod_option_center {
@@ -151,7 +152,7 @@
     border-radius: 5px;
     padding: 10px;
     position: absolute;
-    top: 66px;
+    top: 60px;
 }
 
 #cart-table tbody .product-info .prod_details .prod_option .prod_option_right button {

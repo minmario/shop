@@ -1,4 +1,4 @@
-.search-container {
+.inquiry-option-container {
     padding: 20px;
     background-color: #ffffff;
     border-bottom: 1px solid #ddd;
@@ -6,15 +6,16 @@
     flex-wrap: nowrap;
     align-items: center;
     gap: 20px;
+    justify-content: space-between;
 }
 
-.search-bar {
+.inquiry-search-bar {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.search-bar label {
+.inquiry-search-bar label {
     font-size: 14px;
     color: #555;
     margin-right: 5px;
@@ -24,27 +25,30 @@
     min-width: 60px;
 }
 
-.search-bar label[for="date-range"] {
+.inquiry-search-bar label[for="date-range"] {
     margin-left: 10px;
 }
 
-.search-bar select,
-.search-bar input[type="date"] {
+.inquiry-search-bar select, .inquiry-search-bar input[type="date"] {
     padding: 5px 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
-    width: 115px;
+    width: 120px;
 }
 
-.search-bar .search-button {
+.inquiry-search-bar .search-button {
     min-width: 55px;
 }
 
-.date-picker {
+.inquiry-date-picker {
     display: flex;
     align-items: center;
     gap: 5px;
+}
+
+.register-button-container {
+    margin-left: auto;
 }
 
 .inquiry-container {
@@ -59,27 +63,26 @@
     margin-bottom: 15px;
 }
 
-.question {
+.inquiry-question {
     margin-bottom: 10px;
 }
 
-.answer {
+.inquiry-order-code {
+    color: #007bff;
+}
+
+.inquiry-answer {
     background-color: #f8f9fa;
     padding: 10px;
     border-left: 3px solid #007bff;
 }
 
-.answer p {
-    margin: 0 0 5px;
+.inquiry-answer p {
+    margin: 5px 0 0 0;
     line-height: 1.5;
 }
 
-.date {
+.inquiry-date {
     font-size: 12px;
     color: #888;
-}
-
-[data-full-text] {
-    cursor: pointer;
-    text-decoration: underline;
 }

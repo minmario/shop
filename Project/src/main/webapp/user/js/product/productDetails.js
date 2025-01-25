@@ -9,9 +9,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
             this.classList.add("active");
             const target = this.getAttribute("data-target");
-            document.getElementById(target).classList.add("active");
+            // 문의 탭 클릭 시 AJAX 요청 처리
+            if (target === "inquiry") {
+                loadInquiryData(); // 문의 데이터 로드 함수 호출
+            } else {
+                document.getElementById(target).classList.add("active");
+            }
         });
     });
+    // 문의 데이터를 로드하는 함수
+    function loadInquiryData() {
+        $.ajax({
+            url: "Controller?type=productDetails&action=all",
+            type: "POST",
+            success: function (response) {
+                // 문의 탭 패널에 응답 데이터를 렌더링
+                $("#inquiry").html(response);
+            },
+            error: function (status, error) {
+                console.error("문의 데이터를 불러오는 데 실패했습니다.", error);
+                alert("문의 데이터를 가져오는 중 오류가 발생했습니다.");
+            },
+        });
+    }
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -68,8 +88,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     inquiryItems.forEach((item) => {
         const header = item.querySelector(".inquiry-header");
-        const arrow = header.querySelector(".arrow");
+        const arrow = header?.querySelector(".arrow"); // arrow가 없을 경우 null 처리
         const content = item.querySelector(".inquiry-content");
+
+        if (!header || !content) {
+            console.warn("Required elements (header/content) are missing:", item);
+            return; // 필수 요소가 없으면 실행 중단
+        }
 
         header.addEventListener("click", () => {
             const isOpen = item.classList.contains("open");
@@ -77,56 +102,83 @@ document.addEventListener("DOMContentLoaded", function () {
             inquiryItems.forEach((i) => {
                 if (i !== item) {
                     i.classList.remove("open");
-                    i.querySelector(".inquiry-content").style.display = "none";
-                    i.querySelector(".arrow").classList.replace("bi-chevron-up", "bi-chevron-down");
+                    const otherContent = i.querySelector(".inquiry-content");
+                    const otherArrow = i.querySelector(".arrow");
+                    if (otherContent) otherContent.style.display = "none";
+                    if (otherArrow) otherArrow.classList.replace("bi-chevron-up", "bi-chevron-down");
                 }
             });
 
             if (isOpen) {
                 item.classList.remove("open");
                 content.style.display = "none";
-                arrow.classList.replace("bi-chevron-up", "bi-chevron-down");
+                if (arrow) arrow.classList.replace("bi-chevron-up", "bi-chevron-down");
             } else {
                 item.classList.add("open");
                 content.style.display = "block";
-                arrow.classList.replace("bi-chevron-down", "bi-chevron-up");
+                if (arrow) arrow.classList.replace("bi-chevron-down", "bi-chevron-up");
             }
         });
     });
 });
 
-$(function () {
-    $(".cart-count").each(function () {
-        const cartCountElement = $(this);
-        const minusButton = cartCountElement.find(".btn-minus");
-        const plusButton = cartCountElement.find(".btn-plus");
-        const spanElement = cartCountElement.find(".cart-count-value");
+document.addEventListener("DOMContentLoaded", function () {
+    // 모든 cart-count 요소를 선택
+    const cartCountElements = document.querySelectorAll(".cart-count");
+
+    cartCountElements.forEach(function (cartCountElement) {
+        // - 버튼, + 버튼, 카운트 값 span 선택
+        const minusButton = cartCountElement.querySelector(".btn-minus");
+        const plusButton = cartCountElement.querySelector(".btn-plus");
+        const spanElement = cartCountElement.querySelector(".cart-count-value");
 
         // - 버튼 클릭 이벤트
-        minusButton.on("click", function () {
-            let count = parseInt(spanElement.text(), 10);
+        minusButton.addEventListener("click", function () {
+            let count = parseInt(spanElement.textContent, 10);
             if (count > 0) {
                 count -= 1;
-                spanElement.text(count);
+                spanElement.textContent = count;
             }
         });
 
         // + 버튼 클릭 이벤트
-        plusButton.on("click", function () {
-            let count = parseInt(spanElement.text(), 10);
+        plusButton.addEventListener("click", function () {
+            let count = parseInt(spanElement.textContent, 10);
             count += 1;
-            spanElement.text(count);
+            spanElement.textContent = count;
         });
     });
-
-    $("#add-to-cart").on('click', function () {
-         $.ajax({
-             url: "Controller?type=cart&action=insert",
-             method: 'POST',
-             data: {
-                 prod_id: "",
-                 count: $("#cart-count-value").val()
-             },
-         })
-    });
 });
+
+// 장바구니 추가
+function insertCart() {
+    const prodNo = document.getElementById("prod_id").value;
+    const size = document.getElementById("cart-select-size").value;
+    const cartCountValue = document.getElementById("count-value");
+    const count = parseInt(cartCountValue.textContent, 10);
+
+    if (size == "0") {
+        alert("사이즈를 선택하세요.");
+        return;
+    }
+    
+    if (count == 0) {
+        alert("수량을 선택하세요.");
+        return;
+    }
+
+    $.ajax({
+        url: "Controller?type=cart&action=insert",
+        method: 'POST',
+        data: {
+            prodNo: prodNo,
+            size: size,
+            count: count
+        },
+        success: function () {
+            if (confirm("장바구니에 상품이 담겼습니다. 장바구니로 이동하시겠습니까?")) {
+                window.location.href = 'Controller?type=cart&action=select';
+            }
+        }
+    });
+}

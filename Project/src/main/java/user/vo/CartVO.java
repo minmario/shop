@@ -1,0 +1,101 @@
+package user.vo;
+
+public class CartVO {
+    private String id, cus_no, prod_no, count, size, add_date, p_name, option_name, prod_image, s_name, price, saled_price;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getSaled_price() {
+        return saled_price;
+    }
+
+    public void setSaled_price(String saled_price) {
+        this.saled_price = saled_price;
+    }
+
+    public String getCus_no() {
+        return cus_no;
+    }
+
+    public void setCus_no(String cus_no) {
+        this.cus_no = cus_no;
+    }
+
+    public String getProd_no() {
+        return prod_no;
+    }
+
+    public void setProd_no(String prod_no) {
+        this.prod_no = prod_no;
+    }
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public String getAdd_date() {
+        return add_date;
+    }
+
+    public void setAdd_date(String add_date) {
+        this.add_date = add_date;
+    }
+
+    public String getP_name() {
+        return p_name;
+    }
+
+    public void setP_name(String p_name) {
+        this.p_name = p_name;
+    }
+
+    public String getOption_name() {
+        return option_name;
+    }
+
+    public void setOption_name(String option_name) {
+        this.option_name = option_name;
+    }
+
+    public String getProd_image() {
+        return prod_image;
+    }
+
+    public void setProd_image(String prod_image) {
+        this.prod_image = prod_image;
+    }
+
+    public String getS_name() {
+        return s_name;
+    }
+
+    public void setS_name(String s_name) {
+        this.s_name = s_name;
+    }
+}

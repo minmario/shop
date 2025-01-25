@@ -147,6 +147,26 @@
     color: #555;
 }
 
+.prod-size {
+    margin-top: 30px;
+    position: relative;
+}
+
+.prod-size select.form-select {
+    max-width: 135px;
+    position: absolute;
+    left: 60px;
+    top: -9px;
+}
+
+.cart-count {
+    margin-top: 20px;
+}
+
+.cart-count button.btn.btn-outline-secondary.btn-minus {
+    margin-left: 5px;
+}
+
 .actions {
     display: flex;
     gap: 10px;
@@ -196,6 +216,10 @@
 
 .tab-panel.active {
     display: block;
+}
+
+.detail-images-section {
+    margin-top: 10px;
 }
 
 .size-table {

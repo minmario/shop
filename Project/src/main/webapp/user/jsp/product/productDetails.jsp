@@ -55,7 +55,7 @@
                     <div class="info-section">
                         <div class="product-info">
                             <h3>PRODUCT INFO <span class="info-subtitle">제품정보</span></h3>
-                            <p><i class="bi bi-dash"></i> 제품번호 <strong id="prod_id">MOTIVESTREET (MILK SST PINK)</strong></p>
+                            <p><i class="bi bi-dash"></i> 제품번호 <strong id="prod_id" data-item-id="">MOTIVESTREET (MILK SST PINK)</strong></p>
                             <p><i class="bi bi-dash"></i> 시즌/성별 <strong id="prod_season">2017 S/S / 여</strong></p>
                             <p><i class="bi bi-dash"></i> 누적판매 <strong id="prod_sale_count">233개</strong></p>
                             <p><i class="bi bi-dash"></i> 좋아요 <span class="like-count"><i class="bi bi-heart-fill"></i> <strong id="prod_like_count">91</strong></span></p>
@@ -89,14 +89,26 @@
                             </div>
                         </c:if>
                         <c:if test="${sessionScope.isLoggedIn}">
+                            <div class="prod-size">
+                                <i class="bi bi-dash"></i> 사이즈
+                                <select class="form-select" aria-label="size select" id="cart-select-size">
+                                    <option value="0">:: 선택하세요 ::</option>
+                                    <option value="S">S</option>
+                                    <option value="M">M</option>
+                                    <option value="L">L</option>
+                                    <option value="XL">XL</option>
+                                    <option value="XXL">XXL</option>
+                                </select>
+                            </div>
                             <div class="cart-count">
+                                <i class="bi bi-dash"></i> 개수
                                 <button type="button" class="btn btn-outline-secondary btn-minus">-</button>
-                                <span class="cart-count-value" id="cart-count-value">0</span>
+                                <span class="cart-count-value" id="count-value">0</span>
                                 <button type="button" class="btn btn-outline-secondary btn-plus">+</button>
                             </div>
                             <div class="actions">
                                 <button class="btn btn-outline-danger like-btn"><i class="bi bi-heart"></i> 좋아요</button>
-                                <button class="btn btn-dark add-to-cart">장바구니 담기</button>
+                                <button class="btn btn-dark add-to-cart" onclick="insertCart()">장바구니 담기</button>
                                 <button class="btn btn-dark buy-now" onclick="location.href='Controller?type=payment'">구매하기</button>
                             </div>
                         </c:if>
@@ -289,58 +301,66 @@
                     </div>
                     <div id="inquiry" class="tab-panel">
                         <div class="inquiry-button-container">
-                            <button type="button" class="btn btn-outline-dark" onclick="location.href='Controller?type=writeQuestion'">
+                            <button type="button" class="btn btn-outline-dark" onclick="location.href='Controller?type=writeQuestion&prod_no=1223344'">
                                 판매자에게 문의하기
                             </button>
                         </div>
                         <div class="inquiry-list">
-                            <div class="inquiry-item">
-                                <div class="inquiry-type">재입고</div>
-                                <div class="inquiry-header">
-                                    <span class="inquiry-title">재입고</span>
-                                    <i class="bi bi-chevron-down arrow"></i>
+                            <c:if test="${requestScope.list eq null}">
+                                <div class="inquiry-item">
+                                    <span>해당 상품의 문의 내역이 없습니다.</span>
                                 </div>
-                                <div class="inquiry-meta">답변완료 · jsh*** · 25.01.17</div>
-                                <div class="inquiry-content">
-                                    <p class="question">1960 sweatshirts oatmeal<br>언제되나요ㅠㅠ</p>
-                                    <div class="answer">
-                                        <strong>답변. 유니폼브릿지 담당자</strong>
-                                        <p>안녕하세요, 유니폼브릿지입니다.<br>
-                                            저희 브랜드에 관심을 가지고 문의해주셔서 감사합니다.<br>
-                                            문의하신 상품은 추가 재입고 여부가 확인되지 않습니다.<br>
-                                            아쉬우시겠지만 고객님의 너그러운 양해 부탁드립니다.<br>
-                                            그 외 추가 문의 사항이 있으시다면 답변 도와드리겠습니다.<br>
-                                            감사합니다.</p>
-                                        <span class="answer-date">25.01.17</span>
+                            </c:if>
+                            <c:if test="${requestScope.list ne null}">
+                                <c:forEach var="item" items="${requestScope.list}">
+                                    <div class="inquiry-item">
+                                        <c:choose>
+                                            <c:when test="${item.type == 19}"><div class="inquiry-type">사이즈</div></c:when>
+                                            <c:when test="${item.type == 20}"><div class="inquiry-type">배송</div></c:when>
+                                            <c:when test="${item.type == 21}"><div class="inquiry-type">재입고</div></c:when>
+                                            <c:when test="${item.type == 22}"><div class="inquiry-type">상품상세문의</div></c:when>
+                                        </c:choose>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="inquiry-item">
-                                <div class="inquiry-type">배송</div>
-                                <div class="inquiry-header">
-                                    <span class="inquiry-title">배송</span>
-                                    <i class="bi bi-chevron-down arrow"></i>
-                                </div>
-                                <div class="inquiry-meta">답변완료 · ran*** · 25.01.04</div>
-                                <div class="inquiry-content">
-                                    <p class="question">반품문의 합니다. 반품 신청 어떻게 하나요?</p>
-                                </div>
-                            </div>
+                                    <div class="inquiry-header">
+                                        <c:if test="${item.is_private == 0}">
+                                            <span class="inquiry-title">${item.title}</span>
+                                            <i class="bi bi-chevron-down arrow"></i>
+                                        </c:if>
+                                        <c:if test="${item.is_private == 1}">
+                                            <span class="inquiry-title">비밀글로 설정된 글입니다.</span>
+                                        </c:if>
+                                    </div>
+                                    <c:choose>
+                                        <c:when test="${item.status == 1}"><div class="inquiry-meta">답변대기 · ${item.c_cus_id} · ${item.write_date}</div></c:when>
+                                        <c:when test="${item.type == 2}"><div class="inquiry-meta">답변확인중 · ${item.c_cus_id} · ${item.write_date}</div></c:when>
+                                        <c:when test="${item.type == 3}"><div class="inquiry-meta">답변완료 · ${item.c_cus_id} · ${item.write_date}</div></c:when>
+                                    </c:choose>
+                                    <div class="inquiry-content">
+                                        <p class="question">${item.content}</p>
+                                        <div class="answer">
+                                            <strong>답변. ${item.s_name}}</strong>
+                                            <p>${item.r_content}</p>
+                                            <span class="answer-date">${item.r_write_date}</span>
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                            </c:if>
                         </div>
-                        <nav class="pagination-container">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1">Previous</a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
                     </div>
+                    <nav class="pagination-container">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1">Previous</a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
                 </div>
             </div>
         </div>

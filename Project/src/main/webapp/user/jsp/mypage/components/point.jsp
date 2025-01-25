@@ -49,8 +49,8 @@
                                 <div class="custom-points-title-container">
                                     <p class="custom-points-title">주문 적립</p>
                                     <p class="custom-points-amount">+${item.amount}</p>
-                                    <p class="custom-points-description">${item.order_code}</p>
                                 </div>
+                                <p class="custom-points-description">${item.order_code}</p>
                                 <p class="custom-points-status">적립</p>
                             </c:when>
                             <c:otherwise>

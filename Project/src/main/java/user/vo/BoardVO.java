@@ -3,47 +3,24 @@ package user.vo;
 import java.util.List;
 
 public class BoardVO {
-    private String id, cus_no, prod_no, bname, title, content, snapshot_image, tags, gender, season, style, score, like_count, write_date, is_del, additional_images,
-                    order_code, s_name, r_content;
+    private String id, cus_no, prod_no, bname, title, content, write_date, order_code, additional_images, is_private, s_name, r_content, r_write_date, c_cus_id, type, status;
 
-    public String getR_content() {
-        return r_content;
+    public String getStatus() {
+        return status;
     }
 
-    public void setR_content(String r_content) {
-        this.r_content = r_content;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getS_name() {
-        return s_name;
+    private List<BoardVO> list;
+
+    public String getId() {
+        return id;
     }
 
-    public void setS_name(String s_name) {
-        this.s_name = s_name;
-    }
-
-    public String getAdditional_images() {
-        return additional_images;
-    }
-
-    public void setAdditional_images(String additional_images) {
-        this.additional_images = additional_images;
-    }
-
-    public String getBname() {
-        return bname;
-    }
-
-    public void setBname(String bname) {
-        this.bname = bname;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getCus_no() {
@@ -54,54 +31,6 @@ public class BoardVO {
         this.cus_no = cus_no;
     }
 
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getIs_del() {
-        return is_del;
-    }
-
-    public void setIs_del(String is_del) {
-        this.is_del = is_del;
-    }
-
-    public String getLike_count() {
-        return like_count;
-    }
-
-    public void setLike_count(String like_count) {
-        this.like_count = like_count;
-    }
-
-    public List<BoardVO> getList() {
-        return list;
-    }
-
-    public void setList(List<BoardVO> list) {
-        this.list = list;
-    }
-
-    public String getOrder_code() {
-        return order_code;
-    }
-
-    public void setOrder_code(String order_code) {
-        this.order_code = order_code;
-    }
-
     public String getProd_no() {
         return prod_no;
     }
@@ -110,44 +39,12 @@ public class BoardVO {
         this.prod_no = prod_no;
     }
 
-    public String getScore() {
-        return score;
+    public String getBname() {
+        return bname;
     }
 
-    public void setScore(String score) {
-        this.score = score;
-    }
-
-    public String getSeason() {
-        return season;
-    }
-
-    public void setSeason(String season) {
-        this.season = season;
-    }
-
-    public String getSnapshot_image() {
-        return snapshot_image;
-    }
-
-    public void setSnapshot_image(String snapshot_image) {
-        this.snapshot_image = snapshot_image;
-    }
-
-    public String getStyle() {
-        return style;
-    }
-
-    public void setStyle(String style) {
-        this.style = style;
-    }
-
-    public String getTags() {
-        return tags;
-    }
-
-    public void setTags(String tags) {
-        this.tags = tags;
+    public void setBname(String bname) {
+        this.bname = bname;
     }
 
     public String getTitle() {
@@ -158,6 +55,14 @@ public class BoardVO {
         this.title = title;
     }
 
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     public String getWrite_date() {
         return write_date;
     }
@@ -166,5 +71,75 @@ public class BoardVO {
         this.write_date = write_date;
     }
 
-    private List<BoardVO> list;
+    public String getOrder_code() {
+        return order_code;
+    }
+
+    public void setOrder_code(String order_code) {
+        this.order_code = order_code;
+    }
+
+    public String getAdditional_images() {
+        return additional_images;
+    }
+
+    public void setAdditional_images(String additional_images) {
+        this.additional_images = additional_images;
+    }
+
+    public String getIs_private() {
+        return is_private;
+    }
+
+    public void setIs_private(String is_private) {
+        this.is_private = is_private;
+    }
+
+    public String getS_name() {
+        return s_name;
+    }
+
+    public void setS_name(String s_name) {
+        this.s_name = s_name;
+    }
+
+    public String getR_content() {
+        return r_content;
+    }
+
+    public void setR_content(String r_content) {
+        this.r_content = r_content;
+    }
+
+    public String getR_write_date() {
+        return r_write_date;
+    }
+
+    public void setR_write_date(String r_write_date) {
+        this.r_write_date = r_write_date;
+    }
+
+    public String getC_cus_id() {
+        return c_cus_id;
+    }
+
+    public void setC_cus_id(String c_cus_id) {
+        this.c_cus_id = c_cus_id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public List<BoardVO> getList() {
+        return list;
+    }
+
+    public void setList(List<BoardVO> list) {
+        this.list = list;
+    }
 }
