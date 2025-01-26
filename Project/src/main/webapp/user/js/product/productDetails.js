@@ -32,25 +32,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // 클릭한 탭의 target 속성 가져오기
         const target = clickedTab.getAttribute("data-target");
+        const value = clickedTab.getAttribute("data-value");
 
         // 해당하는 패널 활성화
-        if (target === "inquiry") {
-            loadInquiryData(); // 문의 데이터를 로드
+        if (target === "question") {
+            loadQuestionData(value); // 문의 데이터를 로드
         } else {
             document.getElementById(target).classList.add("active");
         }
     }
 
     // 문의 데이터를 불러오는 함수 정의
-    function loadInquiryData() {
-        const inquiryPanel = document.getElementById("inquiry");
+    function loadQuestionData(value) {
+        const questionPanel = document.getElementById("question");
 
         $.ajax({
             url: "Controller?type=productDetails&action=question",
             type: "POST",
-            success: function (response) {
-                $("#inquiry").html(response);
-                inquiryPanel.classList.add("active");
+            data: {
+                prod_no: value,
+            },
+            success: function (data) {
+                $("#question").html(data);
+                questionPanel.classList.add("active");
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error("AJAX 요청 실패:", textStatus, errorThrown);
@@ -64,7 +68,6 @@ document.addEventListener("DOMContentLoaded", function () {
         tab.addEventListener("click", handleTabClick);
     });
 });
-
 
 document.addEventListener("DOMContentLoaded", function () {
     const sizeSelect = document.getElementById("size-select");
@@ -96,45 +99,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     mySizeToggle.addEventListener("change", () => {
         console.log("내 사이즈:", mySizeToggle.checked);
-    });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    const inquiryItems = document.querySelectorAll(".inquiry-item");
-
-    inquiryItems.forEach((item) => {
-        const header = item.querySelector(".inquiry-header");
-        const arrow = header?.querySelector(".arrow"); // arrow가 없을 경우 null 처리
-        const content = item.querySelector(".inquiry-content");
-
-        if (!header || !content) {
-            console.warn("Required elements (header/content) are missing:", item);
-            return; // 필수 요소가 없으면 실행 중단
-        }
-
-        header.addEventListener("click", () => {
-            const isOpen = item.classList.contains("open");
-
-            inquiryItems.forEach((i) => {
-                if (i !== item) {
-                    i.classList.remove("open");
-                    const otherContent = i.querySelector(".inquiry-content");
-                    const otherArrow = i.querySelector(".arrow");
-                    if (otherContent) otherContent.style.display = "none";
-                    if (otherArrow) otherArrow.classList.replace("bi-chevron-up", "bi-chevron-down");
-                }
-            });
-
-            if (isOpen) {
-                item.classList.remove("open");
-                content.style.display = "none";
-                if (arrow) arrow.classList.replace("bi-chevron-up", "bi-chevron-down");
-            } else {
-                item.classList.add("open");
-                content.style.display = "block";
-                if (arrow) arrow.classList.replace("bi-chevron-down", "bi-chevron-up");
-            }
-        });
     });
 });
 

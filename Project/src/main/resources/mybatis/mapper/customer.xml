@@ -5,8 +5,8 @@
 <mapper namespace="customer">
     <!-- 회원 가입 -->
     <insert id="insert_customer" parameterType="user.vo.CustomerVO">
-        INSERT INTO customer (id, grade_code, cus_id, cus_pw, name, nickname, gender, birth_date, phone, email, is_del)
-        VALUES (#{cus_id}, #{cus_pw}, #{name}, #{nickname}, #{gender}, #{birth_date}, #{phone}, #{email}, "0")
+        INSERT INTO customer (grade_code, cus_id, cus_pw, name, nickname, gender, birth_date, phone, email, weight, height, is_del)
+        VALUES ('1', #{cus_id}, #{cus_pw}, #{name}, #{nickname}, #{gender}, #{birth_date}, #{phone}, #{email}, #{weight}, #{height}, '0')
     </insert>
 
     <!-- 로그인 검증 -->
@@ -22,9 +22,15 @@
         WHERE id = #{id}
     </update>
 
-    <!-- 회원 정보 보기 -->
+    <!-- 회원 정보 보기(id) -->
     <select id="select_customer" resultType="user.vo.CustomerVO" parameterType="String">
         SELECT * FROM customer
-        WHERE id = #{id}
+        WHERE id = #{id} AND is_del = 0
+    </select>
+
+    <!-- 회원 정보 보기(cus_id) -->
+    <select id="select_customer_by_cus_id" resultType="user.vo.CustomerVO" parameterType="String">
+        SELECT * FROM customer
+        WHERE cus_id = #{cus_id} AND is_del = 0
     </select>
 </mapper>

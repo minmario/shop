@@ -26,7 +26,7 @@ public class IndexAction implements Action {
                       List<ProductVO> products = ProductDAO.selectProduct(category, sort);
                       request.setAttribute("products", products);
 
-                      viewPath = "/user/jsp/product/productList.jsp";
+                      viewPath = "/user/jsp/product/components/productList.jsp";
                       break;
               }
           } else {

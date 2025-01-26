@@ -3,7 +3,7 @@ package user.vo;
 import java.util.List;
 
 public class BoardVO {
-    private String id, cus_no, prod_no, bname, title, content, write_date, order_code, additional_images, is_private, s_name, r_content, r_write_date, c_cus_id, type, status;
+    private String id, cus_no, prod_no, bname, title, content, write_date, order_code, additional_images, is_private, brand, r_content, r_write_date, c_cus_id, type, status;
 
     public String getStatus() {
         return status;
@@ -95,12 +95,12 @@ public class BoardVO {
         this.is_private = is_private;
     }
 
-    public String getS_name() {
-        return s_name;
+    public String getBrand() {
+        return brand;
     }
 
-    public void setS_name(String s_name) {
-        this.s_name = s_name;
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     public String getR_content() {

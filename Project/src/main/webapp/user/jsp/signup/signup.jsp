@@ -1,9 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-    request.setCharacterEncoding("UTF-8");
-%>
-
-<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -25,7 +20,7 @@
         <h1 class="text-center fw-bold mb-4">MUSINSA</h1>
 
         <!-- 회원가입 폼 -->
-        <form action="Controller?type=signup" method="POST">
+        <form action="Controller?type=signup&action=insert" method="POST">
             <!-- 아이디 -->
             <div class="mb-3">
                 <label for="cus_id" class="form-label">아이디</label>
@@ -54,11 +49,11 @@
             <div class="mb-3">
                 <label class="form-label">성별</label>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="cus_gender" id="gender_m" value="M" required>
+                    <input class="form-check-input" type="radio" name="cus_gender" id="gender_m" value="1" required>
                     <label class="form-check-label" for="gender_m">남성</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="cus_gender" id="gender_w" value="W" required>
+                    <input class="form-check-input" type="radio" name="cus_gender" id="gender_w" value="2" required>
                     <label class="form-check-label" for="gender_w">여성</label>
                 </div>
             </div>

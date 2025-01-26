@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<c:if test="${requestScope ne null}">
+<c:if test="${requestScope.products ne null}">
     <c:forEach var="item" items="${requestScope.products}">
-        <div class="product-item" onclick="location.href='Controller?type=productDetails'">
+        <div class="product-item" onclick="location.href='Controller?type=productDetails&action=select&prod_no=${item.id}'">
             <img src="${fn:split(item.prod_image, ',')[0]}" alt="상품 이미지" class="product-image">
             <div class="product-info">
                 <p class="product-brand"><strong>${item.brand}</strong></p>

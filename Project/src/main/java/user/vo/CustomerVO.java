@@ -1,7 +1,7 @@
 package user.vo;
 
 public class CustomerVO {
-    private String id, grade_code, cus_id, cus_pw, name, nickname, gender, birth_date, phone, email, profile_image, weight, height, total, grade_expire_date, is_del;
+    private String id, grade_code, cus_id, cus_pw, name, nickname, gender, birth_date, phone, email, profile_image, weight, height, total, grade_expire_date;
 
     public String getId() {
         return id;
@@ -121,13 +121,5 @@ public class CustomerVO {
 
     public void setGrade_expire_date(String grade_expire_date) {
         this.grade_expire_date = grade_expire_date;
-    }
-
-    public String getIs_del() {
-        return is_del;
-    }
-
-    public void setIs_del(String is_del) {
-        this.is_del = is_del;
     }
 }

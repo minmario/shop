@@ -38,7 +38,7 @@
             </div>
             <c:if test="${item.r_content ne null}">
                 <div class="answer">
-                    <p><strong>A</strong> ${item.s_name}</p>
+                    <p><strong>A</strong> ${item.brand}</p>
                     <p>${item.r_content}</p>
                     <p class="date">${item.r_write_date}</p>
                 </div>

@@ -14,26 +14,29 @@ import java.util.List;
 public class ProductDetailsAction implements Action {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession();
         String action = request.getParameter("action");
-        String prod_no = request.getParameter("prod_no");
 
-        String viewPath = "/user/jsp/product/productDetails.jsp";
-        if (action != null){
-            switch (action){
-                case "prodNo":
-                    List<ProductVO> productDetails = ProductDAO.selectProdDetails(prod_no);
+        String viewPath = null;
+        if (action != null) {
+            String prod_no = request.getParameter("prod_no");
+
+            switch (action) {
+                case "select":
+                    ProductVO productDetails = ProductDAO.selectProdDetails(prod_no);
                     List<ProductVO> productSize = ProductDAO.selectSize(prod_no);
                     request.setAttribute("productDetails", productDetails);
                     request.setAttribute("productSize", productSize);
-                    viewPath = "/user/jsp/product/productDetails.jsp";
 
-                case "question":
-                    List<BoardVO> q_list = QuestionDAO.selectProdQuestion(prod_no);
-                    request.setAttribute("q_list", q_list);
                     viewPath = "/user/jsp/product/productDetails.jsp";
+                    break;
+                case "question":
+                    List<BoardVO> questions = QuestionDAO.selectProdQuestion(prod_no);
+                    request.setAttribute("questions", questions);
+                    viewPath = "/user/jsp/product/components/questionList.jsp";
+                    break;
             }
         }
+
         return viewPath;
     }
 }

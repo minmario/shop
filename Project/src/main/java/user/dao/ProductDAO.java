@@ -29,12 +29,12 @@ public class ProductDAO {
     }
 
     // 상품 상세 조회
-    public static List<ProductVO> selectProdDetails(String prod_no){
-        List<ProductVO> productDetails = null;
+    public static ProductVO selectProdDetails(String id) {
+        ProductVO productDetails = null;
         SqlSession ss= FactoryService.getFactory().openSession();
 
         try {
-            productDetails = ss.selectOne("product.select_product", prod_no);
+            productDetails = ss.selectOne("product.select_product_details", id);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -45,7 +45,7 @@ public class ProductDAO {
     }
 
     // 상품 사이즈 조회
-    public static List<ProductVO> selectSize(String name){
+    public static List<ProductVO> selectSize(String name) {
         List<ProductVO> productSize = null;
         SqlSession ss= FactoryService.getFactory().openSession();
 

@@ -88,6 +88,10 @@ function selectProducts() {
         sort = sortItem.getAttribute("data-value");
     }
 
+    if (!category || !sort) {
+        return;
+    }
+
     $.ajax({
         url: 'Controller?type=index&action=select',
         method: 'POST',

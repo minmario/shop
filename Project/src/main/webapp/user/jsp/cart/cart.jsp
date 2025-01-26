@@ -52,7 +52,7 @@
                                                         <img src="${item.prod_image}"/>
                                                     </div>
                                                     <div class="prod_details">
-                                                        <div class="prod_brand">${item.s_name}</div>
+                                                        <div class="prod_brand">${item.brand}</div>
                                                         <div class="prod_name">${item.p_name}</div>
                                                         <div class="prod_option">
                                                             <div class="prod_option_left">옵션&nbsp;:</div>

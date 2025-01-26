@@ -57,13 +57,13 @@
                     </div>
                     <div class="inquiry-answer">
                         <c:choose>
-                            <c:when test="${item.s_name ne null and item.r_content ne null}">
-                                <p><strong>A &nbsp;</strong>${item.s_name}</p>
+                            <c:when test="${item.brand ne null and item.r_content ne null}">
+                                <p><strong>A &nbsp;</strong>${item.brand}</p>
                                 <p>${item.r_content}</p>
                                 <p class="inquiry-date">${item.write_date}</p>
                             </c:when>
                             <c:otherwise>
-                                <p>아직 답변이 등록되지 않았습니다.</p>
+                                <p>답변이 등록되지 않았습니다.</p>
                             </c:otherwise>
                         </c:choose>
                     </div>

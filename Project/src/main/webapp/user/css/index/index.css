@@ -118,6 +118,10 @@ button.unstyled-btn.active {
     margin-bottom: 10px;
 }
 
+.selected-filters button {
+    cursor: default !important;
+}
+
 .selected-item {
     border: 1px solid #bdbdbd;
     border-radius: 5px;

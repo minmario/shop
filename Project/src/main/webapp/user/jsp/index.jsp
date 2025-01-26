@@ -100,7 +100,7 @@
                     </div>
 
                     <div class="product-list d-flex flex-wrap" id="product-list">
-                        <jsp:include page="./product/productList.jsp"></jsp:include>
+                        <jsp:include page="./product/components/productList.jsp"></jsp:include>
                     </div>
                 </div>
             </div>

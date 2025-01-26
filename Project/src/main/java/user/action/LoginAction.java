@@ -29,7 +29,7 @@ public class LoginAction  implements Action {
             session.setAttribute("isLoggedIn", true);
             session.setAttribute("customer_info", loginResult);
 
-            return "/user/jsp/index.jsp";
+            return "Controller?type=index";
         } else {
             // 실패 시에만 isLoggedIn 설정
             if (username != null && password != null) {

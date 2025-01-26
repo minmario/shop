@@ -43,13 +43,29 @@ public class CustomerDAO {
         return cnt;
     }
 
-    // 회원 정보 보기
+    // 회원 정보 보기(id)
     public static CustomerVO selectCustomerById(String id) {
         CustomerVO vo = null;
         SqlSession ss = FactoryService.getFactory().openSession();
 
         try {
             vo = ss.selectOne("customer.select_customer", id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return vo;
+    }
+
+    // 회원 정보 보기(cus_id)
+    public static CustomerVO selectCustomerByCusId(String cus_id) {
+        CustomerVO vo = null;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            vo = ss.selectOne("customer.select_customer_by_cus_id", cus_id);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
