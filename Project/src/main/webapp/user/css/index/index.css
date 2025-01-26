@@ -94,6 +94,10 @@
     text-align: left;
 }
 
+button.unstyled-btn.active {
+    font-weight: bold;
+}
+
 /* Content */
 .product-section {
     width: calc(100% - 280px);
@@ -120,13 +124,9 @@
     padding: 5px;
 }
 
-.selected-item .item-text, .selected-item .remove-item {
+.selected-item .item-text {
     font-size: 17px;
     font-weight: bold;
-}
-
-.selected-filters .unstyled-btn i {
-    color: rgb(221, 53, 69);
 }
 
 .sort-pagination-container {

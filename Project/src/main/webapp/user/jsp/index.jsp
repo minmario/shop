@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -22,11 +23,11 @@
     <%-- header --%>
     <jsp:include page="layout/header.jsp"></jsp:include>
 
-    <div class="wrap">
+    <div class="wrap" id="index">
         <div class="row">
             <div class="container">
                 <div id="accordion" class="product-menu">
-                    <c:forEach var="major" items="${sessionScope.categories}">
+                    <c:forEach var="major" items="${requestScope.categories}" varStatus="st">
                         <c:if test="${major.name ne null}">
                             <div class="card">
                                 <div class="card-header" id="${major.ename}Heading">
@@ -35,12 +36,16 @@
                                         <i class="bi bi-plus"></i>
                                     </button>
                                 </div>
-                                <div id="${major.ename}Collapse" class="collapse" aria-labelledby="${major.ename}Heading" data-parent="#accordion">
+                                <div id="${major.ename}Collapse" class="collapse <c:if test='${st.first}'>show</c:if>" aria-labelledby="${major.ename}Heading" data-parent="#accordion">
                                     <div class="card-body">
-                                        <ul class="list-unstyled">
-                                            <c:forEach var="middle" items="${major.middleCategories}">
+                                        <ul class="list-unstyled" id="list-unstyled">
+                                            <c:forEach var="middle" items="${major.middleCategories}" varStatus="subSt">
                                                 <c:if test="${middle.major_no eq major.id}">
-                                                    <li><button class="unstyled-btn" data-name="${middle.name}" data-value="${middle.id}">${middle.name}</button></li>
+                                                    <li>
+                                                        <button class="unstyled-btn <c:if test='${subSt.first}'>active</c:if>" data-name="${middle.name}" data-value="${middle.id}">
+                                                                ${middle.name}
+                                                        </button>
+                                                    </li>
                                                 </c:if>
                                             </c:forEach>
                                         </ul>
@@ -56,20 +61,16 @@
                         <div class="selected-filters">
                             <button class="unstyled-btn selected-item d-none">
                                 <span class="item-text"></span>
-                                <i class="bi bi-x remove-item"></i>
                             </button>
                         </div>
-
                         <div class="sort-pagination-container">
                             <div class="sort-dropdown">
                                 <div class="dropdown-items">
-                                    <div class="dropdown-item active" data-value="recommend">추천순</div>
-                                    <div class="dropdown-item" data-value="new">신상품(재입고)순</div>
-                                    <div class="dropdown-item" data-value="low-price">낮은 가격순</div>
-                                    <div class="dropdown-item" data-value="high-price">높은 가격순</div>
-                                    <div class="dropdown-item" data-value="discount-rate">할인율순</div>
-                                    <div class="dropdown-item" data-value="review">후기순</div>
-                                    <div class="dropdown-item" data-value="sales">판매순</div>
+                                    <div class="dropdown-item active" data-value="1">신상품(재입고)순</div>
+                                    <div class="dropdown-item" data-value="2">낮은 가격순</div>
+                                    <div class="dropdown-item" data-value="3">높은 가격순</div>
+                                    <div class="dropdown-item" data-value="4">할인율순</div>
+                                    <div class="dropdown-item" data-value="5">판매순</div>
                                 </div>
                             </div>
                             <nav aria-label="Page navigation" class="navigation">
@@ -98,34 +99,8 @@
                         </div>
                     </div>
 
-                    <div class="product-list d-flex flex-wrap">
-                        <c:forEach begin="1" end="9" varStatus="st">
-                            <div class="product-item" onclick="location.href='Controller?type=productDetails'">
-                                <img src="./user/images/product${st.index}.jpg" alt="상품 이미지" class="product-image">
-                                <div class="product-info">
-                                    <p class="product-brand"><strong>브랜드명</strong></p>
-                                    <p class="product-name">상품 이름 상품 이름 상품 이름 상품 이름 상품 이름 상품 이름</p>
-                                    <p class="product-price">
-                                        <del>29,100원</del>
-                                        <strong>19,000원</strong>
-                                    </p>
-                                    <div class="product-rating">
-                                        <span class="stars">
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <span class="star-count">137</span>
-                                        </span>
-                                    </div>
-                                    <div class="product-likes">
-                                        <i class="bi bi-heart-fill"></i>
-                                        <span class="like-count">100</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:forEach>
+                    <div class="product-list d-flex flex-wrap" id="product-list">
+                        <jsp:include page="./product/productList.jsp"></jsp:include>
                     </div>
                 </div>
             </div>

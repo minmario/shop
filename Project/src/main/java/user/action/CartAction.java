@@ -71,7 +71,7 @@ public class CartAction implements Action {
                         sb.append("id : " + u_id + ", ");
                         sb.append("count : " + u_count);
                         lvo.setCurrent(sb.toString());
-                        LogDAO.insertLog(lvo);
+                        LogDAO.updateLog(lvo);
                     }
 
                     break;
