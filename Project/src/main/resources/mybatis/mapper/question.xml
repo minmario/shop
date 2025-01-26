@@ -18,6 +18,20 @@
         ORDER BY b.write_date DESC
     </select>
 
+    <!-- 상품상세 문의 -->
+    <select id="select_prod_question" resultType="user.vo.BoardVO" parameterType="String">
+        SELECT s.name AS s_name, b.id, b.cus_no, b.prod_no, b.bname, b.title, b.content, b.write_date, b.additional_images,
+        b.type, b.status, b.is_private, r.content AS r_content, r.write_date AS r_write_date, c.cus_id AS c_cus_id
+        FROM board b
+        LEFT JOIN reply r ON b.id = r.board_no
+        LEFT JOIN seller s ON r.seller_no = s.id
+        LEFT JOIN customer c ON b.cus_no = c.id
+        WHERE b.prod_no = #{prod_no} AND b.is_del = 0
+        AND (r.is_del = 0 OR r.is_del IS NULL)
+        AND b.bname = 'question'
+        ORDER BY b.write_date DESC
+    </select>
+
     <!-- 답변 상태에 따른 상품문의 조회 -->
     <select id="select_option" resultType="user.vo.BoardVO" parameterType="map">
         SELECT s.name AS s_name, b.id, b.cus_no, b.prod_no, b.bname, b.title, b.content, b.write_date, b.additional_images,
@@ -52,7 +66,7 @@
 
     <!-- 상품 문의 등록 (writeQuestion.jsp) -->
     <insert id="insert_question" parameterType="user.vo.BoardVO">
-        INSERT INTO board(cus_no, prod_no, bname, title, content, write_date, type, status, is_del, is_private)
-        VALUES(#{cus_no}, #{prod_no}, 'question', #{title}, #{content}, NOW(), #{type}, 1, 0, #{is_private})
+        INSERT INTO board(cus_no, prod_no, bname, title, content, additional_images, write_date, type, status, is_del, is_private)
+        VALUES(#{cus_no}, #{prod_no}, 'question', #{title}, #{content}, #{additional_images}, NOW(), #{type}, 1, 0, #{is_private})
     </insert>
 </mapper>

@@ -1,8 +1,10 @@
 package user.action;
 
+import user.dao.LogDAO;
 import user.dao.QuestionDAO;
 import user.vo.BoardVO;
 import user.vo.CustomerVO;
+import user.vo.LogVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +29,26 @@ public class WriteQuestionAction implements Action {
                     String title = request.getParameter("question_title");
                     String is_private = request.getParameter("question_check");
                     String content = request.getParameter("question_content");
-                    int cnt = QuestionDAO.insertQuestion(id, prod_no, title, content, type_value, is_private);
+                    String additional_images = request.getParameter("");
+                    int cnt = QuestionDAO.insertQuestion(id, prod_no, title, content, type_value, is_private, additional_images);
+
+                    if (cnt > 0) {
+                        // 추가 로그
+                        LogVO lvo = new LogVO();
+                        StringBuffer sb = new StringBuffer();
+                        lvo.setCus_no(cvo.getId());
+                        lvo.setTarget("board");
+                        sb.append("cus_no : " + id + ", ");
+                        sb.append("prod_no : " + prod_no + ", ");
+                        sb.append("title : " + title + ", ");
+                        sb.append("content : " + content + ", ");
+                        sb.append("type : " + type_value + ", ");
+                        sb.append("is_private : " + is_private);
+                        sb.append("additional_images : " + additional_images);
+                        lvo.setCurrent(sb.toString());
+                        LogDAO.insertLog(lvo);
+                    }
+
                     viewPage = "/user/jsp/product/writeQuestion.jsp";
                     break;
             }

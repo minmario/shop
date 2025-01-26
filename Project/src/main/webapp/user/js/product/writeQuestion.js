@@ -3,6 +3,7 @@ function insertQuestion(){
     const question_title = document.getElementById("question-title").value;
     const question_check = document.getElementById("question-private-check").checked ? "1" : "0";
     const question_content = document.getElementById("question-content").value;
+    const question_image = document.getElementById("question_image").value;
 
     if (question_type === "selected") {
         alert("문의 유형을 선택해주세요.");

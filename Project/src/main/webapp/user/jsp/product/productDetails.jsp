@@ -20,12 +20,21 @@
     <!-- header -->
     <jsp:include page="../layout/header.jsp"></jsp:include>
 
+    <c:if test="${empty requestScope.p_list}">
+        <script>
+            alert("해당 상품의 정보를 불러올 수 없습니다."); // 경고 메시지 표시
+            window.location.href = "Controller?type=index"; // 상품 목록 페이지로 이동
+        </script>
+    </c:if>
+
     <div class="wrap">
-        <div class="row">
+        <c:if test="${not empty productDetails}">
+        <c:set var="pvo" value="${requestScope.productDetails}"/>
+            <div class="row">
             <div class="container">
                 <div class="product-overview">
-                    <h2 class="product-title">MILK SST PINK</h2>
-                    <p class="brand"><strong>브랜드</strong> <a href="#">MOTIVESTREET</a></p>
+                    <h2 class="product-title">${pvo.name}</h2>
+                    <p class="brand"><strong>브랜드</strong> <a href="#">${pvo.s_name}</a></p>
                     <p class="product-category"><strong>제품분류</strong> <a href="#">상의</a> | <a href="#">반소매 티셔츠</a></p>
                 </div>
                 <div class="product-details">
@@ -55,7 +64,7 @@
                     <div class="info-section">
                         <div class="product-info">
                             <h3>PRODUCT INFO <span class="info-subtitle">제품정보</span></h3>
-                            <p><i class="bi bi-dash"></i> 제품번호 <strong id="prod_id" data-item-id="">MOTIVESTREET (MILK SST PINK)</strong></p>
+                            <p><i class="bi bi-dash"></i> 제품번호 <strong id="prod_id" data-item-id="${pvo.id}">${pvo.id}</strong></p>
                             <p><i class="bi bi-dash"></i> 시즌/성별 <strong id="prod_season">2017 S/S / 여</strong></p>
                             <p><i class="bi bi-dash"></i> 누적판매 <strong id="prod_sale_count">233개</strong></p>
                             <p><i class="bi bi-dash"></i> 좋아요 <span class="like-count"><i class="bi bi-heart-fill"></i> <strong id="prod_like_count">91</strong></span></p>
@@ -78,8 +87,8 @@
                         </div>
                         <div class="price-info">
                             <h3>PRICE INFO <span class="info-subtitle">가격정보</span></h3>
-                            <p><i class="bi bi-dash"></i> 무신사 판매가 <span class="price-original"><strong><del>32,000원</del></strong></span></p>
-                            <p><i class="bi bi-dash"></i> 무신사 세일가 <span class="price-sale"><strong>19,200원</strong></span> <span class="discount">(40% 할인)</span></p>
+                            <p><i class="bi bi-dash"></i> 무신사 판매가 <span class="price-original"><strong><del>${pvo.price}원</del></strong></span></p>
+                            <p><i class="bi bi-dash"></i> 무신사 세일가 <span class="price-sale"><strong>${pvo.price}</strong></span> <span class="discount">(${pvo.sale}% 할인)</span></p>
                             <p><i class="bi bi-dash"></i> 무신사 회원가 <span class="price-member"><strong>17,472 ~ 18,816원</strong></span></p>
                             <p><i class="bi bi-dash"></i> 적립금 최대 <span class="points"><strong>384원</strong></span></p>
                         </div>
@@ -93,11 +102,11 @@
                                 <i class="bi bi-dash"></i> 사이즈
                                 <select class="form-select" aria-label="size select" id="cart-select-size">
                                     <option value="0">:: 선택하세요 ::</option>
-                                    <option value="S">S</option>
-                                    <option value="M">M</option>
-                                    <option value="L">L</option>
-                                    <option value="XL">XL</option>
-                                    <option value="XXL">XXL</option>
+                                    <c:if test="${requestScope.productSize ne null}">
+                                        <c:forEach var="size" items="${requestScope.productSize}">
+                                            <option value="${size.i_option_name}">${size.i_option_name}</option>
+                                        </c:forEach>
+                                    </c:if>
                                 </select>
                             </div>
                             <div class="cart-count">
@@ -306,34 +315,35 @@
                             </button>
                         </div>
                         <div class="inquiry-list">
-                            <c:if test="${requestScope.list eq null}">
+                            <c:if test="${requestScope.q_list eq null}">
                                 <div class="inquiry-item">
                                     <span>해당 상품의 문의 내역이 없습니다.</span>
                                 </div>
                             </c:if>
-                            <c:if test="${requestScope.list ne null}">
-                                <c:forEach var="item" items="${requestScope.list}">
+                            <c:if test="${requestScope.q_list ne null}">
+                                <c:forEach var="item" items="${requestScope.q_list}">
                                     <div class="inquiry-item">
                                         <c:choose>
-                                            <c:when test="${item.type == 19}"><div class="inquiry-type">사이즈</div></c:when>
-                                            <c:when test="${item.type == 20}"><div class="inquiry-type">배송</div></c:when>
-                                            <c:when test="${item.type == 21}"><div class="inquiry-type">재입고</div></c:when>
-                                            <c:when test="${item.type == 22}"><div class="inquiry-type">상품상세문의</div></c:when>
+                                            <c:when test="${item.type == '19'}"><div class="inquiry-type">사이즈</div></c:when>
+                                            <c:when test="${item.type == '20'}"><div class="inquiry-type">배송</div></c:when>
+                                            <c:when test="${item.type == '21'}"><div class="inquiry-type">재입고</div></c:when>
+                                            <c:when test="${item.type == '22'}"><div class="inquiry-type">상품상세문의</div></c:when>
                                         </c:choose>
                                     </div>
                                     <div class="inquiry-header">
-                                        <c:if test="${item.is_private == 0}">
+                                        <c:if test="${item.is_private == '0'}">
                                             <span class="inquiry-title">${item.title}</span>
                                             <i class="bi bi-chevron-down arrow"></i>
                                         </c:if>
-                                        <c:if test="${item.is_private == 1}">
+                                        <c:if test="${item.is_private == '1'}">
+                                            <i class="bi bi-lock"></i>
                                             <span class="inquiry-title">비밀글로 설정된 글입니다.</span>
                                         </c:if>
                                     </div>
                                     <c:choose>
-                                        <c:when test="${item.status == 1}"><div class="inquiry-meta">답변대기 · ${item.c_cus_id} · ${item.write_date}</div></c:when>
-                                        <c:when test="${item.type == 2}"><div class="inquiry-meta">답변확인중 · ${item.c_cus_id} · ${item.write_date}</div></c:when>
-                                        <c:when test="${item.type == 3}"><div class="inquiry-meta">답변완료 · ${item.c_cus_id} · ${item.write_date}</div></c:when>
+                                        <c:when test="${item.status == '1'}"><div class="inquiry-meta">답변대기 · ${item.c_cus_id} · ${item.write_date}</div></c:when>
+                                        <c:when test="${item.status == '2'}"><div class="inquiry-meta">답변확인중 · ${item.c_cus_id} · ${item.write_date}</div></c:when>
+                                        <c:when test="${item.status == '3'}"><div class="inquiry-meta">답변완료 · ${item.c_cus_id} · ${item.write_date}</div></c:when>
                                     </c:choose>
                                     <div class="inquiry-content">
                                         <p class="question">${item.content}</p>
@@ -363,11 +373,12 @@
                 </div>
                 </div>
             </div>
-        </div>
+        </c:if>
 
         <!-- footer -->
         <jsp:include page="../layout/footer.jsp"></jsp:include>
     </div>
+
 
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

@@ -1,40 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const tabs = document.querySelectorAll(".tab-btn");
-    const panels = document.querySelectorAll(".tab-panel");
-
-    tabs.forEach((tab) => {
-        tab.addEventListener("click", function () {
-            tabs.forEach((btn) => btn.classList.remove("active"));
-            panels.forEach((panel) => panel.classList.remove("active"));
-
-            this.classList.add("active");
-            const target = this.getAttribute("data-target");
-            // 문의 탭 클릭 시 AJAX 요청 처리
-            if (target === "inquiry") {
-                loadInquiryData(); // 문의 데이터 로드 함수 호출
-            } else {
-                document.getElementById(target).classList.add("active");
-            }
-        });
-    });
-    // 문의 데이터를 로드하는 함수
-    function loadInquiryData() {
-        $.ajax({
-            url: "Controller?type=productDetails&action=all",
-            type: "POST",
-            success: function (response) {
-                // 문의 탭 패널에 응답 데이터를 렌더링
-                $("#inquiry").html(response);
-            },
-            error: function (status, error) {
-                console.error("문의 데이터를 불러오는 데 실패했습니다.", error);
-                alert("문의 데이터를 가져오는 중 오류가 발생했습니다.");
-            },
-        });
-    }
-});
-
-document.addEventListener("DOMContentLoaded", function () {
     const categoryTabs = document.querySelectorAll(".review-categories li");
     const reviewLists = document.querySelectorAll(".review-list");
 
@@ -49,6 +13,58 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+//문의 탭 클릭 함수
+document.addEventListener("DOMContentLoaded", function () {
+    // 모든 탭 버튼과 탭 패널을 선택
+    const tabs = document.querySelectorAll(".tab-btn");
+    const panels = document.querySelectorAll(".tab-panel");
+
+    // 탭 클릭 이벤트 처리 함수
+    function handleTabClick(event) {
+        // 모든 탭 버튼과 패널의 active 클래스 제거
+        tabs.forEach((btn) => btn.classList.remove("active"));
+        panels.forEach((panel) => panel.classList.remove("active"));
+
+        // 현재 클릭한 탭 버튼에 active 클래스 추가
+        const clickedTab = event.target;
+        clickedTab.classList.add("active");
+
+        // 클릭한 탭의 target 속성 가져오기
+        const target = clickedTab.getAttribute("data-target");
+
+        // 해당하는 패널 활성화
+        if (target === "inquiry") {
+            loadInquiryData(); // 문의 데이터를 로드
+        } else {
+            document.getElementById(target).classList.add("active");
+        }
+    }
+
+    // 문의 데이터를 불러오는 함수 정의
+    function loadInquiryData() {
+        const inquiryPanel = document.getElementById("inquiry");
+
+        $.ajax({
+            url: "Controller?type=productDetails&action=question",
+            type: "POST",
+            success: function (response) {
+                $("#inquiry").html(response);
+                inquiryPanel.classList.add("active");
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error("AJAX 요청 실패:", textStatus, errorThrown);
+                alert("문의 데이터를 가져오는 중 오류가 발생했습니다.");
+            }
+        });
+    }
+
+    // 각 탭 버튼에 클릭 이벤트 추가
+    tabs.forEach((tab) => {
+        tab.addEventListener("click", handleTabClick);
+    });
+});
+
 
 document.addEventListener("DOMContentLoaded", function () {
     const sizeSelect = document.getElementById("size-select");
