@@ -42,42 +42,43 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach var="item" items="${requestScope.cart_list}" varStatus="st">
-                                        <input id="cart-prod-id" type="hidden" value="${item.id}"/>
-                                        <tr>
-                                            <td class="order-id">${st.index + 1}</td>
-                                            <td class="product-info">
-                                                <div class="prod_info">
-                                                    <div class="prod_img">
-                                                        <img src="${item.prod_image}"/>
-                                                    </div>
-                                                    <div class="prod_details">
-                                                        <div class="prod_brand">${item.brand}</div>
-                                                        <div class="prod_name">${item.p_name}</div>
-                                                        <div class="prod_option">
-                                                            <div class="prod_option_left">옵션&nbsp;:</div>
-                                                            <div class="prod_option_center" id="cart-prod-size">${item.size}</div>
-                                                            <div class="prod_option_right">
-                                                                <button type="button" class="btn btn-outline-secondary option-change-btn" data-toggle="modal" data-target="#optionModal">옵션 변경</button>
+                                    <c:if test="${requestScope.cart_list ne null}">
+                                        <c:forEach var="item" items="${requestScope.cart_list}" varStatus="st">
+                                            <tr data-value="${item.id}">
+                                                <td class="order-id">${st.index + 1}</td>
+                                                <td class="product-info">
+                                                    <div class="prod_info">
+                                                        <div class="prod_img">
+                                                            <img src="${item.prod_image}"/>
+                                                        </div>
+                                                        <div class="prod_details">
+                                                            <div class="prod_brand">${item.brand}</div>
+                                                            <div class="prod_name">${item.p_name}</div>
+                                                            <div class="prod_option">
+                                                                <div class="prod_option_left">옵션&nbsp;:</div>
+                                                                <div class="prod_option_center cart-prod-size">${item.size}</div>
+                                                                <div class="prod_option_right">
+                                                                    <button type="button" class="btn btn-outline-secondary option-change-btn" data-toggle="modal" data-target="#optionModal">옵션 변경</button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td class="product-price">
-                                                <del class="default-price"><fmt:formatNumber value="${item.price}"/>원</del>
-                                                <div class="sale-price"><fmt:formatNumber value="${item.saled_price}"/>원</div>
-                                            </td>
-                                            <td class="cart-count">
-                                                <button type="button" class="btn btn-secondary btn-minus" onclick="minusCount()">-</button>
-                                                <span class="cart-count-value" id="cart-count-value">${item.count}</span>
-                                                <button type="button" class="btn btn-secondary btn-plus" onclick="plusCount()">+</button>
-                                            </td>
-                                            <td>
-                                                <input type="checkbox" name="chk-cart" class="cart-checkbox" data-item-id="${item.id}"/>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
+                                                </td>
+                                                <td class="product-price">
+                                                    <del class="default-price"><fmt:formatNumber value="${item.price}"/>원</del>
+                                                    <div class="sale-price"><fmt:formatNumber value="${item.saled_price}"/>원</div>
+                                                </td>
+                                                <td class="cart-count">
+                                                    <button type="button" class="btn btn-secondary btn-minus" onclick="minusCount(this)">-</button>
+                                                    <span class="cart-count-value">${item.count}</span>
+                                                    <button type="button" class="btn btn-secondary btn-plus" onclick="plusCount(this)">+</button>
+                                                </td>
+                                                <td>
+                                                    <input type="checkbox" name="chk-cart" class="cart-checkbox" data-item-id="${item.id}"/>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </c:if>
                                 </tbody>
                             </table>
                             <div class="cart-notice">
@@ -150,50 +151,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="./user/js/cart/cart.js"></script>
-
-    <script>
-        $(function () {
-            $(".cart-count").each(function () {
-                const cartCountElement = $(this);
-                const minusButton = cartCountElement.find(".btn-minus");
-                const plusButton = cartCountElement.find(".btn-plus");
-                const spanElement = cartCountElement.find(".cart-count-value");
-
-                // - 버튼 클릭 이벤트
-                minusButton.on("click", function () {
-                    let count = parseInt(spanElement.text(), 10);
-                    if (count > 0) {
-                        count -= 1;
-                        spanElement.text(count);
-                    }
-                });
-
-                // + 버튼 클릭 이벤트
-                plusButton.on("click", function () {
-                    let count = parseInt(spanElement.text(), 10);
-                    count += 1;
-                    spanElement.text(count);
-                });
-            });
-
-            // 배송지 체크 박스 전체 선택 / 해제 기능
-            $("#cart-table #cart-all").on("click", function () {
-                let ar = $("#cart-table > tbody").find(":checkbox");
-                ar.prop("checked", this.checked);
-            });
-
-            // 배송지 체크 박스 개별 선택 / 해제 기능
-            $("#cart-table > tbody").find(":checkbox").on("click", function () {
-                let allCheck = true;
-                $("#cart-table > tbody").find(":checkbox").not("#cart-table #cart-all").each(function () {
-                    if (!this.checked) {
-                        allCheck = false;
-                        return allCheck;
-                    }
-                });
-                $("#cart-table #cart-all").prop("checked", allCheck);
-            });
-        });
-    </script>
 </body>
 </html>

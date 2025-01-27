@@ -68,13 +68,35 @@ public class CartDAO {
         return cnt;
     }
 
-    // 장바구니 삭제
+    // 장바구니 단일 삭제
     public static int deleteCart(HashMap<String, Object> map) {
         int cnt = 0;
         SqlSession ss = FactoryService.getFactory().openSession();
 
         try {
             cnt = ss.delete("cart.delete_cart", map);
+
+            if (cnt > 0) {
+                ss.commit();
+            } else {
+                ss.rollback();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
+    }
+
+    // 장바구니 다중 삭제
+    public static int deletesCart(HashMap<String, Object> map) {
+        int cnt = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            cnt = ss.delete("cart.deletes_cart", map);
 
             if (cnt > 0) {
                 ss.commit();

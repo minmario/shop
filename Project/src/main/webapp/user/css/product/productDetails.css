@@ -172,7 +172,11 @@
     gap: 10px;
 }
 
-.actions .like-btn {
+.actions btn.btn-danger.like-btn {
+    color: #fff;
+}
+
+.actions btn.btn-outline-danger.like-btn {
     color: #d9534f;
 }
 

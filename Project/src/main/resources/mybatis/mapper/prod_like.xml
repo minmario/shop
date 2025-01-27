@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="prod_like">
+    <!-- 좋아요 조회 -->
+    <select id="select_prod_like" resultType="user.vo.ProdLikeVO" parameterType="user.vo.ProdLikeVO">
+        SELECT * FROM prod_like
+        WHERE cus_no = #{cus_no} AND prod_no = #{prod_no}
+    </select>
+
+    <!-- 좋아요 설정 -->
+    <insert id="insert_prod_like" parameterType="user.vo.ProdLikeVO">
+        INSERT INTO prod_like (prod_no, cus_no, like_status)
+        VALUES (#{prod_no}, #{cus_no}, '1')
+    </insert>
+
+    <!-- 좋아요 해제 -->
+    <delete id="delete_prod_like" parameterType="user.vo.ProdLikeVO">
+        DELETE FROM prod_like
+        WHERE cus_no = #{cus_no} AND prod_no = #{prod_no}
+    </delete>
+</mapper>

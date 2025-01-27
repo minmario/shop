@@ -1,32 +1,90 @@
+// 체크 박스
+document.addEventListener("DOMContentLoaded", function () {
+    // 장바구니 체크박스 전체 선택 / 해제 기능
+    const cartAllCheckbox = document.querySelector("#cart-table #cart-all");
+    const checkboxes = document.querySelectorAll("#cart-table > tbody input[type='checkbox']");
+
+    // 전체 선택 / 해제 기능
+    cartAllCheckbox.addEventListener("click", function () {
+        checkboxes.forEach(function (checkbox) {
+            checkbox.checked = cartAllCheckbox.checked;
+        });
+    });
+
+    // 개별 선택 / 해제 기능
+    checkboxes.forEach(function (checkbox) {
+        checkbox.addEventListener("click", function () {
+            let allChecked = true;
+
+            // 모든 체크박스를 확인
+            checkboxes.forEach(function (cb) {
+                if (!cb.checked) {
+                    allChecked = false;
+                }
+            });
+
+            // 전체 선택 체크박스 상태 업데이트
+            cartAllCheckbox.checked = allChecked;
+        });
+    });
+});
+
 // 수량 감소
-function minusCount() {
-    const id = document.getElementById("cart-prod-id").value;
-    const cartCountValue = document.getElementById("cart-count-value");
-    const count = parseInt(cartCountValue.textContent, 10);
-    const size = document.getElementById("cart-prod-size").value;
+function minusCount(obj) {
+    // tr 요소
+    const row = obj.closest("tr");
+
+    const id = row.dataset.value;
+    const size = row.querySelector(".cart-prod-size").textContent.trim();
+
+    // 수량 정보
+    const cartCountValue = row.querySelector('.cart-count-value');
+    let count = parseInt(cartCountValue.textContent.trim(), 10);
+
+    // 수량 감소
+    if (count > 0) {
+        count -= 1;
+        cartCountValue.textContent = count;
+    }
 
     $.ajax({
-        url: count == "0" ? "Controller?type=cart&action=delete" : "Controller?type=cart&action=update",
+        url: count === 0 ? "Controller?type=cart&action=delete" : "Controller?type=cart&action=update",
         method: 'POST',
-        data: {
-            id: id,
-            size: size,
-            count: count
-        },
+        data: count === 0 ? { id: id } : { id: id, size: size, count: count },
         success: function () {
-            if (count != "0") {
+            if (count !== 0) {
                 alert("수량이 변경되었습니다.");
+            } else {
+                alert("상품이 장바구니에서 삭제되었습니다.");
+                window.location.href = 'Controller?type=cart&action=select';
             }
+        },
+        error: function (error) {
+            alert("요청 처리 중 오류가 발생했습니다.");
+            console.error(error);
         }
     });
 }
 
 // 수량 증가
-function plusCount() {
-    const id = document.getElementById("cart-prod-id").value;
-    const cartCountValue = document.getElementById("cart-count-value");
-    const count = parseInt(cartCountValue.textContent, 10);
-    const size = document.getElementById("cart-prod-size").value;
+function plusCount(obj) {
+    // tr 요소
+    const row = obj.closest("tr");
+
+    const id = row.dataset.value;
+    const size = row.querySelector(".cart-prod-size").textContent.trim();
+
+    // 수량 정보
+    const cartCountValue = row.querySelector('.cart-count-value');
+    let count = parseInt(cartCountValue.textContent.trim(), 10);
+
+    // 수량 증가
+    count += 1;
+    cartCountValue.textContent = count;
+
+    console.log('id : ' + id);
+    console.log('size : ' + size);
+    console.log('count : ' + count);
 
     $.ajax({
         url: "Controller?type=cart&action=update",
@@ -38,6 +96,10 @@ function plusCount() {
         },
         success: function () {
             alert("수량이 변경되었습니다.");
+        },
+        error: function (error) {
+            alert("요청 처리 중 오류가 발생했습니다.");
+            console.error(error);
         }
     });
 }
@@ -55,15 +117,19 @@ function deleteCart() {
     }
 
     $.ajax({
-        url: "Controller?type=cart&action=delete",
+        url: "Controller?type=cart&action=deletes",
         method: 'POST',
         traditional: true, // 배열로 데이터 전송
         data: {
             ids: ids
         },
         success: function () {
-            alert("삭제되었습니다.");
+            alert("상품이 장바구니에서 삭제되었습니다.");
             window.location.href = 'Controller?type=cart&action=select';
+        },
+        error: function (error) {
+            alert("요청 처리 중 오류가 발생했습니다.");
+            console.error(error);
         }
     });
 }
@@ -76,6 +142,10 @@ function deleteAllCart() {
         success: function () {
             alert("전체 삭제되었습니다.");
             window.location.href = 'Controller?type=cart&action=select';
+        },
+        error: function (error) {
+            alert("요청 처리 중 오류가 발생했습니다.");
+            console.error(error);
         }
     });
 }

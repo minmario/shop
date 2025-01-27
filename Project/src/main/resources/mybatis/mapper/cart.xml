@@ -5,7 +5,7 @@
 <mapper namespace="cart">
     <!-- 장바구니 조회 -->
     <select id="select_cart" resultType="user.vo.CartVO" parameterType="String">
-        SELECT c.*, p.name AS p_name, p.prod_image, s.name AS s_name, p.price AS price, p.saled_price AS saled_price FROM cart c
+        SELECT c.*, p.name AS p_name, p.prod_image, s.name AS brand, p.price AS price, p.saled_price AS saled_price FROM cart c
         INNER JOIN product p
         INNER JOIN seller s
         ON c.prod_no = p.id AND p.seller_no = s.id
@@ -25,8 +25,14 @@
         WHERE cus_no = #{cus_no} AND id = #{id}
     </update>
 
-    <!-- 장바구니 삭제 -->
+    <!-- 장바구니 단일 삭제 -->
     <delete id="delete_cart" parameterType="Map">
+        DELETE FROM cart
+        WHERE cus_no = #{cus_no} AND id = #{id}
+    </delete>
+
+    <!-- 장바구니 선택 삭제 -->
+    <delete id="deletes_cart" parameterType="Map">
         DELETE FROM cart
         WHERE cus_no = #{cus_no} AND id in
         <foreach item="item" collection="ids" open="(" separator="," close=")">

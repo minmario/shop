@@ -1,7 +1,7 @@
 package user.vo;
 
 public class CartVO {
-    private String id, cus_no, prod_no, count, size, add_date, p_name, option_name, prod_image, s_name, price, saled_price;
+    private String id, cus_no, prod_no, count, size, add_date, p_name, option_name, prod_image, brand, price, saled_price;
 
     public String getId() {
         return id;
@@ -9,22 +9,6 @@ public class CartVO {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getSaled_price() {
-        return saled_price;
-    }
-
-    public void setSaled_price(String saled_price) {
-        this.saled_price = saled_price;
     }
 
     public String getCus_no() {
@@ -91,11 +75,27 @@ public class CartVO {
         this.prod_image = prod_image;
     }
 
-    public String getS_name() {
-        return s_name;
+    public String getBrand() {
+        return brand;
     }
 
-    public void setS_name(String s_name) {
-        this.s_name = s_name;
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getSaled_price() {
+        return saled_price;
+    }
+
+    public void setSaled_price(String saled_price) {
+        this.saled_price = saled_price;
     }
 }

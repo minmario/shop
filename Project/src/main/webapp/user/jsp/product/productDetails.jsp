@@ -70,7 +70,7 @@
                         <div class="info-section">
                             <div class="product-info">
                                 <h3>PRODUCT INFO <span class="info-subtitle">제품정보</span></h3>
-                                <p><i class="bi bi-dash"></i> 제품번호 <strong id="prod_id" data-item-id="${pvo.id}">${pvo.id}</strong></p>
+                                <p><i class="bi bi-dash"></i> 제품번호 <strong id="prod_id" data-item="${pvo.id}">${pvo.id}</strong></p>
                                 <p><i class="bi bi-dash"></i> 성별 <strong id="prod_season">여</strong></p>
                                 <p><i class="bi bi-dash"></i> 누적판매 <strong id="prod_sale_count">233개</strong></p>
                                 <p><i class="bi bi-dash"></i> 좋아요 <span class="like-count"><i class="bi bi-heart-fill"></i> <strong id="prod_like_count">91</strong></span></p>
@@ -110,7 +110,17 @@
                                         <option value="0">:: 선택하세요 ::</option>
                                         <c:if test="${requestScope.productSize ne null}">
                                             <c:forEach var="size" items="${requestScope.productSize}">
-                                                <option value="${size.i_option_name}">${size.i_option_name}</option>
+                                                <option value="${size.i_option_name}">
+                                                        ${size.i_option_name}
+                                                    <c:choose>
+                                                        <c:when test="${size.count < 5}">
+                                                            (${size.count}개 - 품절 임박!)
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            (${size.count}개)
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </option>
                                             </c:forEach>
                                         </c:if>
                                     </select>
@@ -122,7 +132,14 @@
                                     <button type="button" class="btn btn-outline-secondary btn-plus">+</button>
                                 </div>
                                 <div class="actions">
-                                    <button class="btn btn-outline-danger like-btn"><i class="bi bi-heart"></i> 좋아요</button>
+                                    <c:choose>
+                                        <c:when test="${requestScope.product_like ne null}">
+                                            <button class="btn btn-danger like-btn" data-value="${pvo.id}" onclick="handleLike(this)"><i class="bi bi-heart"></i> 좋아요</button>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <button class="btn btn-outline-danger like-btn" data-value="${pvo.id}" onclick="handleLike(this)"><i class="bi bi-heart"></i> 좋아요</button>
+                                        </c:otherwise>
+                                    </c:choose>
                                     <button class="btn btn-dark add-to-cart" onclick="insertCart()">장바구니 담기</button>
                                     <button class="btn btn-dark buy-now" onclick="location.href='Controller?type=payment'">구매하기</button>
                                 </div>

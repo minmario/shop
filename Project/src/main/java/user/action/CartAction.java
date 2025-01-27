@@ -30,13 +30,15 @@ public class CartAction implements Action {
                     request.setAttribute("cart_list", cart_list);
                     break;
                 case "insert":
-                    String i_prodNo = request.getParameter("prodNo");
+                    String i_prod_no = request.getParameter("prod_no");
                     String i_count = request.getParameter("count");
+                    String i_size = request.getParameter("size");
 
                     CartVO ivo = new CartVO();
                     ivo.setCus_no(cvo.getId());
-                    ivo.setProd_no(i_prodNo);
+                    ivo.setProd_no(i_prod_no);
                     ivo.setCount(i_count);
+                    ivo.setSize(i_size);
                     int i_cnt = CartDAO.insertCart(ivo);
 
                     if (i_cnt > 0) {
@@ -45,8 +47,9 @@ public class CartAction implements Action {
                         StringBuffer sb = new StringBuffer();
                         lvo.setCus_no(cvo.getId());
                         lvo.setTarget("cart 추가");
-                        sb.append("prod_no : " + i_prodNo + ", ");
-                        sb.append("count : " + i_count);
+                        sb.append("prod_no : " + i_prod_no + ", ");
+                        sb.append("count : " + i_count + ", ");
+                        sb.append("size : " + i_size);
                         lvo.setCurrent(sb.toString());
                         LogDAO.insertLog(lvo);
                     }
@@ -55,11 +58,13 @@ public class CartAction implements Action {
                 case "update":
                     String u_id = request.getParameter("id");
                     String u_count = request.getParameter("count");
+                    String u_size = request.getParameter("size");
 
                     CartVO uvo = new CartVO();
                     uvo.setCus_no(cvo.getId());
                     uvo.setId(u_id);
                     uvo.setCount(u_count);
+                    uvo.setSize(u_size);
                     int u_cnt = CartDAO.updateCart(uvo);
 
                     if (u_cnt > 0) {
@@ -69,25 +74,47 @@ public class CartAction implements Action {
                         lvo.setCus_no(cvo.getId());
                         lvo.setTarget("cart 수정");
                         sb.append("id : " + u_id + ", ");
-                        sb.append("count : " + u_count);
+                        sb.append("count : " + u_count + ", ");
+                        sb.append("size : " + u_size);
                         lvo.setCurrent(sb.toString());
                         LogDAO.updateLog(lvo);
                     }
 
                     break;
                 case "delete":
-                    String[] idsArr = request.getParameterValues("ids");
-                    System.out.println("idsArr.length : " + idsArr.length);
+                    String id = request.getParameter("id");
 
-                    List<String> itemIds = Arrays.asList(idsArr);
+                    HashMap<String, Object> d_map = new HashMap<>();
+                    d_map.put("cus_no", cvo.getId());
+                    d_map.put("id", id);
 
-                    HashMap<String, Object> map = new HashMap<>();
-                    map.put("cus_no", cvo.getId());
-                    map.put("ids", itemIds);
-
-                    int d_cnt = CartDAO.deleteCart(map);
+                    int d_cnt = CartDAO.deleteCart(d_map);
 
                     if (d_cnt > 0) {
+                        // 삭제 로그
+                        LogVO lvo = new LogVO();
+                        StringBuffer sb = new StringBuffer();
+                        lvo.setCus_no(cvo.getId());
+                        lvo.setTarget("cart 삭제");
+                        sb.append("id : " + id);
+                        lvo.setCurrent(sb.toString());
+                        LogDAO.insertLog(lvo);
+                    }
+
+                    break;
+                case "deletes":
+                    String[] idsArr = request.getParameterValues("ids");
+
+                    List<String> itemIds = Arrays.asList(idsArr);
+                    System.out.println("itemIds : " + itemIds);
+
+                    HashMap<String, Object> ds_map = new HashMap<>();
+                    ds_map.put("cus_no", cvo.getId());
+                    ds_map.put("ids", itemIds);
+
+                    int ds_cnt = CartDAO.deletesCart(ds_map);
+
+                    if (ds_cnt > 0) {
                         // 삭제 로그
                         LogVO lvo = new LogVO();
                         for (String s : idsArr) {

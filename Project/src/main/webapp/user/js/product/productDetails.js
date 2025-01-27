@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // 장바구니 추가
 function insertCart() {
-    const prodNo = document.getElementById("prod_id").value;
+    const prod_no = document.getElementById("prod_id").dataset.item;
     const size = document.getElementById("cart-select-size").value;
     const cartCountValue = document.getElementById("count-value");
     const count = parseInt(cartCountValue.textContent, 10);
@@ -151,7 +151,7 @@ function insertCart() {
         url: "Controller?type=cart&action=insert",
         method: 'POST',
         data: {
-            prodNo: prodNo,
+            prod_no: prod_no,
             size: size,
             count: count
         },
@@ -159,6 +159,41 @@ function insertCart() {
             if (confirm("장바구니에 상품이 담겼습니다. 장바구니로 이동하시겠습니까?")) {
                 window.location.href = 'Controller?type=cart&action=select';
             }
+        }
+    });
+}
+
+// 좋아요 설정/해제
+function handleLike(obj) {
+    const prod_no = document.getElementById("prod_id").dataset.item;
+
+    // 좋아요 상태
+    const isLiked = obj.classList.contains("btn-outline-danger");
+
+    $.ajax({
+        url: isLiked ? "Controller?type=productDetails&action=like" : "Controller?type=productDetails&action=unlike",
+        method: "POST",
+        data: {
+            prod_no: prod_no
+        },
+        success: function (response) {
+            if (isLiked) {
+                obj.classList.remove("btn-outline-danger");
+                obj.classList.add("btn-danger");
+                obj.innerHTML = '<i class="bi bi-heart"></i> 좋아요';
+                alert("좋아요를 추가했습니다.");
+            } else {
+                obj.classList.remove("btn-danger");
+                obj.classList.add("btn-outline-danger");
+                obj.innerHTML = '<i class="bi bi-heart"></i> 좋아요';
+                alert("좋아요를 취소했습니다.");
+            }
+
+            window.location.href = 'Controller?type=productDetails&action=select&prod_no=' + prod_no;
+        },
+        error: function (error) {
+            alert("요청 처리 중 오류가 발생했습니다.");
+            console.error(error);
         }
     });
 }

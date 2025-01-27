@@ -1,15 +1,7 @@
 package user.vo;
 
 public class ProductVO {
-    private String brand, id, category_no, seller_no, name, length, shoulder, chest, sleeve, waist, hip, thigh, rise, hem, foot_length, foot_width, ankle_height, heel_height, price, add_date, view_count, inventory, active, sale, prod_image, additional_images, content, saled_price, like_count, i_option_name;
-
-    public String getI_option_name() {
-        return i_option_name;
-    }
-
-    public void setI_option_name(String i_option_name) {
-        this.i_option_name = i_option_name;
-    }
+    private String brand, id, category_no, seller_no, name, length, shoulder, chest, sleeve, waist, hip, thigh, rise, hem, foot_length, foot_width, ankle_height, heel_height, price, add_date, view_count, inventory, active, sale, prod_image, additional_images, content, saled_price, like_count, i_option_name, count;
 
     public String getBrand() {
         return brand;
@@ -241,5 +233,21 @@ public class ProductVO {
 
     public void setLike_count(String like_count) {
         this.like_count = like_count;
+    }
+
+    public String getI_option_name() {
+        return i_option_name;
+    }
+
+    public void setI_option_name(String i_option_name) {
+        this.i_option_name = i_option_name;
+    }
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
     }
 }

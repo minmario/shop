@@ -45,12 +45,12 @@ public class ProductDAO {
     }
 
     // 상품 사이즈 조회
-    public static List<ProductVO> selectSize(String name) {
+    public static List<ProductVO> selectSize(String id) {
         List<ProductVO> productSize = null;
         SqlSession ss= FactoryService.getFactory().openSession();
 
         try {
-            productSize = ss.selectList("product.select_size", name);
+            productSize = ss.selectList("product.select_size", id);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

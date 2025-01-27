@@ -89,9 +89,9 @@
     <!-- 상품 상세정보 가져오기 -->
     <select id="select_product_details" resultType="user.vo.ProductVO" parameterType="String">
         SELECT
-            s.name AS brand,
-            p.*,
-            COALESCE(COUNT(pl.prod_no), 0) AS like_count
+        s.name AS brand,
+        p.*,
+        COALESCE(COUNT(pl.prod_no), 0) AS like_count
         FROM product p
         INNER JOIN seller s ON p.seller_no = s.id
         LEFT JOIN prod_like pl ON p.id = pl.prod_no AND pl.like_status IN ('1', '3')
@@ -101,9 +101,19 @@
 
     <!-- 상품 사이즈 정보 가져오기 -->
     <select id="select_size" resultType="user.vo.ProductVO" parameterType="String">
-        SELECT i.option_name AS i_option_name, p.*
+        SELECT i.option_name AS i_option_name, i.count, p.*
         FROM product p
         JOIN inventory i ON i.prod_no = p.id
-        WHERE p.name = #{name}
+        WHERE p.id = #{id} AND p.is_del = 0
+        ORDER BY
+            CASE
+                WHEN i.option_name = 'XS' THEN 1
+                WHEN i.option_name = 'S' THEN 2
+                WHEN i.option_name = 'M' THEN 3
+                WHEN i.option_name = 'L' THEN 4
+                WHEN i.option_name = 'XL' THEN 5
+                WHEN i.option_name = 'XXL' THEN 6
+            ELSE 7
+        END
     </select>
 </mapper>
