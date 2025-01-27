@@ -98,7 +98,7 @@
                         <div class="user-action-buttons">
                             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-order" autocomplete="off">
-                                <label class="btn btn-outline-dark" for="btnradio-order">주문내역</label>
+                                <label class="btn btn-outline-dark" for="btnradio-order" onclick="selectOrder()">주문내역</label>
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-refund" autocomplete="off">
                                 <label class="btn btn-outline-dark" for="btnradio-refund">취소/반품/교환</label>
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-review" autocomplete="off">
@@ -432,6 +432,7 @@
     <script src="./user/js/mypage/components/point.js"></script>
     <script src="./user/js/mypage/components/inquiry.js"></script>
     <script src="./user/js/mypage/components/question.js"></script>
+    <script src="./user/js/mypage/components/order.js"></script>
 
     <script>
         $(function () {
