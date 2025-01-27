@@ -5,8 +5,7 @@
 <mapper namespace="question">
     <!-- 전체 상품문의 조회 -->
     <select id="select_all" resultType="user.vo.BoardVO" parameterType="String">
-        SELECT s.name AS brand, b.id, b.cus_no, b.prod_no, b.bname, b.title, b.content, b.write_date, b.additional_images,
-        b.type, b.status, b.is_private, r.content AS r_content, r.write_date AS r_write_date, c.cus_id AS c_cus_id
+        SELECT s.name AS brand, r.content AS r_content, r.write_date AS r_write_date, c.cus_id AS c_cus_id, b.*
         FROM board b
         LEFT JOIN reply r ON b.id = r.board_no
         LEFT JOIN seller s ON r.seller_no = s.id
@@ -19,8 +18,7 @@
 
     <!-- 상품상세 문의 -->
     <select id="select_prod_question" resultType="user.vo.BoardVO" parameterType="String">
-        SELECT s.name AS brand, b.id, b.cus_no, b.prod_no, b.bname, b.title, b.content, b.write_date, b.additional_images,
-        b.type, b.status, b.is_private, r.content AS r_content, r.write_date AS r_write_date, c.cus_id AS c_cus_id
+        SELECT s.name AS brand, r.content AS r_content, r.write_date AS r_write_date, c.cus_id AS c_cus_id, b.*
         FROM board b
         LEFT JOIN reply r ON b.id = r.board_no
         LEFT JOIN seller s ON r.seller_no = s.id
@@ -33,8 +31,7 @@
 
     <!-- 답변 상태에 따른 상품문의 조회 -->
     <select id="select_option" resultType="user.vo.BoardVO" parameterType="map">
-        SELECT s.name AS brand, b.id, b.cus_no, b.prod_no, b.bname, b.title, b.content, b.write_date, b.additional_images,
-        r.content AS r_content, r.write_date AS r_write_date
+        SELECT s.name AS brand, r.content AS r_content, r.write_date AS r_write_date, b.*
         FROM board b
         LEFT JOIN reply r ON b.id = r.board_no
         LEFT JOIN seller s ON r.seller_no = s.id

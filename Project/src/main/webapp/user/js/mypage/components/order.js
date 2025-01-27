@@ -1,3 +1,8 @@
+// 페이지 로드 시 실행
+document.addEventListener("DOMContentLoaded", function () {
+    selectOrder(); // 페이지 로드 시 주문내역 함수 실행
+});
+
 //주문내역 클릭 시 실행되는 함수
 function selectOrder() {
     $.ajax({
@@ -45,9 +50,9 @@ function searchOrder(){
     const start = new Date(startDate);
     const end = new Date(endDate);
 
-    // 조회 기간이 오늘보다 나중일 때 경고
-    if (start > today || end > today) {
-        alert("조회 기간은 오늘 이전 날짜만 선택할 수 있습니다.");
+    // 조회 기간이 오늘 이후일 때 경고
+    if (start.getTime() > today.getTime() || end.getTime() > today.getTime()) {
+        alert("조회 기간은 오늘 날짜 또는 이전 날짜만 선택할 수 있습니다.");
         return;
     }
 

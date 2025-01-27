@@ -22,13 +22,29 @@
         </div>
     </c:if>
     <c:if test="${requestScope.o_list ne null}">
+        <c:set var="currentDate" value="" />
+        <c:set var="currentOrderCode" value="" />
+
         <c:forEach var="item" items="${requestScope.o_list}">
-            <div class="custom-order-date-group">
-                <span class="custom-order-date">${item.order_date}</span>
-            </div>
-            <div class="custom-order">
+            <!-- 날짜가 바뀌었을 때 -->
+            <c:if test="${currentDate != item.order_date}">
+                <c:set var="currentDate" value="${item.order_date}" />
+                <div class="custom-order-date-group">
+                    <h3 class="custom-order-date">${item.order_date}</h3>
+                </div>
+            </c:if>
+
+            <!-- 주문 코드가 바뀌었을 때 -->
+            <c:if test="${currentOrderCode != item.order_code}">
+                <c:set var="currentOrderCode" value="${item.order_code}" />
+                <div class="custom-order-code-group">
+                    <h4 class="custom-order-code">주문 코드: ${item.order_code}</h4>
+                </div>
+            </c:if>
+
+            <!-- 주문 내역 -->
+            <div class="custom-order-block">
                 <div class="custom-order-header">
-                    <a href="Controller?type=orderDetails" class="custom-details-link">주문 상세</a>
                     <c:choose>
                         <c:when test="${item.status == '0'}"><span class="custom-order-status">입금 대기</span></c:when>
                         <c:when test="${item.status == '1'}"><span class="custom-order-status">결제 완료</span></c:when>
@@ -51,10 +67,10 @@
                         <p class="custom-product-price">${item.prod_saled_price}원</p>
                     </div>
                 </div>
-                <div class="custom-product-actions">
-                    <c:if test="${item.status == '5'}">
+                <c:if test="${item.status == '5'}">
                     <button type="button" class="btn btn-outline-secondary custom-review-button" data-toggle="modal" data-target="#reviewModal">후기 작성 (최대 52,500원 적립)</button>
-                    </c:if>
+                </c:if>
+                <div class="custom-product-actions">
                     <button type="button" class="btn btn-outline-secondary custom-action-button">배송 조회</button>
                     <button type="button" class="btn btn-outline-secondary custom-action-button" data-toggle="modal" data-target="#repurchaseModal">재구매</button>
                 </div>
