@@ -1,6 +1,7 @@
-function selectQuestion() {
+//주문내역 클릭 시 실행되는 함수
+function selectOrder() {
     $.ajax({
-        url: "Controller?type=question&action=all",
+        url: "Controller?type=order&action=all",
         type: "POST",
         success: function (response) {
             // 상품문의 섹션만 표시하고 다른 섹션은 숨김
@@ -15,26 +16,26 @@ function selectQuestion() {
                 "#delivery-article"
             ];
             allSections.forEach((section) => {
-                if (section === "#question-article") {
+                if (section === "#order-article") {
                     $(section).show();
                 } else {
                     $(section).hide();
                 }
             });
 
-            // 응답 데이터를 #question-article에 렌더링
-            $("#question-article").html(response);
+            // 응답 데이터를 #order-article에 렌더링
+            $("#order-article").html(response);
         },
         error: function (status, error) {
-            console.error("상품문의 정보를 가져오는 데 실패했습니다.", error);
+            console.error("주문 정보를 가져오는 데 실패했습니다.", error);
         }
     });
 }
 
-function searchQuestion(){
-    const status = document.getElementById("question-status").value;
-    const startDate = document.getElementById("question-start-date").value;
-    const endDate = document.getElementById("question-end-date").value;
+//날짜 조회
+function searchOrder(){
+    const startDate = document.getElementById("order-start-date").value;
+    const endDate = document.getElementById("order-end-date").value;
 
     // 현재 날짜
     const today = new Date();
@@ -57,15 +58,14 @@ function searchQuestion(){
     }
 
     $.ajax({
-        url: "Controller?type=question&action=option",
+        url: "Controller?type=order&action=date",
         type: "POST",
         data: {
-            status: status,
             startDate: startDate,
             endDate: endDate
         },
         success: function (response) {
-            $("#question-article").html(response);
+            $("#order-article").html(response);
         },
         error: function (status, error) {
             console.error("상품문의 정보를 가져오는 데 실패했습니다.", error);
