@@ -24,9 +24,10 @@
     <c:if test="${requestScope.o_list ne null}">
         <c:set var="currentDate" value="" />
         <c:set var="currentOrderCode" value="" />
+        <c:set var="lastItem" value="${fn:length(requestScope.o_list) - 1}" />
 
-        <c:forEach var="item" items="${requestScope.o_list}">
-            <!-- 날짜가 바뀌었을 때 -->
+        <c:forEach var="item" items="${requestScope.o_list}" varStatus="status">
+            <!-- 날짜가 바뀌었을 때 새로운 날짜 블록 생성 -->
             <c:if test="${currentDate != item.order_date}">
                 <c:set var="currentDate" value="${item.order_date}" />
                 <div class="custom-order-date-group">
@@ -34,7 +35,7 @@
                 </div>
             </c:if>
 
-            <!-- 주문 코드가 바뀌었을 때 -->
+            <!-- 주문 코드가 바뀌었을 때 새로운 주문 코드 블록 생성 -->
             <c:if test="${currentOrderCode != item.order_code}">
                 <c:set var="currentOrderCode" value="${item.order_code}" />
                 <div class="custom-order-code-group">
@@ -55,6 +56,7 @@
                         <c:when test="${item.status == '6'}"><span class="custom-order-status">반품/취소</span></c:when>
                         <c:when test="${item.status == '7'}"><span class="custom-order-status">교환</span></c:when>
                     </c:choose>
+                    <a href="Controller?type=orderDetails&action=select&order_code=${item.order_code}" class="custom-details-link">주문 상세</a>
                 </div>
                 <div class="custom-order-content">
                     <div class="custom-product-image">
@@ -75,6 +77,11 @@
                     <button type="button" class="btn btn-outline-secondary custom-action-button" data-toggle="modal" data-target="#repurchaseModal">재구매</button>
                 </div>
             </div>
+
+            <!-- 날짜의 마지막 항목인지 확인 -->
+            <c:if test="${status.index == lastItem || currentDate != requestScope.o_list[status.index + 1].order_date}">
+                <hr class="custom-order-separator" />
+            </c:if>
         </c:forEach>
     </c:if>
 </div>

@@ -5,8 +5,64 @@ import java.util.List;
 public class OrderVO {
     private String id, tid, cus_no, prod_no, coupon_no, point_no, deli_no, order_code, count, order_date,
             pay_type, bank, account, card_name, is_install, install_month, status, prod_code, prod_name, prod_price,
-            prod_sale, prod_image, prod_saled_price, brand, option_name;
+            prod_sale, prod_image, prod_saled_price, brand, option_name, deli_name, pos_code, addr1, addr2, phone, deli_request, point_amount;
     private List<OrderVO> list;
+
+    public String getPoint_amount() {
+        return point_amount;
+    }
+
+    public void setPoint_amount(String point_amount) {
+        this.point_amount = point_amount;
+    }
+
+    public String getDeli_name() {
+        return deli_name;
+    }
+
+    public void setDeli_name(String deli_name) {
+        this.deli_name = deli_name;
+    }
+
+    public String getPos_code() {
+        return pos_code;
+    }
+
+    public void setPos_code(String pos_code) {
+        this.pos_code = pos_code;
+    }
+
+    public String getAddr1() {
+        return addr1;
+    }
+
+    public void setAddr1(String addr1) {
+        this.addr1 = addr1;
+    }
+
+    public String getAddr2() {
+        return addr2;
+    }
+
+    public void setAddr2(String addr2) {
+        this.addr2 = addr2;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getDeli_request() {
+        return deli_request;
+    }
+
+    public void setDeli_request(String deli_request) {
+        this.deli_request = deli_request;
+    }
 
     public String getOption_name() {
         return option_name;

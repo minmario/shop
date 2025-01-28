@@ -56,6 +56,7 @@
 
 .custom-order-header {
     display: flex;
+    justify-content: space-between;
     flex-direction: column;
     margin-bottom: 15px;
 }
@@ -75,6 +76,7 @@
 
 .custom-details-link {
     font-size: 14px;
+    float : right;
     color: #8f8d8d;
     border-bottom: 1px solid #9d9b9b;
 }
@@ -159,20 +161,25 @@
 }
 
 .custom-order-block:not(:last-child) {
-    margin-bottom: 30px; /* 블록 간 간격 */
+    margin-bottom: 30px !important; /* 블록 간 간격 */
 }
 
 .custom-order-date-group {
-    margin-top: 30px;
     margin-bottom: 20px;
     font-size: 18px;
     font-weight: bold;
     border-bottom: 2px solid #ddd;
+    padding-top: 10px;
     padding-bottom: 10px;
 }
 
 .custom-order-code-group {
+    margin-top: 10px;
     margin-bottom: 10px;
     font-size: 16px;
+    font-weight: bold;
     color: #555;
+}
+.custom-order-items {
+    margin-top: 10px;
 }
