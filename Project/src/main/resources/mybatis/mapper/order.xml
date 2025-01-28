@@ -10,7 +10,7 @@
         p.saled_price AS prod_saled_price, i.option_name AS option_name, o.* FROM `order` o
         INNER JOIN product p ON o.prod_no = p.id
         INNER JOIN seller s ON p.seller_no = s.id
-        INNER JOIN inventory i ON i.prod_no = p.id
+        LEFT JOIN inventory i ON i.id = o.inventory_no
         WHERE o.cus_no = ${cus_no} AND o.order_date IS NOT NULL
         ORDER BY o.order_date DESC
     </select>
@@ -21,11 +21,44 @@
         p.saled_price AS prod_saled_price, i.option_name AS option_name, o.* FROM `order` o
         INNER JOIN product p ON o.prod_no = p.id
         INNER JOIN seller s ON p.seller_no = s.id
-        INNER JOIN inventory i ON i.prod_no = p.id
+        LEFT JOIN inventory i ON i.id = o.inventory_no
         WHERE cus_no = #{cus_no}
         <if test="startDate != null and startDate != '' and endDate != null and endDate != ''">
             AND o.order_date BETWEEN #{startDate} AND #{endDate}
         </if>
         ORDER BY o.order_date DESC
+    </select>
+
+    <!-- 주문코드를 기반으로 주문, 배송, 결제 정보를 조회(list) -->
+    <select id="select_order_code" resultType="user.vo.OrderVO" parameterType="map">
+        SELECT o.*, s.name AS brand, d.name AS deli_name, d.pos_code, d.addr1, d.addr2, d.phone, d.request AS deli_request, p.prod_code AS prod_code, po.amount AS point_amount,
+        p.name AS prod_name, p.price AS prod_price, p.sale AS prod_sale, p.prod_image AS prod_image, p.saled_price AS prod_saled_price, i.option_name AS option_name
+        FROM `order` o
+        INNER JOIN product p ON o.prod_no = p.id
+        INNER JOIN delivery d ON o.deli_no = d.id
+        INNER JOIN seller s ON p.seller_no = s.id
+        LEFT JOIN inventory i ON i.id = o.inventory_no
+        INNER JOIN point po ON o.point_no = po.id
+        WHERE o.order_code = #{order_code} AND o.cus_no = #{cus_no}
+    </select>
+
+    <!-- 주문코드를 기반으로 주문 정보만 조회(vo) -->
+    <select id="select_order" resultType="user.vo.OrderVO" parameterType="map">
+        SELECT DISTINCT order_code, order_date, pay_type, bank, account, card_name, status FROM `order`
+        WHERE order_code = #{order_code} AND cus_no = #{cus_no}
+    </select>
+
+    <!-- 주문코드 별 금액 총 합 -->
+    <select id="select_total_price" resultType="int" parameterType="map">
+        SELECT SUM(p.price) FROM `order` o
+        INNER JOIN product p ON o.prod_no = p.id
+        WHERE order_code = #{order_code} AND cus_no = #{cus_no}
+    </select>
+
+    <!-- 주문코드 별 할인 금액 총 합 -->
+    <select id="select_total_saled_price" resultType="int" parameterType="map">
+        SELECT SUM(p.saled_price) FROM `order` o
+        INNER JOIN product p ON o.prod_no = p.id
+        WHERE o.order_code = #{order_code} AND o.cus_no = #{cus_no}
     </select>
 </mapper>
