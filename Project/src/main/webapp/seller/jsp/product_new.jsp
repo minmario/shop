@@ -1,15 +1,16 @@
 <%@ page import="comm.vo.ProductVO" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
   request.setCharacterEncoding("UTF-8");
-  String nickname = (String) session.getAttribute("nickname");
-
+  String seller_no = (String) session.getAttribute("seller_no");
+  session.setAttribute("seller_no",seller_no);
 %>
 
 <html>
 <header>
   <jsp:include page="./layout/header.jsp"/>
+  <meta charset="UTF-8">
   <title>상품 등록</title>
   <style>
     .image-container {
@@ -67,12 +68,56 @@
   <h3 class="mb-3 center">상품 등록</h3>
   <hr/>
   <!-- 상품 정보 폼 -->
-  <form method="POST" action="Controller" class="form-container" enctype="multipart/form-data">
+  <form method="POST" action="Controller?type=saveProduct" class="form-container" enctype="multipart/form-data">
     <!-- 상품 명 -->
     <div style="flex-grow: 1;">
       <div class="mb-4">
         <label for="prod_name" class="form-label">상품명</label>
         <input type="text" class="form-control" id="prod_name" name="prod_name" style="width: 100%;">
+      </div>
+      <hr/>
+      <div class="mb-3">
+        <label class="form-label">카테고리 설정</label>
+        <div class="option-group">
+          <select id="major_category" name="major_category" class="form-control">
+            <option value="" disabled selected>대분류</option>
+          <c:forEach var="major" items="${majorCategoryAr}">
+            <option value="${major.id}">${major.name}</option>
+          </c:forEach>
+          </select>
+          <select id="middle_category" name="middle_category" class="form-control">
+            <option value="" disabled selected>중분류</option>
+          </select>
+          <script>
+            const middleCategoryData ={
+              <c:forEach var="major" items="${majorCategoryAr}">
+                "${major.id}" : [
+                  <c:forEach var="middle" items="${middleCategoryAr}">
+                    <c:if test="${major.id eq middle.major_no}">
+                    { value: "${middle.id}",text: "${middle.name}"},
+                  </c:if>
+                  </c:forEach>
+                ],
+              </c:forEach>
+            };
+            document.getElementById('major_category').addEventListener('change', function() {
+              const majorValue = this.value;
+              const middleCategory = document.getElementById('middle_category');
+
+              // 기존 옵션 제거
+              middleCategory.innerHTML = '<option value="" disabled selected>중분류</option>';
+
+              if (majorValue && middleCategoryData[majorValue]) {
+                middleCategoryData[majorValue].forEach(item => {
+                  let option = document.createElement('option');
+                  option.textContent = item.text;
+                  option.value = item.value;
+                  middleCategory.appendChild(option);
+                });
+              }
+            });
+          </script>
+        </div>
       </div>
       <hr/>
       <!-- 상품 옵션 -->
@@ -81,37 +126,10 @@
         <div id="productOptionsContainer">
           <div class="option-group">
             <input type="text" class="form-control" name="prod_option[]" placeholder="옵션을 입력하세요">
+            <input type="number" class="form-control" name="inventory_option[]" placeholder="재고 수량을 입력하세요">
           </div>
         </div>
         <button type="button" class="btn btn-outline-success mt-2" onclick="addOption()">옵션 추가</button>
-      </div>
-      <hr/>
-      <div class="mb-3">
-        <label for="prod_color" class="form-label">상품 색상</label>
-        <select id="prod_color" name="prod_color" class="form-control"
-                onchange="changeColor()" style="height: 40px; width:60px;">
-          <option value="" disabled selected>선택</option>
-          <option value="red" style="background-color: red;"></option>
-          <option value="blue" style="background-color: blue; "></option>
-          <option value="green" style="background-color: green;"></option>
-          <option value="yellow" style="background-color: yellow; "></option>
-          <option value="orange" style="background-color: orange;"></option>
-          <option value="purple" style="background-color: purple; "></option>
-          <option value="pink" style="background-color: pink; "></option>
-          <option value="brown" style="background-color: brown; "></option>
-          <option value="gray" style="background-color: gray; "></option>
-          <option value="black" style="background-color: black;  ;"></option>
-          <option value="white" style="background-color: white;  ;"></option>
-          <option value="beige" style="background-color: beige; ;"></option>
-          <option value="cyan" style="background-color: cyan; ;"></option>
-          <option value="magenta" style="background-color: magenta;"></option>
-          <option value="lavender" style="background-color: lavender; "></option>
-          <option value="indigo" style="background-color: indigo; "></option>
-          <option value="gold" style="background-color: gold; ;"></option>
-          <option value="silver" style="background-color: silver;"></option>
-          <option value="teal" style="background-color: teal;"></option>
-          <option value="violet" style="background-color: violet;"></option>
-        </select>
       </div>
       <hr/>
       <!-- 가격 -->
@@ -123,14 +141,15 @@
       <hr/>
       <!-- 할인 -->
       <div class="mb-3">
-        <label for="sale_price" class="form-label">할인</label><br/>
-        <input type="number" class="form-control" id="sale_price" name="sale_price" style="width: 50%; display: inline-block;">
-        <span>원</span>
+        <label for="sale" class="form-label">할인(%)</label><br/>
+        <input type="number" class="form-control" id="sale" name="sale" style="width: 50%; display: inline-block;">
+        <span>%</span>
       </div>
       <div class="mb-3" id="discountedPriceContainer">
         <p id="discountedPrice" style="font-weight: bold; color: #28a745;">할인 후 가격: 0 원</p>
       </div>
       <hr/>
+      <!-- 대표 이미지 -->
       <label class="form-label">대표 이미지</label>
       <div>
         <div id="mainImageContainer" class="image-container">
@@ -139,7 +158,7 @@
         </div>
       </div>
       <button type="button" class="btn btn-outline-primary mt-2" onclick="document.getElementById('mainImageInput').click();">대표 이미지 선택</button>
-      <input type="file" id="mainImageInput" name="mainImage" accept="image/*" style="display: none;" onchange="previewMainImage(event)"/>
+      <input type="file" id="mainImageInput" name="main_image" accept="image/*" style="display: none;" onchange="previewMainImage(event)"/>
 
       <!-- 추가 이미지 -->
 
@@ -153,7 +172,7 @@
             <img src="" alt="추가 이미지 미리보기" class="additional-image-preview" style="display: none;"/>
           </div>
           <button type="button" class="btn btn-outline-secondary mt-2" onclick="triggerAdditionalImageInput(this)">이미지 선택</button>
-          <input type="file" name="additionalImages[]" accept="image/*" style="display: none;" onchange="previewAdditionalImage(event, this)"/>
+          <input type="file" name="additional_images[]" accept="image/*" style="display: none;" multiple onchange="previewAdditionalImage(event, this)"/>
         </div>
       </div>
       <button type="button" class="btn btn-outline-success mt-3" onclick="addAdditionalImage()">이미지 추가</button>
@@ -168,7 +187,7 @@
 
     <!-- 수정/저장 버튼 -->
     <div class="button-container">
-      <button type="button" class="btn btn-success" onclick="saveProduct()">저장</button>
+      <button type="button" class="btn btn-success" onclick="addProduct(this.form)">저장</button>
     </div>
     <hr/>
   </form>
@@ -220,7 +239,8 @@
     const newOptionGroup = document.createElement('div');
     newOptionGroup.className = 'option-group';
     newOptionGroup.innerHTML = `
-            <input type="text" class="form-control" name="productOption[]" placeholder="옵션을 입력하세요">
+            <input type="text" class="form-control" name="prod_option[]" placeholder="옵션을 입력하세요">
+            <input type="number" class="form-control" name="inventory_option[]" placeholder="재고 수량을 입력하세요"">
         `;
     container.appendChild(newOptionGroup);
   }
@@ -234,6 +254,8 @@
       preview.src = reader.result;
       preview.style.display = 'block';
       placeholder.style.display = 'none';
+
+
     };
     reader.readAsDataURL(event.target.files[0]);
   }
@@ -270,17 +292,11 @@
                 <img src="" alt="추가 이미지 미리보기" class="additional-image-preview" style="display: none;"/>
             </div>
             <button type="button" class="btn btn-outline-secondary mt-2" onclick="triggerAdditionalImageInput(this)">이미지 선택</button>
-            <input type="file" name="additionalImages[]" accept="image/*" style="display: none;" onchange="previewAdditionalImage(event, this)"/>
+            <input type="file" name="additional_images[]" accept="image/*" style="display: none;" multiple onchange="previewAdditionalImage(event, this) "/>
+
         `;
 
     container.appendChild(newImageWrapper);
-  }
-  function changeColor() {
-    const selectElement = document.getElementById("prod_color");
-    const selectedColor = selectElement.value;
-
-    // 선택된 색상으로 select 박스의 배경색을 변경
-    selectElement.style.backgroundColor = selectedColor;
   }
   window.onload = function() {
     updateDiscountedPrice();
@@ -289,26 +305,71 @@
   // 할인 후 가격 업데이트
   function updateDiscountedPrice() {
     const price = parseFloat(document.getElementById('price').value) || 0;
-    const salePrice = parseFloat(document.getElementById('sale_price').value) || 0;
-    const discountedPrice = price - salePrice;
+    const sale = parseFloat(document.getElementById('sale').value) || 0;
 
-    if (discountedPrice < 0) {
-      alert("할인 금액이 정가보다 클 수 없습니다.");
-      document.getElementById('sale_price').value = 0;
+    if (sale >= 100 || sale<0) {
+      alert("할인은 0~99%만 가능합니다.");
+      document.getElementById('sale').value = 0;
       return;
     }
+    const discountedPrice = price-price/100*sale;
 
     // discountedPriceElement를 가져오고 텍스트 업데이트
     const discountedPriceElement = document.getElementById('discountedPrice');
-    console.log("${discountedPrice.toString()}")
     if (discountedPriceElement) {
-      discountedPriceElement.innerText = "할인 후 가격: " +discountedPrice+"원"; // innerText 사용
+      discountedPriceElement.innerText = "할인 후 가격: " +parseInt(discountedPrice)+"원"; // innerText 사용
     }
   }
 
+  function addProduct(frm){
+    if($("#prod_name").val().trim().length==0){
+      alert("상품 이름을 입력하세요.");
+      $("#prod_name").focus();
+      return;
+    }
+    let isValid=true;
+    $("input[name='prod_option']").each(function(){
+      if($(this).val().trim().length==0){
+        alert("모든 옵션을 입력하세요");
+        isValid=false;
+        return;
+      }
+    });
+    $("input[name='inventory_option']").each(function(){
+      if($(this).val().trim().length==0){
+        alert("모든 재고(수량)를 입력하세요");
+        isValid=false;
+        return ;
+      }
+    });
+    if($("#prod_color").val()==""){
+      alert("색상을 선책해주세요")
+      isValid=false;
+      return;
+    }
+    if($("#price").val().trim().length==0){
+      alert("가격을 입력해주세요");
+      isValid=false;
+      return;
+    }
+    if($("#mainImageInput").val().trim().length==0){
+      alert("대표이미지를 선택해주세요");
+      isValid=false;
+      return;
+    }
+    if($("#content").val().trim().length==0){
+      alert("상세설명을 작성해주세요");
+      isValid=false;
+      return;
+    }
+    if(!isValid){
+      return;
+    }
+    frm.submit();
+  }
   // 정가나 할인 금액이 변경될 때마다 가격 업데이트
   document.getElementById('price').addEventListener('input', updateDiscountedPrice);
-  document.getElementById('sale_price').addEventListener('input', updateDiscountedPrice);
+  document.getElementById('sale').addEventListener('input', updateDiscountedPrice);
 
 </script>
 </body>

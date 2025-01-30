@@ -1,7 +1,10 @@
 package seller.action;
 
 import comm.action.Action;
+import comm.dao.OrderDAO;
 import comm.service.FactoryService;
+import comm.vo.OrderVO;
+import comm.vo.ProductVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,9 +15,14 @@ public class OrderListAction implements Action {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
 
-        String  order_no = (String) session.getAttribute("order_no");
+        String  seller_no = (String) session.getAttribute("seller_no");
+        System.out.println("seller_no: "+ seller_no);
+        OrderVO[] ar = OrderDAO.getOrderList(seller_no);
 
-        if(order_no == null){
+        request.setAttribute("ar",ar);
+
+        session.setAttribute("seller_no",seller_no);
+        if(seller_no == null){
 
             return "/seller/jsp/order_list.jsp";
         }

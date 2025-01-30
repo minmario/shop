@@ -2,8 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     request.setCharacterEncoding("UTF-8");
-    String nickname = (String) session.getAttribute("nickname");
-    boolean isLoggedIn = (nickname != null);
+    String seller_no = (String) session.getAttribute("seller_no");
 %>
 
 <html>
@@ -46,6 +45,9 @@
         thead tr{
             background-color: #222222;
             color: white;
+        }
+        .hide {
+            display: none;
         }
     </style>
 </head>
@@ -101,6 +103,31 @@
             </tr>
             </thead>
             <tbody>
+            <c:if test="${ar != null}">
+                <c:forEach var="order" items="${ar}">
+                    <tr class="list">
+                        <td><input type="checkbox" name="orderBox"></td>
+                        <td>  <a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#orderDetailModal"
+                        data-order="${order}" onclick="seeDialog()">
+                            ${order.tid}
+                        </a></td>
+                        <td>${order.cus_id}</td>
+                        <td>${order.prod_no}</td>
+                        <td>${order.name}</td>
+                        <td>${order.option_name}</td>
+                        <td>${order.count}</td>
+                        <td>${order.order_date}</td>
+                        <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelReasonModal" style="height: 30px">
+                            취소
+                        </button> </td>
+                    </tr>
+                    <div id="dialog" class="hide">
+                        <tr>
+                            <td>${order.tid}</td>
+                        </tr>
+                    </div>
+                </c:forEach>
+            </c:if>
             <tr class="list">
                 <td><input type="checkbox" name="orderBox"></td>
                 <td>  <a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#orderDetailModal" >
@@ -116,18 +143,7 @@
                     취소
                 </button> </td>
             </tr>
-            <c:forEach var="order" items="${orderList}">
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>${order.id}</td>
-                    <td>${order.prod_no}</td>
-                    <td>${order.prod_name}</td>
-                    <td>${order.count}</td>
-                    <td>${order.order_date}</td>
-                    <td><button type="button" onclick="showDialog()" class="btn btn-primary mb-4">취소</button></td>
-                </tr>
-            </c:forEach>
-            <c:if test="${empty orderList}">
+            <c:if test="${empty ar}">
                 <tr>
                     <td colspan="9" class="center">조회된 데이터가 없습니다.</td>
                 </tr>
@@ -196,7 +212,7 @@
             <tbody>
             <tr class="list">
                 <td><input type="checkbox" name="delibox"></td>
-                <td>  <a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#orderDetailModal" >
+                <td> <a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#orderDetailModal" >
                     3122325
                 </a></td>
                 <td>vldhtmxk</td>
@@ -311,19 +327,15 @@
                     <tbody>
                     <tr>
                         <th>주문 번호</th>
-                        <td>${order.orderNumber}</td>
+                        <td>${order.tid}</td>
                     </tr>
                     <tr>
                         <th>상품명</th>
-                        <td>${order.productName}</td>
-                    </tr>
-                    <tr>
-                        <th>상품 상태</th>
-                        <td>${order.productStatus}</td>
+                        <td>${order.name}</td>
                     </tr>
                     <tr>
                         <th>결제 상태</th>
-                        <td>${order.paymentStatus}</td>
+                        <td>${order.status}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -334,7 +346,7 @@
                     <tbody>
                     <tr>
                         <th>수취인명</th>
-                        <td>${order.recipientName}</td>
+                        <td>${order.cus_id}</td>
                     </tr>
                     <tr>
                         <th>연락처1</th>
@@ -352,30 +364,6 @@
                         <th>배송 메모</th>
                         <td>${order.deliveryMemo}</td>
                     </tr>
-                    </tbody>
-                </table>
-
-                <!-- 주문 처리 이력 -->
-                <h5>주문 처리 이력</h5>
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>처리 내용</th>
-                        <th>처리 일시</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="history" items="${order.processHistory}">
-                        <tr>
-                            <td>${history.action}</td>
-                            <td>${history.date}</td>
-                        </tr>
-                    </c:forEach>
-                    <c:if test="${empty order.processHistory}">
-                        <tr>
-                            <td colspan="2" class="text-center">처리 이력이 없습니다.</td>
-                        </tr>
-                    </c:if>
                     </tbody>
                 </table>
             </div>
@@ -421,6 +409,9 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script>
+    function seeDialog(){
+        $("#dialog").dialog();
+    }
     // 전체 선택 체크박스 기능
     function toggleAll(source) {
         checkboxes = document.getElementsByName('orderCheckbox');

@@ -120,34 +120,6 @@
         </div>
     </div>
 </div>
-<tr>
-    <td>${product.prod_no}</td>
-    <td>
-        <img src="${product.imagePath}" class="card-img-top product-image" alt="Product Image">
-    </td>
-    <td>
-        <a href="Controller?type=productEdit&b_idx=${product.prod_no}">
-            ${product.prod_name}
-        </a>
-    </td>
-    <td>${product.price}원</td>
-    <td>${product.sale_price}원</td>
-    <td>
-        <label>재고 : ${product.inventory}</label><br/>
-        <input class="stock" type="number" name="stock" value="${product.inventory}">
-        <button type="button" onclick="changeStock(this)">변경</button>
-    </td>
-    <td>
-        <select>
-            <option value="1" ${product.active == 1 ? 'selected' : ''}>판매</option>
-            <option value="2" ${product.active == 2 ? 'selected' : ''}>판매중지</option>
-        </select>
-    </td>
-    <td>
-        <button type="button" onclick="deleteRecord(this)">삭제</button>
-    </td>
-</tr>`;
-tableBody.append(row)
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

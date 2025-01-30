@@ -1,7 +1,12 @@
 package seller.action;
 
 import comm.action.Action;
+import comm.dao.CategoryDAO;
+import comm.dao.InventoryDAO;
 import comm.dao.ProductDAO;
+import comm.vo.InventoryVO;
+import comm.vo.MajorCategoryVO;
+import comm.vo.MiddleCategoryVO;
 import comm.vo.ProductVO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,20 +23,23 @@ public class ProductEditAction implements Action{
 
         String  prod_no = (String) request.getParameter("prod_no");
         String  cPage = (String) request.getParameter("cPage");
-
-
-        Object obj = session.getAttribute("list");
-        if (obj == null) {
-        }
-        if(prod_no == null){
-            p_list= new ArrayList<ProductVO>();
-            session.setAttribute("p_list",p_list);
-
-        }else{
-            p_list = (ArrayList<ProductVO>) obj;
-        }
         ProductVO vo = ProductDAO.getProductOne(prod_no);
+        MajorCategoryVO[] majorCategoryAr = CategoryDAO.AllMajorCategory();
+        MiddleCategoryVO[] middleCategoryAr = CategoryDAO.AllMiddleCategory();
+
+        request.setAttribute("majorCategoryAr",majorCategoryAr);
+        request.setAttribute("middleCategoryAr",middleCategoryAr);
         if(vo!=null) {
+            InventoryVO[] options = InventoryDAO.getOptions(prod_no);
+
+            MiddleCategoryVO categoryInfo = CategoryDAO.getProdCategory(vo.getCategory_no());
+            vo.setOptions(options);
+            if(vo.getAdditional_images()!=null) {
+                String[] images = vo.getAdditional_images().replace(" ", "").split(",");
+                vo.setAr_images(images);
+            }
+            System.out.println("내용: "+vo.getContent());
+            request.setAttribute("categoryInfo",categoryInfo);
             request.setAttribute("vo", vo);
             request.setAttribute("cPage", cPage);
             return "/seller/jsp/product_edit.jsp";

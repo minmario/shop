@@ -14,4 +14,25 @@
     INSERT INTO inventory(prod_no, count)
     VALUES(#{id},#{stock}
   </insert>
+  <select id="getOptions" parameterType="String" resultType="comm.vo.InventoryVO">
+    SELECT * FROM inventory
+    WHERE prod_no = #{prod_no}
+  </select>
+  <insert id="addOptions" parameterType="list">
+    INSERT INTO inventory(prod_no, option_name, count)
+    VALUES
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.prod_no}, #{item.option_name}, #{item.count})
+    </foreach>
+  </insert>
+  <update id="delete_option" parameterType="String">
+    UPDATE inventory
+    SET status=1
+    WHERE prod_no=#{prod_no}
+  </update>
+  <update id="update_option" parameterType="map">
+    UPDATE inventory
+    SET prod_no = ${prod_no},
+    SET count = ${
+  </update>
 </mapper>

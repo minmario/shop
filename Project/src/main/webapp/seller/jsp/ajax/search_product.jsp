@@ -1,29 +1,28 @@
-<%@page import="org.json.JSONObject"%>
-<%@page import="org.json.JSONArray"%>
-<%@ page import="comm.vo.ProductVO"%>
-<%@ page language="java" contentType="application/json; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%
-	Object obj = request.getAttribute("ar");
-	if(obj != null){
-		ProductVO[] ar = (ProductVO[])obj;
-		JSONObject jsonList = new JSONObject();
-		JSONArray itemList = new JSONArray();
-		int i =0;
-		for(ProductVO vo : ar){
-			JSONObject json = new JSONObject();
-			json.put("prod_no",vo.getId());
-			json.put("prod_image",vo.getProd_image());
-			json.put("prod_name",vo.getName());
-			json.put("price",vo.getPrice());
-			json.put("sale",vo.getSale());
-			json.put("inventory",vo.getInventory());
-			json.put("active",vo.getActive());
-			json.put("is_del",vo.getIs_del());
-			//{"empno":"1007,"ename":"Michael",...)
-			itemList.put(json);
-		}
-			jsonList.put("items",itemList);
+<%@ page language="java" contentType="application/json; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="comm.vo.ProductVO" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Map" %>
 
-	}
+<%
+    // 서버에서 'ar' 데이터를 가져옴
+    ProductVO[] ar = (ProductVO[]) request.getAttribute("ar");
+
+    // JSON 변환 객체
+    Gson gson = new Gson();
+    Map<String, Object> responseMap = new HashMap<>();
+
+    // 'ar'가 null이 아니면 JSON 응답을 설정
+    if (ar != null) {
+        responseMap.put("ar", ar);  // 데이터 포함
+    } else {
+        responseMap.put("error", "No products found");
+    }
+
+    // JSON 변환
+    String json = gson.toJson(responseMap);
+
+    // 응답 출력
+    response.setContentType("application/json; charset=UTF-8");
+    response.getWriter().write(json);
 %>

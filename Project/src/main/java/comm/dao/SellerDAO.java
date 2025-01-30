@@ -1,7 +1,10 @@
 package comm.dao;
 
+import comm.vo.ProductVO;
 import org.apache.ibatis.session.SqlSession;
 import comm.service.FactoryService;
+
+import java.util.List;
 
 public class SellerDAO {
 
@@ -27,4 +30,5 @@ public class SellerDAO {
         ss.close();
         return cnt;
     }
+
 }

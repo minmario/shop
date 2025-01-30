@@ -5,64 +5,52 @@
 <mapper namespace="product">
   <!-- 인자로 카테고리 값을 받아 검색하는 기능 -->
 
-  <update id="updateProduct" parameterType="Map">
-    UPDATE product
-    SET
-    category_no = #{category_no},
-    seller_no = #{seller_no},
-    name = #{name},
-    desc = #{desc},
-    color = #{color},
-    size = #{size},
-    length = #{length},
-    shoulder = #{shoulder},
-    chest = #{chest},
-    sleeve = #{sleeve},
-    waist = #{waist},
-    hip = #{hip},
-    thigh = #{thigh},
-    rise = #{rise},
-    hem = #{hem},
-    foot_length = #{foot_length},
-    foot_width = #{foot_width},
-    ankle_height = #{ankle_height},
-    heel_height = #{heel_height},
-    price = #{price}
-    WHERE product_id = #{product_id}
-  </update>
-  <insert id="addProduct" parameterType="Map">
-    INSERT INTO product(category_no, seller_no, name, desc, color,
-    size, length, shoulder, chest, sleeve, waist, hip, thigh, rise,
-    hem, foot_length, foot_width, ankle_height, heel_height, price)
-    VALUES(#{category_no}, #{seller_no}, #{name},#{desc}, #{color},
-    #{size}, #{length}, #{shoulder}, #{chest}, #{sleeve}, #{waist}, #{hip}, #{thigh}, #{rise},
-    #{hem}, #{foot_length}, #{foot_width}, #{ankle_height}, #{heel_height}, #{price})
-  </insert>
-  <update id="deleteProduct" parameterType="String">
-    UPDATE product
-    SET is_del = 0
-    WHERE prod_no  = #{id}
-  </update>
-  <select id="SellerProduct" parameterType="String" resultType="comm.vo.ProductVO">
+  <select id="getAll" parameterType="String" resultType="comm.vo.ProductVO">
     SELECT * FROM product
     WHERE seller_no = #{id}
     AND is_del = 0;
   </select>
   <select id="search_product_all" parameterType="map" resultType="comm.vo.ProductVO">
     SELECT * FROM product
-    WHERE seller_no=#{seller_no}
-    AND name LIKE CONCAT('%',#{prod_name},'%'}
-    AND is_del = 0;
+    WHERE seller_no=1
+    AND name LIKE CONCAT('%',#{prod_name},'%')
+    AND is_del = 0
   </select>
   <select id="search_product" parameterType="map" resultType="comm.vo.ProductVO">
     SELECT * FROM product
-    WHERE seller_no=#{seller_no}
+    WHERE seller_no=1
     AND category_no = #{category}
-    AND name LIKE CONCAT('%',#{prod_name},'%'}
-    AND is_del = 0;
+    AND name LIKE CONCAT('%',#{prod_name},'%')
+    AND is_del = 0
   </select>
   <select id="getProductOne" parameterType="String" resultType="comm.vo.ProductVO">
     SELECT * FROM product
     WHERE id = #{prod_no}
   </select>
+  <update id="changeActive" parameterType="map">
+    UPDATE product
+    SET active= #{active}
+    WHERE id=#{prod_no}
+  </update>
+  <update id="delete_product" parameterType="String">
+    UPDATE product
+    SET is_del=1
+    WHERE id=#{prod_no}
+  </update>
+  <insert id="addProduct" parameterType="map" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    INSERT INTO product (name,category_no, price, sale,seller_no,add_date,prod_image,additional_images,content,saled_price)
+    VALUES (#{prod_name}, #{middle_category}, #{price}, #{sale},#{seller_no},NOW(),#{prod_image},#{additional_image},#{content},#{saled_price})
+  </insert>
+  <update id="updateProduct" parameterType="map">
+    UPDATE product SET
+    name = #{prod_name},
+    category_no = #{middle_category},
+    price = #{price},
+    sale = #{sale},
+    prod_image = #{prod_image},
+    additional_images=#{additional_image},
+    content = #{content},
+    saled_price = #{saled_price}
+    WHERE id = #{prod_no}
+  </update>
 </mapper>

@@ -9,8 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     request.setCharacterEncoding("UTF-8");
-    String nickname = (String) session.getAttribute("nickname");
-    boolean isLoggedIn = (nickname != null);
+    session.setAttribute("seller_no","1");
 %>
 
 
