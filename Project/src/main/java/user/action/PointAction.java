@@ -17,6 +17,10 @@ public class PointAction implements Action{
         HttpSession session = request.getSession();
         CustomerVO cvo = (CustomerVO) session.getAttribute("customer_info");
 
+        if (cvo == null) {
+            return "/user/jsp/error/error.jsp";
+        }
+
         // 적립 예정 금액
         String upcomingTotal = PointDAO.selectUpcomingTotal(cvo.getId());
         request.setAttribute("upcomingTotal", upcomingTotal);

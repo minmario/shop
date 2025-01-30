@@ -3,6 +3,7 @@ package user.dao;
 import org.apache.ibatis.session.SqlSession;
 import service.FactoryService;
 import user.vo.ProductVO;
+import user.vo.ReviewVO;
 
 import java.util.HashMap;
 import java.util.List;
@@ -58,5 +59,33 @@ public class ProductDAO {
         }
 
         return productSize;
+    }
+
+    // 상품 리뷰 조회
+    public static List<ReviewVO> selectReview(String id, String gender, String height, String weight) {
+        List<ReviewVO> r_list = null;
+        SqlSession ss= FactoryService.getFactory().openSession();
+
+        try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("prod_no", id);
+            if (gender != null && !gender.equals("")) {
+                map.put("gender", gender);
+            }
+            if (height != null && !height.equals("")) {
+                map.put("height", height);
+            }
+            if (weight != null && !weight.equals("")) {
+                map.put("weight", weight);
+            }
+
+            r_list = ss.selectList("product.select_review", map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return r_list;
     }
 }

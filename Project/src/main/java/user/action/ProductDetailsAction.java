@@ -3,10 +3,7 @@ package user.action;
 import user.dao.ProdLikeDAO;
 import user.dao.ProductDAO;
 import user.dao.QuestionDAO;
-import user.vo.BoardVO;
-import user.vo.CustomerVO;
-import user.vo.ProdLikeVO;
-import user.vo.ProductVO;
+import user.vo.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,18 +24,32 @@ public class ProductDetailsAction implements Action {
 
             switch (action) {
                 case "select":
+                    // 상품 상세 정보
                     ProductVO productDetails = ProductDAO.selectProdDetails(prod_no);
-                    List<ProductVO> productSize = ProductDAO.selectSize(prod_no);
                     request.setAttribute("productDetails", productDetails);
+
+                    // 상품 사이즈 목록
+                    List<ProductVO> productSize = ProductDAO.selectSize(prod_no);
                     request.setAttribute("productSize", productSize);
 
-                    ProdLikeVO s_vo = new ProdLikeVO();
-                    s_vo.setCus_no(cvo.getId());
-                    s_vo.setProd_no(prod_no);
-                    ProdLikeVO plvo = ProdLikeDAO.selectProdLike(s_vo);
-                    request.setAttribute("product_like", plvo);
+                    // 상품 좋아요 정보
+                    if (cvo != null) {
+                        ProdLikeVO s_vo = new ProdLikeVO();
+                        s_vo.setCus_no(cvo.getId());
+                        s_vo.setProd_no(prod_no);
+                        ProdLikeVO plvo = ProdLikeDAO.selectProdLike(s_vo);
+                        request.setAttribute("product_like", plvo);
+                    }
 
                     viewPath = "/user/jsp/product/productDetails.jsp";
+                    break;
+                case "review":
+                    String gender = request.getParameter("gender");
+                    String height = request.getParameter("height");
+                    String weight = request.getParameter("weight");
+                    List<ReviewVO> reviews = ProductDAO.selectReview(prod_no, gender, height, weight);
+                    request.setAttribute("reviews", reviews);
+                    viewPath = "/user/jsp/product/components/reviewList.jsp";
                     break;
                 case "question":
                     List<BoardVO> questions = QuestionDAO.selectProdQuestion(prod_no);

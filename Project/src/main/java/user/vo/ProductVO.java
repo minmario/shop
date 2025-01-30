@@ -1,7 +1,7 @@
 package user.vo;
 
 public class ProductVO {
-    private String brand, id, category_no, seller_no, name, length, shoulder, chest, sleeve, waist, hip, thigh, rise, hem, foot_length, foot_width, ankle_height, heel_height, price, add_date, view_count, inventory, active, sale, prod_image, additional_images, content, saled_price, like_count, i_option_name, count;
+    private String brand, courier, id, category_no, seller_no, prod_code, name, length, shoulder, chest, sleeve, waist, hip, thigh, rise, hem, foot_length, foot_width, ankle_height, heel_height, price, view_count, inventory, active, sale, prod_image, additional_images, saled_price, like_count, i_option_name, count, avg_score, review_count, sales_count;
 
     public String getBrand() {
         return brand;
@@ -9,6 +9,14 @@ public class ProductVO {
 
     public void setBrand(String brand) {
         this.brand = brand;
+    }
+
+    public String getCourier() {
+        return courier;
+    }
+
+    public void setCourier(String courier) {
+        this.courier = courier;
     }
 
     public String getId() {
@@ -33,6 +41,14 @@ public class ProductVO {
 
     public void setSeller_no(String seller_no) {
         this.seller_no = seller_no;
+    }
+
+    public String getProd_code() {
+        return prod_code;
+    }
+
+    public void setProd_code(String prod_code) {
+        this.prod_code = prod_code;
     }
 
     public String getName() {
@@ -155,14 +171,6 @@ public class ProductVO {
         this.price = price;
     }
 
-    public String getAdd_date() {
-        return add_date;
-    }
-
-    public void setAdd_date(String add_date) {
-        this.add_date = add_date;
-    }
-
     public String getView_count() {
         return view_count;
     }
@@ -211,14 +219,6 @@ public class ProductVO {
         this.additional_images = additional_images;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     public String getSaled_price() {
         return saled_price;
     }
@@ -249,5 +249,29 @@ public class ProductVO {
 
     public void setCount(String count) {
         this.count = count;
+    }
+
+    public String getAvg_score() {
+        return avg_score;
+    }
+
+    public void setAvg_score(String avg_score) {
+        this.avg_score = avg_score;
+    }
+
+    public String getReview_count() {
+        return review_count;
+    }
+
+    public void setReview_count(String review_count) {
+        this.review_count = review_count;
+    }
+
+    public String getSales_count() {
+        return sales_count;
+    }
+
+    public void setSales_count(String sales_count) {
+        this.sales_count = sales_count;
     }
 }

@@ -8,6 +8,22 @@ import java.util.HashMap;
 import java.util.List;
 
 public class CartDAO {
+    // 장바구니 수 조회
+    public static int selectCartCount(String cus_no) {
+        int cnt = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            cnt = ss.selectOne("cart.select_cart_count", cus_no);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
+    }
+
     // 장바구니 조회
     public static List<CartVO> selectCart(String cus_no) {
         List<CartVO> c_list = null;

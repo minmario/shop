@@ -1,5 +1,6 @@
 package user.action;
 
+import user.dao.CartDAO;
 import user.dao.CustomerDAO;
 import user.vo.CustomerVO;
 
@@ -14,20 +15,22 @@ public class LoginAction  implements Action {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        CustomerVO loginResult = null;
-
         CustomerVO vo = new CustomerVO();
         vo.setCus_id(username);
         vo.setCus_pw(password);
 
         // 로그인 정보 가져오기
-        loginResult = CustomerDAO.login(vo);
+        CustomerVO loginResult = CustomerDAO.login(vo);
 
         HttpSession session = request.getSession();
         if (loginResult != null) {
             // 로그인 정보 저장
             session.setAttribute("isLoggedIn", true);
             session.setAttribute("customer_info", loginResult);
+
+            // 장바구니 수
+            int cart_count = CartDAO.selectCartCount(loginResult.getId());
+            request.setAttribute("cart_count", cart_count);
 
             return "Controller?type=index";
         } else {

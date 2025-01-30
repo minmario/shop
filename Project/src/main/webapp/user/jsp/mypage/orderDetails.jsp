@@ -68,7 +68,7 @@
                             </c:choose>
                             <c:forEach var="item" items="${requestScope.o_list}">
                                 <div class="product-item">
-                                    <img src="${item.prod_image != null && not empty item.prod_image ? fn:split(item.prod_image, ',')[0] : './user/images/product1.jpg'}" alt="상품 이미지" class="product-img">
+                                    <img src="${item.prod_image}" alt="상품 이미지" class="product-img">
                                     <div class="product-details">
                                         <div class="product-header">
                                             <p class="product-brand"><strong>${item.brand}</strong></p>

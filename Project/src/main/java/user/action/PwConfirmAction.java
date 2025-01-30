@@ -17,11 +17,16 @@ public class PwConfirmAction implements Action {
             switch (action) {
                 case "select":
                     HttpSession session = request.getSession();
-                    CustomerVO s_cvo = (CustomerVO) session.getAttribute("customer_info");
+                    CustomerVO cvo = (CustomerVO) session.getAttribute("customer_info");
+
+                    if (cvo == null) {
+                        return "/user/jsp/error/error.jsp";
+                    }
+
                     String cus_pw = request.getParameter("cus_pw");
 
                     CustomerVO vo = new CustomerVO();
-                    vo.setCus_id(s_cvo.getCus_id());
+                    vo.setCus_id(cvo.getCus_id());
                     vo.setCus_pw(cus_pw);
 
                     CustomerVO res = CustomerDAO.login(vo);

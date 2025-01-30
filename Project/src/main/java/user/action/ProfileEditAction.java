@@ -12,7 +12,10 @@ public class ProfileEditAction implements Action {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         CustomerVO cvo = (CustomerVO) session.getAttribute("customer_info");
-        String id = cvo.getId();
+
+        if (cvo == null) {
+            return "/user/jsp/error/error.jsp";
+        }
 
         String action = request.getParameter("action");
         if (action != null) {
@@ -22,7 +25,7 @@ public class ProfileEditAction implements Action {
                     String phone = request.getParameter("phone");
 
                     CustomerVO uvo = new CustomerVO();
-                    uvo.setId(id);
+                    uvo.setId(cvo.getId());
                     uvo.setEmail(email);
                     uvo.setPhone(phone);
 
@@ -37,7 +40,7 @@ public class ProfileEditAction implements Action {
 
                     break;
                 case "select":
-                    CustomerVO svo = CustomerDAO.selectCustomerById(id);
+                    CustomerVO svo = CustomerDAO.selectCustomerById(cvo.getId());
                     session.setAttribute("customer_info", svo);
                     break;
             }

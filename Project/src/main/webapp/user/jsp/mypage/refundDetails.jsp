@@ -169,7 +169,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-dark button" onclick="location.href='Controller?type=cart'">장바구니 담기</button>
-                            <button type="button" class="btn btn-dark button" onclick="location.href='Controller?type=payment'">구매하기</button>
+                            <button type="button" class="btn btn-dark button" onclick="location.href='Controller?type=order&action=order'">구매하기</button>
                         </div>
                     </div>
                 </div>

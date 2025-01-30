@@ -78,7 +78,7 @@
                         <span class="nickname">${sessionScope.customer_info.nickname}님 &nbsp;&nbsp; <button type="button" class="btn btn-outline-danger" onclick="location.href='${pageContext.request.contextPath}/Controller?type=logout';">로그아웃</button></span>
                         <div class="d-flex gap-3 align-items-center user-header-menu">
                             <%-- 좋아요 --%>
-                            <a href="#" class="text-decoration-none text-danger">
+                            <a href="Controller?type=like&action=select" class="text-decoration-none text-danger">
                                 <i class="bi bi-heart-fill"></i>
                                 <span class="like_title">좋아요</span>
                             </a>
@@ -92,7 +92,11 @@
                             <a href="Controller?type=cart&action=select" class="text-decoration-none text-dark position-relative">
                                 <i class="bi bi-basket-fill"></i>
                                 <span>장바구니</span>
-                                <span class="badge bg-primary rounded-pill cart_count">0</span>
+                                <c:if test="${not empty requestScope.cart_count and requestScope.cart_count ne '0'}">
+                                    <span class="badge bg-primary rounded-pill cart_count">
+                                        ${requestScope.cart_count}
+                                    </span>
+                                </c:if>
                             </a>
                             <%-- 주문배송조회 --%>
                             <a href="Controller?type=orderDelivery" class="text-decoration-none text-dark">

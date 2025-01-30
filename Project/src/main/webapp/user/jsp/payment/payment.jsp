@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -23,10 +24,6 @@
             <%-- header --%>
             <jsp:include page="../layout/header.jsp"></jsp:include>
 
-            <c:if test="${requestScope.userInfo ne null}">
-                <c:set var="user" value="${requestScope.userInfo}"/>
-            </c:if>
-
             <div class="wrap">
                 <div class="row">
                     <div class="container">
@@ -34,37 +31,56 @@
                             <h3>주문서</h3>
                         </div>
                         <div class="delivery-info-container">
-                            <div class="header">
-                                <h3>테스트 <span class="badge">기본 배송지</span></h3>
-                                <button class="btn btn-outline-secondary btn-sm change-address-btn" data-toggle="modal" data-target="#deliveryModal">배송지 변경</button>
-                            </div>
-                            <p class="address">서울특별시 강남구 강남대로 113 8층 801호</p>
-                            <p class="phone">010-1234-5678</p>
-                            <div class="delivery-option-container">
-                                <select class="delivery-options" id="delivery-options">
-                                    <option value="문 앞에 놔주세요">문 앞에 놔주세요</option>
-                                    <option value="경비실에 맡겨주세요">경비실에 맡겨주세요</option>
-                                    <option value="택배함에 넣어주세요">택배함에 넣어주세요</option>
-                                    <option value="배송 전에 연락 주세요">배송 전에 연락 주세요</option>
-                                    <option value="직접 입력">직접 입력</option>
-                                </select>
-                            </div>
-                            <textarea class="delivery-message" id="delivery-message" maxlength="50" placeholder="최대 50자까지 입력 가능합니다."></textarea>
-                            <p class="char-count" id="char-count">0&nbsp;/&nbsp;50</p>
+                            <c:if test="${not empty requestScope.delivery}">
+                                <c:set var="dvo" value="${requestScope.delivery}"/>
+                                <div class="header">
+                                    <h3>${dvo.name} <span class="badge">기본 배송지</span></h3>
+                                    <button class="btn btn-outline-secondary btn-sm change-address-btn" data-toggle="modal" data-target="#deliveryModal">배송지 변경</button>
+                                </div>
+                                <p class="address">${dvo.addr1} ${dvo.addr2}</p>
+                                <p class="phone">${dvo.phone}</p>
+                                <div class="delivery-option-container">
+                                    <select class="delivery-options" id="delivery-options">
+                                        <c:choose>
+                                            <c:when test="${dvo.request == '문 앞에 놔주세요'}">
+                                                <option value="문 앞에 놔주세요" selected>문 앞에 놔주세요</option>
+                                            </c:when>
+                                            <c:when test="${dvo.request == '경비실에 맡겨주세요'}">
+                                                <option value="경비실에 맡겨주세요" selected>경비실에 맡겨주세요</option>
+                                            </c:when>
+                                            <c:when test="${dvo.request == '택배함에 넣어주세요'}">
+                                                <option value="택배함에 넣어주세요" selected>택배함에 넣어주세요</option>
+                                            </c:when>
+                                            <c:when test="${dvo.request == '배송 전에 연락 주세요'}">
+                                                <option value="배송 전에 연락 주세요" selected>배송 전에 연락 주세요</option>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <option value="직접 입력" selected>직접 입력</option>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </select>
+                                </div>
+                                <textarea class="delivery-message" id="delivery-message" maxlength="50" placeholder="최대 50자까지 입력 가능합니다."></textarea>
+                                <p class="char-count" id="char-count">0&nbsp;/&nbsp;50</p>
+                            </c:if>
                         </div>
                         <div class="order-product-container">
                             <h3>주문 상품 1개</h3>
                             <div class="product-info">
-                                <img src="./user/images/product3.jpg" alt="상품 이미지" class="product-image">
-                                <div class="product-details">
-                                    <p class="product-name">리트리버클럽</p>
-                                    <p class="product-desc">RETRIEVER FRIENDS CREWNECK [MELANGE GRAY]</p>
-                                    <p class="product-size">M(논키로) / 4개</p>
-                                    <p class="product-price">
-                                        <span class="original-price">288,000원</span>
-                                        <span class="discounted-price">115,200원</span>
-                                    </p>
-                                </div>
+                                <c:if test="${not empty requestScope.selectedItems}">
+                                    <c:forEach var="item" items="${requestScope.selectedItems}">
+                                        <img src="${item.prod_image}" alt="상품 이미지" class="product-image">
+                                        <div class="product-details">
+                                            <p class="product-brand">${item.brand}</p>
+                                            <p class="product-name" id="product-name">${item.p_name}</p>
+                                            <p class="product-size">${item.size} / <span id="product-count">${item.count}</span>개</p>
+                                            <p class="product-price">
+                                                <span class="original-price"><fmt:formatNumber value="${item.price}"/>원</span>
+                                                <span class="discounted-price"><fmt:formatNumber value="${item.saled_price}"/>원</span>
+                                            </p>
+                                        </div>
+                                    </c:forEach>
+                                </c:if>
                             </div>
                             <button type="button" class="btn btn-outline-secondary coupon-btn" data-toggle="modal" data-target="#couponModal">쿠폰 사용</button>
                         </div>
@@ -82,7 +98,7 @@
                                 <input type="text"/>
                                 <button type="button" class="btn btn-outline-secondary cancel-btn">사용 취소</button>
                             </div>
-                            <p class="points-info">적용한도(7%) 8,064원 / 보유 9,296원</p>
+                            <p class="points-info">적용한도(7%) 8,064원 / 보유 <fmt:formatNumber value="${requestScope.points}"/>원</p>
                         </div>
                         <div class="reward-container">
                             <div class="reward-top">
@@ -99,67 +115,6 @@
                                 <label><input type="radio" name="reward"> 적립금 선할인</label>
                             </div>
                             <p class="reward-info">선할인 제한 상품이에요.</p>
-                        </div>
-                        <div class="instant-discount-container">
-                            <h3>즉시 할인</h3>
-                            <div class="checkbox-container">
-                                <input type="checkbox" id="instant-discount">
-                                <label for="instant-discount">
-                                    무신사 현대카드 즉시 할인 <span class="text-muted">(중복적용가능)</span>
-                                </label>
-                                <span class="discount-amount">-30,000원</span>
-                            </div>
-                            <div class="discount-options">
-                                <div class="discount-card">
-                                    <img src="kakao.png" alt="카카오페이">
-                                    <p>-3,000원<br>카카오페이 × 페이머니</p>
-                                    <p class="option-desc">전 상품</p>
-                                </div>
-                                <div class="discount-card">
-                                    <img src="toss.png" alt="토스페이">
-                                    <p>-3,000원<br>토스페이 × 계좌/머니</p>
-                                    <p class="option-desc">전 상품</p>
-                                </div>
-                                <div class="discount-card">
-                                    <img src="musinsa.png" alt="무신사페이">
-                                    <p>-3,000원<br>무신사페이 × 하나카드</p>
-                                    <p class="option-desc">전 상품</p>
-                                </div>
-                                <div class="discount-card">
-                                    <img src="another.png" alt="기타">
-                                    <p>-3,000원<br>무신사페이 × 기타</p>
-                                    <p class="option-desc">전 상품</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="payment-methods-container">
-                            <h3>결제 수단</h3>
-                            <div class="radio-group">
-                                <label><input type="radio" name="payment-method" onclick="toggleButtonGroup(false)"><img class="logo-finance" src="./user/images/logo-finance-toss.png"/>토스페이<span class="badge highlight">혜택</span></label>
-                                <label><input type="radio" name="payment-method" onclick="toggleButtonGroup(false)"><img class="logo-finance" src="./user/images/logo-finance-kakaopay.png"/>카카오페이<span class="badge highlight">혜택</span></label>
-                                <label><input type="radio" name="payment-method" onclick="toggleButtonGroup(false)"><img class="logo-finance" src="./user/images/logo-finance-payco.png"/>페이코<span class="badge">혜택</span></label>
-                                <label><input type="radio" name="payment-method" onclick="toggleButtonGroup(true)" checked>기타 결제</label>
-                            </div>
-                            <div class="button-group">
-                                <button class="radio-button">카드</button>
-                                <button class="radio-button">가상계좌</button>
-                                <button class="radio-button">휴대폰</button>
-                                <button class="radio-button">삼성페이</button>
-                                <button class="radio-button">네이버페이</button>
-                                <button class="radio-button">KBPay <span class="badge">혜택</span></button>
-                            </div>
-                            <div class="select-group">
-                                <select class="card-select" id="card-select">
-                                    <option>농협카드</option>
-                                    <option>신한카드</option>
-                                    <option>국민카드</option>
-                                </select>
-                                <select class="payment-select" id="payment-select">
-                                    <option>일시불</option>
-                                    <option>할부 (3개월)</option>
-                                    <option>할부 (6개월)</option>
-                                </select>
-                            </div>
                         </div>
                         <div class="payment-details-container">
                             <h3>결제 금액</h3>
@@ -223,7 +178,7 @@
                             </span>
                                 </div>
                                 <div class="benefits-right">
-                                    <span class="text-blue total-benefit">186,784원</span>
+                                    <span class="text-blue total-benefit" id="total_amount">186,784<span>원</span></span>
                                 </div>
                             </div>
                             <div class="order-benefits-bottom">
@@ -233,12 +188,12 @@
                             </div>
                         </div>
                         <div class="payment-button-container">
-                            <button type="button" class="btn btn-dark payment-button" onclick="location.href='Controller?type=orderCompleted'">107,136원 결제하기</button>
+                            <button type="button" class="btn btn-dark payment-button" onclick="onPayment()">107,136원 결제하기</button>
                         </div>
                     </div>
                 </div>
 
-                    <%-- footer --%>
+                <%-- footer --%>
                 <jsp:include page="../layout/footer.jsp"></jsp:include>
             </div>
 
@@ -526,45 +481,6 @@
     <%-- Bootstrap --%>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const deliveryOptions = document.getElementById("delivery-options");
-            const deliveryMessage = document.getElementById("delivery-message");
-            const charCount = document.getElementById("char-count");
-            const buttons = document.querySelectorAll('.radio-button');
-
-            deliveryOptions.addEventListener("change", (event) => {
-                if (event.target.value === "직접입력") {
-                    deliveryMessage.style.display = "block";
-                    charCount.style.display = "block";
-                    deliveryMessage.value = "";
-                    charCount.innerText = "0/50";
-                } else {
-                    deliveryMessage.style.display = "none";
-                    charCount.style.display = "none";
-                    charCount.style.display = "none";
-                }
-            });
-
-            deliveryMessage.addEventListener("keyup", () => {
-                const currentLength = deliveryMessage.value.length;
-                charCount.innerText = currentLength + "/50";
-            });
-
-            buttons.forEach(button => {
-                button.addEventListener('click', () => {
-                    buttons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                });
-            });
-        });
-
-        function toggleButtonGroup(show) {
-            const buttonGroup = document.querySelector('.button-group');
-            const selectGroup = document.querySelector('.select-group');
-            buttonGroup.style.display = show ? 'grid' : 'none';
-            selectGroup.style.display = show ? 'flex' : 'none';
-        }
-    </script>
+    <script src="./user/js/payment/payment.js"></script>
 </body>
 </html>

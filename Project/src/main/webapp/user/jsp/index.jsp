@@ -55,7 +55,6 @@
                         </c:if>
                     </c:forEach>
                 </div>
-
                 <div class="product-section">
                     <div class="sorting-bar">
                         <div class="selected-filters">
@@ -98,8 +97,7 @@
                             </nav>
                         </div>
                     </div>
-
-                    <div class="product-list d-flex flex-wrap" id="product-list">
+                    <div class="product-list" id="product-list">
                         <jsp:include page="./product/components/productList.jsp"></jsp:include>
                     </div>
                 </div>

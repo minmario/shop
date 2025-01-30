@@ -9,6 +9,12 @@
         WHERE cus_no = #{cus_no} AND is_del = 0
     </select>
 
+    <!-- 기본 배송지 조회 -->
+    <select id="select_delivery_default" resultType="user.vo.DeliveryVO" parameterType="String">
+        SELECT * FROM delivery
+        WHERE cus_no = #{cus_no} AND is_default = 1 AND is_del = 0
+    </select>
+
     <!-- 배송지 상세 조회 -->
     <select id="select_delivery_by_id" resultType="user.vo.DeliveryVO" parameterType="String">
         SELECT * FROM delivery

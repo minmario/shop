@@ -22,7 +22,10 @@ public class CartAction implements Action {
         HttpSession session = request.getSession();
         CustomerVO cvo = (CustomerVO) session.getAttribute("customer_info");
 
-        String viewPath = null;
+        if (cvo == null) {
+            return "/user/jsp/error/error.jsp";
+        }
+
         if (action != null) {
             switch (action) {
                 case "select":

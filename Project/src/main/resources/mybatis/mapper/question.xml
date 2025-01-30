@@ -13,7 +13,7 @@
         WHERE b.cus_no = #{cus_no} AND b.is_del = 0
         AND (r.is_del = 0 OR r.is_del IS NULL)
         AND b.bname = 'question'
-        ORDER BY b.write_date DESC
+        ORDER BY b.write_date DESC, b.id DESC
     </select>
 
     <!-- 상품상세 문의 -->
@@ -26,7 +26,7 @@
         WHERE b.prod_no = #{prod_no} AND b.is_del = 0
         AND (r.is_del = 0 OR r.is_del IS NULL)
         AND b.bname = 'question'
-        ORDER BY b.write_date DESC
+        ORDER BY b.write_date DESC, b.id DESC
     </select>
 
     <!-- 답변 상태에 따른 상품문의 조회 -->
@@ -57,7 +57,7 @@
         <if test="startDate != null and startDate != '' and endDate != null and endDate != ''">
             AND b.write_date BETWEEN #{startDate} AND #{endDate}
         </if>
-        ORDER BY b.write_date DESC
+        ORDER BY b.write_date DESC, b.id DESC
     </select>
 
     <!-- 상품 문의 등록 (writeQuestion.jsp) -->

@@ -149,3 +149,45 @@ function deleteAllCart() {
         }
     });
 }
+
+// 장바구니 선택 주문
+function onSendPayment() {
+    // 체크된 상품들의 정보를 담을 배열
+    let selectedItems = [];
+
+    // 체크된 상품들을 가져오기
+    $('input[name="chk-cart"]:checked').each(function() {
+        const itemId = $(this).data('item-id');
+        const itemRow = $(this).closest('tr');
+
+        // 각 항목의 데이터를 가져오기
+        const item = [
+            itemId,
+            itemRow.find('img').attr('src'),
+            itemRow.find('.prod_brand').text().trim(),
+            itemRow.find('.prod_name').text().trim(),
+            itemRow.find('.cart-prod-size').text().trim(),
+            itemRow.find('.default-price').text().trim(),
+            itemRow.find('.sale-price').text().trim(),
+            itemRow.find('.cart-count-value').text().trim()
+        ];
+
+        // 데이터를 문자열로 변환하여 배열에 추가
+        selectedItems.push(item.join(','));
+    });
+
+    $.ajax({
+        url: "Controller?type=order&action=order",
+        method: 'POST',
+        data: {
+
+        },
+        success: function () {
+
+        },
+        error: function (error) {
+            alert("요청 처리 중 오류가 발생했습니다.");
+            console.error(error);
+        }
+    });
+}

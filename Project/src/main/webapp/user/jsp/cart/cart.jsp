@@ -97,7 +97,7 @@
                                 </div>
                             </div>
                             <div class="cart-button">
-                                <button type="button" class="btn btn-dark order-btn" onclick="location.href='Controller?type=payment'">주문하기</button>
+                                <button type="button" class="btn btn-dark order-btn" onclick="onSendPayment()">주문하기</button>
                             </div>
                         </div>
                     </div>

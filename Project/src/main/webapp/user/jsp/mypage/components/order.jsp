@@ -60,7 +60,7 @@
                 </div>
                 <div class="custom-order-content">
                     <div class="custom-product-image">
-                        <img src="${item.prod_image != null && not empty item.prod_image ? fn:split(item.prod_image, ',')[0] : './user/images/product1.jpg'}" alt="상품 이미지">
+                        <img src="${item.prod_image != null && not empty item.prod_image && fn:split(item.prod_image, ',')[0]}" alt="상품 이미지">
                     </div>
                     <div class="custom-product-details">
                         <p class="custom-product-name">${item.brand}</p>

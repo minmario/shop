@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DeliveryDAO {
-    //배송지 정보 가져오기
+    // 배송지 정보 가져오기
     public static List<DeliveryVO> selectDelivery(String cus_no) {
         SqlSession ss = FactoryService.getFactory().openSession();
 
@@ -23,6 +23,22 @@ public class DeliveryDAO {
         }
 
         return list;
+    }
+
+    // 기본 배송지 조회
+    public static DeliveryVO selectDeliveryDefault(String cus_no) {
+        DeliveryVO dvo = null;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            dvo = ss.selectOne("delivery.select_delivery_default", cus_no);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return dvo;
     }
 
     // 배송지 상세 조회

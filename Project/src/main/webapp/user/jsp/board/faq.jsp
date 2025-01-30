@@ -15,7 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <%-- CSS --%>
-    <link rel="stylesheet" type="text/css" href="./user/css/board/board.css"/>
+    <link rel="stylesheet" type="text/css" href="./user/css/board/faq.css"/>
 </head>
 <body>
     <c:choose>
@@ -57,7 +57,7 @@
                         </div>
 
                         <div class="tab-content">
-                                <%-- 전체 --%>
+                            <%-- 전체 --%>
                             <div class="accordion tab-pane fade show active" id="all-accordion" role="tabpanel">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="all-headingOne">
@@ -147,7 +147,7 @@
                                 </div>
                             </div>
 
-                                <%-- 배송 --%>
+                            <%-- 배송 --%>
                             <div class="accordion tab-pane fade" id="delivery-accordion" role="tabpanel">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="delivery-headingOne">
@@ -237,7 +237,7 @@
                                 </div>
                             </div>
 
-                                <%-- 교환/취소(반품) --%>
+                            <%-- 교환/취소(반품) --%>
                             <div class="accordion tab-pane fade" id="exchange-accordion" role="tabpanel">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="exchange-headingOne">

@@ -4,6 +4,8 @@ import org.apache.ibatis.session.SqlSession;
 import service.FactoryService;
 import user.vo.ProdLikeVO;
 
+import java.util.List;
+
 public class ProdLikeDAO {
     // 좋아요 조회
     public static ProdLikeVO selectProdLike(ProdLikeVO vo) {
@@ -19,6 +21,22 @@ public class ProdLikeDAO {
         }
 
         return pvo;
+    }
+
+    // 좋아요 목록
+    public static List<ProdLikeVO> selectProdLikeList(ProdLikeVO vo) {
+        List<ProdLikeVO> list = null;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            list = ss.selectList("prod_like.select_prod_like_list", vo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return list;
     }
 
     // 좋아요 설정

@@ -1,9 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="question-button-container">
-    <button type="button" class="btn btn-outline-dark" onclick="location.href='Controller?type=writeQuestion&prod_no=1223344'">
-        판매자에게 문의하기
-    </button>
+    <c:if test="${not empty sessionScope.customer_info}">
+        <button type="button" class="btn btn-outline-dark" onclick="onMoveQuestionPage()">
+            판매자에게 문의하기
+        </button>
+    </c:if>
 </div>
 <c:choose>
     <c:when test="${requestScope.questions ne null}">
@@ -16,43 +18,84 @@
                     <c:when test="${item.type == '22'}"><div class="question-type">상품상세문의</div></c:when>
                 </c:choose>
 
-                <div class="question-header">
-                    <c:if test="${item.is_private == '0'}">
-                        <span class="question-title">${item.title}</span>
-                    </c:if>
-                    <c:if test="${item.is_private == '1'}">
-                        <i class="bi bi-lock"></i>
-                        <span class="question-title">비밀글로 설정된 글입니다.</span>
-                    </c:if>
-                </div>
-
                 <c:choose>
-                    <c:when test="${item.status == '1'}">
-                        <div class="question-meta">답변대기 · ${item.c_cus_id} · ${item.write_date}</div>
-                    </c:when>
-                    <c:when test="${item.status == '2'}">
-                        <div class="question-meta">답변확인중 · ${item.c_cus_id} · ${item.write_date}</div>
-                    </c:when>
-                    <c:when test="${item.status == '3'}">
-                        <div class="question-meta">답변완료 · ${item.c_cus_id} · ${item.write_date}</div>
-                    </c:when>
-                </c:choose>
-
-                <c:choose>
-                    <c:when test="${item.status != '3'}">
-                        <div class="question-content">
-                            <p class="answer">답변이 등록되지 않았습니다.</p>
+                    <c:when test="${item.is_private eq '0'}">
+                        <div class="question-header">
+                            <span class="question-title">${item.title}</span>
                         </div>
+                        <c:choose>
+                            <c:when test="${item.status eq '1'}">
+                                <div class="question-meta">답변대기 · ${item.c_cus_id} · ${item.write_date}</div>
+                            </c:when>
+                            <c:when test="${item.status eq '2'}">
+                                <div class="question-meta">답변확인중 · ${item.c_cus_id} · ${item.write_date}</div>
+                            </c:when>
+                            <c:when test="${item.status eq '3'}">
+                                <div class="question-meta">답변완료 · ${item.c_cus_id} · ${item.write_date}</div>
+                            </c:when>
+                        </c:choose>
+                        <c:choose>
+                            <c:when test="${item.status ne '3'}">
+                                <div class="question-content">
+                                    <p class="answer">답변이 등록되지 않았습니다.</p>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="question-content">
+                                    <p class="question">${item.content}</p>
+                                    <div class="answer">
+                                        <strong>A. ${item.brand}</strong>
+                                        <p>${item.r_content}</p>
+                                        <span class="answer-date">${item.r_write_date}</span>
+                                    </div>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
                     </c:when>
                     <c:otherwise>
-                        <div class="question-content">
-                            <p class="question">${item.content}</p>
-                            <div class="answer">
-                                <strong>A. ${item.brand}</strong>
-                                <p>${item.r_content}</p>
-                                <span class="answer-date">${item.r_write_date}</span>
-                            </div>
-                        </div>
+                        <c:choose>
+                            <c:when test="${item.is_private eq '1' and not empty sessionScope.customer_info and (item.cus_no eq sessionScope.customer_info.id)}">
+                                <i class="bi bi-lock"></i>
+                                <span class="question-title">비밀글로 설정된 글입니다.</span>
+                                <div class="question-header">
+                                    <span class="question-title">${item.title}</span>
+                                </div>
+                                <c:choose>
+                                    <c:when test="${item.status eq '1'}">
+                                        <div class="question-meta">답변대기 · ${item.c_cus_id} · ${item.write_date}</div>
+                                    </c:when>
+                                    <c:when test="${item.status eq '2'}">
+                                        <div class="question-meta">답변확인중 · ${item.c_cus_id} · ${item.write_date}</div>
+                                    </c:when>
+                                    <c:when test="${item.status eq '3'}">
+                                        <div class="question-meta">답변완료 · ${item.c_cus_id} · ${item.write_date}</div>
+                                    </c:when>
+                                </c:choose>
+                                <c:choose>
+                                    <c:when test="${item.status ne '3'}">
+                                        <div class="question-content">
+                                            <p class="answer">답변이 등록되지 않았습니다.</p>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="question-content">
+                                            <p class="question">${item.content}</p>
+                                            <div class="answer">
+                                                <strong>A. ${item.brand}</strong>
+                                                <p>${item.r_content}</p>
+                                                <span class="answer-date">${item.r_write_date}</span>
+                                            </div>
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:when>
+                            <c:when test="${(item.is_private eq '1' and sessionScope.customer_info eq null) or (item.is_private eq '1' and item.cus_no ne sessionScope.customer_info.id)}">
+                                <div class="question-header">
+                                    <i class="bi bi-lock"></i>
+                                    <span class="question-title">비밀글로 설정된 글입니다.</span>
+                                </div>
+                            </c:when>
+                        </c:choose>
                     </c:otherwise>
                 </c:choose>
             </div>

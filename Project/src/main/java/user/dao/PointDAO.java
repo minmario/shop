@@ -102,4 +102,20 @@ public class PointDAO {
 
         return expireTotal;
     }
+
+    // 보유 적립금 가져오기
+    public static String selectSavePoint(String cus_no) {
+        String point = null;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            point = ss.selectOne("point.select_save_point", cus_no);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return point;
+    }
 }

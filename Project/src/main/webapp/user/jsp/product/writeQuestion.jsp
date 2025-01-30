@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -32,16 +34,19 @@
                             <h2 class="title">판매자에게 문의하기</h2>
                         </div>
                         <div class="product-info">
-                            <img src="./user/images/product7.jpg" alt="상품 이미지" class="product-image">
-                            <div class="product-details">
-                                <p class="product-title">시티 레저 오버사이즈 후드드 스웨트셔츠 [그레이]</p>
-                                <span class="discount">10%</span> <span class="price">53,790원</span>
-                            </div>
+                            <c:if test="${requestScope.prod_details ne null}">
+                                <input type="hidden" id="prod_no" value="${requestScope.prod_details.id}"/>
+                                <img src="${fn:split(requestScope.prod_details.prod_image, ',')[0]}" alt="상품 이미지" class="product-image">
+                                <div class="product-details">
+                                    <p class="product-title">${requestScope.prod_details.name}</p>
+                                    <span class="discount">${requestScope.prod_details.sale}%</span> <span class="price"><fmt:formatNumber value="${requestScope.prod_details.saled_price}"/>원</span>
+                                </div>
+                            </c:if>
                         </div>
                         <div class="form-group">
                             <label for="question-type" class="form-label">문의 유형 (필수)</label>
                             <select id="question-type" name="question-type" class="form-control">
-                                <option value="selected" selected>문의 유형을 선택해주세요</option>
+                                <option value="0" selected>:: 문의 유형을 선택하세요 ::</option>
                                 <option value="19">사이즈</option>
                                 <option value="20">배송</option>
                                 <option value="21">재입고</option>

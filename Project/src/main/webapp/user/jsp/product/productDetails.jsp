@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -20,13 +21,6 @@
 <body>
     <!-- header -->
     <jsp:include page="../layout/header.jsp"></jsp:include>
-
-    <c:if test="${empty requestScope.p_list}">
-        <script>
-            // alert("해당 상품의 정보를 불러올 수 없습니다."); // 경고 메시지 표시
-            // window.location.href = "Controller?type=index"; // 상품 목록 페이지로 이동
-        </script>
-    </c:if>
 
     <div class="wrap">
         <div class="row">
@@ -72,31 +66,95 @@
                                 <h3>PRODUCT INFO <span class="info-subtitle">제품정보</span></h3>
                                 <p><i class="bi bi-dash"></i> 제품번호 <strong id="prod_id" data-item="${pvo.id}">${pvo.id}</strong></p>
                                 <p><i class="bi bi-dash"></i> 성별 <strong id="prod_season">여</strong></p>
-                                <p><i class="bi bi-dash"></i> 누적판매 <strong id="prod_sale_count">233개</strong></p>
-                                <p><i class="bi bi-dash"></i> 좋아요 <span class="like-count"><i class="bi bi-heart-fill"></i> <strong id="prod_like_count">91</strong></span></p>
+                                <p><i class="bi bi-dash"></i> 누적판매 <strong id="prod_sale_count"><fmt:formatNumber value="${pvo.sales_count}"/>개</strong></p>
+                                <p><i class="bi bi-dash"></i> 좋아요 <span class="like-count"><i class="bi bi-heart-fill"></i> <strong id="prod_like_count"><fmt:formatNumber value="${pvo.like_count}"/></strong></span></p>
                                 <p>
                                     <i class="bi bi-dash"></i> 구매후기
                                     <span class="stars">
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <span class="star-count">137건</span>
-                                </span>
+                                        <c:if test="${pvo.avg_score ne null}">
+                                            <c:choose>
+                                                <c:when test="${pvo.avg_score >= 1.0 && pvo.avg_score < 1.5}">
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star"></i>
+                                                    <i class="bi bi-star"></i>
+                                                    <i class="bi bi-star"></i>
+                                                    <i class="bi bi-star"></i>
+                                                </c:when>
+                                                <c:when test="${pvo.avg_score >= 1.5 && pvo.avg_score < 2.0}">
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-half"></i>
+                                                    <i class="bi bi-star"></i>
+                                                    <i class="bi bi-star"></i>
+                                                    <i class="bi bi-star"></i>
+                                                </c:when>
+                                                <c:when test="${pvo.avg_score >= 2.0 && pvo.avg_score < 2.5}">
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star"></i>
+                                                    <i class="bi bi-star"></i>
+                                                    <i class="bi bi-star"></i>
+                                                </c:when>
+                                                <c:when test="${pvo.avg_score >= 2.5 && pvo.avg_score < 3.0}">
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-half"></i>
+                                                    <i class="bi bi-star"></i>
+                                                    <i class="bi bi-star"></i>
+                                                </c:when>
+                                                <c:when test="${pvo.avg_score >= 3.0 && pvo.avg_score < 3.5}">
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star"></i>
+                                                    <i class="bi bi-star"></i>
+                                                </c:when>
+                                                <c:when test="${pvo.avg_score >= 3.5 && pvo.avg_score < 4.0}">
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-half"></i>
+                                                    <i class="bi bi-star"></i>
+                                                </c:when>
+                                                <c:when test="${pvo.avg_score >= 4.0 && pvo.avg_score < 4.5}">
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star"></i>
+                                                </c:when>
+                                                <c:when test="${pvo.avg_score >= 4.5 && pvo.avg_score <= 5.0}">
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <i class="bi bi-star"></i>
+                                                    <i class="bi bi-star"></i>
+                                                    <i class="bi bi-star"></i>
+                                                    <i class="bi bi-star"></i>
+                                                    <i class="bi bi-star"></i>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:if>
+                                        <span class="star-count">
+                                            <fmt:formatNumber value="${pvo.review_count}"/>개
+                                        </span>
+                                    </span>
                                 </p>
                             </div>
                             <div class="delivery-info">
                                 <h3>DELIVERY INFO <span class="info-subtitle">배송정보</span></h3>
                                 <p><i class="bi bi-dash"></i> 배송방법 <strong>국내 배송 / 입점사 배송</strong></p>
-                                <p><i class="bi bi-dash"></i> 평균 배송기간 <strong>1.2일 (CJ대한통운)</strong></p>
+                                <p><i class="bi bi-dash"></i> 평균 배송기간 <strong>1.2일 (${pvo.courier})</strong></p>
                             </div>
                             <div class="price-info">
                                 <h3>PRICE INFO <span class="info-subtitle">가격정보</span></h3>
-                                <p><i class="bi bi-dash"></i> 무신사 판매가 <span class="price-original"><strong><del>${pvo.price}원</del></strong></span></p>
-                                <p><i class="bi bi-dash"></i> 무신사 세일가 <span class="price-sale"><strong>${pvo.price}</strong></span> <span class="discount">(${pvo.sale}% 할인)</span></p>
-                                <p><i class="bi bi-dash"></i> 무신사 회원가 <span class="price-member"><strong>17,472 ~ 18,816원</strong></span></p>
-                                <p><i class="bi bi-dash"></i> 적립금 최대 <span class="points"><strong>384원</strong></span></p>
+                                <p><i class="bi bi-dash"></i> 무신사 판매가 <span class="price-original"><strong><del><fmt:formatNumber value="${pvo.price}"/>원</del></strong></span></p>
+                                <p><i class="bi bi-dash"></i> 무신사 세일가 <span class="price-sale"><strong><fmt:formatNumber value="${pvo.saled_price}"/>원</strong></span> <span class="discount">(${pvo.sale}% 할인)</span></p>
+                                <%--<p><i class="bi bi-dash"></i> 무신사 회원가 <span class="price-member"><strong>17,472 ~ 18,816원</strong></span></p>--%>
+                                <%--<p><i class="bi bi-dash"></i> 적립금 최대 <span class="points"><strong><fmt:formatNumber value="${pvo.points}"/>원</strong></span></p>--%>
                             </div>
                             <c:if test="${empty sessionScope.isLoggedIn}">
                                 <div class="alert alert-danger" role="alert">
@@ -141,7 +199,7 @@
                                         </c:otherwise>
                                     </c:choose>
                                     <button class="btn btn-dark add-to-cart" onclick="insertCart()">장바구니 담기</button>
-                                    <button class="btn btn-dark buy-now" onclick="location.href='Controller?type=payment'">구매하기</button>
+                                    <button class="btn btn-dark buy-now" onclick="location.href='Controller?type=order&action=order'">구매하기</button>
                                 </div>
                             </c:if>
                         </div>
@@ -178,157 +236,68 @@
                             <div class="size-table-section">
                                 <table class="size-table">
                                     <thead>
-                                    <tr>
-                                        <th>Size</th>
-                                        <th>Shoulder (cm)</th>
-                                        <th>Chest (cm)</th>
-                                        <th>Length (cm)</th>
-                                        <th>Sleeve (cm)</th>
-                                    </tr>
+                                        <tr>
+                                            <th>사이즈</th>
+                                            <th>총장 (cm)</th>
+                                            <th>어깨너비 (cm)</th>
+                                            <th>가슴단면 (cm)</th>
+                                            <th>소매길이 (cm)</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>S</td>
-                                        <td>45</td>
-                                        <td>100</td>
-                                        <td>65</td>
-                                        <td>20</td>
-                                    </tr>
-                                    <tr>
-                                        <td>M</td>
-                                        <td>47</td>
-                                        <td>105</td>
-                                        <td>67</td>
-                                        <td>21</td>
-                                    </tr>
-                                    <tr>
-                                        <td>L</td>
-                                        <td>49</td>
-                                        <td>110</td>
-                                        <td>69</td>
-                                        <td>22</td>
-                                    </tr>
+                                        <c:if test="${requestScope.productSize ne null}">
+                                            <c:forEach var="size" items="${requestScope.productSize}">
+                                                <tr>
+                                                    <td>${size.i_option_name}</td>
+                                                    <c:if test="${size.length ne null}">
+                                                        <td><fmt:formatNumber value="${size.length}"/></td>
+                                                    </c:if>
+                                                    <c:if test="${size.shoulder ne null}">
+                                                        <td><fmt:formatNumber value="${size.shoulder}"/></td>
+                                                    </c:if>
+                                                    <c:if test="${size.chest ne null}">
+                                                        <td><fmt:formatNumber value="${size.chest}"/></td>
+                                                    </c:if>
+                                                    <c:if test="${size.sleeve ne null}">
+                                                        <td><fmt:formatNumber value="${size.sleeve}"/></td>
+                                                    </c:if>
+                                                    <c:if test="${size.waist ne null}">
+                                                        <td><fmt:formatNumber value="${size.waist}"/></td>
+                                                    </c:if>
+                                                    <c:if test="${size.hip ne null}">
+                                                        <td><fmt:formatNumber value="${size.hip}"/></td>
+                                                    </c:if>
+                                                    <c:if test="${size.thigh ne null}">
+                                                        <td><fmt:formatNumber value="${size.thigh}"/></td>
+                                                    </c:if>
+                                                    <c:if test="${size.rise ne null}">
+                                                        <td><fmt:formatNumber value="${size.rise}"/></td>
+                                                    </c:if>
+                                                    <c:if test="${size.hem ne null}">
+                                                        <td><fmt:formatNumber value="${size.hem}"/></td>
+                                                    </c:if>
+                                                    <c:if test="${size.foot_length ne null}">
+                                                        <td><fmt:formatNumber value="${size.foot_length}"/></td>
+                                                    </c:if>
+                                                    <c:if test="${size.foot_width ne null}">
+                                                        <td><fmt:formatNumber value="${size.foot_width}"/></td>
+                                                    </c:if>
+                                                    <c:if test="${size.ankle_height ne null}">
+                                                        <td><fmt:formatNumber value="${size.ankle_height}"/></td>
+                                                    </c:if>
+                                                    <c:if test="${size.heel_height ne null}">
+                                                        <td><fmt:formatNumber value="${size.heel_height}"/></td>
+                                                    </c:if>
+                                                </tr>
+                                            </c:forEach>
+                                        </c:if>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                         <div id="review" class="tab-panel">
-                            <ul class="review-categories">
-                                <li class="active" data-target="all">전체 <span class="count">14,281</span></li>
-                                <li data-target="style">스타일 <span class="count">2,271</span></li>
-                                <li data-target="general">일반 <span class="count">11,995</span></li>
-                                <li data-target="monthly">한달후기 <span class="count">15</span></li>
-                            </ul>
-                            <div class="review-options">
-                                <div class="option-group">
-                                    <label for="size-select">옵션 (사이즈)</label>
-                                    <select id="size-select" class="custom-select">
-                                        <option value="">전체</option>
-                                        <option value="S">S</option>
-                                        <option value="M">M</option>
-                                        <option value="L">L</option>
-                                    </select>
-                                </div>
-                                <div class="option-group">
-                                    <label for="gender-select">성별</label>
-                                    <select id="gender-select" class="custom-select">
-                                        <option value="">전체</option>
-                                        <option value="male">남성</option>
-                                        <option value="female">여성</option>
-                                    </select>
-                                </div>
-                                <div class="option-group">
-                                    <label for="height-input">키</label>
-                                    <input id="height-input" type="number" class="form-control" placeholder="cm">
-                                </div>
-                                <div class="option-group">
-                                    <label for="weight-input">몸무게</label>
-                                    <input id="weight-input" type="number" class="form-control" placeholder="kg">
-                                </div>
-                            </div>
-                            <div class="toggle-options">
-                                <div class="toggle-group">
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="photo-review-toggle">
-                                        <label class="form-check-label" for="photo-review-toggle">사진후기만</label>
-                                    </div>
-                                </div>
-                                <div class="toggle-group">
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="my-size-toggle">
-                                        <label class="form-check-label" for="my-size-toggle">내 사이즈</label>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="review-content">
-                                <div id="all" class="review-list active">
-                                    <div class="review-item">
-                                        <div class="review-user">
-                                            <p class="user-name">홍길동</p>
-                                            <p class="review-date">1일 전</p>
-                                        </div>
-                                        <div class="review-rating">★★★★★</div>
-                                        <div class="user-info">남성 · 171cm · 70kg · L 구매</div>
-                                        <div class="review-content">
-                                            <p>제 스펙이시면 라지 사이즈로 구매하세요. 딱 좋은 핏 나옵니다.</p>
-                                        </div>
-                                        <div class="review-actions">
-                                            <button>좋아요</button>
-                                            <button>답글</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="style" class="review-list">
-                                    <div class="review-item">
-                                        <div class="review-user">
-                                            <p class="user-name">일지매</p>
-                                            <p class="review-date">3일 전</p>
-                                        </div>
-                                        <div class="review-rating">★★★★★</div>
-                                        <div class="user-info">남성 · 170cm · 84kg · L 구매</div>
-                                        <div class="review-content">
-                                            <p>네이비라 굉장히 코디하기 편하구 여유로워요. 몸에 딱 붙은 중간핏이 있습니다.</p>
-                                        </div>
-                                        <div class="review-actions">
-                                            <button>좋아요</button>
-                                            <button>답글</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="general" class="review-list">
-                                    <div class="review-item">
-                                        <div class="review-user">
-                                            <p class="user-name">테스트 사용자</p>
-                                            <p class="review-date">5일 전</p>
-                                        </div>
-                                        <div class="review-rating">★★★★☆</div>
-                                        <div class="user-info">여성 · 165cm · 55kg · M 구매</div>
-                                        <div class="review-content">
-                                            <p>핏이 조금 큰 감이 있지만 전반적으로 만족합니다.</p>
-                                        </div>
-                                        <div class="review-actions">
-                                            <button>좋아요</button>
-                                            <button>답글</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="monthly" class="review-list">
-                                    <div class="review-item">
-                                        <div class="review-user">
-                                            <p class="user-name">한달 후기 작성자</p>
-                                            <p class="review-date">1달 전</p>
-                                        </div>
-                                        <div class="review-rating">★★★★★</div>
-                                        <div class="user-info">남성 · 180cm · 80kg · L 구매</div>
-                                        <div class="review-content">
-                                            <p>한 달 사용해봤는데 여전히 만족스럽습니다. 튼튼하고 편해요!</p>
-                                        </div>
-                                        <div class="review-actions">
-                                            <button>좋아요</button>
-                                            <button>답글</button>
-                                        </div>
-                                    </div>
-                                </div>
+                                <jsp:include page="./components/reviewList.jsp"></jsp:include>
                             </div>
                         </div>
                         <div id="question" class="tab-panel">
@@ -357,7 +326,6 @@
         <!-- footer -->
         <jsp:include page="../layout/footer.jsp"></jsp:include>
     </div>
-
 
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

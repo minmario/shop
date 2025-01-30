@@ -18,6 +18,10 @@ public class DeliveryAction implements Action {
         HttpSession session = request.getSession();
         CustomerVO cvo = (CustomerVO) session.getAttribute("customer_info");
 
+        if (cvo == null) {
+            return "/user/jsp/error/error.jsp";
+        }
+
         String viewPage = null;
         if (action != null) {
             switch (action) {
