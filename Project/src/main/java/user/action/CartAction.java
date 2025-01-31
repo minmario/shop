@@ -1,10 +1,7 @@
 package user.action;
 
-import user.dao.CartDAO;
-import user.dao.LogDAO;
-import user.vo.CartVO;
-import user.vo.CustomerVO;
-import user.vo.LogVO;
+import user.dao.*;
+import user.vo.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,11 +23,13 @@ public class CartAction implements Action {
             return "/user/jsp/error/error.jsp";
         }
 
+        String viewPage = null;
         if (action != null) {
             switch (action) {
                 case "select":
                     List<CartVO> cart_list = CartDAO.selectCart(cvo.getId());
                     request.setAttribute("cart_list", cart_list);
+                    viewPage = "/user/jsp/cart/cart.jsp";
                     break;
                 case "insert":
                     String i_prod_no = request.getParameter("prod_no");
@@ -57,6 +56,7 @@ public class CartAction implements Action {
                         LogDAO.insertLog(lvo);
                     }
 
+                    viewPage = "/user/jsp/cart/cart.jsp";
                     break;
                 case "update":
                     String u_id = request.getParameter("id");
@@ -83,6 +83,7 @@ public class CartAction implements Action {
                         LogDAO.updateLog(lvo);
                     }
 
+                    viewPage = "/user/jsp/cart/cart.jsp";
                     break;
                 case "delete":
                     String id = request.getParameter("id");
@@ -104,6 +105,7 @@ public class CartAction implements Action {
                         LogDAO.insertLog(lvo);
                     }
 
+                    viewPage = "/user/jsp/cart/cart.jsp";
                     break;
                 case "deletes":
                     String[] idsArr = request.getParameterValues("ids");
@@ -129,7 +131,8 @@ public class CartAction implements Action {
                             LogDAO.insertLog(lvo);
                         }
                     }
-                    
+
+                    viewPage = "/user/jsp/cart/cart.jsp";
                     break;
                 case "delete_all":
                     int da_cnt = CartDAO.deleteAllCart(cvo.getId());
@@ -144,10 +147,44 @@ public class CartAction implements Action {
                         LogDAO.insertLog(lvo);
                     }
 
+                    viewPage = "/user/jsp/cart/cart.jsp";
+                    break;
+                case "order":
+                    // 선택된 상품
+                    String[] selectedItems = request.getParameterValues("selectedItems");
+                    List<CartVO> cartItems = new ArrayList<>();
+                    for (int i = 0; i < selectedItems.length; i++) {
+                        CartVO item = CartDAO.selectCartDetails(cvo.getId(), selectedItems[i]);
+                        System.out.println("item : " + item.getSale());
+                        cartItems.add(item);
+                    }
+                    request.setAttribute("cartItems", cartItems);
+
+                    // 기본 배송지
+                    DeliveryVO delivery = DeliveryDAO.selectDeliveryDefault(cvo.getId());
+                    request.setAttribute("delivery", delivery);
+
+                    // 배송지 목록
+                    List<DeliveryVO> deli_list = DeliveryDAO.selectDelivery(cvo.getId());
+                    request.setAttribute("deli_list", deli_list);
+
+                    // 보유 적립금
+                    int points = PointDAO.selectSavePoint(cvo.getId());
+                    request.setAttribute("points", points);
+
+                    // 사용자 등급
+                    GradeVO gvo = GradeDAO.selectGradeById(cvo.getGrade_no());
+                    request.setAttribute("grade", gvo);
+
+                    // 등급 정보
+                    List<GradeVO> grades = GradeDAO.selectGradeAll();
+                    request.setAttribute("grades", grades);
+
+                    viewPage = "/user/jsp/payment/payment.jsp";
                     break;
             }
         }
 
-        return "/user/jsp/cart/cart.jsp";
+        return viewPage;
     }
 }

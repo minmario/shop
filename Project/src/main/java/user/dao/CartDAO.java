@@ -150,4 +150,24 @@ public class CartDAO {
 
         return cnt;
     }
+
+    // 장바구니 상품 상세 조회
+    public static CartVO selectCartDetails(String cus_no, String id) {
+        CartVO cvo = null;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("cus_no", cus_no);
+            map.put("id", id);
+
+            cvo = ss.selectOne("cart.select_cart_details", map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cvo;
+    }
 }

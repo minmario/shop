@@ -1,7 +1,15 @@
 package user.vo;
 
 public class ProductVO {
-    private String brand, courier, id, category_no, seller_no, prod_code, name, length, shoulder, chest, sleeve, waist, hip, thigh, rise, hem, foot_length, foot_width, ankle_height, heel_height, price, view_count, inventory, active, sale, prod_image, additional_images, saled_price, like_count, i_option_name, count, avg_score, review_count, sales_count;
+    private String brand, courier, id, category_no, seller_no, prod_code, name, length, shoulder, chest, sleeve, waist, hip, thigh, rise, hem, foot_length, foot_width, ankle_height, heel_height, price, view_count, inventory, active, sale, prod_image, additional_images, saled_price, like_count, i_option_name, count, avg_score, review_count, sales_count, user_like_status;
+
+    public String getUser_like_status() {
+        return user_like_status;
+    }
+
+    public void setUser_like_status(String user_like_status) {
+        this.user_like_status = user_like_status;
+    }
 
     public String getBrand() {
         return brand;

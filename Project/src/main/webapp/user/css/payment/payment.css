@@ -168,9 +168,13 @@
     margin-right: 10px;
 }
 
-.order-product-container .product-details .discounted-price {
+.order-product-container .product-details .sale-percent {
     font-weight: bold;
     color: #d9534f;
+}
+
+.order-product-container .product-details .discounted-price {
+    font-weight: bold;
 }
 
 .coupon-btn {
@@ -599,6 +603,12 @@
     margin-bottom: 20px;
 }
 
+.address-item label {
+    margin-bottom: 0;
+    position: relative;
+    top: 15px;
+}
+
 .address-item input[type="radio"] {
     margin-right: 10px;
     cursor: pointer;
@@ -622,6 +632,12 @@
     font-size: 14px;
     color: #333;
     margin-top: 5px;
+    margin-bottom: 0;
+}
+
+.deli-phone {
+    margin-top: 5px;
+    margin-bottom: 0;
 }
 
 #deliveryModal .action-buttons {

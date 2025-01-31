@@ -1,12 +1,15 @@
 package user.action;
 
 import user.dao.CartDAO;
+import user.dao.CategoryDAO;
 import user.dao.CustomerDAO;
 import user.vo.CustomerVO;
+import user.vo.MajorCategoryVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 public class LoginAction  implements Action {
 
@@ -30,9 +33,16 @@ public class LoginAction  implements Action {
 
             // 장바구니 수
             int cart_count = CartDAO.selectCartCount(loginResult.getId());
-            request.setAttribute("cart_count", cart_count);
+            session.setAttribute("cart_count", cart_count);
 
-            return "Controller?type=index";
+            // 카테고리
+            List<MajorCategoryVO> categories = CategoryDAO.getCategory();
+
+            if (categories != null && categories.size() > 0) {
+                request.setAttribute("categories", categories);
+            }
+
+            return "/user/jsp/index.jsp";
         } else {
             // 실패 시에만 isLoggedIn 설정
             if (username != null && password != null) {

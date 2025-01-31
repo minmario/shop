@@ -1,7 +1,7 @@
 package user.vo;
 
 public class CustomerVO {
-    private String id, grade_code, cus_id, cus_pw, name, nickname, gender, birth_date, phone, email, profile_image, weight, height, total, grade_expire_date;
+    private String id, grade_no, cus_id, cus_pw, name, nickname, gender, birth_date, phone, email, profile_image, weight, height, total, grade_expire_date;
 
     public String getId() {
         return id;
@@ -11,12 +11,12 @@ public class CustomerVO {
         this.id = id;
     }
 
-    public String getGrade_code() {
-        return grade_code;
+    public String getGrade_no() {
+        return grade_no;
     }
 
-    public void setGrade_code(String grade_code) {
-        this.grade_code = grade_code;
+    public void setGrade_no(String grade_no) {
+        this.grade_no = grade_no;
     }
 
     public String getCus_id() {

@@ -92,9 +92,9 @@
                             <a href="Controller?type=cart&action=select" class="text-decoration-none text-dark position-relative">
                                 <i class="bi bi-basket-fill"></i>
                                 <span>장바구니</span>
-                                <c:if test="${not empty requestScope.cart_count and requestScope.cart_count ne '0'}">
+                                <c:if test="${not empty sessionScope.cart_count and sessionScope.cart_count ne '0'}">
                                     <span class="badge bg-primary rounded-pill cart_count">
-                                        ${requestScope.cart_count}
+                                        ${sessionScope.cart_count}
                                     </span>
                                 </c:if>
                             </a>
