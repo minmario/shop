@@ -121,11 +121,12 @@ public class Controller extends HttpServlet {
 		 */
 		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			// type이라는 파라미터를 받기
+			request.setCharacterEncoding("UTF-8");
 			String type = request.getParameter("type");
 			
 			// 만약! type이 null이면 기본객체(DateAction)을 지정한다.
 			if(type == null)
-				type = "index";
+				type = "login";
 			
 			// type으로 받은 값이 actionMap의 key로 사용되고 있으며
 			// actionMap으로부터 원하는 객체를 얻도록 한다.

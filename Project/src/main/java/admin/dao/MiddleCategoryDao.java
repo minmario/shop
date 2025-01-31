@@ -15,6 +15,7 @@ public class MiddleCategoryDao {
         SqlSession ss = FactoryService.getFactory().openSession();
         List<MiddleCategoryVO> vo = new ArrayList<>();
         vo = ss.selectList("root.allMiddle");
+        ss.close();
         return vo;
     }
 
@@ -22,6 +23,7 @@ public class MiddleCategoryDao {
         SqlSession ss = FactoryService.getFactory().openSession();
         List<String> name = new ArrayList<>();
         name= ss.selectList("root.allMiddleCol");
+        ss.close();
         return name;
     }
     public static MiddleCategoryVO[] searchMiddleCategory(String searchType, String searchValue){

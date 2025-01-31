@@ -2,6 +2,21 @@ package admin.vo;
 
 public class CustomerVO {
   String id;
+  String grade_code;
+  String cus_id;
+  String cus_pw;
+  String name;
+  String nickname;
+  String gender;
+  String birth_date;
+  String phone;
+  String email;
+  String profile_image;
+  String weight;
+  String height;
+  String total;
+  String grade_expire_date;
+  String is_del;
 
   public String getId() {
     return id;
@@ -131,20 +146,5 @@ public class CustomerVO {
     this.is_del = is_del;
   }
 
-  String grade_code;
-  String cus_id;
-  String cus_pw;
-  String name;
-  String nickname;
-  String gender;
-  String birth_date;
-  String phone;
-  String email;
-  String profile_image;
-  String weight;
-  String height;
-  String total;
-  String grade_expire_date;
-  String is_del;
 
 }

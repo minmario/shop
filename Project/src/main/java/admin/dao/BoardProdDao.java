@@ -22,6 +22,7 @@ public class BoardProdDao {
         SqlSession ss = FactoryService.getFactory().openSession();
         List<String> name = new ArrayList<>();
         name = ss.selectList("root.allBoardProdCol");
+        ss.close();
         return name;
     }
     public static BoardProdVO[] searchBoardProd(String searchType, String searchValue){

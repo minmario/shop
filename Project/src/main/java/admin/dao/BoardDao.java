@@ -24,7 +24,9 @@ public class BoardDao {
         SqlSession ss = FactoryService.getFactory().openSession();
         List<String> name = new ArrayList<>();
         name = ss.selectList("root.allBoardCol");
+        ss.close();
         return name;
+
     }
     public static BoardVO[] searchBoard(String searchType, String searchValue){
         Map<String,String> map = new HashMap<>();

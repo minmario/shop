@@ -1,4 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--
   Created by IntelliJ IDEA.
   User: aaa
@@ -6,7 +7,7 @@
   Time: 오후 2:55
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -58,7 +59,7 @@
             width: 10%;
         }
         th:nth-child(6), td:nth-child(6) {
-            width: 7%;
+            width: 10%;
         }
         th:nth-child(7), td:nth-child(7) {
             width: 10%;
@@ -107,57 +108,73 @@
 
         <div class="mt-3">
             <div class="input-group">
-        <span class="input-group-text">
-          <i class="bi bi-search"></i> <!-- 부트스트랩 아이콘 사용 -->
-            </span>
-                <input type="text" class="form-control" placeholder="전체 구매자 검색">
+                <!-- 검색 아이콘 -->
+                <span class="input-group-text">
+                    <i class="bi bi-search"></i>
+                </span>
+                <select class="form-select" aria-label="Default select example" id="customer_name">
+                    <c:forEach var="name" items="${customerName}" varStatus="st">
+                        <c:if test="${name ne 'id' && name ne 'profile_image'}">
+
+                                <option class="column-name" value="${name}">${name}</option>
+
+                        </c:if>
+                    </c:forEach>
+
+                </select>
+
+
+                <!-- 검색 입력 -->
+                <input type="text" class="form-control" placeholder="검색할 열을 선택" aria-label="Search" id="customer_word">
+                <!-- 드롭다운 버튼 -->
+                <button class="btn btn-outline-secondary" type="button" aria-expanded="false" id="customer_search_btn">
+                    검색
+                </button>
+                <!-- 드롭다운 메뉴 -->
+                <%--<ul class="dropdown-menu dropdown-menu-end">
+                    <c:forEach var="name" items="${majorcategoryName}" begin="1">
+                        <li><a class="dropdown-item" href="#">${name}</a></li>
+                    </c:forEach>
+                </ul>--%>
             </div>
         </div>
 
-        <table class="table mt-3">
+        <table class="table mt-3" id="customer_table">
             <thead class="table-light">
             <tr>
                 <th><input type="checkbox"></th>
-                <th>등급 코드</th>
-                <th>고객 id</th>
-                <th>고객 pw</th>
-                <th>고객 이름</th>
-                <th>고객 별명</th>
-                <th>고객 성별</th>
-                <th>고객 생일</th>
-                <th>전화번호</th>
-                <th>이메일</th>
-                <th>프로필 사진</th>
-                <td>무게</td>
-                <td>키</td>
-                <td>전체</td>
-                <td>등급 만기일</td>
-                <td>삭제 여부</td>
+                <c:forEach var="name" items="${customerName}">
+                    <c:if test="${name ne 'id' && name ne 'profile_image'}">
+                            <th class="column-name" >${name}</th>
 
+
+                    </c:if>
+                </c:forEach>
+                <th>&nbsp;</th>
             </tr>
             </thead>
             <tbody>
-            <c:forEach var ="cl"  items="${customerList}">
+            <c:forEach var ="cusl"  items="${customerList}">
 
 
             <tr>
                 <td><input type="checkbox"></td>
-                <td>${cl.grade_code}</td>
-                <td>${cl.cus_id}</td>
-                <td>${cl.cus_pw}</td>
-                <th>${cl.name}</th>
-                <td>${cl.nickname}</td>
-                <td>${cl.gender}</td>
-                <td>${cl.birth_date}</td>
-                <td>${cl.phone}</td>
-                <th>${cl.email}</th>
-                <th>${cl.profile_image}</th>
+                <td>${cusl.grade_code}</td>
+                <td>${cusl.cus_id}</td>
+                <td>${cusl.cus_pw}</td>
+                <th>${cusl.name}</th>
+                <td>${cusl.nickname}</td>
+                <td>${cusl.gender}</td>
+                <td>${cusl.birth_date}</td>
+                <td>${cusl.phone}</td>
+                <th>${cusl.email}</th>
 
-                <td>${cl.weight}</td>
-                <td>${cl.height}</td>
-                <td>${cl.total}</td>
-                <td>${cl.grade_expire_date}</td>
-                <td>${cl.is_del}</td>
+
+                <td>${cusl.weight}</td>
+                <td>${cusl.height}</td>
+                <td>${cusl.total}</td>
+                <td>${cusl.grade_expire_date}</td>
+                <td>${cusl.is_del}</td>
             </tr>
             </c:forEach>
 
@@ -176,5 +193,56 @@
 </div>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+    $(function (){
+        $("#customer_search_btn").click(function(){
+            //검색버튼을 클릭할 때마다 수행하는 곳
+            let category_name = $("#customer_name").val();
+            let word = $("#customer_word").val();
+            alert(category_name+"/"+word);
+            let param = "type=searchCustomer&searchType="+
+                encodeURIComponent(category_name)+
+                "&searchValue="+encodeURIComponent(word);
+            //비동기식 통신
+            $.ajax({
+                url: "Controller",
+                type: "POST",
+                data: param,
+            }).done(function(data){
+                $("#customer_table tbody").html(data);
+            });
+        });
+    });
+    const columnTranslations = {
+        'grade_code': '등급코드',
+        'cus_id': '사용자 id',
+        'cus_pw': '사용자 pw',
+        'name': '이름',
+        'nickname': '닉네임',
+        'gender': '성별',
+        'birth_date': '생일',
+        'phone': '전화번호',
+        'email': '이메일',
+        'weight': '무게',
+        'height': '높이',
+        'total': '전체',
+        'grade_expire_date': '등급만기일자',
+        'is_del':'삭제여부'
+
+    };
+
+    // 페이지 로딩 후 컬럼 이름을 한국어로 변환
+    document.addEventListener('DOMContentLoaded', function() {
+        const columnElements = document.querySelectorAll('.column-name'); // 'column-name' 클래스를 가진 요소들
+
+        columnElements.forEach(element => {
+            const columnName = element.innerText.trim();
+            if (columnTranslations[columnName]) {
+                element.innerText = columnTranslations[columnName];  // 한국어로 번역
+            }
+        });
+    });
+</script>
 </body>
 </html>

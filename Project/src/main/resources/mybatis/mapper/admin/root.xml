@@ -20,7 +20,7 @@
   </select>
   <!--테이블 전체-->
   <select id="allCustomer" resultType="admin.vo.CustomerVO" >
-    select * from `customer`
+    select `grade_code`,`cus_id`, `cus_pw`,`name`,`nickname`,`gender`,`birth_date`,`phone`,`email`,`weight`,`height`,`total`,`grade_expire_date`,`is_del` from `customer`
 
   </select>
   <select id="allMajor" resultType="admin.vo.MajorCategoryVO">
@@ -73,6 +73,13 @@
     SELECT COLUMN_NAME as mcname
     FROM INFORMATION_SCHEMA.COLUMNS
     WHERE TABLE_NAME = 'coupon'
+    AND TABLE_SCHEMA = 'shop'
+    ORDER BY ORDINAL_POSITION
+  </select>
+  <select id="allCustomerCol" resultType="String">
+    SELECT COLUMN_NAME as mcname
+    FROM INFORMATION_SCHEMA.COLUMNS
+    WHERE TABLE_NAME = 'customer'
     AND TABLE_SCHEMA = 'shop'
     ORDER BY ORDINAL_POSITION
   </select>
@@ -132,7 +139,7 @@
     </trim>
 
   </select>
-  <select id="searchCoupon" parameterType="Map" resultType="admin.vo.MajorCategoryVO">
+  <select id="searchCoupon" parameterType="Map" resultType="admin.vo.CouponVO">
     SELECT * FROM coupon
     <trim prefix="where">
       <choose>
@@ -149,5 +156,36 @@
         <when test="searchType == 'status'">status LIKE CONCAT('%',#{searchValue},'%')</when>
       </choose>
     </trim>
+  </select>
+  <select id="searchCustomer" parameterType="Map" resultType="admin.vo.CustomerVO">
+    SELECT * FROM customer
+    <trim prefix="where">
+      <choose>
+        <when test="searchType == 'grade_code'">grade_code LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test="searchType == 'cus_id'">cus_id LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test="searchType == 'cus_pw'">cus_pw LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test="searchType == 'name'">name LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test="searchType == 'nickname'">nickname LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test="searchType == 'gender'">gender LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test="searchType == 'birth_date'">birth_date LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test="searchType == 'phone'">phone LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test="searchType == 'email'">email LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test="searchType == 'weight'">weight LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test="searchType == 'height'">height LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test="searchType == 'total'">total LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test="searchType == 'grade_expire_date'">grade_expire_date LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test="searchType == 'is_del'">is_del LIKE CONCAT('%',#{searchValue},'%')</when>
+      </choose>
+    </trim>
+  </select>
+  <insert id="addMajorCategory" parameterType="admin.vo.MajorCategoryVO">
+    INSERT INTO major_category (name,ename)
+    VALUES (#{name},#{ename});
+
+  </insert>
+  <select id="getCategory" resultType="admin.vo.CategoryVO">
+    SELECT middle_category.*,major_category.name as major_name
+    FROM middle_category as mi
+    JOIN major_category as ma on mi.major_no = ma.id
   </select>
 </mapper>

@@ -1,9 +1,9 @@
 package admin.dao;
 
-import admin.vo.CustomerVO;
 import admin.vo.MajorCategoryVO;
 import org.apache.ibatis.session.SqlSession;
 import service.FactoryService;
+import user.vo.CustomerVO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,4 +37,16 @@ public class MajorCategoryDao {
         ss.close();
         return ar;
     }
+    public static int addMajorCategory(MajorCategoryVO vo) {
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        int cnt = ss.insert("root.addMajorCategory", vo);  // 'root.addMajorCategory'는 MyBatis 매퍼 파일에서 설정한 ID
+        if (cnt > 0) {
+            ss.commit();  // 성공적으로 추가되었을 경우 커밋
+        }
+
+        ss.close();
+        return cnt;  // 추가된 레코드 수 반환
+    }
+
 }

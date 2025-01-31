@@ -24,6 +24,7 @@ public class CouponDao {
         SqlSession ss = FactoryService.getFactory().openSession();
         List<String> name = new ArrayList<>();
         name = ss.selectList("root.allCouponCol");
+        ss.close();
         return name;
     }
     public static CouponVO[] searchCoupon(String searchType, String searchValue){
