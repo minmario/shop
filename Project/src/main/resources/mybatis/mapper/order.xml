@@ -4,20 +4,25 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="order">
   <select id="new_order_list" parameterType="String" resultType="comm.vo.OrderVO">
-    SELECT `order`.*,product.*, customer.cus_id,inventory.option_name
-    FROM `order`
-    LEFT JOIN product ON `order`.prod_no = product.id
-    LEFT JOIN customer ON customer.id = `order`.cus_no
-    LEFT JOIN inventory ON `order`.inventory_no = inventory.id
-    WHERE product.seller_no = #{seller_no}
-    AND `order`.status = 0
+    SELECT o.*, p.name as prod_name, c.cus_id,i.option_name,i.count as option_count
+    FROM `order` as o
+    LEFT JOIN product as p ON o.prod_no = p.id
+    LEFT JOIN customer as c ON c.id = o.cus_no
+    LEFT JOIN inventory as i ON o.inventory_no = i.id
+    WHERE p.seller_no = #{seller_no}
   </select>
   <select id="get_order_one" parameterType="String" resultType="comm.vo.OrderVO">
-    SELECT `order`.*,product.*, customer.cus_id,inventory.option_name
-    FROM `order`
-    LEFT JOIN product ON `order`.prod_no = product.id
-    LEFT JOIN customer ON customer.id = `order`.cus_no
-    LEFT JOIN inventory ON `order`.inventory_no = inventory.id
-    WHERE `order`.id = #{order_no}
+    SELECT o.*,p.name as prod_name,d.*,i.option_name,i.count as option_count,c.cus_id,c.name as cus_name
+    FROM `order` as o
+    LEFT JOIN product as p ON o.prod_no = p.id
+    LEFT JOIN customer as c ON c.id = o.cus_no
+    LEFT JOIN inventory as i ON o.inventory_no = i.id
+    LEFT JOIN delivery as d ON o.deli_no = d.id
+    WHERE o.id = #{order_no};
   </select>
+  <update id="change_status" parameterType="String">
+    UPDATE `order`
+    SET status=#{status}
+    WHERE tid = #{tid}
+  </update>
 </mapper>

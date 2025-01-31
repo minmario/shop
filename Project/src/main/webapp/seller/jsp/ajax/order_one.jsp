@@ -7,13 +7,22 @@
     Object obj = request.getAttribute("vo");
     if(obj!=null){
         OrderVO vo = (OrderVO) obj;
-        System.out.println("json: "+vo.getName());
+
 %>
 {
 "cus_id":"<%=vo.getCus_id()%>",
-"name":"<%=vo.getName()%>",
+"prod_name":"<%=vo.getProd_name()%>",
 "order_no":"<%=vo.getId()%>",
-"option":"<%=vo.getOption_name()%>"
+"option_name":"<%=vo.getOption_name()%>",
+"cus_name":"<%=vo.getCus_name()%>",
+"count":"<%=vo.getOption_count()%>",
+"order_status":"<%=vo.getStatus()%>",
+"deli_name":"<%=vo.getDeli_name()%>",
+"order_date":"<%=vo.getOrder_date()%>",
+"phone":"<%=vo.getPhone()%>",
+"addr1":"<%=vo.getAddr1()%>",
+"addr2":"<%=vo.getAddr2()%>",
+"reason":"<%=vo.getReason()%>"
 }
 <%
     }

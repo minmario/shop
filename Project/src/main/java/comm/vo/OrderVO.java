@@ -1,256 +1,53 @@
 package comm.vo;
 
 public class OrderVO {
-    private String category_no, seller_no, prod_code, name, length, shoulder, chest, sleeve, waist, hip, thigh, rise, hem, foot_length, foot_width, ankle_height, heel_height, price, add_date, view_count, inventory, active, sale, prod_image, additional_images, content, is_del, saled_price, id,
-            tid, cus_no, prod_no, coupon_no, point_no, deli_no, order_code, count, order_date, pay_type, bank, account, card_name, is_install, install_month, status;
-    private String cus_id,inventory_no, option_name;
+    private String id, tid, cus_no, prod_no, coupon_no, point_no, deli_no, order_code, count, order_date, pay_type, order_bank, order_account, refund_bank,
+            refund_account, card_name, is_install, install_month, status, inventory_no, reason, retrieve_deli_no;
+    private String cus_id, cus_name;
+    private String prod_name;
+    private String addr1,addr2,deli_name,phone;
+    private String option_name, option_count;
+    ProductVO product;
+    DeliveryVO delivery;
 
-    public String getInventory_no() {
-        return inventory_no;
+    public String getAddr1() {
+        return addr1;
     }
 
-    public void setInventory_no(String inventory_no) {
-        this.inventory_no = inventory_no;
+    public void setAddr1(String addr1) {
+        this.addr1 = addr1;
     }
 
-    public String getOption_name() {
-        return option_name;
+    public String getAddr2() {
+        return addr2;
     }
 
-    public void setOption_name(String option_name) {
-        this.option_name = option_name;
+    public void setAddr2(String addr2) {
+        this.addr2 = addr2;
     }
 
-    public String getCategory_no() {
-        return category_no;
+    public String getDeli_name() {
+        return deli_name;
     }
 
-    public void setCategory_no(String category_no) {
-        this.category_no = category_no;
+    public void setDeli_name(String deli_name) {
+        this.deli_name = deli_name;
     }
 
-    public String getSeller_no() {
-        return seller_no;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setSeller_no(String seller_no) {
-        this.seller_no = seller_no;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getProd_code() {
-        return prod_code;
+    public String getProd_name() {
+        return prod_name;
     }
 
-    public void setProd_code(String prod_code) {
-        this.prod_code = prod_code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLength() {
-        return length;
-    }
-
-    public void setLength(String length) {
-        this.length = length;
-    }
-
-    public String getShoulder() {
-        return shoulder;
-    }
-
-    public void setShoulder(String shoulder) {
-        this.shoulder = shoulder;
-    }
-
-    public String getChest() {
-        return chest;
-    }
-
-    public void setChest(String chest) {
-        this.chest = chest;
-    }
-
-    public String getSleeve() {
-        return sleeve;
-    }
-
-    public void setSleeve(String sleeve) {
-        this.sleeve = sleeve;
-    }
-
-    public String getWaist() {
-        return waist;
-    }
-
-    public void setWaist(String waist) {
-        this.waist = waist;
-    }
-
-    public String getHip() {
-        return hip;
-    }
-
-    public void setHip(String hip) {
-        this.hip = hip;
-    }
-
-    public String getThigh() {
-        return thigh;
-    }
-
-    public void setThigh(String thigh) {
-        this.thigh = thigh;
-    }
-
-    public String getRise() {
-        return rise;
-    }
-
-    public void setRise(String rise) {
-        this.rise = rise;
-    }
-
-    public String getHem() {
-        return hem;
-    }
-
-    public void setHem(String hem) {
-        this.hem = hem;
-    }
-
-    public String getFoot_length() {
-        return foot_length;
-    }
-
-    public void setFoot_length(String foot_length) {
-        this.foot_length = foot_length;
-    }
-
-    public String getFoot_width() {
-        return foot_width;
-    }
-
-    public void setFoot_width(String foot_width) {
-        this.foot_width = foot_width;
-    }
-
-    public String getAnkle_height() {
-        return ankle_height;
-    }
-
-    public void setAnkle_height(String ankle_height) {
-        this.ankle_height = ankle_height;
-    }
-
-    public String getHeel_height() {
-        return heel_height;
-    }
-
-    public void setHeel_height(String heel_height) {
-        this.heel_height = heel_height;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getAdd_date() {
-        return add_date;
-    }
-
-    public void setAdd_date(String add_date) {
-        this.add_date = add_date;
-    }
-
-    public String getView_count() {
-        return view_count;
-    }
-
-    public void setView_count(String view_count) {
-        this.view_count = view_count;
-    }
-
-    public String getInventory() {
-        return inventory;
-    }
-
-    public void setInventory(String inventory) {
-        this.inventory = inventory;
-    }
-
-    public String getActive() {
-        return active;
-    }
-
-    public void setActive(String active) {
-        this.active = active;
-    }
-
-    public String getSale() {
-        return sale;
-    }
-
-    public void setSale(String sale) {
-        this.sale = sale;
-    }
-
-    public String getProd_image() {
-        return prod_image;
-    }
-
-    public void setProd_image(String prod_image) {
-        this.prod_image = prod_image;
-    }
-
-    public String getAdditional_images() {
-        return additional_images;
-    }
-
-    public void setAdditional_images(String additional_images) {
-        this.additional_images = additional_images;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getIs_del() {
-        return is_del;
-    }
-
-    public void setIs_del(String is_del) {
-        this.is_del = is_del;
-    }
-
-    public String getSaled_price() {
-        return saled_price;
-    }
-
-    public void setSaled_price(String saled_price) {
-        this.saled_price = saled_price;
-    }
-
-    public String getCus_id() {
-        return cus_id;
-    }
-
-    public void setCus_id(String cus_id) {
-        this.cus_id = cus_id;
+    public void setProd_name(String prod_name) {
+        this.prod_name = prod_name;
     }
 
     public String getId() {
@@ -341,20 +138,36 @@ public class OrderVO {
         this.pay_type = pay_type;
     }
 
-    public String getBank() {
-        return bank;
+    public String getOrder_bank() {
+        return order_bank;
     }
 
-    public void setBank(String bank) {
-        this.bank = bank;
+    public void setOrder_bank(String order_bank) {
+        this.order_bank = order_bank;
     }
 
-    public String getAccount() {
-        return account;
+    public String getOrder_account() {
+        return order_account;
     }
 
-    public void setAccount(String account) {
-        this.account = account;
+    public void setOrder_account(String order_account) {
+        this.order_account = order_account;
+    }
+
+    public String getRefund_bank() {
+        return refund_bank;
+    }
+
+    public void setRefund_bank(String refund_bank) {
+        this.refund_bank = refund_bank;
+    }
+
+    public String getRefund_account() {
+        return refund_account;
+    }
+
+    public void setRefund_account(String refund_account) {
+        this.refund_account = refund_account;
     }
 
     public String getCard_name() {
@@ -387,5 +200,77 @@ public class OrderVO {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getInventory_no() {
+        return inventory_no;
+    }
+
+    public void setInventory_no(String inventory_no) {
+        this.inventory_no = inventory_no;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public String getRetrieve_deli_no() {
+        return retrieve_deli_no;
+    }
+
+    public void setRetrieve_deli_no(String retrieve_deli_no) {
+        this.retrieve_deli_no = retrieve_deli_no;
+    }
+
+    public String getCus_id() {
+        return cus_id;
+    }
+
+    public void setCus_id(String cus_id) {
+        this.cus_id = cus_id;
+    }
+
+    public String getCus_name() {
+        return cus_name;
+    }
+
+    public void setCus_name(String cus_name) {
+        this.cus_name = cus_name;
+    }
+
+    public String getOption_name() {
+        return option_name;
+    }
+
+    public void setOption_name(String option_name) {
+        this.option_name = option_name;
+    }
+
+    public String getOption_count() {
+        return option_count;
+    }
+
+    public void setOption_count(String option_count) {
+        this.option_count = option_count;
+    }
+
+    public ProductVO getProduct() {
+        return product;
+    }
+
+    public void setProduct(ProductVO product) {
+        this.product = product;
+    }
+
+    public DeliveryVO getDelivery() {
+        return delivery;
+    }
+
+    public void setDelivery(DeliveryVO delivery) {
+        this.delivery = delivery;
     }
 }

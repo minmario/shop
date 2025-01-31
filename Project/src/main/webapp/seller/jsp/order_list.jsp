@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <%
     request.setCharacterEncoding("UTF-8");
     String seller_no = (String) session.getAttribute("seller_no");
@@ -92,7 +93,7 @@
             </colgroup>
             <thead>
             <tr class="center">
-                <th><input type="checkbox" onclick="newAll(this)"></th>
+                <th><input type="checkbox" id="newAll" onclick="toggleAll(this)"></th>
                 <th>주문번호</th>
                 <th>ID</th>
                 <th>상품번호</th>
@@ -106,34 +107,29 @@
             <tbody>
             <c:if test="${ar != null}">
                 <c:forEach var="order" items="${ar}">
+                    <c:if test="${order.status == 0}">
                     <tr class="list">
                         <td><input type="checkbox" name="newBox"></td>
                         <td> <a href="#" class="text-primary"
-
                                 onclick="setModal('${order.id}')">
                                 ${order.tid}
                         </a></td>
                         <td>${order.cus_id}</td>
                         <td>${order.prod_no}</td>
-                        <td>${order.name}</td>
+                        <td>${order.prod_name}</td>
                         <td>${order.option_name}</td>
-                        <td>${order.count}</td>
+                        <td>${order.option_count}</td>
                         <td>${order.order_date}</td>
                         <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelReasonModal" style="height: 30px" onclick="cancelModal('${order.id}')" >
                             취소
                         </button> </td>
                     </tr>
-
+                    </c:if>
                 </c:forEach>
-            </c:if>
-            <c:if test="${empty ar}">
-                <tr>
-                    <td colspan="9" class="center">조회된 데이터가 없습니다.</td>
-                </tr>
             </c:if>
             </tbody>
         </table>
-        <button type="button" onclick="processSelected()" class="btn btn-primary mb-4">발송 준비</button>
+        <button type="button" id="ready_btn" onclick="processSelected(this)" class="btn btn-primary mb-4">발송 준비</button>
     </div>
     <hr/>
     <!-- 배송 관리 -->
@@ -166,21 +162,20 @@
         <table class="table table-bordered">
             <colgroup>
                 <col width="50px">
+                <col width="100px">
                 <col width="120px">
-                <col width="140px">
                 <col width="*">
                 <col width="80px">
                 <col width="120px">
                 <col width="120px">
                 <col width="140px">
                 <col width="100px">
-                <col width="140px">
 
 
             </colgroup>
             <thead>
             <tr class="center">
-                <th><input type="checkbox" onclick="toggleAll(this)"></th>
+                <th><input type="checkbox" id="readyAll" onclick="toggleAll(this)"></th>
                 <th>주문번호</th>
                 <th>ID</th>
                 <th>상품명</th>
@@ -188,44 +183,36 @@
                 <th>수량</th>
                 <th>주문 상태</th>
                 <th>주문 일자</th>
-                <th>배송사</th>
-                <th>송장 번호</th>
+                <th>송장번호</th>
+
             </tr>
             </thead>
             <tbody>
-            <tr class="list">
-                <td><input type="checkbox" name="delibox"></td>
-                <td> <a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#orderDetailModal" >
-                    3122325
-                </a></td>
-                <td>vldhtmxk</td>
-                <td>후드티</td>
-                <td>XL</td>
-                <td>1개</td>
-                <td>발송 준비</td>
-                <td>2025-01-16</td>
-                <td>cj대한통운</td>
-                <td>215135489898</td>
-            </tr>
-            <c:forEach var="order" items="${orderList}">
-                <tr>
-                    <td>${order.orderNumber}</td>
-                    <td>${order.prod_no}</td>
-                    <td>${order.prod_name}</td>
-                    <td>${order.count}</td>
-                    <td>${order.order_code}</td>
-                    <td>${order.deli_name}</td>
-                    <td>${order.deli_no}</td>
-                </tr>
-            </c:forEach>
-            <c:if test="${empty orderList}">
-                <tr>
-                    <td colspan="10" class="center">조회된 데이터가 없습니다.</td>
-                </tr>
+            <c:if test="${ar != null}">
+                <c:forEach var="order" items="${ar}">
+                    <c:if test="${order.status eq '1' || order.status eq '2'}">
+                        <tr class="list">
+                            <td><input type="checkbox" name="readyBox"></td>
+                            <td> <a href="#" class="text-primary" onclick="setModal('${order.id}')" >
+                                ${order.tid}
+                            </a></td>
+                            <td>${order.id}</td>
+                            <td>${order.prod_name}</td>
+                            <td>${order.option_name}</td>
+                            <td>${order.option_count}</td>
+                            <td>
+                                <c:if test="${order.status eq 1}">발송 준비</c:if>
+                                <c:if test="${order.status eq 2}">발송 완료</c:if>
+                            </td>
+                            <td>${order.order_date}</td>
+                            <td>64161651</td>
+                        </tr>
+                    </c:if>
+                </c:forEach>
             </c:if>
             </tbody>
         </table>
-        <button type="button" onclick="changeComplete()" class="btn btn-primary mb-4">발송 완료</button>
+        <button type="button" id="done_btn"onclick="processSelected(this)" class="btn btn-primary mb-4">발송 완료</button>
     </div>
     <hr/>
     <!-- 반품/교환 -->
@@ -254,44 +241,53 @@
                 <col width="140px">
                 <col width="100px">
                 <col width="100px">
-                <col width="130">
                 <col width="100px">
-                <col width="80px">
             </colgroup>
             <thead>
             <tr class="center">
-                <th><input type="checkbox" onclick="toggleAll(this)"></th>
+                <th><input type="checkbox" id="returnAll"onclick="toggleAll(this)"></th>
                 <th>주문번호</th>
-                <th>ID</th>
                 <th>구분</th>
                 <th>상태</th>
                 <th>반품/교환 요청일</th>
-                <th>사유</th>
                 <th>거부</th>
 
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="order" items="${orderList}">
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>${order.orderNumber}</td>
-                    <td>${order.order_code}</td>
-                    <td>${order.order_code}</td>
-                    <td>${order.price}</td>
-                    <td>${order.order_date}</td>
-                    <td>${order.deliveryMethod}</td>
-                    <td><button type="button" onclick="showDialog()" class="btn btn-primary mb-4">거부</button></td>
-                </tr>
-            </c:forEach>
-            <c:if test="${empty orderList}">
-                <tr>
-                    <td colspan="8" class="center">조회된 데이터가 없습니다.</td>
-                </tr>
+            <c:if test="${ar != null}">
+                <c:forEach var="order" items="${ar}">
+                    <c:if test="${order.status eq 3 or order.status eq 4 or order.status eq 5 or order.status eq 6 or
+                    order.status eq 7}">
+                        <tr class="list">
+                            <td><c:if test="${order.status eq 3 or order.status eq 5}">
+                            <input type="checkbox" name="returnBox">
+                            </c:if></td>
+                            <td> <a href="#" class="text-primary" onclick="setModal('${order.id}')" >
+                                    ${order.tid}
+                            </a></td>
+                            <td id="division">
+                                <c:if test="${order.status eq 3 or order.status eq 4}">교환</c:if>
+                                <c:if test="${order.status eq 5 or order.status eq 6 or order.status eq 7}">반품</c:if>
+                            </td>
+                            <td>
+                                <c:if test="${order.status eq 3}">교환 신청</c:if>
+                                <c:if test="${order.status eq 4}">교환 거부</c:if>
+                                <c:if test="${order.status eq 5}">반품 신청</c:if>
+                                <c:if test="${order.status eq 6}">반품 완료</c:if>
+                                <c:if test="${order.status eq 7}">반품 거부</c:if>
+                            </td>
+                            <td>${order.order_date}</td>
+                            <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelReasonModal" style="height: 30px" onclick="cancelModal('${order.id}')" >
+                                거부사유 입력
+                            </button> </td>
+                        </tr>
+                    </c:if>
+                </c:forEach>
             </c:if>
             </tbody>
         </table>
-        <button type="button" onclick="changeComplete()" class="btn btn-primary mb-4">일괄 처리</button>
+        <button type="button" id="return_btn" onclick="processSelected(this)" class="btn btn-primary mb-4">일괄 처리</button>
     </div>
     <hr/>
 </div>
@@ -306,6 +302,14 @@
             <div class="modal-body">
                 <!-- 주문 상세 정보 -->
                 <h5>주문 상세 정보</h5>
+                <table id="reasonTable" class="table table-bordered" style="display:none;">
+                    <tbody>
+                        <tr>
+                            <th id="thSet" >반품 사유</th>
+                            <Td id="reason"></Td>
+                        </tr>
+                    </tbody>
+                </table>
                 <table id="tables" class="table table-bordered">
                     <tbody>
                     <tr>
@@ -313,12 +317,32 @@
                         <td id="order_no"></td>
                     </tr>
                     <tr>
+                        <th>ID</th>
+                        <td id="cus_id"></td>
+                    </tr>
+                    <tr>
+                        <th>이름</th>
+                        <td id="cus_name"></td>
+                    </tr>
+                    <tr>
                         <th>상품명</th>
                         <td id="prod_name"></td>
                     </tr>
                     <tr>
                         <th>옵션</th>
-                        <td id="option"></td>
+                        <td id="option_name"></td>
+                    </tr>
+                    <tr>
+                        <th>수량</th>
+                        <td id="count"></td>
+                    </tr>
+                    <tr>
+                        <th>주문 일자</th>
+                        <td id="order_date"></td>
+                    </tr>
+                    <tr>
+                        <th>상태</th>
+                        <td id="order_status"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -329,15 +353,23 @@
                     <tbody>
                     <tr>
                         <th>수취인명</th>
-                        <td id="cus_name"></td>
+                        <td id="deli_name"></td>
+                    </tr>
+                    <tr>
+                        <th>송장 번호</th>
+                        <td id="invoice"></td>
                     </tr>
                     <tr>
                         <th>연락처</th>
-                        <td id="cus_phone"></td>
+                        <td id="phone"></td>
                     </tr>
                     <tr>
-                        <th>배송번호</th>
-                        <td id="deli_no"></td>
+                        <th>주소 1 </th>
+                        <td id="addr1"></td>
+                    </tr>
+                    <tr>
+                        <th>주소 2</th>
+                        <td id="addr2"></td>
                     </tr>
 
                     </tbody>
@@ -407,10 +439,30 @@
             data: param,
             dataType: "json",
         }).done(function (res) {
-            console.log("console: " + res.name);
-            $("#prod_name").text(res.name);
-            $("#cus_name").text(res.cus_id);
-            $("#option").text(res.option);
+            $("#cus_id").text(res.cus_id);
+            $("#prod_name").text(res.prod_name);
+            $("#cus_name").text(res.cus_name);
+            $("#option_name").text(res.option_name);
+            $("#order_no").text(res.order_no);
+            $("#count").text(res.count);
+            $("#order_date").text(res.order_date);
+            $("#order_status").text(res.order_status);
+            $("#deli_name").text(res.deli_name);
+            $("#phone").text(res.phone);
+            $("#addr1").text(res.addr1);
+            $("#addr2").text(res.addr2);
+            const status = parseInt(res.order_status);
+            if(status > 3) {
+                    console.log(status);
+                if(status<5)
+                    $("#thSet").text("교환 사유");
+                else
+                    $("#thSet").text("반품 사유");
+                $("#reason").text(res.reason);
+                $("#reasonTable").show();
+            }
+            else
+                $("#reasonTable").hide();
             // 테이블 요소 가져오기
 
             // 모달 열기 (부트스트랩 5 기준)
@@ -419,32 +471,90 @@
         }).fail(function (xhr, status, error) {
             console.error("AJAX 요청 실패:", error);
         });
+
     }
     // 전체 선택 체크박스 기능
-    function newAll(source) {
-        const checkboxes = document.getElementsByName('newBox');
+    function toggleAll(source) {
+        let box;
+        let boxes_id = source.id;
+        if(boxes_id === 'newAll')
+            box = 'newBox';
+        else if(boxes_id === 'readyAll')
+            box = 'readyBox'
+        else if(boxes_id === 'returnAll')
+            box = 'returnBox'
+        const checkboxes = document.getElementsByName(box);
         for(var i=0, n=checkboxes.length; i<n; i++) {
             checkboxes[i].checked = source.checked;
         }
     }
 
     // 선택된 항목 처리
-    function processSelected() {
+    function processSelected(button) {
         const selectedOrders = [];
-
-        document.querySelectorAll('input[name="orderBox"]:checked').forEach(checkbox => {
-            // checkbox가 속한 tr 요소를 찾아서 그 안의 td 값 추출
-            const row = checkbox.closest('tr');  // 체크박스가 속한 <tr> 찾기
-            const orderValue = row.querySelector('td:nth-child(3)').textContent;// 두 번째 <td>의 값 가져오기
-            console.log(orderValue);
-            selectedOrders.push(orderValue);
-        });
-
-        if (selectedOrders.length > 0) {
-            alert('선택된 주문: ' + selectedOrders.join(', '));
-        } else {
-            alert('선택된 주문이 없습니다.');
+        let checkboxes = [];
+        let status=[];
+        let chk = false;
+        if (button.id === "ready_btn") {
+            checkboxes = document.querySelectorAll('input[name="newBox"]:checked');
+            status[0] = 1;
+        } else if (button.id === "done_btn") {
+            checkboxes = document.querySelectorAll('input[name="readyBox"]:checked');
+            status[0] = 2;
+        } else if (button.id === "return_btn"){
+            checkboxes = document.querySelectorAll('input[name="returnBox"]:checked')
+            chk = true;
         }
+
+        let i=0;
+       checkboxes.forEach(checkbox => {
+           // checkbox가 속한 tr 요소를 찾아서 그 안의 td 값 추출
+           const row = checkbox.closest('tr');  // 체크박스가 속한 <tr> 찾기
+           const orderValue = row.querySelector('td:nth-child(2)').textContent;// 두 번째 <td>의 값 가져오기
+           const division = row.querySelector('td:nth-child(3)').textContent.trim();
+           if (chk) {
+               if (division === '반품')
+                   status[i] = 6;
+               else if (division === '교환')
+                   status[i] = 2;
+           }
+
+            selectedOrders.push(orderValue);
+            i++;
+        });
+        const param = "type=changeStatus&selectedOrders="+encodeURIComponent(selectedOrders.join(','))+"&status="+encodeURIComponent(status.join(','));
+        $.ajax({
+            url: "Controller",
+            type: "post",
+            data: param,
+            dataType: "json",
+        }).done(function(res){
+            if(res.cnt>0){
+                location.reload();
+                let message;
+                switch (status[0]){
+                    case 1:
+                        message ="주문 접수 완료!";
+                        break;
+                    case 2:
+                        message="상품 발송 완료!";
+                        break;
+                    case 6:
+                        message="환불/반품 완료!"
+                        break;
+                    case 4:
+                        message="교환 거부 사유를 보냈습니다."
+                        break;
+                    case 7:
+                        message="반품 거부 사유를 보냈습니다.";
+                        break;
+                }
+                alert(message);
+            }else{
+                alert("변경 실패")
+
+            }
+        });
     }
     // 취소 모달
    function cancelModal(order_no){
