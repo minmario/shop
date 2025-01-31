@@ -1,166 +1,146 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Musinsa Style Page</title>
+    <link rel="icon" href="./user/images/share_musinsa.png">
+    <title>무신사</title>
 
+    <%-- Google Font : Gothic A1 --%>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <%-- CSS --%>
+    <link rel="stylesheet" type="text/css" href="./user/css/index/index.css"/>
 </head>
 <body>
- <jsp:include page="layout/header.jsp"></jsp:include>
- <!-- 네비게이션 아래 메뉴바 페이지 -->
- <!-- d-flex justify-content-between align-items-center: 좌우정렬과 가운데정렬을 하는 부트스트랩기능-->
+<%-- header --%>
+<jsp:include page="layout/header.jsp"></jsp:include>
 
-<%-- <div class="index header d-flex justify-content-between align-items-center p-3 bg-light border-bottom">--%>
+<div class="wrap">
+    <div class="row">
+        <div class="container">
+            <div id="accordion" class="product-menu">
+                <c:forEach var="major" items="${sessionScope.categories}">
+                    <c:if test="${major.name ne null}">
+                        <div class="card">
+                            <div class="card-header" id="${major.ename}Heading">
+                                <button class="btn btn-link d-flex justify-content-between align-items-center toggle-btn" data-toggle="collapse" data-target="#${major.ename}Collapse" aria-expanded="false" aria-controls="${major.ename}Collapse">
+                                    <span class="text-left">${major.name} <span class="badge badge-secondary">${major.ename}</span></span>
+                                    <i class="bi bi-plus"></i>
+                                </button>
+                            </div>
+                            <div id="${major.ename}Collapse" class="collapse" aria-labelledby="${major.ename}Heading" data-parent="#accordion">
+                                <div class="card-body">
+                                    <ul class="list-unstyled">
+                                        <c:forEach var="middle" items="${major.middleCategories}">
+                                            <c:if test="${middle.major_no eq major.id}">
+                                                <li><button class="unstyled-btn" data-name="${middle.name}" data-value="${middle.id}">${middle.name}</button></li>
+                                            </c:if>
+                                        </c:forEach>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </c:if>
+                </c:forEach>
+            </div>
 
-<%--     <div>--%>
-<%--         <c:choose>--%>
-<%--             <c:when test="${isLoggedIn}">--%>
-<%--                 <span class="me-3">환영합니다, <strong>${nickname}님</strong></span>--%>
-<%--                 <button type="button" class="btn btn-outline-secondary"--%>
-<%--                         onclick="location.href='Controller?type=logout';">로그아웃</button>--%>
-<%--             </c:when>--%>
-<%--             <c:otherwise>--%>
-<%--                 <button type="button" class="btn btn-outline-primary"--%>
-<%--                         onclick="location.href='login.jsp';">로그인</button>--%>
-<%--             </c:otherwise>--%>
-<%--         </c:choose>--%>
-<%--     </div>--%>
+            <div class="product-section">
+                <div class="sorting-bar">
+                    <div class="selected-filters">
+                        <button class="unstyled-btn selected-item d-none">
+                            <span class="item-text"></span>
+                            <i class="bi bi-x remove-item"></i>
+                        </button>
+                    </div>
 
+                    <div class="sort-pagination-container">
+                        <div class="sort-dropdown">
+                            <div class="dropdown-items">
+                                <div class="dropdown-item active" data-value="recommend">추천순</div>
+                                <div class="dropdown-item" data-value="new">신상품(재입고)순</div>
+                                <div class="dropdown-item" data-value="low-price">낮은 가격순</div>
+                                <div class="dropdown-item" data-value="high-price">높은 가격순</div>
+                                <div class="dropdown-item" data-value="discount-rate">할인율순</div>
+                                <div class="dropdown-item" data-value="review">후기순</div>
+                                <div class="dropdown-item" data-value="sales">판매순</div>
+                            </div>
+                        </div>
+                        <nav aria-label="Page navigation" class="navigation">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">1</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">2</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">3</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
 
+                <div class="product-list d-flex flex-wrap">
+                    <c:forEach begin="1" end="9" varStatus="st">
+                        <div class="product-item" onclick="location.href='Controller?type=productDetails'">
+                            <img src="./user/images/product${st.index}.jpg" alt="상품 이미지" class="product-image">
+                            <div class="product-info">
+                                <p class="product-brand"><strong>브랜드명</strong></p>
+                                <p class="product-name">상품 이름 상품 이름 상품 이름 상품 이름 상품 이름 상품 이름</p>
+                                <p class="product-price">
+                                    <del>29,100원</del>
+                                    <strong>19,000원</strong>
+                                </p>
+                                <div class="product-rating">
+                                        <span class="stars">
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
+                                            <span class="star-count">137</span>
+                                        </span>
+                                </div>
+                                <div class="product-likes">
+                                    <i class="bi bi-heart-fill"></i>
+                                    <span class="like-count">100</span>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
+            </div>
+        </div>
+    </div>
 
-
-<%--     <div class="d-flex gap-3 align-items-center">--%>
-<%--         <a href="#" class="text-decoration-none text-dark">바로접속 ON</a>--%>
-<%--         <a href="mypage.jsp" class="text-decoration-none text-dark">마이페이지</a>--%>
-<%--         <a href="#" class="text-decoration-none text-dark">최근 본 상품</a>--%>
-<%--         <a href="#" class="text-decoration-none text-danger">좋아요</a>--%>
-<%--         <a href="#" class="text-decoration-none text-dark position-relative">--%>
-<%--             장바구니 <span class="badge bg-primary rounded-pill">0</span>--%>
-<%--         </a>--%>
-<%--         <a href="#" class="text-decoration-none text-dark">주문배송조회</a>--%>
-<%--         <a href="#" class="text-decoration-none text-dark">고객센터</a>--%>
-<%--     </div>--%>
-<%-- </div>--%>
-
-
- <!--이벤트슬라이더 -->
- <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-     <div class="carousel-inner">
-         <!-- 첫 번째 이미지 -->
-         <div class="carousel-item active">
-             <img src="../images/index1.jpg" class="d-block w-100" alt="이벤트 이미지 1">
-         </div>
-         <!-- 두 번째 이미지 -->
-         <div class="carousel-item">
-             <img src="../images/index2.jpg" class="d-block w-100" alt="이벤트 이미지 2">
-         </div>
-
-     </div>
-
-     <!-- 이전 버튼 -->
-     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-         <span class="visually-hidden">Previous</span>
-     </button>
-     <!-- 다음 버튼 -->
-     <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-         <span class="visually-hidden">Next</span>
-     </button>
- </div>
-
-
- <!-- 각 옷들 태그묶음집 -->
- <div class="container my-5">
-     <h2 class="mb-4">스포티 스타일 브랜드 아이템 추천</h2>
-     <div class="row row-cols-1 row-cols-md-4 g-4">
-
-         <div class="col">
-             <div class="card h-100">
-                 <img src="../images/product1.jpg" class="card-img-top" alt="Product Image">
-                 <div class="card-body">
-                     <h5 class="card-title">Sunground Hoody - 4COL</h5>
-                     <p class="card-text text-danger">55% 48,600원</p>
-                 </div>
-             </div>
-         </div>
-
-         <div class="col">
-             <div class="card h-100">
-                 <img src="../images/product2.jpg" class="card-img-top" alt="Product Image">
-                 <div class="card-body">
-                     <h5 class="card-title">조던 부루클린 플리스 팬츠</h5>
-                     <p class="card-text text-danger">10% 76,500원</p>
-                 </div>
-             </div>
-         </div>
-
-         <div class="col">
-             <div class="card h-100">
-                 <img src="../images/product3.jpg" class="card-img-top" alt="Product Image">
-                 <div class="card-body">
-                     <h5 class="card-title">INDIGO WASHED JOGGER PANTS</h5>
-                     <p class="card-text text-danger">80% 15,800원</p>
-                 </div>
-             </div>
-         </div>
-
-         <div class="col">
-             <div class="card h-100">
-                 <img src="../images/product4.jpg" class="card-img-top" alt="Product Image">
-                 <div class="card-body">
-                     <h5 class="card-title">[2PACK] 프렌치 테리 팬츠</h5>
-                     <p class="card-text text-danger">62% 40,000원</p>
-                 </div>
-             </div>
-         </div>
-
-         <div class="col">
-             <div class="card h-100">
-                 <img src="../images/product5.jpg" class="card-img-top" alt="Product Image">
-                 <div class="card-body">
-                     <h5 class="card-title">유니버스 오버핏 스웨트</h5>
-                     <p class="card-text text-danger">40% 29,880원</p>
-                 </div>
-             </div>
-         </div>
-         <div class="col">
-             <div class="card h-100">
-                 <img src="../images/product6.jpg" class="card-img-top" alt="Product Image">
-                 <div class="card-body">
-                     <h5 class="card-title">RDS 2PK 후디 미드</h5>
-                     <p class="card-text text-danger">43% 169,000원</p>
-                 </div>
-             </div>
-         </div>
-         <div class="col">
-             <div class="card h-100">
-                 <img src="../images/product7.jpg" class="card-img-top" alt="Product Image">
-                 <div class="card-body">
-                     <h5 class="card-title">AV LOGO CROP HOODY</h5>
-                     <p class="card-text text-danger">35% 80,600원</p>
-                 </div>
-             </div>
-         </div>
-         <div class="col">
-             <div class="card h-100">
-                 <img src="../images/product8.jpg" class="card-img-top" alt="Product Image">
-                 <div class="card-body">
-                     <h5 class="card-title">스포츠 스타일 팬츠</h5>
-                     <p class="card-text text-danger">45,000원</p>
-                 </div>
-             </div>
-         </div>
-     </div>
- </div>
-
-</body>
-<footer>
+    <%-- footer --%>
     <jsp:include page="./layout/footer.jsp"></jsp:include>
-</footer>
+</div>
 
+<%-- JQuery --%>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+<%-- Bootstrap --%>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="./user/JS/index/index.js"></script>
+</body>
 </html>

@@ -1,22 +1,30 @@
 package user.vo;
 
 public class CustomerVO {
-  private String id, grade_no, cus_id, cus_pw, cus_name, cus_nickname, cus_gender, cus_birth, cus_phone, cus_email, weight, height, total, expire_date, is_del;
-
+  private String id, grade_code, cus_id, cus_pw, name, nickname, gender, birth_date, phone, email, weight, height, total, expire_date, is_del;
+  private String profile_image;
   public String getId() {
     return id;
+  }
+
+  public String getProfile_image() {
+    return profile_image;
+  }
+
+  public void setProfile_image(String profile_image) {
+    this.profile_image = profile_image;
   }
 
   public void setId(String id) {
     this.id = id;
   }
 
-  public String getGrade_no() {
-    return grade_no;
+  public String getGrade_code() {
+    return grade_code;
   }
 
-  public void setGrade_no(String grade_no) {
-    this.grade_no = grade_no;
+  public void setGrade_code(String grade_code) {
+    this.grade_code = grade_code;
   }
 
   public String getCus_id() {
@@ -35,52 +43,52 @@ public class CustomerVO {
     this.cus_pw = cus_pw;
   }
 
-  public String getCus_name() {
-    return cus_name;
+  public String getName() {
+    return name;
   }
 
-  public void setCus_name(String cus_name) {
-    this.cus_name = cus_name;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public String getCus_nickname() {
-    return cus_nickname;
+  public String getNickname() {
+    return nickname;
   }
 
-  public void setCus_nickname(String cus_nickname) {
-    this.cus_nickname = cus_nickname;
+  public void setNickname(String nickname) {
+    this.nickname = nickname;
   }
 
-  public String getCus_gender() {
-    return cus_gender;
+  public String getGender() {
+    return gender;
   }
 
-  public void setCus_gender(String cus_gender) {
-    this.cus_gender = cus_gender;
+  public void setGender(String gender) {
+    this.gender = gender;
   }
 
-  public String getCus_birth() {
-    return cus_birth;
+  public String getBirth_date() {
+    return birth_date;
   }
 
-  public void setCus_birth(String cus_birth) {
-    this.cus_birth = cus_birth;
+  public void setBirth_date(String birth_date) {
+    this.birth_date = birth_date;
   }
 
-  public String getCus_phone() {
-    return cus_phone;
+  public String getPhone() {
+    return phone;
   }
 
-  public void setCus_phone(String cus_phone) {
-    this.cus_phone = cus_phone;
+  public void setPhone(String phone) {
+    this.phone = phone;
   }
 
-  public String getCus_email() {
-    return cus_email;
+  public String getEmail() {
+    return email;
   }
 
-  public void setCus_email(String cus_email) {
-    this.cus_email = cus_email;
+  public void setEmail(String email) {
+    this.email = email;
   }
 
   public String getWeight() {

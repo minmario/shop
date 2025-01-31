@@ -13,7 +13,7 @@
 <body class="bg-light d-flex justify-content-center align-items-center vh-100">
 <div class="card shadow p-4" style="width: 22rem;">
     <h1 class="text-center mb-4">MUSINSA</h1>
-    <form action="Controller?type=login" method="POST">
+    <form action="${pageContext.request.contextPath}/Controller?type=login" method="POST">
         <div class="mb-3">
             <input type="text" class="form-control" id="username" name="username" placeholder="아이디">
         </div>

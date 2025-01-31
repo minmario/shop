@@ -1,6 +1,7 @@
-package user.action;
+package user.action.Snap;
 
 import org.json.JSONObject;
+import user.action.Action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

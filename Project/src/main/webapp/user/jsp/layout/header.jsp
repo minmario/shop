@@ -1,31 +1,23 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: gjcks
-  Date: 2025-01-11
-  Time: 오전 10:51
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%
-    request.setCharacterEncoding("UTF-8");
-    String nickname = (String) session.getAttribute("nickname");
-    boolean isLoggedIn = (nickname != null);
-%>
-
-
-</style>
-
 <html>
 <header>
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-<%--    <link rel="stylesheet" href="css/styles.css">--%>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <%-- CSS --%>
+<%--    <link href="./user/css/common/common.css" rel="stylesheet" type="text/css">--%>
+<%--    <link href="./user/css/layout/header.css" rel="stylesheet" type="text/css">--%>
+<%--    <link href="./user/css/alarm/alarm.css" rel="stylesheet" type="text/css">--%>
+
+<%--    &lt;%&ndash; JS &ndash;%&gt;--%>
+<%--    <script src="./JS/alarm/alarm.js"></script>--%>
 
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <div class="container-fluid">
             <!-- 로고 -->
-            <a class="navbar-brand fw-bold text-white" href="#" style="font-size: 1.8rem;">MUSINSA</a>
+            <a class="navbar-brand fw-bold text-white" href="${pageContext.request.contextPath}/Controller" style="font-size: 1.8rem;">MUSINSA</a>
 
             <!-- 검색창 -->
             <form class="d-flex align-items-center" role="search">
@@ -54,8 +46,9 @@
                         <a class="nav-link" href="#">업데이트</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">코디</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}Controller?type=snap">코디</a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="#">세일</a>
                     </li>
@@ -79,35 +72,52 @@
         </div>
     </nav>
     <div>
-
         <div class="index header d-flex justify-content-between align-items-center p-3 bg-light border-bottom">
-
-            <div>
-                <c:choose>
-                    <c:when test="${isLoggedIn}">
-                        <span class="me-3">환영합니다, <strong>${nickname}님</strong></span>
-                        <button type="button" class="btn btn-outline-secondary"
-                                onclick="location.href='Controller?type=logout';">로그아웃</button>
-                    </c:when>
-                    <c:otherwise>
-                        <button type="button" class="btn btn-outline-primary"
-                                onclick="location.href='../login/login.jsp';">로그인</button>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-
-            <div class="d-flex gap-3 align-items-center">
-                <a href="#" class="text-decoration-none text-dark">바로접속 ON</a>
-                <a href="../mypage/mypage.jsp" class="text-decoration-none text-dark">마이페이지</a>
-                <a href="#" class="text-decoration-none text-dark">최근 본 상품</a>
-                <a href="#" class="text-decoration-none text-danger">좋아요</a>
-                <a href="#" class="text-decoration-none text-dark position-relative">
-                    장바구니 <span class="badge bg-primary rounded-pill">0</span>
-                </a>
-                <a href="#" class="text-decoration-none text-dark">주문배송조회</a>
-                <a href="#" class="text-decoration-none text-dark">고객센터</a>
-            </div>
+            <c:choose>
+                <c:when test="${not empty sessionScope.customer_info}">
+                    <!-- 로그인 상태 -->
+                    <span class="nickname">${sessionScope.customer_info.nickname}님 &nbsp;&nbsp; <button type="button" class="btn btn-outline-danger" onclick="location.href='${pageContext.request.contextPath}/Controller?type=logout';">로그아웃</button></span>
+                    <div class="d-flex gap-3 align-items-center user-header-menu">
+                            <%-- 좋아요 --%>
+                        <a href="#" class="text-decoration-none text-danger">
+                            <i class="bi bi-heart-fill"></i>
+                            <span class="like_title">좋아요</span>
+                        </a>
+                            <%-- 알림 --%>
+                        <a href="#" class="text-decoration-none text-dark position-relative" id="alarm-toggle">
+                            <i class="bi bi-bell-fill"></i>
+                            <span>알림</span>
+                            <span class="new_alert"></span>
+                        </a>
+                            <%-- 장바구니 --%>
+                        <a href="Controller?type=cart" class="text-decoration-none text-dark position-relative">
+                            <i class="bi bi-basket-fill"></i>
+                            <span>장바구니</span>
+                            <span class="badge bg-primary rounded-pill cart_count">0</span>
+                        </a>
+                            <%-- 주문배송조회 --%>
+                        <a href="Controller?type=orderDelivery" class="text-decoration-none text-dark">
+                            <i class="bi bi-box-seam-fill"></i>
+                            <span>주문배송조회</span>
+                        </a>
+                            <%-- 마이페이지 --%>
+                        <a href="Controller?type=myPage" class="text-decoration-none text-dark">
+                            <i class="bi bi-person-circle"></i>
+                            <span>마이페이지</span>
+                        </a>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <!-- 비로그인 상태 -->
+                    <button type="button" class="btn btn-outline-primary" onclick="location.href='${pageContext.request.contextPath}/Controller?type=showlogin';">로그인</button>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
 </header>
+
+<%-- alarm --%>
+<div class="alarm-container d-none">
+    <jsp:include page="/user/jsp/alarm/alarm.jsp"></jsp:include>
+</div>
 </html>
