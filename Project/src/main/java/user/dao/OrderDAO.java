@@ -18,6 +18,8 @@ public class OrderDAO {
             list = ss.selectList("order.select_all", cus_no);
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            ss.close();
         }
 
         return list;
@@ -37,6 +39,8 @@ public class OrderDAO {
             list = ss.selectList("order.select_date", map);
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            ss.close();
         }
 
         return list;
@@ -55,6 +59,8 @@ public class OrderDAO {
             list = ss.selectList("order.select_order_code", map);
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            ss.close();
         }
 
         return list;
@@ -73,6 +79,8 @@ public class OrderDAO {
             vo = ss.selectOne("order.select_order", map);
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            ss.close();
         }
 
         return vo;
@@ -91,6 +99,8 @@ public class OrderDAO {
             totalPrice = ss.selectOne("order.select_total_price", map);
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            ss.close();
         }
 
         return totalPrice;
@@ -109,8 +119,134 @@ public class OrderDAO {
             totalPrice = ss.selectOne("order.select_total_saled_price", map);
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            ss.close();
         }
 
         return totalPrice;
+    }
+
+    //배송지 변경
+    public static int updateOrderDelivery(String cus_no, String order_code, String deli_no){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("cus_no", cus_no);
+        map.put("order_code", order_code);
+        map.put("deli_no", deli_no);
+
+        SqlSession ss = FactoryService.getFactory().openSession();
+        int cnt = 0;
+
+        try {
+            cnt = ss.update("order.update_order_delivery", map);
+
+            if (cnt > 0)
+                ss.commit();
+            else
+                ss.rollback();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
+    }
+
+    //상품 사이즈 목록 조회
+    public static List<String> selectSize(String id){
+        SqlSession ss = FactoryService.getFactory().openSession();
+        List<String> list = null;
+
+        try{
+            list = ss.selectList("order.select_size", id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return list;
+    }
+    // 취소 요청
+    public static int updateOrderCancel(String cus_no, String prod_no, String order_code){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("cus_no", cus_no);
+        map.put("prod_no", prod_no);
+        map.put("order_code", order_code);
+
+        SqlSession ss = FactoryService.getFactory().openSession();
+        int cnt = 0;
+
+        try {
+            cnt = ss.update("order.update_order_cancel", map);
+
+            if (cnt > 0)
+                ss.commit();
+            else
+                ss.rollback();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
+
+    }
+    // 반품 요청
+    public static int updateOrderRefund(String cus_no, String[] prod_nos, String order_code, String refund_bank, String refund_account, String reason, String retrieve_deli_no){
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("cus_no", cus_no);
+        map.put("prod_no_list", prod_nos);
+        map.put("order_code", order_code);
+        map.put("refund_bank", refund_bank);
+        map.put("refund_account", refund_account);
+        map.put("reason", reason);
+        map.put("retrieve_deli_no", retrieve_deli_no);
+
+        SqlSession ss = FactoryService.getFactory().openSession();
+        int cnt = 0;
+
+        try {
+            cnt = ss.update("order.update_order_refund", map);
+
+            if (cnt > 0)
+                ss.commit();
+            else
+                ss.rollback();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
+
+    }
+    // 교환 요청
+    public static int updateOrderExchange(String cus_no, String prod_no, String order_code){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("cus_no", cus_no);
+        map.put("prod_no", prod_no);
+        map.put("order_code", order_code);
+
+        SqlSession ss = FactoryService.getFactory().openSession();
+        int cnt = 0;
+
+        try {
+            cnt = ss.update("order.update_order_exchange", map);
+
+            if (cnt > 0)
+                ss.commit();
+            else
+                ss.rollback();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
+
     }
 }

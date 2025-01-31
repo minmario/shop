@@ -50,7 +50,7 @@ input#account-number.toggle, input#account-holder.toggle {
     height: 30px;
 }
 
-.wrap-product, .product-content {
+.product-content {
     display: flex;
 }
 
@@ -255,6 +255,17 @@ input.addr2, #custom-input>input.toggle, #request-select {
     height: 30px;
     width: 500px;
     margin: 5px 10px;
+}
+
+.refund-info>ul{
+    padding: 0;
+    margin: 15px 0px;
+}
+
+.refund-info li{
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
 }
 
 /***************배송 방법 정보 모달******************/
