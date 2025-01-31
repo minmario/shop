@@ -156,7 +156,7 @@
             </thead>
             <tbody>
             <c:forEach var ="bl"  items="${boardList}">
-                <tr>
+                <tr id="row-${bl.id}">
                     <td><input type="checkbox"></td>
                     <td>${bl.bname}</td>
                     <td>${bl.title}</td>
@@ -263,72 +263,123 @@
                     <h5 class="modal-title" id="rejectModalLabel">게시판 사유</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="/Controller?type=deleteBoard" method="post" >
+                <form id="deleteBoardForm">
                     <div class="modal-body">
                         <input type="hidden" id="deleteBoardId" name="id">
 
-                        <textarea class="form-control" name="content" rows="3">보드를 삭제할 이유를 적어주세요.</textarea>
+                        <textarea class="form-control" id="deleteReason" name="content" rows="3">보드를 삭제할 이유를 적어주세요.</textarea>
                         <span class="text-danger">*특수문자사용시 스마트스토어 정책에 따라 전송 에러가 발생합니다. 텍스트와 숫자로 안내문구를 작성해주시기 바랍니다.</span>
                     </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                    <button type="submit" class="btn btn-primary">저장</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                        <button type="submit" class="btn btn-primary">저장</button>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
-<!-- 부트스트랩 관련 스크립트 -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script>
-    $(function (){
-        $("#board_search_btn").click(function(){
-            //검색버튼을 클릭할 때마다 수행하는 곳
-            let category_name = $("#board_name").val();
-            let word = $("#board_word").val();
-            alert(category_name+"/"+word);
-            let param = "type=searchBoard&searchType="+
-                encodeURIComponent(category_name)+
-                "&searchValue="+encodeURIComponent(word);
-            //비동기식 통신
-            $.ajax({
-                url: "Controller",
-                type: "POST",
-                data: param,
-            }).done(function(data){
-                $("#board_table tbody").html(data);
-            });
+    <!-- 부트스트랩 관련 스크립트 -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+      $(function () {
+        $("#board_search_btn").click(function () {
+          //검색버튼을 클릭할 때마다 수행하는 곳
+          let category_name = $("#board_name").val();
+          let word = $("#board_word").val();
+          alert(category_name + "/" + word);
+          let param = "type=searchBoard&searchType=" +
+              encodeURIComponent(category_name) +
+              "&searchValue=" + encodeURIComponent(word);
+          //비동기식 통신
+          $.ajax({
+            url: "Controller",
+            type: "POST",
+            data: param,
+          }).done(function (data) {
+            $("#board_table tbody").html(data);
+          });
         });
-    });
-    $(function (){
-        $("#boardprod_search_btn").click(function(){
-            //검색버튼을 클릭할 때마다 수행하는 곳
-            let category_name = $("#boardprod_name").val();
-            let word = $("#boardprod_word").val();
-            alert(category_name+"/"+word);
-            let param = "type=searchBoardProd&searchType="+
-                encodeURIComponent(category_name)+
-                "&searchValue="+encodeURIComponent(word);
-            //비동기식 통신
-            $.ajax({
-                url: "Controller",
-                type: "POST",
-                data: param,
-            }).done(function(data){
-                $("#boardprod_table tbody").html(data);
-            });
+      });
+      $(function () {
+        $("#boardprod_search_btn").click(function () {
+          //검색버튼을 클릭할 때마다 수행하는 곳
+          let category_name = $("#boardprod_name").val();
+          let word = $("#boardprod_word").val();
+          alert(category_name + "/" + word);
+          let param = "type=searchBoardProd&searchType=" +
+              encodeURIComponent(category_name) +
+              "&searchValue=" + encodeURIComponent(word);
+          //비동기식 통신
+          $.ajax({
+            url: "Controller",
+            type: "POST",
+            data: param,
+          }).done(function (data) {
+            $("#boardprod_table tbody").html(data);
+          });
         });
-    });
-    function setBoardInfo(boardId, cusNo) {
-      document.getElementById("deleteBoardId").value = boardId;
-      document.getElementById("deleteBoardCusNo").value = cusNo;
-      console.log("선택한 게시글 ID: " + boardId + ", CUS_NO: " + cusNo); // 콘솔 확인
-    }
+      });
 
-</script>
+        $(document).ready(function () {
+        $("#deleteBoardForm").submit(function (event) {
+          event.preventDefault(); // 기본 form 제출 막기
+
+          let boardId = $("#deleteBoardId").val();
+          let cusNo = $("#deleteBoardCusNo").val();
+          let content = $("#deleteReason").val();
+
+          if (!boardId) {
+            alert("삭제할 게시판 ID가 없습니다.");
+            return;
+          }
+
+          $.ajax({
+            url: "Controller",
+            type: "POST",
+            data: {
+              type: "deleteBoard",
+              id: boardId,
+              cus_no: cusNo,
+              content: content
+            },
+            dataType: "json",
+            success: function (response) {
+              if (response.status === "success") {
+                console.log("삭제 성공:", response);
+
+
+                $("#row-" + response.deletedId).remove();
+
+
+                $("#deleteBoardModal").modal("hide");
+
+                alert("게시글이 삭제되었습니다.");
+              } else {
+                console.error("삭제 실패:", response.message);
+                alert("게시글 삭제에 실패했습니다: " + response.message);
+              }
+            },
+            error: function (xhr, status, error) {
+              console.error("삭제 실패:", error);
+              alert("게시글 삭제 중 오류가 발생했습니다.");
+            }
+          });
+        });
+      });
+
+        function setBoardInfo(boardId, cusNo) {
+        console.log("전달된 게시판 ID:", boardId);
+        console.log("전달된 고객 번호:", cusNo);
+
+        $("#deleteBoardId").val(boardId);
+        $("#deleteBoardCusNo").val(cusNo);
+      }
+
+
+
+    </script>
 </body>
 </html>
-
