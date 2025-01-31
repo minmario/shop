@@ -3,7 +3,7 @@ function addReasonInput() {
     let selectValue = document.getElementById("select").value;
     let refundInput = document.getElementById("refund-input");
 
-    if (selectValue == "5") {
+    if (selectValue == "직접 입력") {
         refundInput.style.display = "block";
     } else {
         refundInput.style.display = "none";
@@ -48,7 +48,16 @@ $(document).ready(function () {
         if (isNaN(pointUsed)) pointUsed = 0;
 
         // 체크된 상품의 가격을 합산
-        $('.refund-checkbox:checked').each(function () {
+        const checkedProducts = $('.refund-checkbox:checked');
+        if (checkedProducts.length === 0) {
+            // 체크된 상품이 없으면 금액을 0으로 설정
+            $('.refund-info .item-price').text('0원');
+            $('.refund-info .points-used').text('0원');
+            $('.refund-info .refund-amount').text('0원');
+            return;  // 함수 종료
+        }
+
+        checkedProducts.each(function () {
             const price = parseInt($(this).data('price'), 10) || 0;
             const count = parseInt($(this).data('count'), 10) || 1;
 
@@ -84,18 +93,26 @@ function refundRequest() {
         return;
     }
 
+    // ordercode 값을 가져오기
+    const orderCode = $('#orderCode').val();
+
     // 반품 사유 가져오기
     let reason = $('#select').val();
     if (reason === "0") {
         alert("반품 사유를 선택해 주세요.");
         return;
     }
-    if (reason === "5") {
+    if (reason === "직접 입력") {
         reason = $('input[name="request-reason"]').val();
         if (!reason) {
             alert("반품 사유를 입력해 주세요.");
             return;
         }
+    }
+
+    // 반품 신청 확인 경고창
+    if (!confirm("반품 신청하시겠습니까?")) {
+        return;  // 사용자가 취소를 누르면 함수 종료
     }
 
     // 회수지 번호 가져오기
@@ -107,7 +124,7 @@ function refundRequest() {
     const retrieveDeliNo = retrieveDeliElement.value;
 
     // 계좌 정보 가져오기
-    const bank = $('#bank-select').find('option:selected').text();
+    const bank = $('#bank-select').find('option:selected').val();
     const accountNumber = $('#account-number').val();
 
     if (!bank || !accountNumber) {
@@ -115,21 +132,27 @@ function refundRequest() {
         return;
     }
 
+    // 환불 예정 금액 가져오기
+    const refundAmount = $('.refund-info .refund-amount').text().replace(/[^0-9]/g, '');
+
     // AJAX 요청
     $.ajax({
         url: 'Controller?type=refundRequest&action=update',
         type: 'POST',
         data: {
+
             prod_no_list: selectedProducts,
             reason: reason,
             retrieve_deli_no: retrieveDeliNo,
-            bank: bank,
-            account_number: accountNumber
+            bank: encodeURIComponent(bank),
+            account_number: accountNumber,
+            orderCode: orderCode,
+            refund_amount: refundAmount
         },
         success: function (response) {
             if (response && response.success) {
                 alert("반품 신청이 완료되었습니다.");
-                window.location.href = "Controller?type=mypage";
+                window.location.href = "Controller?type=myPage";
             } else {
                 alert(response.message || "반품 신청 중 오류가 발생했습니다.");
             }

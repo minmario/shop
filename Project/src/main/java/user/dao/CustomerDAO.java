@@ -4,6 +4,8 @@ import org.apache.ibatis.session.SqlSession;
 import service.FactoryService;
 import user.vo.CustomerVO;
 
+import java.util.HashMap;
+
 public class CustomerDAO {
     // 로그인
     public static CustomerVO login(CustomerVO vo) {
@@ -94,6 +96,31 @@ public class CustomerDAO {
             ss.close();
         }
 
+        return cnt;
+    }
+
+    // 누적 금액 수정(취소/반품)
+    public static int updateTotal(String id, String total) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("id", id);
+        map.put("total", total);
+
+        SqlSession ss = FactoryService.getFactory().openSession();
+        int cnt = 0;
+
+        try {
+            cnt = ss.update("customer.update_total", map);
+
+            if (cnt > 0) {
+                ss.commit();
+            } else {
+                ss.rollback();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
         return cnt;
     }
 }

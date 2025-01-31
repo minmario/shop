@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -40,6 +40,7 @@
                     <c:if test="${requestScope.o_list ne null and requestScope.d_list ne null}">
                         <div class="wrap-title">
                             <span class="left bold">반품요청</span>
+                            <input type="hidden" id="orderCode" name="orderCode" value="${requestScope.o_list[0].order_code}"/>
                         </div>
 
                         <!-- 전체 틀 -->
@@ -76,11 +77,11 @@
                                 <span class="bold">반품사유</span><br/>
                                 <select class="form-select select" id="select" name="select" onchange="addReasonInput()">
                                     <option value="0" selected="selected">:: 반품 사유를 선택하세요 ::</option>
-                                    <option value="1">단순 변심</option>
-                                    <option value="2">상품 불량</option>
-                                    <option value="3">배송 지연</option>
-                                    <option value="4">상품정보와 상이</option>
-                                    <option value="5">직접 입력</option>
+                                    <option value="단순 변심">단순 변심</option>
+                                    <option value="상품 불량">상품 불량</option>
+                                    <option value="배송 지연">배송 지연</option>
+                                    <option value="상품정보와 상이">상품정보와 상이</option>
+                                    <option value="직접 입력">직접 입력</option>
                                 </select>
 
                                 <!-- '직접 입력'을 선택할 때만 보이는 새로운 입력 필드 -->
@@ -124,10 +125,10 @@
                                     <label for="bank-select" class="bold">은행 선택</label><br>
                                     <select class="form-select select" id="bank-select" name="bank">
                                         <option value="" selected disabled>:: 은행을 선택하세요 ::</option>
-                                        <option value="kb">KB국민은행</option>
-                                        <option value="shinhan">신한은행</option>
-                                        <option value="woori">우리은행</option>
-                                        <option value="nh">NH농협은행</option>
+                                        <option value="KB국민은행">KB국민은행</option>
+                                        <option value="신한은행">신한은행</option>
+                                        <option value="우리은행">우리은행</option>
+                                        <option value="NH농협은행">NH농협은행</option>
                                     </select>
                                 </div>
 
@@ -137,12 +138,6 @@
                                     <input type="text" class="toggle" id="account-number" name="account-number" placeholder="계좌번호를 입력하세요"/><br/>
                                 </div><hr/>
 
-<%--                                <!-- 예금주 이름 -->--%>
-<%--                                <div class="margin">--%>
-<%--                                    <label for="account-holder" class="bold">예금주</label><br>--%>
-<%--                                    <input type="text" class="toggle" id="account-holder" name="account-holder" placeholder="예금주 이름을 입력하세요"/>--%>
-<%--                                </div><br/>--%>
-<%--                                <hr/>--%>
                                 <!-- 환불 정보 -->
                                 <div class="refund-info">
                                     <span class="bold">환불 정보</span><br/>
@@ -219,7 +214,6 @@
                                     <td>
                                         <select class="form-select" id="request-select" name="select" onchange="addInputRequest()">
                                             <option selected="selected">:: 배송 요청사항을 선택하세요 ::</option>
-                                            <!--가장 먼저 작성하는 것이 선택되기 때문에 selected로 지정한다. -->
                                             <option value="1">문 앞에 놔주세요</option>
                                             <option value="2">경비실에 맡겨주세요</option>
                                             <option value="3">택배함에 넣어주세요</option>

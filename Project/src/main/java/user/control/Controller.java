@@ -122,6 +122,7 @@ public class Controller extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// type이라는 파라미터를 받기
 		String type = request.getParameter("type");
+		request.setCharacterEncoding("UTF-8");
 
 		// 만약! type이 null이면 기본객체(DateAction)을 지정한다.
 		if (type == null)

@@ -96,8 +96,13 @@
     <!-- 취소 요청 -->
     <update id="update_order_cancel" parameterType="map">
         UPDATE `order`
-        SET status = 6, refund_bank = #{refund_bank}, refund_account = #{refund_account}, refund_reason = #{reason}
-        WHERE cus_no = #{cus_no} AND prod_no = #{prod_no} AND order_code = #{order_code}
+        SET status = 6, refund_bank = #{refund_bank}, refund_account = #{refund_account},
+        reason = #{reason}
+        WHERE cus_no = #{cus_no} AND order_code = #{order_code}
+        AND prod_no IN
+        <foreach collection="prod_no_list" item="prod_no" separator="," open="(" close=")">
+            #{prod_no}
+        </foreach>
     </update>
 
     <!-- 반품 요청 -->
@@ -108,15 +113,19 @@
         WHERE cus_no = #{cus_no} AND order_code = #{order_code}
         AND prod_no IN
         <foreach collection="prod_no_list" item="prod_no" separator="," open="(" close=")">
-            ${prod_no}
+            #{prod_no}
         </foreach>
     </update>
 
     <!-- 교환 요청 -->
     <update id="update_order_exchange" parameterType="map">
         UPDATE `order`
-        SET status = 8, refund_bank = #{refund_bank}, refund_account = #{refund_account}, refund_reason = #{reason}
-        WHERE cus_no = #{cus_no} AND prod_no = #{prod_no} AND order_code = #{order_code}
+        SET status = 8, reason = #{reason}, retrieve_deli_no = #{retrieve_deli_no}
+        WHERE cus_no = #{cus_no} AND order_code = #{order_code}
+        AND prod_no IN
+        <foreach collection="prod_no_list" item="prod_no" separator="," open="(" close=")">
+            #{prod_no}
+        </foreach>
     </update>
 
 </mapper>

@@ -34,13 +34,11 @@ public class OrderDetailsAction implements Action {
                 case "select":
                     o_list = OrderDAO.selectOrderCode(cus_no, order_code); // 주문상세 정보 list
                     List<DeliveryVO> deli_list = DeliveryDAO.selectDelivery(cus_no); // 해당 주문의 배송지 정보
-                    vo = OrderDAO.selectOrder(cus_no, order_code); // 주문상세 정보 vo
                     int totalPrice = OrderDAO.selectTotalPrice(cus_no, order_code); // 원가 총 금액
                     int totalSaledPrice = OrderDAO.selectTotalSaledPrice(cus_no, order_code); // 할인가 총 금액
 
                     request.setAttribute("o_list", o_list);
                     request.setAttribute("deli_list", deli_list);
-                    request.setAttribute("vo", vo);
                     request.setAttribute("totalPrice", totalPrice);
                     request.setAttribute("totalSaledPrice", totalSaledPrice);
 

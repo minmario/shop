@@ -33,4 +33,11 @@
         SELECT * FROM customer
         WHERE cus_id = #{cus_id} AND is_del = 0
     </select>
+
+    <!-- 누적 금액 수정(취소/반품) -->
+    <update id="update_total" parameterType="map">
+        UPDATE customer
+        SET total = #{total}
+        WHERE id = #{id} AND is_del = 0
+    </update>
 </mapper>

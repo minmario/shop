@@ -54,8 +54,9 @@
                         <c:when test="${item.status == '3'}"><span class="custom-order-status">배송중</span></c:when>
                         <c:when test="${item.status == '4'}"><span class="custom-order-status">배송완료</span></c:when>
                         <c:when test="${item.status == '5'}"><span class="custom-order-status">구매확정</span></c:when>
-                        <c:when test="${item.status == '6'}"><span class="custom-order-status">반품/취소</span></c:when>
-                        <c:when test="${item.status == '7'}"><span class="custom-order-status">교환</span></c:when>
+                        <c:when test="${item.status == '6'}"><span class="custom-order-status">취소</span></c:when>
+                        <c:when test="${item.status == '7'}"><span class="custom-order-status">반품</span></c:when>
+                        <c:when test="${item.status == '8'}"><span class="custom-order-status">교환</span></c:when>
                     </c:choose>
                     <a href="Controller?type=orderDetails&action=select&order_code=${item.order_code}" class="custom-details-link">주문 상세</a>
                 </div>

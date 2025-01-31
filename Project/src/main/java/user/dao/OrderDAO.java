@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import service.FactoryService;
 import user.vo.OrderVO;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -64,26 +65,6 @@ public class OrderDAO {
         }
 
         return list;
-    }
-
-    //주문날짜, 결제방법, 주문상태 조회
-    public static OrderVO selectOrder(String cus_no, String order_code){
-        HashMap<String, String> map = new HashMap<>();
-        map.put("cus_no", cus_no);
-        map.put("order_code", order_code);
-
-        SqlSession ss = FactoryService.getFactory().openSession();
-        OrderVO vo = null;
-
-        try{
-            vo = ss.selectOne("order.select_order", map);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            ss.close();
-        }
-
-        return vo;
     }
 
     //총 상품 금액(원가)
@@ -168,11 +149,22 @@ public class OrderDAO {
         return list;
     }
     // 취소 요청
-    public static int updateOrderCancel(String cus_no, String prod_no, String order_code){
-        HashMap<String, String> map = new HashMap<>();
+    public static int updateOrderCancel(String cus_no, String[] prod_nos, String order_code, String refund_bank, String refund_account, String reason, String retrieve_deli_no){
+        HashMap<String, Object> map = new HashMap<>();
         map.put("cus_no", cus_no);
-        map.put("prod_no", prod_no);
+        map.put("prod_no_list", prod_nos);
         map.put("order_code", order_code);
+        map.put("refund_bank", refund_bank);
+        map.put("refund_account", refund_account);
+        map.put("reason", reason);
+        map.put("retrieve_deli_no", retrieve_deli_no);
+
+        System.out.println(cus_no);
+        System.out.println(prod_nos);
+        System.out.println(order_code);
+        System.out.println(refund_bank);
+        System.out.println(reason);
+        System.out.println(retrieve_deli_no);
 
         SqlSession ss = FactoryService.getFactory().openSession();
         int cnt = 0;
