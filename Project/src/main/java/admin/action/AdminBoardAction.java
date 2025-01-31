@@ -15,6 +15,11 @@ import java.util.List;
 public class AdminBoardAction implements Action {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+
+
+
+
+
         BoardDao bdao = new BoardDao();
 
         List<BoardVO> list1 = bdao.allBoard();
@@ -29,6 +34,11 @@ public class AdminBoardAction implements Action {
         List<String> list2_1 = bpdao.allBoardProdCol();
         request.setAttribute("boardprodName", list2_1);
 
-        return "/admin/jsp/boardmain.jsp";
+
+
+
+
+
+      return "/admin/jsp/boardmain.jsp";
     }
 }

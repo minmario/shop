@@ -38,6 +38,9 @@
             text-align: center; /* 중앙 정렬 */
             word-wrap: break-word; /* 긴 텍스트 줄바꿈 방지 */
         }
+        thead  {
+            text-align:  center;
+        }
 
         /* 열에 대한 너비를 고정적으로 설정 */
         th:nth-child(1), td:nth-child(1) {
@@ -155,17 +158,15 @@
             <c:forEach var ="bl"  items="${boardList}">
                 <tr>
                     <td><input type="checkbox"></td>
-
                     <td>${bl.bname}</td>
-
                     <td>${bl.title}</td>
-
                     <td>${bl.content}</td>
                     <td>${bl.score}</td>
                     <td>${bl.write_date}</td>
 
                     <td>
-                        <button class="btn btn-secondary add-user-btn" data-bs-toggle="modal"  data-board-id="${bl.id} data-bs-target="#deleteBoard">게시판 삭제</button>
+                        <button class="btn btn-secondary add-user-btn" data-bs-toggle="modal" data-bs-target="#deleteBoardModal"
+                                onclick="setBoardInfo('${bl.id}', '${bl.cus_no}')">게시판 삭제</button>
                     </td>
                 </tr>
             </c:forEach>
@@ -255,15 +256,17 @@
 
 
     <%--보드 삭제 모달 창--%>
-    <div class="modal fade" id="deleteBoard" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteBoardModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="rejectModalLabel">게시판 사유</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="/Controller?type=deleteBoard&id" method="post" >
+                <form action="/Controller?type=deleteBoard" method="post" >
                     <div class="modal-body">
+                        <input type="hidden" id="deleteBoardId" name="id">
+
                         <textarea class="form-control" name="content" rows="3">보드를 삭제할 이유를 적어주세요.</textarea>
                         <span class="text-danger">*특수문자사용시 스마트스토어 정책에 따라 전송 에러가 발생합니다. 텍스트와 숫자로 안내문구를 작성해주시기 바랍니다.</span>
                     </div>
@@ -319,6 +322,11 @@
             });
         });
     });
+    function setBoardInfo(boardId, cusNo) {
+      document.getElementById("deleteBoardId").value = boardId;
+      document.getElementById("deleteBoardCusNo").value = cusNo;
+      console.log("선택한 게시글 ID: " + boardId + ", CUS_NO: " + cusNo); // 콘솔 확인
+    }
 
 </script>
 </body>

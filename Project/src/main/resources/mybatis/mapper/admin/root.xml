@@ -30,7 +30,7 @@
     select * from `middle_category`
   </select>
   <select id ="allBoard" resultType="admin.vo.BoardVO">
-    select * from `board`
+    select * from `board` where is_del = 0
   </select>
   <select id ="allBoardProd" resultType="admin.vo.BoardProdVO">
     select * from `board_prod`
@@ -188,4 +188,18 @@
     FROM middle_category as mi
     JOIN major_category as ma on mi.major_no = ma.id
   </select>
+
+
+  <update id="deleteBoard">
+    UPDATE board
+    SET is_del = 1
+    WHERE id = #{id}
+  </update>
+
+
+  <insert id="loginsert" parameterType="admin.vo.LogVO">
+    INSERT INTO log (cus_no, root_no, target, log_type, prev, current, log_date)
+    VALUES (#{cus_no}, #{root_no}, #{target}, #{log_type}, #{prev}, #{current}, NOW());
+  </insert>
+
 </mapper>

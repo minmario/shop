@@ -2,6 +2,7 @@ package admin.dao;
 
 import admin.vo.BoardProdVO;
 import admin.vo.BoardVO;
+import admin.vo.LogVO;
 import admin.vo.MajorCategoryVO;
 import org.apache.ibatis.session.SqlSession;
 import service.FactoryService;
@@ -12,7 +13,40 @@ import java.util.List;
 import java.util.Map;
 
 public class BoardDao {
-    public static List<BoardVO> allBoard(){
+
+  public int logininsert(LogVO boardVO) {
+    SqlSession ss = FactoryService.getFactory().openSession();
+    int chk = ss.insert("root.loginsert", boardVO);
+    ss.commit();
+    ss.close();
+    return chk;
+
+
+  }
+
+
+
+
+
+  public boolean deleteBoard(int id) {
+    SqlSession ss = FactoryService.getFactory().openSession();
+
+    int updatedRows = ss.update("root.deleteBoard", id);
+    if (updatedRows > 0) {
+      ss.commit();
+      ss.close();
+      return true;
+    }
+    ss.rollback();
+    ss.close();
+    return false;
+  }
+
+
+
+
+
+  public static List<BoardVO> allBoard(){
 
         SqlSession ss = FactoryService.getFactory().openSession();
         List<BoardVO> vo = new ArrayList<>();

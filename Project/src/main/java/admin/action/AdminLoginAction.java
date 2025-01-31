@@ -35,6 +35,7 @@ public class AdminLoginAction implements Action {
             System.out.println(password);
             HttpSession session = request.getSession();
             session.setAttribute("name", loginResult.getName());
+            session.setAttribute("id", loginResult.getId());
             session.setAttribute("root_id", loginResult.getRoot_id());
             System.out.println(loginResult.getRoot_id());
             request.setAttribute("isLoggedIn", true);
