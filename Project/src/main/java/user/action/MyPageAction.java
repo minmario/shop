@@ -15,6 +15,11 @@ public class MyPageAction implements Action {
         HttpSession session = request.getSession();
         CustomerVO loginResult = (CustomerVO) session.getAttribute("customer_info");
 
+        if (loginResult == null) {
+            request.setAttribute("session_expired", true);
+            return "/user/jsp/error/error.jsp";
+        }
+
         // 적립금 내역 가져오기
         List<PointVO> all = PointDAO.selectAll(loginResult.getId());
 
