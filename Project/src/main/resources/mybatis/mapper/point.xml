@@ -69,6 +69,13 @@
             SUM(CASE WHEN p_type = 0 THEN amount ELSE 0 END) -
             SUM(CASE WHEN p_type = 1 THEN amount ELSE 0 END) AS total_points
         FROM point
-        WHERE cus_no = #{cus_no};
+        WHERE cus_no = #{cus_no}
     </select>
+
+    <!-- 사용한 적립금 복구(환불) -->
+    <update id="update_point" parameterType="map">
+        UPDATE point
+        SET use_date = NULL, p_type = 0
+        WHERE cus_no = #{cus_no} AND order_code = #{order_code}
+    </update>
 </mapper>

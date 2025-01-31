@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="order-section">
     <div class="order-header">
         <div class="order-title">주문 목록</div>
@@ -65,8 +66,8 @@
                     <div class="custom-product-details">
                         <p class="custom-product-name">${item.brand}</p>
                         <p class="custom-product-description">${item.prod_name}</p>
-                        <p class="custom-product-size">${item.option_name} / ${item.count}개</p>
-                        <p class="custom-product-price">${item.prod_saled_price}원</p>
+                        <p class="custom-product-size">${not empty item.option_name ? item.option_name : '기본 옵션'} / ${item.count}개</p>
+                        <p class="custom-product-price"><fmt:formatNumber value="${not empty item.prod_saled_price ? item.prod_saled_price : item.prod_price}"/>원</p>
                     </div>
                 </div>
                 <c:if test="${item.status == '5'}">
