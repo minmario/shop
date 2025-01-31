@@ -4,12 +4,52 @@ import java.util.List;
 
 public class OrderVO {
     private String id, tid, cus_no, prod_no, coupon_no, point_no, deli_no, order_code, count, order_date,
-            pay_type, bank, account, card_name, is_install, install_month, status, prod_code, prod_name, prod_price,
-            prod_sale, prod_image, prod_saled_price, brand, option_name, deli_name, pos_code, addr1, addr2, phone, deli_request, point_amount;
+            pay_type, order_bank, order_account, card_name, is_install, install_month, status, refund_bank, refund_account, reason, retrieve_deli_no, prod_code, prod_name, prod_price,
+            prod_sale, prod_image, prod_saled_price, brand, option_name, deli_name, pos_code, addr1, addr2, phone, deli_request, is_default, point_amount;
     private List<OrderVO> list;
+
+    public String getRetrieve_deli_no() {
+        return retrieve_deli_no;
+    }
+
+    public void setRetrieve_deli_no(String retrieve_deli_no) {
+        this.retrieve_deli_no = retrieve_deli_no;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
 
     public String getPoint_amount() {
         return point_amount;
+    }
+
+    public String getIs_default() {
+        return is_default;
+    }
+
+    public void setIs_default(String is_default) {
+        this.is_default = is_default;
+    }
+
+    public String getRefund_bank() {
+        return refund_bank;
+    }
+
+    public void setRefund_bank(String refund_bank) {
+        this.refund_bank = refund_bank;
+    }
+
+    public String getRefund_account() {
+        return refund_account;
+    }
+
+    public void setRefund_account(String refund_account) {
+        this.refund_account = refund_account;
     }
 
     public void setPoint_amount(String point_amount) {
@@ -224,20 +264,20 @@ public class OrderVO {
         this.pay_type = pay_type;
     }
 
-    public String getBank() {
-        return bank;
+    public String getOrder_bank() {
+        return order_bank;
     }
 
-    public void setBank(String bank) {
-        this.bank = bank;
+    public void setOrder_bank(String order_bank) {
+        this.order_bank = order_bank;
     }
 
-    public String getAccount() {
-        return account;
+    public String getOrder_account() {
+        return order_account;
     }
 
-    public void setAccount(String account) {
-        this.account = account;
+    public void setOrder_account(String order_account) {
+        this.order_account = order_account;
     }
 
     public String getCard_name() {
