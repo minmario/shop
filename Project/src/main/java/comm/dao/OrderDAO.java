@@ -21,4 +21,11 @@ public class OrderDAO {
         ss.close();
         return ar;
     }
+    public static OrderVO getOrderOne(String order_no){
+        SqlSession ss = FactoryService.getFactory().openSession();
+        OrderVO vo = ss.selectOne("order.get_order_one",order_no);
+        System.out.println("DAO: "+vo.getName());
+        ss.close();
+        return vo;
+    }
 }
