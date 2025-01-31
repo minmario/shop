@@ -181,3 +181,53 @@ function onSendPayment() {
     }
     window.location.href = path;
 }
+
+// 옵션 변경 모달 열기
+function onShowOptionModal(value) {
+    $('#optionModal').on('shown.bs.modal', function () {
+        const isVisible = $('#optionModal').is(':visible');
+
+        if (isVisible) {
+            selectProdSize(value);
+        }
+    });
+
+    // 모달 열기
+    $('#optionModal').modal('show');
+}
+
+// 옵션 변경 모달 닫기
+function onHideOptionModal() {
+    $('#optionModal').modal('hide');
+}
+
+// 사이즈 정보 조회
+function selectProdSize(value) {
+    $.ajax({
+        url: "Controller?type=cart&action=select_size",
+        method: 'POST',
+        data: {
+            prod_no: value
+        },
+        success: function (response) {
+            if (response.success) {
+                const optionSelect = document.getElementById('option-size-select');
+                optionSelect.innerHTML = '';
+
+                response.data.forEach(function(item) {
+                    const option = document.createElement('option');
+                    option.value = item.prod_no;
+                    option.textContent = item.option_name;
+
+                    optionSelect.appendChild(option);
+                });
+            } else {
+                alert("응답에 실패했습니다.");
+            }
+        },
+        error: function (error) {
+            alert("요청 처리 중 오류가 발생했습니다.");
+            console.error(error);
+        }
+    });
+}

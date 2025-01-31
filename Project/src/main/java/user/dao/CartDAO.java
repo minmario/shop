@@ -24,6 +24,49 @@ public class CartDAO {
         return cnt;
     }
 
+    // 장바구니 상품 존재 확인
+    public static int selectExistsCart(String cus_no, String prod_no, String size) {
+        int cnt = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("cus_no", cus_no);
+            map.put("prod_no", prod_no);
+            map.put("size", size);
+
+            cnt = ss.selectOne("cart.select_exists_cart", map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
+    }
+
+    // 장바구니 상품 수량 1 증가
+    public static int updateExistsCart(String cus_no, String prod_no, String size, String count) {
+        int cnt = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("cus_no", cus_no);
+            map.put("prod_no", prod_no);
+            map.put("size", size);
+            map.put("count", count);
+
+            cnt = ss.selectOne("cart.update_exists_cart", map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
+    }
+
     // 장바구니 조회
     public static List<CartVO> selectCart(String cus_no) {
         List<CartVO> c_list = null;

@@ -18,6 +18,19 @@
         WHERE c.cus_no = #{cus_no}
     </select>
 
+    <!-- 장바구니 존재 여부 -->
+    <select id="select_exists_cart" resultType="int" parameterType="Map">
+        SELECT COUNT(*) FROM cart
+        WHERE cus_no = #{cus_no} AND prod_no = #{prod_no} AND size = #{size}
+    </select>
+
+    <!-- 이미 존재하는 상품일 때 수량만 증가 -->
+    <update id="update_exists_cart" parameterType="map">
+        UPDATE cart
+        SET count = count + #{count}
+        WHERE cus_no = #{cus_no} AND prod_no = #{prod_no} AND size = #{size}
+    </update>
+
     <!-- 장바구니 추가 -->
     <insert id="insert_cart" parameterType="user.vo.CartVO">
         INSERT INTO cart (cus_no, prod_no, count, size, add_date)

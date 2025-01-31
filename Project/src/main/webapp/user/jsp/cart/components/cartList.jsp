@@ -28,9 +28,7 @@
                                     <div class="prod_option_left">옵션&nbsp;:</div>
                                     <div class="prod_option_center cart-prod-size">${item.size}</div>
                                     <div class="prod_option_right">
-                                        <button type="button" class="btn btn-outline-secondary option-change-btn"
-                                                data-toggle="modal" data-target="#optionModal">옵션 변경
-                                        </button>
+                                        <button type="button" class="btn btn-outline-secondary option-change-btn" onclick="onShowOptionModal(${item.prod_no})">옵션 변경</button>
                                     </div>
                                 </div>
                             </div>
@@ -41,7 +39,7 @@
                         <c:choose>
                             <c:when test="${not empty item.saled_price}">
                                 <c:set var="total_count" value="${item.saled_price}"/>
-                                <del class="default-price"><fmt:formatNumber value="${item.price}"/>원</del>
+                                <del class="default-price"><fmt:formatNumber value="${item.price * item.count}"/>원</del>
                                 <div class="sale-price"><fmt:formatNumber value="${total_count * item.count}"/>원</div>
                             </c:when>
                             <c:otherwise>

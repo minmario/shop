@@ -6,6 +6,7 @@ import user.vo.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -37,24 +38,34 @@ public class CartAction implements Action {
                     String i_count = request.getParameter("count");
                     String i_size = request.getParameter("size");
 
-                    CartVO ivo = new CartVO();
-                    ivo.setCus_no(cvo.getId());
-                    ivo.setProd_no(i_prod_no);
-                    ivo.setCount(i_count);
-                    ivo.setSize(i_size);
-                    int i_cnt = CartDAO.insertCart(ivo);
+                    // 존재 여부 확인
+                    int exists = CartDAO.selectExistsCart(cvo.getId(), i_prod_no, i_size);
+                    System.out.println("exists: " + exists);
 
-                    if (i_cnt > 0) {
-                        // 추가 로그
-                        LogVO lvo = new LogVO();
-                        StringBuffer sb = new StringBuffer();
-                        lvo.setCus_no(cvo.getId());
-                        lvo.setTarget("cart 추가");
-                        sb.append("prod_no : " + i_prod_no + ", ");
-                        sb.append("count : " + i_count + ", ");
-                        sb.append("size : " + i_size);
-                        lvo.setCurrent(sb.toString());
-                        LogDAO.insertLog(lvo);
+                    // 있다면 수량만 증가
+                    if (exists > 0) {
+                        CartDAO.updateExistsCart(cvo.getId(), i_prod_no, i_size, i_count);
+                    } else {
+                        // 없다면 추가
+                        CartVO ivo = new CartVO();
+                        ivo.setCus_no(cvo.getId());
+                        ivo.setProd_no(i_prod_no);
+                        ivo.setCount(i_count);
+                        ivo.setSize(i_size);
+                        int i_cnt = CartDAO.insertCart(ivo);
+
+                        if (i_cnt > 0) {
+                            // 추가 로그
+                            LogVO lvo = new LogVO();
+                            StringBuffer sb = new StringBuffer();
+                            lvo.setCus_no(cvo.getId());
+                            lvo.setTarget("cart 추가");
+                            sb.append("prod_no : " + i_prod_no + ", ");
+                            sb.append("count : " + i_count + ", ");
+                            sb.append("size : " + i_size);
+                            lvo.setCurrent(sb.toString());
+                            LogDAO.insertLog(lvo);
+                        }
                     }
 
                     viewPage = "/user/jsp/cart/components/cartList.jsp";
@@ -182,6 +193,41 @@ public class CartAction implements Action {
 
                     viewPage = "/user/jsp/payment/payment.jsp";
                     break;
+                case "select_size":
+                    String prod_no = request.getParameter("prod_no");
+
+                    // 상품 사이즈 목록
+                    List<ProductVO> productSize = ProductDAO.selectSize(prod_no);
+
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+
+                    try (PrintWriter out = response.getWriter()) {
+                        out.print("{");
+                        out.print("\"success\": true,");
+                        out.print("\"data\": [");
+
+                        for (int i = 0; i < productSize.size(); i++) {
+                            ProductVO vo = productSize.get(i);
+
+                            out.print("{");
+                            out.print("\"prod_no\": \"" + vo.getId() + "\",");
+                            out.print("\"option_name\": \"" + vo.getI_option_name() + "\"");
+                            out.print("}");
+
+                            if (i < productSize.size() - 1) {
+                                out.print(",");
+                            }
+                        }
+
+                        out.print("]");
+                        out.print("}");
+                        out.flush();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    return null;
             }
         } else {
             viewPage = "/user/jsp/cart/cart.jsp";

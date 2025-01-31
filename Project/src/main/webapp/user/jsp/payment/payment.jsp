@@ -41,29 +41,7 @@
                                 <p class="address">${dvo.addr1} ${dvo.addr2}</p>
                                 <p class="phone">${dvo.phone}</p>
                                 <div class="delivery-option-container">
-                                    <c:set var="request" value="${dvo.request}"/>
-                                    <c:choose>
-                                        <c:when test="${(request eq '문 앞에 놔주세요') or (request eq '경비실에 맡겨주세요') or (request eq '택배함에 넣어주세요') or (request eq '배송 전에 연락 주세요')}">
-                                            <select class="form-select" id="delivery-request">
-                                                <option value="문 앞에 놔주세요" ${request == '문 앞에 놔주세요' ? 'selected' : ''}>문 앞에 놔주세요</option>
-                                                <option value="경비실에 맡겨주세요" ${request == '경비실에 맡겨주세요' ? 'selected' : ''}>경비실에 맡겨주세요</option>
-                                                <option value="택배함에 넣어주세요" ${request == '택배함에 넣어주세요' ? 'selected' : ''}>택배함에 넣어주세요</option>
-                                                <option value="배송 전에 연락 주세요" ${request == '배송 전에 연락 주세요' ? 'selected' : ''}>배송 전에 연락 주세요</option>
-                                                <option value="직접 입력">직접 입력</option>
-                                            </select>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <select class="form-select" id="delivery-request">
-                                                <option value="문 앞에 놔주세요">문 앞에 놔주세요</option>
-                                                <option value="경비실에 맡겨주세요">경비실에 맡겨주세요</option>
-                                                <option value="택배함에 넣어주세요">택배함에 넣어주세요</option>
-                                                <option value="배송 전에 연락 주세요">배송 전에 연락 주세요</option>
-                                                <option value="직접 입력" selected>직접 입력</option>
-                                            </select>
-                                            <textarea class="delivery-message" id="delivery-message" maxlength="50" placeholder="최대 50자까지 입력 가능합니다.">${request}</textarea>
-                                            <p class="char-count" id="char-count">0&nbsp;/&nbsp;50</p>
-                                        </c:otherwise>
-                                    </c:choose>
+                                    <input type="text" class="form-control" id="request-delivery" aria-describedby="request-deli" value="${dvo.request}" disabled/>
                                 </div>
                             </c:if>
                         </div>
@@ -119,10 +97,11 @@
                                 </span>
                             </div>
                             <div class="points-input">
-                                <input type="text" id="point-input" oninput="handlePointInput()"/>
+                                <input type="text" id="point-input" oninput="formatCurrency()" placeholder="사용할 적립금을 입력하세요"/>
+                                <button type="button" class="btn btn-outline-secondary apply-btn" onclick="applyPoint()">사용</button>
                                 <button type="button" class="btn btn-outline-secondary cancel-btn" onclick="resetPoint()">사용 취소</button>
                             </div>
-                            <p class="points-info">적용한도(7%) <fmt:formatNumber value="${total_amount * 0.07}"/>원 / 보유 <span><fmt:formatNumber value="${requestScope.points}"/></span>원</p>
+                            <p class="points-info">적용한도(7%) <span class="max-points" id="max-points"><fmt:formatNumber value="${total_amount * 0.07}"/></span>원 / 보유 <span class="save-points" id="save-points"><fmt:formatNumber value="${requestScope.points}"/></span>원</p>
                         </div>
                         <div class="reward-container">
                             <div class="reward-top">
@@ -144,11 +123,9 @@
                             <div class="radio-group">
                                 <label><input type="radio" name="payment-method">
                                     <img class="logo-finance" src="./user/images/logo-finance-toss.png"/>토스페이
-                                    <span class="badge highlight">혜택</span>
                                 </label>
                                 <label><input type="radio" name="payment-method">
                                     <img class="logo-finance" src="./user/images/logo-finance-kakaopay.png"/>카카오페이
-                                    <span class="badge highlight">혜택</span>
                                 </label>
                             </div>
                         </div>
@@ -161,11 +138,11 @@
                                 </li>
                                 <li>
                                     <span>할인 금액</span>
-                                    <span class="text-blue">-<fmt:formatNumber value="${sale_amount}"/>원</span>
+                                    <span class="text-blue">- <fmt:formatNumber value="${sale_amount}"/>원</span>
                                 </li>
                                 <li>
                                     <span>적립금 사용</span>
-                                    <span class="text-blue" id="used-point">0원</span>
+                                    <span class="text-blue" id="used-point">- 0원</span>
                                 </li>
                                 <li>
                                     <span>배송비</span>

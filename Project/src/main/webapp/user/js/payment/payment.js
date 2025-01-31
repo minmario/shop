@@ -1,11 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const deliveryOptions = document.getElementById("delivery-options");
+    const deliverySelect = document.getElementById('delivery-request');
     const deliveryMessage = document.getElementById("delivery-message");
     const charCount = document.getElementById("char-count");
-    const buttons = document.querySelectorAll('.radio-button');
 
-    deliveryOptions.addEventListener("change", (event) => {
-        if (event.target.value === "직접입력") {
+    // 옵션 변경 시 이벤트 리스너 추가
+    deliverySelect.addEventListener('change', function () {
+        toggleMessageVisibility();
+    });
+
+    // 글자 수 카운트 업데이트 이벤트 리스너 추가
+    deliveryMessage.addEventListener('keyup', function () {
+        charCount.textContent = deliveryMessage.value.length + "/50";
+    });
+
+    // 메시지 표시/숨김 함수
+    function toggleMessageVisibility() {
+        if (deliverySelect.value === '직접 입력') {
             deliveryMessage.style.display = "block";
             charCount.style.display = "block";
             deliveryMessage.value = "";
@@ -15,27 +25,11 @@ document.addEventListener("DOMContentLoaded", () => {
             charCount.style.display = "none";
             charCount.style.display = "none";
         }
-    });
+    }
 
-    deliveryMessage.addEventListener("keyup", () => {
-        const currentLength = deliveryMessage.value.length;
-        charCount.innerText = currentLength + "/50";
-    });
-
-    buttons.forEach(button => {
-        button.addEventListener('click', () => {
-            buttons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-        });
-    });
+    // 페이지 로드 시 초기 상태 설정
+    toggleMessageVisibility();
 });
-
-function toggleButtonGroup(show) {
-    const buttonGroup = document.querySelector('.button-group');
-    const selectGroup = document.querySelector('.select-group');
-    buttonGroup.style.display = show ? 'grid' : 'none';
-    selectGroup.style.display = show ? 'flex' : 'none';
-}
 
 // 주문 코드
 function onGetOrderCode() {
@@ -79,7 +73,7 @@ function onPayment() {
 }
 
 // 주문 배송지 변경
-function updateDeliveryAddress() {
+function updateDeliveryAddr() {
     // 기존 배송지 ID
     const DeliveryID = document.querySelector(".deli-no").value;
     // 선택된 배송지 ID 가져오기
@@ -113,32 +107,51 @@ function updateDeliveryAddress() {
     });
 }
 
-// 사용 적립금 입력
-function handlePointInput() {
-    const inputElement = document.getElementById('point-input');
-    const usedPointElement = document.getElementById('used-point');
+// 적립금 입력
+function formatCurrency() {
+    const pointInput = document.getElementById('point-input');
+    let inputValue = pointInput.value;
 
-    // 입력 값 가져오기
-    let inputValue = inputElement.value;
-
-    // 숫자가 아닌 값 제거 및 음수 방지
     inputValue = inputValue.replace(/[^0-9]/g, '');
 
-    // 값이 없으면 return
     if (!inputValue) {
+        pointInput.value = '';
         return;
     }
 
-    // 입력값을 다시 설정 (숫자가 아닌 문자는 제거된 상태로)
-    inputElement.value = inputValue;
+    const formattedValue = parseInt(inputValue, 10).toLocaleString();
+    pointInput.value = formattedValue;
+}
 
-    // 사용 포인트 표시
-    usedPointElement.textContent = "-" + parseInt(inputValue).toLocaleString() + "원";
+// 적립급 사용
+function applyPoint() {
+    const pointInputElement = document.getElementById('point-input');
+    const maxPointsElement = document.getElementById('max-points');
+    const savePointsElement = document.getElementById('save-points');
+    const usedPointElement = document.getElementById('used-point');
+
+    const maxPoints = parseInt(maxPointsElement.textContent.replace(/[^0-9]/g, ''), 10);
+    const savePoints = parseInt(savePointsElement.textContent.replace(/[^0-9]/g, ''), 10);
+    const inputValue = parseInt(pointInputElement.value.replaceAll(/[^0-9]/g, ""), 10);
+
+    console.log("maxPoints : " + maxPoints);
+    console.log("savePoints : " + savePoints);
+    console.log("inputValue : " + inputValue);
+
+    if (isNaN(inputValue) || inputValue > maxPoints) {
+        pointInputElement.value = savePoints;
+    }
+
+    if (isNaN(inputValue) || inputValue > savePoints) {
+        pointInputElement.value = savePoints;
+    }
+
+    usedPointElement.textContent = "- " + parseInt(inputValue).toLocaleString() + "원";
 }
 
 // 사용 적립금 초기화
 function resetPoint() {
     // 포인트 입력 초기화 및 표시 초기화
     document.getElementById('point-input').value = '';
-    document.getElementById('used-point').textContent = '-0원';
+    document.getElementById('used-point').textContent = '- 0원';
 }

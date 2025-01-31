@@ -66,6 +66,13 @@ function onSendDeliveryInfo() {
         return;
     }
 
+    let request = "";
+    if ($("select[name=request-select] option:selected").val() !== "직접 입력") {
+        request = $("select[name=request-select] option:selected").text();
+    } else {
+        request = $("#deli_request").val();
+    }
+
     const formData = {
         id: $("#addrModal #addr_id").val(), // 배송지 ID (수정 시 필요)
         name: $("#addrModal #name").val(),
@@ -73,7 +80,7 @@ function onSendDeliveryInfo() {
         pos_code: $("#addrModal #pos_code").val(),
         addr1: $("#addrModal #addr1").val(),
         addr2: $("#addrModal #addr2").val(),
-        deli_request: $("select[name=request-select] option:selected").val() != "0" ? $("select[name=request-select] option:selected").text() : null,
+        deli_request: request,
         chkDefault: $("#addrModal #chkDefault").is(":checked") ? "1" : "0"
     };
 
