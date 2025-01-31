@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import service.FactoryService;
 import user.vo.PointVO;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class PointDAO {
@@ -117,5 +118,24 @@ public class PointDAO {
         }
 
         return point;
+    }
+
+    //사용 적립금 복구
+    public static int updatePoint(String cus_no, String order_code){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("cus_no", cus_no);
+        map.put("order_code", order_code);
+
+        SqlSession ss = FactoryService.getFactory().openSession();
+        int cnt = 0;
+
+        try {
+            cnt = ss.update("point.update_point", map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+        return cnt;
     }
 }
