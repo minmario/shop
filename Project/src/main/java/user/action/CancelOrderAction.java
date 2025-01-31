@@ -22,24 +22,23 @@ public class CancelOrderAction implements Action {
         CustomerVO cvo = (CustomerVO) session.getAttribute("customer_info");
 
         if (cvo == null) {
+            request.setAttribute("session_expired", true);
             return "/user/jsp/error/error.jsp";
         }
 
-        String cus_no = cvo.getId();
         String action = request.getParameter("action");
         String order_code = request.getParameter("order_code");
 
         if (action != null) {
             switch (action) {
                 case "select":
-                    List<OrderVO> o_list = OrderDAO.selectOrderCode(cus_no, order_code);
-                    List<DeliveryVO> d_list = DeliveryDAO.selectDelivery(cus_no);
+                    List<OrderVO> o_list = OrderDAO.selectOrderCode(cvo.getId(), order_code);
+                    List<DeliveryVO> d_list = DeliveryDAO.selectDelivery(cvo.getId());
 
                     request.setAttribute("o_list", o_list);
                     request.setAttribute("d_list", d_list);
 
                     return "/user/jsp/mypage/cancelOrder.jsp";
-
                 case "update":
                     try {
                         // 요청 데이터 가져오기
@@ -64,15 +63,15 @@ public class CancelOrderAction implements Action {
 
 
                         // 주문 정보 업데이트 (취소 상태로 변경)
-                        int u_o_cnt = OrderDAO.updateOrderCancel(cus_no, prodNos, orderCode, refund_bank, refund_account, reason, retrieve_deli_no);
+                        int u_o_cnt = OrderDAO.updateOrderCancel(cvo.getId(), prodNos, orderCode, refund_bank, refund_account, reason, retrieve_deli_no);
                         System.out.println("Order update result: " + u_o_cnt);
 
                         // 사용한 적립금 복구
-                        int u_p_cnt = PointDAO.updatePoint(cus_no, orderCode);
+                        int u_p_cnt = PointDAO.updatePoint(cvo.getId(), orderCode);
                         System.out.println("Point update result: " + u_p_cnt);
 
                         // 해당 고객의 누적 금액에서 환불금액 차감
-                        int u_c_cnt = CustomerDAO.updateTotal(cus_no, total);
+                        int u_c_cnt = CustomerDAO.updateTotal(cvo.getId(), total);
                         System.out.println("Customer update result: " + u_c_cnt);
 
                         // JSON 응답 설정
@@ -88,7 +87,6 @@ public class CancelOrderAction implements Action {
                             }
                             out.flush();
                         }
-
                     } catch (Exception e) {
                         e.printStackTrace();
 
@@ -108,10 +106,6 @@ public class CancelOrderAction implements Action {
                         }
                     }
                     return null;
-
-
-                default:
-                    return "/user/jsp/error/error.jsp";
             }
         }
 

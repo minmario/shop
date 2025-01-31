@@ -28,13 +28,6 @@
             <%-- header --%>
             <jsp:include page="../layout/header.jsp"></jsp:include>
 
-            <c:if test="${requestScope.o_list eq null}">
-                <script>
-                    // alert("해당 주문의 정보를 불러올 수 없습니다.");
-                    // window.location.href = "Controller?type=myPage";
-                </script>
-            </c:if>
-
             <div class="wrap">
                 <div class="row">
                     <div class="container">
@@ -173,13 +166,15 @@
                         </c:if>
                     </div>
                 </div>
-                    <%-- footer --%>
+
+                <%-- footer --%>
                 <jsp:include page="../layout/footer.jsp"></jsp:include>
             </div>
         </c:when>
         <c:otherwise>
             <script>
-                window.location.href = "Controller?type=error";
+                alert("세션이 만료되었습니다. 다시 로그인해 주세요.");
+                window.location.href = 'Controller?type=login';
             </script>
         </c:otherwise>
     </c:choose>

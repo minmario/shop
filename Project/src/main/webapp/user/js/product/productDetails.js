@@ -196,8 +196,8 @@ function selectQuestion() {
         data: {
             prod_no: document.getElementById("prod_id").dataset.item,
         },
-        success: function (data) {
-            $("#question").html(data);
+        success: function (response) {
+            $("#question").html(response);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alert("문의 데이터를 가져오는 중 오류가 발생했습니다.");

@@ -28,8 +28,6 @@
             <div class="wrap">
                 <div class="row">
                     <div class="container">
-
-                        <!-- Order Section -->
                         <div class="order-container">
                             <div class="order-status">
                                 <h2 class="order-title">진행 중 주문 현황</h2>
@@ -70,7 +68,7 @@
                     </div>
                 </div>
 
-                    <%-- footer --%>
+                <%-- footer --%>
                 <jsp:include page="../layout/footer.jsp"></jsp:include>
             </div>
         </c:when>

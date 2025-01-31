@@ -18,10 +18,12 @@ public class OrderDetailsAction implements Action {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         CustomerVO cvo = (CustomerVO) session.getAttribute("customer_info");
+
         if (cvo == null) {
+            request.setAttribute("session_expired", true);
             return "/user/jsp/error/error.jsp";
         }
-        String cus_no = cvo.getId();
+
         String action = request.getParameter("action");
         String order_code = request.getParameter("order_code");
 
@@ -32,10 +34,10 @@ public class OrderDetailsAction implements Action {
             switch (action) {
                 // 주문상세 조회
                 case "select":
-                    o_list = OrderDAO.selectOrderCode(cus_no, order_code); // 주문상세 정보 list
-                    List<DeliveryVO> deli_list = DeliveryDAO.selectDelivery(cus_no); // 해당 주문의 배송지 정보
-                    int totalPrice = OrderDAO.selectTotalPrice(cus_no, order_code); // 원가 총 금액
-                    int totalSaledPrice = OrderDAO.selectTotalSaledPrice(cus_no, order_code); // 할인가 총 금액
+                    o_list = OrderDAO.selectOrderCode(cvo.getId(), order_code); // 주문상세 정보 list
+                    List<DeliveryVO> deli_list = DeliveryDAO.selectDelivery(cvo.getId()); // 해당 주문의 배송지 정보
+                    int totalPrice = OrderDAO.selectTotalPrice(cvo.getId(), order_code); // 원가 총 금액
+                    int totalSaledPrice = OrderDAO.selectTotalSaledPrice(cvo.getId(), order_code); // 할인가 총 금액
 
                     request.setAttribute("o_list", o_list);
                     request.setAttribute("deli_list", deli_list);
@@ -48,7 +50,7 @@ public class OrderDetailsAction implements Action {
                 case "update":
                     String prev_deli_no = request.getParameter("pre_delivery_id");
                     String deli_no = request.getParameter("delivery_id");
-                    int o_cnt = OrderDAO.updateOrderDelivery(cus_no, order_code, deli_no);
+                    int o_cnt = OrderDAO.updateOrderDelivery(cvo.getId(), order_code, deli_no);
 
                     response.setContentType("application/json");
                     response.setCharacterEncoding("UTF-8");
@@ -63,12 +65,12 @@ public class OrderDetailsAction implements Action {
                             StringBuffer sb = new StringBuffer();
                             lvo.setCus_no(cvo.getId());
                             lvo.setTarget("order");
-                            sb.append("cus_no : " + cus_no + ", ");
+                            sb.append("cus_no : " + cvo.getId() + ", ");
                             sb.append("deli_no : " + prev_deli_no + ", ");
                             sb.append("order_code : " + order_code + ", ");
                             lvo.setPrev(sb.toString());
                             sb = new StringBuffer();
-                            sb.append("cus_no : " + cus_no + ", ");
+                            sb.append("cus_no : " + cvo.getId() + ", ");
                             sb.append("deli_no : " + deli_no + ", ");
                             sb.append("order_code : " + order_code + ", ");
                             lvo.setCurrent(sb.toString());
@@ -131,15 +133,10 @@ public class OrderDetailsAction implements Action {
 //                        e.printStackTrace();
 //                    }
 //                    return null;
-
-                default:
-                    viewPage = "/user/jsp/error/error.jsp";
             }
 
-        } else {
-            viewPage = "/user/jsp/error/error.jsp";
-
         }
+
         return viewPage;
     }
 }

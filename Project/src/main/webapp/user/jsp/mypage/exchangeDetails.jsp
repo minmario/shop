@@ -28,14 +28,11 @@
             <div class="wrap">
                 <div class="row">
                     <div class="container">
-
                         <div class="wrap-title">
                             <span class="title">교환 상세내역</span>
                         </div>
-
                         <div class="exchange-details">
-
-                                <%-- 주문 정보 --%>
+                            <%-- 주문 정보 --%>
                             <div class="order-info">
                                 <div class="order-date">2024.12.18 19:54</div>
                                 <div class="wrap-order-details">
@@ -45,7 +42,7 @@
                             </div>
                             <hr/>
 
-                                <%-- 교환 상품 정보 --%>
+                            <%-- 교환 상품 정보 --%>
                             <div class="exchange-product">
                                 <h2>교환 상품 1개</h2>
                                 <span class="exchange-status">교환완료</span>
@@ -59,14 +56,13 @@
                                     </div>
                                 </div>
                             </div>
-
-                                <%-- 버튼 --%>
                             <div class="wrap-buttons">
                                 <button class="btn btn-outline-secondary button">교환 배송 조회</button>
                                 <button class="btn btn-outline-secondary button">회수 배송 조회</button>
-                            </div><hr/>
+                            </div>
+                            <hr/>
 
-                                <%-- 교환 신청 정보 --%>
+                            <%-- 교환 신청 정보 --%>
                             <div class="request-info">
                                 <h2 class="subtitle">교환 신청 정보</h2>
                                 <ul class="info-list">
@@ -120,7 +116,6 @@
                                 <p class="notice">* 주문 시 사용한 적립금 및 할인쿠폰은 취소완료 즉시 반환됩니다.</p>
                             </div>
                         </div>
-
                     </div>
                 </div>
 
@@ -130,7 +125,8 @@
         </c:when>
         <c:otherwise>
             <script>
-                window.location.href = "Controller?type=error";
+                alert("세션이 만료되었습니다. 다시 로그인해 주세요.");
+                window.location.href = 'Controller?type=login';
             </script>
         </c:otherwise>
     </c:choose>

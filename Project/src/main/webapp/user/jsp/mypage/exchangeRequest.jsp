@@ -28,14 +28,11 @@
             <div class="wrap">
                 <div class="row">
                     <div class="container">
-
                         <div class="wrap-title">
                             <span class="left bold">교환요청</span>
                         </div>
 
-                        <!-- 전체 틀 -->
                         <div class="box">
-
                             <!-- 교환 상품 정보 -->
                             <section class="wrap-product">
                                 <div class="product-content">
@@ -94,20 +91,20 @@
                                 <input type="radio" id="shop-delivery" name="delivery" value="1" onclick="selectAddr()" checked/>
                                 <label for="shop-delivery">회수해 주세요</label>
                                 <span class="svg-icon" data-toggle="modal" data-target="#retrieveModal">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
-                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
-                            </svg>
-                        </span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                        <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
+                                    </svg>
+                                </span>
                                 <br/>
                                 <input type="radio" id="direct" name="delivery" value="2" onclick="selectAddr()"/>
                                 <label for="direct">직접 보낼게요</label>
                                 <span class="svg-icon" data-toggle="modal" data-target="#personallyModal">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
-                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
-                            </svg>
-                        </span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                        <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
+                                    </svg>
+                                </span>
                             </div>
 
                             <!-- '회수해 주세요'을 선택할 때만 보이는 필드 -->
@@ -152,7 +149,8 @@
         </c:when>
         <c:otherwise>
             <script>
-                window.location.href = "Controller?type=error";
+                alert("세션이 만료되었습니다. 다시 로그인해 주세요.");
+                window.location.href = 'Controller?type=login';
             </script>
         </c:otherwise>
     </c:choose>

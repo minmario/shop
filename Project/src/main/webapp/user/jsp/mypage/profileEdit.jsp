@@ -30,30 +30,8 @@
                         <div class="edit-header">
                             <h2>회원 정보 변경</h2>
                         </div>
-                        <div class="profile-container">
-                            <table class="profile-table">
-                                <tbody>
-                                <tr>
-                                    <th>이름</th>
-                                    <td>${sessionScope.customer_info.name}</td>
-                                </tr>
-                                <tr>
-                                    <th>생년월일</th>
-                                    <td>${sessionScope.customer_info.birth_date}</td>
-                                </tr>
-                                <tr>
-                                    <th>이메일</th>
-                                    <td>${sessionScope.customer_info.email}</td>
-                                </tr>
-                                <tr>
-                                    <th>휴대폰 번호</th>
-                                    <td>${sessionScope.customer_info.phone}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <div class="button-container">
-                                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#editModal">회원정보 변경</button>
-                            </div>
+                        <div class="profile-container" id="profile-acticle">
+                            <jsp:include page="components/profile.jsp"></jsp:include>
                         </div>
                         <div class="retired-link-container">
                             <a href="Controller?type=retiredReason">회원탈퇴</a>
@@ -86,7 +64,7 @@
                                     <input type="text" class="form-control verification-input" id="phone" name="phone" placeholder="휴대폰 번호" autoComplete="off" value="${sessionScope.customer_info.phone}"/>
                                 </div>
                                 <div class="change-button-container">
-                                    <button type="button" class="btn btn-dark" id="btn-change">변경</button>
+                                    <button type="button" class="btn btn-dark" id="btn-change" onclick="updateCustomer()">변경</button>
                                 </div>
                             </div>
                         </div>
@@ -96,7 +74,8 @@
         </c:when>
         <c:otherwise>
             <script>
-                window.location.href = "Controller?type=error";
+                alert("세션이 만료되었습니다. 다시 로그인해 주세요.");
+                window.location.href = 'Controller?type=login';
             </script>
         </c:otherwise>
     </c:choose>

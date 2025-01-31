@@ -70,7 +70,7 @@ function onPayment() {
             tax_free_amount: Math.floor(parseInt(total_amount, 10) * 0.1)
         },
         dataType: "JSON",
-        success: function (res) {
+        success: function (response) {
 
         }, error: function (err) {
             window.location.href = err.responseJSON.next_redirect_pc_url;

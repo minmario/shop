@@ -165,7 +165,7 @@
                                 </li>
                                 <li>
                                     <span>적립금 사용</span>
-                                    <span class="text-blue" id="used-point"></span>
+                                    <span class="text-blue" id="used-point">0원</span>
                                 </li>
                                 <li>
                                     <span>배송비</span>
@@ -466,7 +466,8 @@
         </c:when>
         <c:otherwise>
             <script>
-                window.location.href = "Controller?type=error";
+                alert("세션이 만료되었습니다. 다시 로그인해 주세요.");
+                window.location.href = 'Controller?type=login';
             </script>
         </c:otherwise>
     </c:choose>

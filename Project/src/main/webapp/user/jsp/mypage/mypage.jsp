@@ -37,12 +37,10 @@
             <div class="wrap">
                 <div class="row">
                     <div class="container">
-                        <!-- Title Section -->
                         <div class="text-title">
                             <h3>마이 페이지</h3>
                         </div>
 
-                        <!-- Profile Section -->
                         <div class="profile-container">
                             <div class="profile-row">
                                 <div class="profile-header">
@@ -77,7 +75,6 @@
                             </div>
                         </div>
 
-                        <!-- Order Section -->
                         <div class="order-container">
                             <div class="order-status">
                                 <h2 class="order-title">진행 중 주문 현황</h2>
@@ -94,7 +91,6 @@
                             </div>
                         </div>
 
-                        <!-- Action Buttons Section -->
                         <div class="user-action-buttons">
                             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-order" autocomplete="off">
@@ -115,50 +111,34 @@
                                 <label class="btn btn-outline-dark" for="btnradio-delivery" onclick="selectDelivery()">배송지</label>
                             </div>
                         </div>
-
-                        <!-- Order Section -->
                         <div class="order-section-container" id="order-article">
                             <jsp:include page="components/order.jsp"/>
                         </div>
-
-                        <!-- Refund Section -->
                         <div class="refund-section-container" id="refund-article">
                             <jsp:include page="components/refund.jsp"/>
                         </div>
-
-                        <!-- Review Section -->
                         <div class="review-section-container" id="review-article">
                             <jsp:include page="./components/review.jsp"/>
                         </div>
-
-                        <!-- Point Section -->
                         <div class="point-section-container" id="point-article">
                             <jsp:include page="./components/point.jsp"/>
                         </div>
-
-                        <!-- Inquiry Section -->
                         <div class="inquiry-section-container" id="inquiry-article">
                             <jsp:include page="./components/inquiry.jsp"/>
                         </div>
-
-                        <!-- Question Section -->
                         <div class="question-section-container" id="question-article">
                             <jsp:include page="./components/question.jsp"/>
                         </div>
-
-                        <!-- Coupon Section -->
                         <div class="coupon-section-container" id="coupon-article">
                             <jsp:include page="./components/coupon.jsp"/>
                         </div>
-
-                            <%-- Delivery Section --%>
                         <div class="delivery-section-container" id="delivery-article">
                             <jsp:include page="./components/delivery.jsp"/>
                         </div>
                     </div>
                 </div>
 
-                    <%-- footer --%>
+                <%-- footer --%>
                 <jsp:include page="../layout/footer.jsp"></jsp:include>
             </div>
 
@@ -414,7 +394,8 @@
         </c:when>
         <c:otherwise>
             <script>
-                window.location.href = "Controller?type=error";
+                alert("세션이 만료되었습니다. 다시 로그인해 주세요.");
+                window.location.href = 'Controller?type=login';
             </script>
         </c:otherwise>
     </c:choose>

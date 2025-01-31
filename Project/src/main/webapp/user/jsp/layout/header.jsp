@@ -89,7 +89,7 @@
                                 <span class="new_alert"></span>
                             </a>
                             <%-- 장바구니 --%>
-                            <a href="Controller?type=cart&action=select" class="text-decoration-none text-dark position-relative">
+                            <a href="Controller?type=cart" class="text-decoration-none text-dark position-relative">
                                 <i class="bi bi-basket-fill"></i>
                                 <span>장바구니</span>
                                 <c:if test="${not empty sessionScope.cart_count and sessionScope.cart_count ne '0'}">

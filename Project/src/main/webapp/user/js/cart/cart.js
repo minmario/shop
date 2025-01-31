@@ -1,5 +1,7 @@
-// 체크 박스
 document.addEventListener("DOMContentLoaded", function () {
+    // 장바구니 목록
+    selectCart();
+
     // 장바구니 체크박스 전체 선택 / 해제 기능
     const cartAllCheckbox = document.querySelector("#cart-table #cart-all");
     const checkboxes = document.querySelectorAll("#cart-table > tbody input[type='checkbox']");
@@ -52,12 +54,7 @@ function minusCount(obj) {
         method: 'POST',
         data: count === 0 ? { id: id } : { id: id, size: size, count: count },
         success: function () {
-            if (count !== 0) {
-                alert("수량이 변경되었습니다.");
-            } else {
-                alert("상품이 장바구니에서 삭제되었습니다.");
-                window.location.href = 'Controller?type=cart&action=select';
-            }
+            selectCart();
         },
         error: function (error) {
             alert("요청 처리 중 오류가 발생했습니다.");
@@ -95,7 +92,7 @@ function plusCount(obj) {
             count: count
         },
         success: function () {
-            alert("수량이 변경되었습니다.");
+            selectCart();
         },
         error: function (error) {
             alert("요청 처리 중 오류가 발생했습니다.");
@@ -124,8 +121,7 @@ function deleteCart() {
             ids: ids
         },
         success: function () {
-            alert("상품이 장바구니에서 삭제되었습니다.");
-            window.location.href = 'Controller?type=cart&action=select';
+            selectCart();
         },
         error: function (error) {
             alert("요청 처리 중 오류가 발생했습니다.");
@@ -140,8 +136,22 @@ function deleteAllCart() {
         url: "Controller?type=cart&action=delete_all",
         method: 'POST',
         success: function () {
-            alert("전체 삭제되었습니다.");
-            window.location.href = 'Controller?type=cart&action=select';
+            selectCart();
+        },
+        error: function (error) {
+            alert("요청 처리 중 오류가 발생했습니다.");
+            console.error(error);
+        }
+    });
+}
+
+// 장바구니 목록 조회
+function selectCart() {
+    $.ajax({
+        url: "Controller?type=cart&action=select",
+        method: 'POST',
+        success: function (response) {
+            $("#cart-article").html(response);
         },
         error: function (error) {
             alert("요청 처리 중 오류가 발생했습니다.");

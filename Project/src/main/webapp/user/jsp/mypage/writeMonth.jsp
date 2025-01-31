@@ -29,7 +29,6 @@
                 <div class="row">
                     <div class="container">
                         <div class="review-container">
-
                             <div class="review-header">
                                 <div class="review-info">
                                     <span class="review-title">한달 후기 작성</span>
@@ -143,7 +142,8 @@
         </c:when>
         <c:otherwise>
             <script>
-                window.location.href = "Controller?type=error";
+                alert("세션이 만료되었습니다. 다시 로그인해 주세요.");
+                window.location.href = 'Controller?type=login';
             </script>
         </c:otherwise>
     </c:choose>

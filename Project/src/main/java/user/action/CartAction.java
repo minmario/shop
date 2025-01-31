@@ -20,6 +20,7 @@ public class CartAction implements Action {
         CustomerVO cvo = (CustomerVO) session.getAttribute("customer_info");
 
         if (cvo == null) {
+            request.setAttribute("session_expired", true);
             return "/user/jsp/error/error.jsp";
         }
 
@@ -29,7 +30,7 @@ public class CartAction implements Action {
                 case "select":
                     List<CartVO> cart_list = CartDAO.selectCart(cvo.getId());
                     request.setAttribute("cart_list", cart_list);
-                    viewPage = "/user/jsp/cart/cart.jsp";
+                    viewPage = "/user/jsp/cart/components/cartList.jsp";
                     break;
                 case "insert":
                     String i_prod_no = request.getParameter("prod_no");
@@ -56,7 +57,7 @@ public class CartAction implements Action {
                         LogDAO.insertLog(lvo);
                     }
 
-                    viewPage = "/user/jsp/cart/cart.jsp";
+                    viewPage = "/user/jsp/cart/components/cartList.jsp";
                     break;
                 case "update":
                     String u_id = request.getParameter("id");
@@ -83,7 +84,7 @@ public class CartAction implements Action {
                         LogDAO.updateLog(lvo);
                     }
 
-                    viewPage = "/user/jsp/cart/cart.jsp";
+                    viewPage = "/user/jsp/cart/components/cartList.jsp";
                     break;
                 case "delete":
                     String id = request.getParameter("id");
@@ -105,7 +106,7 @@ public class CartAction implements Action {
                         LogDAO.insertLog(lvo);
                     }
 
-                    viewPage = "/user/jsp/cart/cart.jsp";
+                    viewPage = "/user/jsp/cart/components/cartList.jsp";
                     break;
                 case "deletes":
                     String[] idsArr = request.getParameterValues("ids");
@@ -132,7 +133,7 @@ public class CartAction implements Action {
                         }
                     }
 
-                    viewPage = "/user/jsp/cart/cart.jsp";
+                    viewPage = "/user/jsp/cart/components/cartList.jsp";
                     break;
                 case "delete_all":
                     int da_cnt = CartDAO.deleteAllCart(cvo.getId());
@@ -147,7 +148,7 @@ public class CartAction implements Action {
                         LogDAO.insertLog(lvo);
                     }
 
-                    viewPage = "/user/jsp/cart/cart.jsp";
+                    viewPage = "/user/jsp/cart/components/cartList.jsp";
                     break;
                 case "order":
                     // 선택된 상품
@@ -155,7 +156,6 @@ public class CartAction implements Action {
                     List<CartVO> cartItems = new ArrayList<>();
                     for (int i = 0; i < selectedItems.length; i++) {
                         CartVO item = CartDAO.selectCartDetails(cvo.getId(), selectedItems[i]);
-                        System.out.println("item : " + item.getSale());
                         cartItems.add(item);
                     }
                     request.setAttribute("cartItems", cartItems);
@@ -183,6 +183,8 @@ public class CartAction implements Action {
                     viewPage = "/user/jsp/payment/payment.jsp";
                     break;
             }
+        } else {
+            viewPage = "/user/jsp/cart/cart.jsp";
         }
 
         return viewPage;

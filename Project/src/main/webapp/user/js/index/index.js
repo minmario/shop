@@ -97,8 +97,8 @@ function selectProducts() {
             category: category,
             sort: sort
         },
-        success: function (data) {
-            $("#product-list").html(data);
+        success: function (response) {
+            $("#product-list").html(response);
         },
         error: function () {
             alert('상품 조회에 실패했습니다.');

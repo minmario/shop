@@ -20,6 +20,7 @@ public class BoardAction implements Action {
         CustomerVO cvo = (CustomerVO) session.getAttribute("customer_info");
 
         if (cvo == null) {
+            request.setAttribute("session_expired", true);
             return "/user/jsp/error/error.jsp";
         }
 

@@ -28,14 +28,12 @@
             <div class="wrap">
                 <div class="row">
                     <div class="container">
-
                         <div class="wrap-title">
                             <span class="title">반품 상세내역</span>
                         </div>
 
                         <div class="refund-details">
-
-                                <%-- 주문 정보 --%>
+                            <%-- 주문 정보 --%>
                             <div class="order-info">
                                 <div class="order-date">2024.12.18 19:54</div>
                                 <div class="wrap-order-details">
@@ -45,7 +43,7 @@
                             </div>
                             <hr/>
 
-                                <%-- 반품 상품 정보 --%>
+                            <%-- 반품 상품 정보 --%>
                             <div class="refund-product">
                                 <h2>반품 상품 1개</h2>
                                 <span class="refund-status">반품완료</span>
@@ -59,14 +57,12 @@
                                     </div>
                                 </div>
                             </div>
-
-                                <%-- 버튼 --%>
                             <div class="wrap-buttons">
                                 <button class="btn btn-outline-secondary button" data-toggle="modal" data-target="#repurchaseModal">재구매</button>
                                 <button class="btn btn-outline-secondary button">회수 배송 조회</button>
                             </div><hr/>
 
-                                <%-- 반품 신청 정보 --%>
+                            <%-- 반품 신청 정보 --%>
                             <div class="request-info">
                                 <h2 class="subtitle">반품 신청 정보</h2>
                                 <ul class="info-list">
@@ -143,10 +139,9 @@
                                 </div>
                             </div>
 
-                                <%-- 안내사항 --%>
+                            <%-- 안내사항 --%>
                             <div class="notice">* 주문 시 사용한 적립금 및 할인쿠폰은 취소완료 즉시 반환됩니다.</div>
                         </div>
-
                     </div>
                 </div>
 
@@ -177,7 +172,8 @@
         </c:when>
         <c:otherwise>
             <script>
-                window.location.href = "Controller?type=error";
+                alert("세션이 만료되었습니다. 다시 로그인해 주세요.");
+                window.location.href = 'Controller?type=login';
             </script>
         </c:otherwise>
     </c:choose>

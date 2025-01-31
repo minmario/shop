@@ -14,9 +14,11 @@ public class ProfileEditAction implements Action {
         CustomerVO cvo = (CustomerVO) session.getAttribute("customer_info");
 
         if (cvo == null) {
+            request.setAttribute("session_expired", true);
             return "/user/jsp/error/error.jsp";
         }
 
+        String viewPath = null;
         String action = request.getParameter("action");
         if (action != null) {
             switch (action) {
@@ -28,24 +30,18 @@ public class ProfileEditAction implements Action {
                     uvo.setId(cvo.getId());
                     uvo.setEmail(email);
                     uvo.setPhone(phone);
+                    CustomerDAO.updateCustomer(uvo);
 
-                    // 호출
-                    int cnt = CustomerDAO.updateCustomer(uvo);
-
-                    if (cnt > 0) {
-                        request.setAttribute("response", true);
-                    } else {
-                        request.setAttribute("response", false);
-                    }
-
+                    viewPath = "/user/jsp/mypage/profileEdit.jsp";
                     break;
                 case "select":
-                    CustomerVO svo = CustomerDAO.selectCustomerById(cvo.getId());
-                    session.setAttribute("customer_info", svo);
+                    CustomerVO rvo = CustomerDAO.selectCustomerById(cvo.getId());
+                    session.setAttribute("customer_info", rvo);
+                    viewPath = "/user/jsp/mypage/components/profile.jsp";
                     break;
             }
         }
 
-        return "/user/jsp/mypage/profileEdit.jsp";
+        return viewPath;
     }
 }

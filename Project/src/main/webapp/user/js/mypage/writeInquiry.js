@@ -87,8 +87,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 data: formData,
                 processData: false,
                 contentType: false,
-                success: function (data) {
-                    console.log("서버 응답:", data);
+                success: function (response) {
+                    console.log("서버 응답:", response);
                     alert("파일 업로드 성공!");
                 },
                 error: function (xhr, status, error) {
