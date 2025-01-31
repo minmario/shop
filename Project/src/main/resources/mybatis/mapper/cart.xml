@@ -51,4 +51,12 @@
         DELETE FROM cart
         WHERE cus_no = #{cus_no}
     </delete>
+
+    <!-- 장바구니 상품 상세 조회 -->
+    <select id="select_cart_details" resultType="user.vo.CartVO" parameterType="Map">
+        SELECT c.*, p.*, s.name AS brand FROM cart c
+        INNER JOIN product p ON c.prod_no = p.id
+        INNER JOIN seller s ON p.seller_no = s.id
+        WHERE cus_no = #{cus_no} AND c.id = #{id}
+    </select>
 </mapper>

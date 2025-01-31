@@ -105,8 +105,8 @@ public class PointDAO {
     }
 
     // 보유 적립금 가져오기
-    public static String selectSavePoint(String cus_no) {
-        String point = null;
+    public static int selectSavePoint(String cus_no) {
+        int point = 0;
         SqlSession ss = FactoryService.getFactory().openSession();
 
         try {
@@ -122,15 +122,21 @@ public class PointDAO {
 
     //사용 적립금 복구
     public static int updatePoint(String cus_no, String order_code){
+        int cnt = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
         HashMap<String, String> map = new HashMap<>();
         map.put("cus_no", cus_no);
         map.put("order_code", order_code);
 
-        SqlSession ss = FactoryService.getFactory().openSession();
-        int cnt = 0;
-
         try {
             cnt = ss.update("point.update_point", map);
+
+            if (cnt > 0) {
+                ss.commit();
+            } else {
+                ss.rollback();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

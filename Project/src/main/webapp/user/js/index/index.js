@@ -1,5 +1,5 @@
-// side menu toggle
 document.addEventListener('DOMContentLoaded', () => {
+    // side menu toggle
     const toggleButtons = document.querySelectorAll('.toggle-btn');
 
     toggleButtons.forEach(button => {
@@ -19,10 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-});
 
-// category 선택
-document.addEventListener("DOMContentLoaded", () => {
+    // 카테고리 선택
     const listItems = document.querySelectorAll(".list-unstyled .unstyled-btn");
     let activeItem = document.querySelector(".list-unstyled .unstyled-btn.active");
 
@@ -108,3 +106,44 @@ function selectProducts() {
     });
 }
 
+function notLoginLike() {
+    if (confirm("로그인 후 이용할 수 있습니다. 로그인 페이지로 이동하시겠습니까?")) {
+        window.location.href = "Controller?type=showlogin";
+    }
+}
+
+// 좋아요 설정
+function likeProduct(value) {
+    $.ajax({
+        url: "Controller?type=like&action=like",
+        method: 'POST',
+        data: {
+            prod_no: value
+        },
+        success: function () {
+            window.location.href = "Controller";
+        },
+        error: function (error) {
+            alert("요청 처리 중 오류가 발생했습니다.");
+            console.error(error);
+        }
+    });
+}
+
+// 좋아요 해제
+function unlikeProduct(value) {
+    $.ajax({
+        url: "Controller?type=like&action=unlike",
+        method: 'POST',
+        data: {
+            prod_no: value
+        },
+        success: function () {
+            window.location.href = "Controller";
+        },
+        error: function (error) {
+            alert("요청 처리 중 오류가 발생했습니다.");
+            console.error(error);
+        }
+    });
+}

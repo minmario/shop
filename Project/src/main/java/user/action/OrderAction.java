@@ -51,19 +51,6 @@ public class OrderAction implements Action {
                     request.setAttribute("o_list", d_list);
                     viewPage = "/user/jsp/mypage/components/order.jsp";
                     break;
-                case "order":
-                    // 선택된 상품
-
-                    // 기본 배송지
-                    DeliveryVO delivery = DeliveryDAO.selectDeliveryDefault(cvo.getCus_id());
-                    request.setAttribute("delivery", delivery);
-
-                    // 보유 적립금
-                    String points = PointDAO.selectSavePoint(cvo.getCus_id());
-                    request.setAttribute("points", points);
-
-                    viewPage = "/user/jsp/payment/payment.jsp";
-                    break;
                 case "payment":
                     String order_code = request.getParameter("order_code");
                     String prod_name = request.getParameter("prod_name");
@@ -208,6 +195,8 @@ public class OrderAction implements Action {
                     break;
             }
         }
+
+        System.out.println("viewPage : " + viewPage);
 
         return viewPage;
     }

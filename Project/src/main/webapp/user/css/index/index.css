@@ -253,25 +253,25 @@ button.unstyled-btn.active {
     color: #8f8d8d;
 }
 
-.product-reviews {
+.product-brand {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 5px;
-    font-size: 14px;
 }
 
-.stars i, .stars .star-count {
-    color: #f5c518;
-    font-weight: bold;
+.product-brand strong {
+    flex-grow: 1;
 }
 
-.product-likes {
-    margin-top: 5px;
-    font-size: 14px;
+.product-brand i {
+    color: #d9534f;
+    margin-left: 10px;
 }
 
-.product-likes i, .product-likes .like-count {
-    color: rgb(221, 53, 69);
-    font-weight: bold;
+@media (max-width: 1615px) {
+    .product-item {
+        width: calc(10% - 10px);
+    }
 }
 
 @media (max-width: 1200px) {

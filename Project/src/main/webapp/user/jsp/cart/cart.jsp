@@ -65,8 +65,18 @@
                                                     </div>
                                                 </td>
                                                 <td class="product-price">
-                                                    <del class="default-price"><fmt:formatNumber value="${item.price}"/>원</del>
-                                                    <div class="sale-price"><fmt:formatNumber value="${item.saled_price}"/>원</div>
+                                                    <c:set var="total_count" value="0"/>
+                                                    <c:choose>
+                                                        <c:when test="${not empty item.saled_price}">
+                                                            <c:set var="total_count" value="${item.saled_price}"/>
+                                                            <del class="default-price"><fmt:formatNumber value="${item.price}"/>원</del>
+                                                            <div class="sale-price"><fmt:formatNumber value="${total_count * item.count}"/>원</div>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <c:set var="total_count" value="${item.count}"/>
+                                                            <div class="default-price"><fmt:formatNumber value="${total_count * item.count}"/>원</div>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </td>
                                                 <td class="cart-count">
                                                     <button type="button" class="btn btn-secondary btn-minus" onclick="minusCount(this)">-</button>

@@ -64,7 +64,7 @@
     </select>
 
     <!-- 보유 적립금 -->
-    <select id="select_save_point" resultType="String" parameterType="String">
+    <select id="select_save_point" resultType="int" parameterType="String">
         SELECT
             SUM(CASE WHEN p_type = 0 THEN amount ELSE 0 END) -
             SUM(CASE WHEN p_type = 1 THEN amount ELSE 0 END) AS total_points

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -40,96 +41,131 @@
                                 <p class="address">${dvo.addr1} ${dvo.addr2}</p>
                                 <p class="phone">${dvo.phone}</p>
                                 <div class="delivery-option-container">
-                                    <select class="delivery-options" id="delivery-options">
-                                        <c:choose>
-                                            <c:when test="${dvo.request == '문 앞에 놔주세요'}">
-                                                <option value="문 앞에 놔주세요" selected>문 앞에 놔주세요</option>
-                                            </c:when>
-                                            <c:when test="${dvo.request == '경비실에 맡겨주세요'}">
-                                                <option value="경비실에 맡겨주세요" selected>경비실에 맡겨주세요</option>
-                                            </c:when>
-                                            <c:when test="${dvo.request == '택배함에 넣어주세요'}">
-                                                <option value="택배함에 넣어주세요" selected>택배함에 넣어주세요</option>
-                                            </c:when>
-                                            <c:when test="${dvo.request == '배송 전에 연락 주세요'}">
-                                                <option value="배송 전에 연락 주세요" selected>배송 전에 연락 주세요</option>
-                                            </c:when>
-                                            <c:otherwise>
+                                    <c:set var="request" value="${dvo.request}"/>
+                                    <c:choose>
+                                        <c:when test="${(request eq '문 앞에 놔주세요') or (request eq '경비실에 맡겨주세요') or (request eq '택배함에 넣어주세요') or (request eq '배송 전에 연락 주세요')}">
+                                            <select class="form-select" id="delivery-request">
+                                                <option value="문 앞에 놔주세요" ${request == '문 앞에 놔주세요' ? 'selected' : ''}>문 앞에 놔주세요</option>
+                                                <option value="경비실에 맡겨주세요" ${request == '경비실에 맡겨주세요' ? 'selected' : ''}>경비실에 맡겨주세요</option>
+                                                <option value="택배함에 넣어주세요" ${request == '택배함에 넣어주세요' ? 'selected' : ''}>택배함에 넣어주세요</option>
+                                                <option value="배송 전에 연락 주세요" ${request == '배송 전에 연락 주세요' ? 'selected' : ''}>배송 전에 연락 주세요</option>
+                                                <option value="직접 입력">직접 입력</option>
+                                            </select>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <select class="form-select" id="delivery-request">
+                                                <option value="문 앞에 놔주세요">문 앞에 놔주세요</option>
+                                                <option value="경비실에 맡겨주세요">경비실에 맡겨주세요</option>
+                                                <option value="택배함에 넣어주세요">택배함에 넣어주세요</option>
+                                                <option value="배송 전에 연락 주세요">배송 전에 연락 주세요</option>
                                                 <option value="직접 입력" selected>직접 입력</option>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </select>
+                                            </select>
+                                            <textarea class="delivery-message" id="delivery-message" maxlength="50" placeholder="최대 50자까지 입력 가능합니다.">${request}</textarea>
+                                            <p class="char-count" id="char-count">0&nbsp;/&nbsp;50</p>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
-                                <textarea class="delivery-message" id="delivery-message" maxlength="50" placeholder="최대 50자까지 입력 가능합니다."></textarea>
-                                <p class="char-count" id="char-count">0&nbsp;/&nbsp;50</p>
                             </c:if>
                         </div>
                         <div class="order-product-container">
-                            <h3>주문 상품 1개</h3>
-                            <div class="product-info">
-                                <c:if test="${not empty requestScope.selectedItems}">
-                                    <c:forEach var="item" items="${requestScope.selectedItems}">
-                                        <img src="${item.prod_image}" alt="상품 이미지" class="product-image">
+                            <c:if test="${not empty requestScope.cartItems}">
+                                <h3>주문 상품 <fmt:formatNumber value="${fn:length(requestScope.cartItems)}"/>개</h3>
+                                <c:set var="prev_amount" value="0"/>
+                                <c:set var="sale_amount" value="0"/>
+                                <c:set var="sale_percent" value="0"/>
+                                <c:set var="total_amount" value="0"/>
+                                <c:forEach var="item" items="${requestScope.cartItems}">
+                                    <div class="product-info">
+                                        <img src="${fn:split(item.prod_image, ',')[0]}" alt="상품 이미지" class="product-image"/>
                                         <div class="product-details">
                                             <p class="product-brand">${item.brand}</p>
                                             <p class="product-name" id="product-name">${item.p_name}</p>
                                             <p class="product-size">${item.size} / <span id="product-count">${item.count}</span>개</p>
                                             <p class="product-price">
-                                                <span class="original-price"><fmt:formatNumber value="${item.price}"/>원</span>
-                                                <span class="discounted-price"><fmt:formatNumber value="${item.saled_price}"/>원</span>
+                                                <c:set var="prev_amount" value="${prev_amount + item.price}"/>
+                                                <c:choose>
+                                                    <c:when test="${not empty item.saled_price}">
+                                                        <p class="original-price"><fmt:formatNumber value="${item.price}"/>원</p>
+                                                        <c:if test="${not empty item.sale}">
+                                                            <span class="sale-percent">${item.sale}%</span>
+                                                            <c:set var="sale_percent" value="${sale_percent + item.sale}"/>
+                                                        </c:if>
+                                                        <span class="discounted-price"><fmt:formatNumber value="${item.saled_price}"/>원</span>
+                                                        <!-- 할인 가격이 있을 경우 누적 -->
+                                                        <c:set var="total_amount" value="${total_amount + item.saled_price}"/>
+                                                        <c:set var="sale_amount" value="${sale_amount + item.saled_price}"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <span class="original-price"><fmt:formatNumber value="${item.price}"/>원</span>
+                                                        <!-- 할인 가격이 없을 경우 원래 가격 누적 -->
+                                                        <c:set var="total_amount" value="${total_amount + item.price}"/>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </p>
                                         </div>
-                                    </c:forEach>
-                                </c:if>
-                            </div>
+                                    </div>
+                                </c:forEach>
+                            </c:if>
                             <button type="button" class="btn btn-outline-secondary coupon-btn" data-toggle="modal" data-target="#couponModal">쿠폰 사용</button>
                         </div>
                         <div class="points-container">
                             <div class="points-left">
                                 <h3>보유 적립금 사용</h3>
                                 <span class="svg-icon" data-toggle="modal" data-target="#pointsModal">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
-                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
-                            </svg>
-                        </span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                        <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
+                                    </svg>
+                                </span>
                             </div>
                             <div class="points-input">
-                                <input type="text"/>
-                                <button type="button" class="btn btn-outline-secondary cancel-btn">사용 취소</button>
+                                <input type="text" id="point-input" oninput="handlePointInput()"/>
+                                <button type="button" class="btn btn-outline-secondary cancel-btn" onclick="resetPoint()">사용 취소</button>
                             </div>
-                            <p class="points-info">적용한도(7%) 8,064원 / 보유 <fmt:formatNumber value="${requestScope.points}"/>원</p>
+                            <p class="points-info">적용한도(7%) <fmt:formatNumber value="${total_amount * 0.07}"/>원 / 보유 <span><fmt:formatNumber value="${requestScope.points}"/></span>원</p>
                         </div>
                         <div class="reward-container">
                             <div class="reward-top">
                                 <h3>구매 적립/선할인</h3>
                                 <span class="svg-icon" data-toggle="modal" data-target="#rewardModal">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
-                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
-                            </svg>
-                        </span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                        <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
+                                    </svg>
+                                </span>
                             </div>
                             <div class="reward-options">
                                 <label><input type="radio" name="reward"> 구매 적립</label>
                                 <label><input type="radio" name="reward"> 적립금 선할인</label>
                             </div>
-                            <p class="reward-info">선할인 제한 상품이에요.</p>
+                        </div>
+                        <div class="payment-methods-container">
+                            <h3>결제 수단</h3>
+                            <div class="radio-group">
+                                <label><input type="radio" name="payment-method">
+                                    <img class="logo-finance" src="./user/images/logo-finance-toss.png"/>토스페이
+                                    <span class="badge highlight">혜택</span>
+                                </label>
+                                <label><input type="radio" name="payment-method">
+                                    <img class="logo-finance" src="./user/images/logo-finance-kakaopay.png"/>카카오페이
+                                    <span class="badge highlight">혜택</span>
+                                </label>
+                            </div>
                         </div>
                         <div class="payment-details-container">
                             <h3>결제 금액</h3>
                             <ul>
                                 <li>
                                     <span>상품 금액</span>
-                                    <span>288,000원</span>
+                                    <span><fmt:formatNumber value="${prev_amount}"/>원</span>
                                 </li>
                                 <li>
                                     <span>할인 금액</span>
-                                    <span class="text-blue">-172,800원</span>
+                                    <span class="text-blue">-<fmt:formatNumber value="${sale_amount}"/>원</span>
                                 </li>
                                 <li>
                                     <span>적립금 사용</span>
-                                    <span class="text-blue">-8,064원</span>
+                                    <span class="text-blue" id="used-point"></span>
                                 </li>
                                 <li>
                                     <span>배송비</span>
@@ -137,7 +173,7 @@
                                 </li>
                                 <li class="total">
                                     <span>총 결제 금액</span>
-                                    <span class="text-red">63% 107,136원</span>
+                                    <span class="text-red">${sale_percent}% <fmt:formatNumber value="${total_amount}"/>원</span>
                                 </li>
                             </ul>
                         </div>
@@ -145,25 +181,23 @@
                             <div class="reward-benefits-top">
                                 <h3>적립 혜택</h3>
                                 <span class="svg-icon" data-toggle="modal" data-target="#rewardBenefitsModal">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
-                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
-                            </svg>
-                        </span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                        <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
+                                    </svg>
+                                </span>
                             </div>
                             <ul>
-                                <li>
-                                    <span>LV.5 실버 · 2% 적립</span>
-                                    <span>2,304원</span>
-                                </li>
-                                <li>
-                                    <span>구매 추가 적립</span>
-                                    <span>116원</span>
-                                </li>
-                                <li>
-                                    <span>후기 적립금</span>
-                                    <span>최대 3,500원</span>
-                                </li>
+                                <c:if test="${not empty requestScope.grade}">
+                                    <li>
+                                        <span>${requestScope.grade.name} · ${requestScope.grade.point_condition}% 적립</span>
+                                        <span><fmt:formatNumber value="${prev_amount * (requestScope.grade.point_condition / 100)}"/>원</span>
+                                    </li>
+                                    <li>
+                                        <span>후기 적립금</span>
+                                        <span>최대 <fmt:formatNumber value="${total_amount * 0.1}"/>원</span>
+                                    </li>
+                                </c:if>
                             </ul>
                         </div>
                         <div class="order-benefits-container">
@@ -178,7 +212,7 @@
                             </span>
                                 </div>
                                 <div class="benefits-right">
-                                    <span class="text-blue total-benefit" id="total_amount">186,784<span>원</span></span>
+                                    <span class="text-blue total-benefit" id="total_amount"><fmt:formatNumber value="${total_amount}"/><span>원</span></span>
                                 </div>
                             </div>
                             <div class="order-benefits-bottom">
@@ -188,7 +222,7 @@
                             </div>
                         </div>
                         <div class="payment-button-container">
-                            <button type="button" class="btn btn-dark payment-button" onclick="onPayment()">107,136원 결제하기</button>
+                            <button type="button" class="btn btn-dark payment-button" onclick="onPayment()"><fmt:formatNumber value="${total_amount}"/>원 결제하기</button>
                         </div>
                     </div>
                 </div>
@@ -202,38 +236,30 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="deliveryModalTitle">배송지 정보</h5>
+                            <h5 class="modal-title" id="deliveryModalTitle">배송지 정보 <span class="change-delivery-notice">*배송지 추가 및 수정은 마이페이지에서 가능합니다.</span></h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <button class="btn btn-outline-dark add-address-btn">배송지 추가하기</button>
-                            <div class="address-item">
-                                <input type="radio" id="address1" name="deliveryAddress" checked>
-                                <label for="address1">
-                                    <span class="address-name">홍길동</span>
-                                    <span class="default-label">기본 배송지</span>
-                                    <p class="address-detail">서울 강남구 도산대로 12-5 3층<br>010-1234-5678</p>
-                                    <div class="action-buttons">
-                                        <button class="btn btn-outline-dark edit-btn">수정</button>
+                            <c:if test="${requestScope.deli_list ne null}">
+                                <c:forEach var="deli" items="${requestScope.deli_list}" varStatus="status">
+                                    <div class="address-item">
+                                        <input type="radio" id="address${status.index}" name="deliveryAddress" value="${deli.id}" ${status.index == 0 ? 'checked' : ''}>
+                                        <label for="address${status.index}">
+                                            <span class="address-name">${deli.name}</span>
+                                            <c:if test="${deli.is_default == '1'}">
+                                                <span class="default-label">기본 배송지</span>
+                                            </c:if>
+                                            <p class="address-detail">${deli.addr1} ${deli.addr2}</p>
+                                            <p class="deli-phone">${deli.phone}</p>
+                                        </label>
                                     </div>
-                                </label>
-                            </div>
-                            <div class="address-item">
-                                <input type="radio" id="address2" name="deliveryAddress">
-                                <label for="address2">
-                                    <span class="address-name">일지매</span>
-                                    <p class="address-detail">경기도 가평시 가평대로 22길 5층 505호<br>010-6325-1478</p>
-                                    <div class="action-buttons">
-                                        <button class="btn btn-outline-dark edit-btn">수정</button>
-                                        <button class="btn btn-outline-dark delete-btn">삭제</button>
-                                    </div>
-                                </label>
-                            </div>
+                                </c:forEach>
+                            </c:if>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-dark confirm-btn">변경하기</button>
+                            <button class="btn btn-dark confirm-btn" onclick="updateDeliveryAddr()">변경하기</button>
                         </div>
                     </div>
                 </div>
@@ -305,16 +331,16 @@
                                 <div>
                                     <table>
                                         <thead>
-                                        <tr>
-                                            <th>등급</th>
-                                            <th>적용 한도</th>
-                                        </tr>
+                                            <tr>
+                                                <th>등급</th>
+                                                <th>적용 한도</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <th>전체</th>
-                                            <td>판매가 기준 7%</td>
-                                        </tr>
+                                            <tr>
+                                                <th>전체</th>
+                                                <td>판매가 기준 7%</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -346,52 +372,22 @@
                             <div>
                                 <table>
                                     <thead>
-                                    <tr>
-                                        <th>등급</th>
-                                        <th>선할인율</th>
-                                        <th>적립률</th>
-                                    </tr>
+                                        <tr>
+                                            <th>등급</th>
+                                            <th>선할인율</th>
+                                            <th>적립률</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <th>Lv.1</th>
-                                        <td colspan="2">제한</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Lv.2</th>
-                                        <td>1%</td>
-                                        <td>1%</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Lv.3</th>
-                                        <td>1%</td>
-                                        <td>1%</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Lv.4</th>
-                                        <td>2%</td>
-                                        <td>2%</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Lv.5</th>
-                                        <td>2%</td>
-                                        <td>2%</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Lv.6</th>
-                                        <td>3%</td>
-                                        <td>3%</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Lv.7</th>
-                                        <td>3%</td>
-                                        <td>3%</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Lv.8</th>
-                                        <td>4%</td>
-                                        <td>4%</td>
-                                    </tr>
+                                        <c:if test="${not empty requestScope.grades}">
+                                            <c:forEach var="item" items="${requestScope.grades}">
+                                                <tr>
+                                                    <th>${item.name}</th>
+                                                    <td>${item.sale_condition}%</td>
+                                                    <td>${item.point_condition}%</td>
+                                                </tr>
+                                            </c:forEach>
+                                        </c:if>
                                     </tbody>
                                 </table>
                             </div>
@@ -481,6 +477,39 @@
     <%-- Bootstrap --%>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
+    <%-- Toss --%>
+    <script src="https://js.tosspayments.com/v1/payment-widget"></script>
+
     <script src="./user/js/payment/payment.js"></script>
+
+    <script>
+        // ------ 클라이언트 키로 객체 초기화 ------
+        var clientKey = 'test_ck_DpexMgkW36x2lAM0O1XbrGbR5ozO'
+        var tossPayments = TossPayments(clientKey)
+
+        // ------ 결제창 띄우기 ------
+        tossPayments.requestPayment('카드', { // 결제수단 파라미터 (카드, 계좌이체, 가상계좌, 휴대폰 등)
+            // 결제 정보 파라미터
+            // 더 많은 결제 정보 파라미터는 결제창 Javascript SDK에서 확인하세요.
+            // https://docs.tosspayments.com/reference/js-sdk
+            amount: 100, // 결제 금액
+            orderId: '7_XR8395y-HtJQb7Wb55L', // 주문 ID(주문 ID는 상점에서 직접 만들어주세요.)
+            orderName: '테스트 결제', // 주문명
+            customerName: '김토스', // 구매자 이름
+            successUrl: 'https://docs.tosspayments.com/guides/payment/test-success', // 결제 성공 시 이동할 페이지(이 주소는 예시입니다. 상점에서 직접 만들어주세요.)
+            failUrl: 'https://docs.tosspayments.com/guides/payment/test-fail', // 결제 실패 시 이동할 페이지(이 주소는 예시입니다. 상점에서 직접 만들어주세요.)
+        })
+            // ------결제창을 띄울 수 없는 에러 처리 ------
+            // 메서드 실행에 실패해서 reject 된 에러를 처리하는 블록입니다.
+            // 결제창에서 발생할 수 있는 에러를 확인하세요.
+            // https://docs.tosspayments.com/reference/error-codes#결제창공통-sdk-에러
+            .catch(function (error) {
+                if (error.code === 'USER_CANCEL') {
+                    // 결제 고객이 결제창을 닫았을 때 에러 처리
+                } else if (error.code === 'INVALID_CARD_COMPANY') {
+                    // 유효하지 않은 카드 코드에 대한 에러 처리
+                }
+            });
+    </script>
 </body>
 </html>

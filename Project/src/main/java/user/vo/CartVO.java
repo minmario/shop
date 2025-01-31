@@ -1,7 +1,15 @@
 package user.vo;
 
 public class CartVO {
-    private String id, cus_no, prod_no, count, size, add_date, p_name, option_name, prod_image, brand, price, saled_price, total_count;
+    private String id, cus_no, prod_no, count, size, add_date, p_name, option_name, prod_image, brand, price, saled_price, total_count, sale;
+
+    public String getSale() {
+        return sale;
+    }
+
+    public void setSale(String sale) {
+        this.sale = sale;
+    }
 
     public String getTotal_count() {
         return total_count;

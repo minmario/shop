@@ -26,5 +26,6 @@
         <mapper resource="mybatis/mapper/cart.xml"/>
         <mapper resource="mybatis/mapper/order.xml"/>
         <mapper resource="mybatis/mapper/prod_like.xml"/>
+        <mapper resource="mybatis/mapper/grade.xml"/>
     </mappers>
 </configuration>
