@@ -4,12 +4,10 @@ import org.apache.ibatis.session.SqlSession;
 import service.FactoryService;
 import user.vo.OrderVO;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 public class OrderDAO {
-
     //전체 주문내역 조회
     public static List<OrderVO> selectAll(String cus_no){
         SqlSession ss = FactoryService.getFactory().openSession();
@@ -133,21 +131,6 @@ public class OrderDAO {
         return cnt;
     }
 
-    //상품 사이즈 목록 조회
-    public static List<String> selectSize(String id){
-        SqlSession ss = FactoryService.getFactory().openSession();
-        List<String> list = null;
-
-        try{
-            list = ss.selectList("order.select_size", id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            ss.close();
-        }
-
-        return list;
-    }
     // 취소 요청
     public static int updateOrderCancel(String cus_no, String[] prod_nos, String order_code, String refund_bank, String refund_account, String reason, String retrieve_deli_no){
         HashMap<String, Object> map = new HashMap<>();
@@ -239,6 +222,38 @@ public class OrderDAO {
         }
 
         return cnt;
+    }
 
+    // 주문 추가
+    public static int insertOrder(String tid, String cus_no, String prod_no, String coupon_no, String deli_no, String order_code, String count, String amount, String inventory_no) {
+        int cnt = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
+        
+        try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("tid", tid);
+            map.put("cus_no", cus_no);
+            map.put("prod_no", prod_no);
+            map.put("coupon_no", coupon_no);
+            map.put("deli_no", deli_no);
+            map.put("order_code", order_code);
+            map.put("count", count);
+            map.put("amount", amount);
+            map.put("inventory_no", inventory_no);
+
+            cnt = ss.insert("order.insert_order", map);
+
+            if (cnt > 0) {
+                ss.commit();
+            } else {
+                ss.rollback();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
     }
 }

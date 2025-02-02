@@ -56,7 +56,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary cancel-btn" data-dismiss="modal" onclick="onHideOptionModal()">취소</button>
-                            <button type="button" class="btn btn-outline-secondary confirm-btn">변경</button>
+                            <button type="button" class="btn btn-outline-secondary confirm-btn" onclick="onChangeProdSize()">변경</button>
                         </div>
                     </div>
                 </div>

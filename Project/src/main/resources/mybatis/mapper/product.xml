@@ -157,7 +157,6 @@
             p.price,
             p.add_date,
             p.view_count,
-            p.inventory,
             p.active,
             p.sale,
             p.prod_image,
@@ -196,20 +195,18 @@
             p.price,
             p.add_date,
             p.view_count,
-            p.inventory,
             p.active,
             p.sale,
             p.prod_image,
             p.additional_images,
             p.content,
-            p.is_del,
             p.saled_price,
-            s.name;
+            s.name
     </select>
 
     <!-- 상품 사이즈 정보 가져오기 -->
     <select id="select_size" resultType="user.vo.ProductVO" parameterType="String">
-        SELECT i.option_name AS i_option_name, i.count, p.*
+        SELECT i.id AS inventory_no, i.option_name AS i_option_name, i.count, p.*
         FROM product p
         JOIN inventory i ON i.prod_no = p.id
         WHERE p.id = #{id} AND p.is_del = 0

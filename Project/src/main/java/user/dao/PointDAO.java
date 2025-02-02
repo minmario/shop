@@ -144,4 +144,26 @@ public class PointDAO {
         }
         return cnt;
     }
+
+    // 사용 적립금 추가
+    public static int insertUsePoint(PointVO vo) {
+        int cnt = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            cnt = ss.insert("point.insert_use_point", vo);
+
+            if (cnt > 0) {
+                ss.commit();
+            } else {
+                ss.rollback();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
+    }
 }

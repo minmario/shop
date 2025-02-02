@@ -25,7 +25,7 @@ public class CartDAO {
     }
 
     // 장바구니 상품 존재 확인
-    public static int selectExistsCart(String cus_no, String prod_no, String size) {
+    public static int selectExistsCart(String cus_no, String prod_no, String inventory_no) {
         int cnt = 0;
         SqlSession ss = FactoryService.getFactory().openSession();
 
@@ -33,7 +33,7 @@ public class CartDAO {
             HashMap<String, String> map = new HashMap<>();
             map.put("cus_no", cus_no);
             map.put("prod_no", prod_no);
-            map.put("size", size);
+            map.put("inventory_no", inventory_no);
 
             cnt = ss.selectOne("cart.select_exists_cart", map);
         } catch (Exception e) {
@@ -46,7 +46,7 @@ public class CartDAO {
     }
 
     // 장바구니 상품 수량 1 증가
-    public static int updateExistsCart(String cus_no, String prod_no, String size, String count) {
+    public static int updateExistsCart(String cus_no, String prod_no, String inventory_no, String count) {
         int cnt = 0;
         SqlSession ss = FactoryService.getFactory().openSession();
 
@@ -54,7 +54,7 @@ public class CartDAO {
             HashMap<String, String> map = new HashMap<>();
             map.put("cus_no", cus_no);
             map.put("prod_no", prod_no);
-            map.put("size", size);
+            map.put("inventory_no", inventory_no);
             map.put("count", count);
 
             cnt = ss.selectOne("cart.update_exists_cart", map);
@@ -128,11 +128,15 @@ public class CartDAO {
     }
 
     // 장바구니 단일 삭제
-    public static int deleteCart(HashMap<String, Object> map) {
+    public static int deleteCart(String cus_no, String id) {
         int cnt = 0;
         SqlSession ss = FactoryService.getFactory().openSession();
 
         try {
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("cus_no", cus_no);
+            map.put("id", id);
+
             cnt = ss.delete("cart.delete_cart", map);
 
             if (cnt > 0) {
@@ -150,11 +154,15 @@ public class CartDAO {
     }
 
     // 장바구니 다중 삭제
-    public static int deletesCart(HashMap<String, Object> map) {
+    public static int deletesCart(String cus_no, List<String> ids) {
         int cnt = 0;
         SqlSession ss = FactoryService.getFactory().openSession();
 
         try {
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("cus_no", cus_no);
+            map.put("ids", ids);
+
             cnt = ss.delete("cart.deletes_cart", map);
 
             if (cnt > 0) {

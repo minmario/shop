@@ -152,6 +152,7 @@
 
 .product-details {
     font-size: 14px;
+    width: 100%;
 }
 
 .order-product-container .product-details .product-brand {
@@ -166,17 +167,19 @@
 
 .order-product-container .product-details .product-size {
     color: #777;
-    margin-bottom: 8px;
+    margin-bottom: 0;
 }
 
 .order-product-container .product-details .product-price {
     font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 0;
 }
 
 .order-product-container .product-details .original-price {
     text-decoration: line-through;
     color: #aaa;
-    margin-right: 10px;
+    margin-bottom: 5px;
 }
 
 .order-product-container .product-details .sale-percent {
@@ -190,19 +193,19 @@
 
 .coupon-btn {
     display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    text-align: center;
     font-size: 14px;
     cursor: pointer;
+    width: 100px;
+    margin-right: 5px;
 }
 
-.coupon-btn:hover {
-    background-color: #0056b3;
+.cancel-coupon-btn {
+    width: 100px;
+}
+
+.cancel-coupon-btn:hover {
+    background-color: #fff !important;
+    color: #dc3545 !important;
 }
 
 .points-container, .reward-container {
@@ -249,6 +252,18 @@
 
 .reward-container .reward-top {
     height: 30px;
+}
+
+.reward-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.reward-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .reward-options input[type=radio] {
@@ -479,6 +494,12 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+}
+
+.payment-button-container button span {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
 }
 
 .payment-button-container button:hover {
@@ -716,10 +737,12 @@
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #fff;
+    cursor: pointer;
 }
 
 #couponModal .coupon-radio {
-    margin-top: 5px;
+    position: relative;
+    top: 22px;
 }
 
 #couponModal .coupon-label {
@@ -727,6 +750,7 @@
     flex-direction: column;
     flex-grow: 1;
     margin-bottom: 0 !important;
+    cursor: pointer;
 }
 
 #couponModal .discount {

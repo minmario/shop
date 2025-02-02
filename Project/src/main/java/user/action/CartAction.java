@@ -35,64 +35,45 @@ public class CartAction implements Action {
                     break;
                 case "insert":
                     String i_prod_no = request.getParameter("prod_no");
+                    String i_inventory_no = request.getParameter("inventory_no");
                     String i_count = request.getParameter("count");
                     String i_size = request.getParameter("size");
 
-                    // 존재 여부 확인
-                    int exists = CartDAO.selectExistsCart(cvo.getId(), i_prod_no, i_size);
-                    System.out.println("exists: " + exists);
+                    if (i_prod_no != null && i_inventory_no != null && i_count != null && i_size != null) {
+                        // 존재 여부 확인
+                        int exists = CartDAO.selectExistsCart(cvo.getId(), i_prod_no, i_inventory_no);
 
-                    // 있다면 수량만 증가
-                    if (exists > 0) {
-                        CartDAO.updateExistsCart(cvo.getId(), i_prod_no, i_size, i_count);
-                    } else {
-                        // 없다면 추가
-                        CartVO ivo = new CartVO();
-                        ivo.setCus_no(cvo.getId());
-                        ivo.setProd_no(i_prod_no);
-                        ivo.setCount(i_count);
-                        ivo.setSize(i_size);
-                        int i_cnt = CartDAO.insertCart(ivo);
-
-                        if (i_cnt > 0) {
-                            // 추가 로그
-                            LogVO lvo = new LogVO();
-                            StringBuffer sb = new StringBuffer();
-                            lvo.setCus_no(cvo.getId());
-                            lvo.setTarget("cart 추가");
-                            sb.append("prod_no : " + i_prod_no + ", ");
-                            sb.append("count : " + i_count + ", ");
-                            sb.append("size : " + i_size);
-                            lvo.setCurrent(sb.toString());
-                            LogDAO.insertLog(lvo);
+                        // 있다면 수량만 증가
+                        if (exists > 0) {
+                            CartDAO.updateExistsCart(cvo.getId(), i_prod_no, i_inventory_no, i_count);
+                        } else {
+                            // 없다면 추가
+                            CartVO ivo = new CartVO();
+                            ivo.setCus_no(cvo.getId());
+                            ivo.setProd_no(i_prod_no);
+                            ivo.setInventory_no(i_inventory_no);
+                            ivo.setCount(i_count);
+                            CartDAO.insertCart(ivo);
                         }
                     }
 
+                    // 장바구니 수
+                    int cart_count = CartDAO.selectCartCount(cvo.getId());
+                    session.setAttribute("cart_count", cart_count);
+
                     viewPage = "/user/jsp/cart/components/cartList.jsp";
                     break;
-                case "update":
+                case "update_count":
                     String u_id = request.getParameter("id");
                     String u_count = request.getParameter("count");
                     String u_size = request.getParameter("size");
 
-                    CartVO uvo = new CartVO();
-                    uvo.setCus_no(cvo.getId());
-                    uvo.setId(u_id);
-                    uvo.setCount(u_count);
-                    uvo.setSize(u_size);
-                    int u_cnt = CartDAO.updateCart(uvo);
-
-                    if (u_cnt > 0) {
-                        // 수정 로그
-                        LogVO lvo = new LogVO();
-                        StringBuffer sb = new StringBuffer();
-                        lvo.setCus_no(cvo.getId());
-                        lvo.setTarget("cart 수정");
-                        sb.append("id : " + u_id + ", ");
-                        sb.append("count : " + u_count + ", ");
-                        sb.append("size : " + u_size);
-                        lvo.setCurrent(sb.toString());
-                        LogDAO.updateLog(lvo);
+                    if (u_id != null && u_count != null && u_size != null) {
+                        CartVO uvo = new CartVO();
+                        uvo.setCus_no(cvo.getId());
+                        uvo.setId(u_id);
+                        uvo.setCount(u_count);
+                        CartDAO.updateCart(uvo);
                     }
 
                     viewPage = "/user/jsp/cart/components/cartList.jsp";
@@ -100,22 +81,13 @@ public class CartAction implements Action {
                 case "delete":
                     String id = request.getParameter("id");
 
-                    HashMap<String, Object> d_map = new HashMap<>();
-                    d_map.put("cus_no", cvo.getId());
-                    d_map.put("id", id);
-
-                    int d_cnt = CartDAO.deleteCart(d_map);
-
-                    if (d_cnt > 0) {
-                        // 삭제 로그
-                        LogVO lvo = new LogVO();
-                        StringBuffer sb = new StringBuffer();
-                        lvo.setCus_no(cvo.getId());
-                        lvo.setTarget("cart 삭제");
-                        sb.append("id : " + id);
-                        lvo.setCurrent(sb.toString());
-                        LogDAO.insertLog(lvo);
+                    if (id != null) {
+                        CartDAO.deleteCart(cvo.getId(), id);
                     }
+
+                    // 장바구니 수
+                    cart_count = CartDAO.selectCartCount(cvo.getId());
+                    session.setAttribute("cart_count", cart_count);
 
                     viewPage = "/user/jsp/cart/components/cartList.jsp";
                     break;
@@ -123,41 +95,23 @@ public class CartAction implements Action {
                     String[] idsArr = request.getParameterValues("ids");
 
                     List<String> itemIds = Arrays.asList(idsArr);
-                    System.out.println("itemIds : " + itemIds);
 
-                    HashMap<String, Object> ds_map = new HashMap<>();
-                    ds_map.put("cus_no", cvo.getId());
-                    ds_map.put("ids", itemIds);
-
-                    int ds_cnt = CartDAO.deletesCart(ds_map);
-
-                    if (ds_cnt > 0) {
-                        // 삭제 로그
-                        LogVO lvo = new LogVO();
-                        for (String s : idsArr) {
-                            StringBuffer sb = new StringBuffer();
-                            lvo.setCus_no(cvo.getId());
-                            lvo.setTarget("cart 삭제");
-                            sb.append("id : " + s);
-                            lvo.setCurrent(sb.toString());
-                            LogDAO.insertLog(lvo);
-                        }
+                    if (itemIds.size() > 0) {
+                        CartDAO.deletesCart(cvo.getId(), itemIds);
                     }
+
+                    // 장바구니 수
+                    cart_count = CartDAO.selectCartCount(cvo.getId());
+                    session.setAttribute("cart_count", cart_count);
 
                     viewPage = "/user/jsp/cart/components/cartList.jsp";
                     break;
                 case "delete_all":
-                    int da_cnt = CartDAO.deleteAllCart(cvo.getId());
+                    CartDAO.deleteAllCart(cvo.getId());
 
-                    if (da_cnt > 0) {
-                        // 삭제 로그
-                        LogVO lvo = new LogVO();
-                        StringBuffer sb = new StringBuffer();
-                        lvo.setCus_no(cvo.getId());
-                        lvo.setTarget("cart 전체 삭제");
-                        lvo.setCurrent(sb.toString());
-                        LogDAO.insertLog(lvo);
-                    }
+                    // 장바구니 수
+                    cart_count = CartDAO.selectCartCount(cvo.getId());
+                    session.setAttribute("cart_count", cart_count);
 
                     viewPage = "/user/jsp/cart/components/cartList.jsp";
                     break;
@@ -169,7 +123,7 @@ public class CartAction implements Action {
                         CartVO item = CartDAO.selectCartDetails(cvo.getId(), selectedItems[i]);
                         cartItems.add(item);
                     }
-                    request.setAttribute("cartItems", cartItems);
+                    session.setAttribute("cartItems", cartItems);
 
                     // 기본 배송지
                     DeliveryVO delivery = DeliveryDAO.selectDeliveryDefault(cvo.getId());
@@ -212,6 +166,7 @@ public class CartAction implements Action {
 
                             out.print("{");
                             out.print("\"prod_no\": \"" + vo.getId() + "\",");
+                            out.print("\"inventory_no\": \"" + vo.getInventory_no() + "\",");
                             out.print("\"option_name\": \"" + vo.getI_option_name() + "\"");
                             out.print("}");
 
@@ -228,6 +183,21 @@ public class CartAction implements Action {
                     }
 
                     return null;
+                case "update_size":
+                    // 사이즈 변경
+                    String us_id = request.getParameter("cart_no");
+                    String us_prod_no = request.getParameter("prod_no");
+                    String us_inventory_no = request.getParameter("inventory_no");
+
+                    CartVO us_vo = new CartVO();
+                    us_vo.setId(us_id);
+                    us_vo.setCus_no(cvo.getId());
+                    us_vo.setProd_no(us_prod_no);
+                    us_vo.setInventory_no(us_inventory_no);
+                    CartDAO.updateCart(us_vo);
+
+                    viewPage = "/user/jsp/cart/cart.jsp";
+                    break;
             }
         } else {
             viewPage = "/user/jsp/cart/cart.jsp";

@@ -78,4 +78,10 @@
         SET use_date = NULL, p_type = 0
         WHERE cus_no = #{cus_no} AND order_code = #{order_code}
     </update>
+
+    <!-- 적립금 추가 -->
+    <insert id="insert_use_point" parameterType="user.vo.PointVO">
+        INSERT INTO point (cus_no, amount, use_date, order_code, p_type)
+        VALUES (#{cus_no}, #{amount}, NOW(), #{order_code}, #{p_type})
+    </insert>
 </mapper>

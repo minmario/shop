@@ -1,7 +1,15 @@
 package user.vo;
 
 public class CartVO {
-    private String id, cus_no, prod_no, count, size, add_date, p_name, option_name, prod_image, brand, price, saled_price, total_count, sale;
+    private String id, cus_no, prod_no, inventory_no, count, add_date, p_name, option_name, prod_image, brand, price, saled_price, total_count, sale;
+
+    public String getInventory_no() {
+        return inventory_no;
+    }
+
+    public void setInventory_no(String inventory_no) {
+        this.inventory_no = inventory_no;
+    }
 
     public String getSale() {
         return sale;
@@ -49,14 +57,6 @@ public class CartVO {
 
     public void setCount(String count) {
         this.count = count;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
     }
 
     public String getAdd_date() {

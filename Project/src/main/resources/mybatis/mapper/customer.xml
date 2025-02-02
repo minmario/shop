@@ -40,4 +40,11 @@
         SET total = #{total}
         WHERE id = #{id} AND is_del = 0
     </update>
+
+    <!-- 누적 금액 추가 -->
+    <update id="update_add_total" parameterType="Map">
+        UPDATE customer
+        SET total = total + #{total}
+        WHERE id = #{id} AND is_del = 0
+    </update>
 </mapper>

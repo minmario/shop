@@ -3,7 +3,7 @@ package user.vo;
 import java.util.List;
 
 public class OrderVO {
-    private String id, tid, cus_no, prod_no, coupon_no, point_no, deli_no, order_code, count, order_date,
+    private String id, tid, cus_no, prod_no, coupon_no, deli_no, order_code, count, order_date,
             pay_type, order_bank, order_account, card_name, is_install, install_month, status, refund_bank, refund_account, reason, retrieve_deli_no, prod_code, prod_name, prod_price,
             prod_sale, prod_image, prod_saled_price, brand, option_name, deli_name, pos_code, addr1, addr2, phone, deli_request, is_default, point_amount;
     private List<OrderVO> list;
@@ -214,14 +214,6 @@ public class OrderVO {
 
     public void setCoupon_no(String coupon_no) {
         this.coupon_no = coupon_no;
-    }
-
-    public String getPoint_no() {
-        return point_no;
-    }
-
-    public void setPoint_no(String point_no) {
-        this.point_no = point_no;
     }
 
     public String getDeli_no() {
