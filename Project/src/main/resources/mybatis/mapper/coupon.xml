@@ -8,7 +8,7 @@
         SELECT c.*
         FROM coupon c
         JOIN product p ON (p.category_no = c.category_no OR c.type = 1)
-        WHERE p.id = #{prod_no} AND c.grade_no = #{grade_no} AND c.status = 1 AND c.is_del = 0
+        WHERE p.id = #{prod_no} AND c.grade_no = #{grade_no} AND c.status = '1' AND c.is_del = '0'
     </select>
 
     <!-- 쿠폰 사용 이력 추가 -->
