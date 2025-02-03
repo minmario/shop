@@ -16,7 +16,6 @@ public class OrderListAction implements Action {
         HttpSession session = request.getSession();
 
         String  seller_no = (String) session.getAttribute("seller_no");
-        System.out.println("seller_no: "+ seller_no);
         OrderVO[] ar = OrderDAO.getOrderList(seller_no);
 
         request.setAttribute("ar",ar);

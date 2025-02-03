@@ -365,12 +365,33 @@
     if(!isValid){
       return;
     }
+    saveImage($("mainImageInput").val());
     frm.submit();
   }
   // 정가나 할인 금액이 변경될 때마다 가격 업데이트
   document.getElementById('price').addEventListener('input', updateDiscountedPrice);
   document.getElementById('sale').addEventListener('input', updateDiscountedPrice);
+  function saveImage(file){
+    // 서버로 이미지를 보내기 위해 폼객체 준비
+    let frm = new FormData();
 
+    // 서버로 파일을 보내기 위해 폼객체에 파라미터를 지정
+    frm.append("upload", file);
+
+    //비 동기식 통신
+    $.ajax({
+      url: "Controller?type=saveImg",
+      data: frm,
+      type: "post",
+      contentType: false,
+      processData: false,// 첨부파일을 보내는 것이고, 일반적인 데이터 전송이 아님!
+      dataType: "json"
+    }).done(function(res){
+      //서버에서 보내는 json데이터는 res가 되며, 그 res안에 img_url을 가지고
+      //img요소를 에디터에 추가
+      console.log("경로:"+res.img_url);
+    });
+  }
 </script>
 </body>
 <footer>

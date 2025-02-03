@@ -24,7 +24,7 @@
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <div class="container-fluid">
             <!-- 로고 -->
-            <a class="navbar-brand fw-bold text-white" href="./shop/seller/jsp/index.jsp" style="font-size: 1.8rem;">MUSINSA Partner Center</a>
+            <a class="navbar-brand fw-bold text-white" href="Controller?type=dashBoard" style="font-size: 1.8rem;">MUSINSA Partner Center</a>
 
             <!-- 검색창 -->
 

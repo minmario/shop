@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="question">
+
+  <select id="get_question_all" parameterType="String" resultType="comm.vo.QuestionVO">
+    SELECT b.*,r.content as answer,c.cus_id as cus_id FROM board as b
+    INNER JOIN product as p on b.prod_no = p.id
+    INNER JOIN seller as s on s.id = p.seller_no
+    JOIN customer as c on c.id = b.cus_no
+    LEFT JOIN reply as r on r.board_no=b.id
+    WHERE s.id = #{seller_no}
+    AND c.id = b.cus_no
+    AND b.bname='question'
+    AND b.is_del=0;
+  </select>
+  <insert id="reply_question" parameterType="map">
+    INSERT INTO reply(board_no,seller_no,cus_no,content,write_date)
+    VALUES(#{board_no},#{seller_no},#{cus_no},#{content},NOW())
+  </insert>
+</mapper>

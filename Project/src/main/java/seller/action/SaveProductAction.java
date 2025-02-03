@@ -24,7 +24,7 @@ public class SaveProductAction implements Action {
         HttpSession session = request.getSession();
         try {
             ServletContext application = request.getServletContext();
-            String realPath = application.getRealPath("/upload_img");
+            String realPath = application.getRealPath("/upload");
             File uploadDir = new File(realPath);
             if (!uploadDir.exists()) uploadDir.mkdirs();
 
