@@ -422,7 +422,6 @@
 
             // 장바구니 체크 박스 전체 선택 / 해제 기능
             $("#cart-table #cart-all").on("click", function () {
-                console.log("click");
                 let ar = $("#cart-table > tbody").find(":checkbox");
                 ar.prop("checked", this.checked);
             });

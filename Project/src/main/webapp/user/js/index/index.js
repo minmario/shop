@@ -54,15 +54,22 @@ document.addEventListener('DOMContentLoaded', () => {
             updateActiveItem(item);
         });
     });
-});
 
-// sort 선택
-document.querySelectorAll('.dropdown-item').forEach(item => {
-    item.addEventListener('click', function () {
-        document.querySelectorAll('.dropdown-item').forEach(i => i.classList.remove('active'));
-        this.classList.add('active');
+    // sort 선택
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.addEventListener('click', function () {
+            document.querySelectorAll('.dropdown-item').forEach(i => i.classList.remove('active'));
+            this.classList.add('active');
 
-        selectProducts();
+            selectProducts();
+        });
+    });
+
+    // 검색어 입력 및 상품 조회
+    document.getElementById("total-search-input").addEventListener("keydown", function (e) {
+        if (e.key === 'Enter') {
+            selectProducts();
+        }
     });
 });
 
@@ -70,6 +77,7 @@ document.querySelectorAll('.dropdown-item').forEach(item => {
 function selectProducts() {
     const categoryItem = document.getElementById("list-unstyled");
     const sortItem = document.querySelector(".dropdown-items .dropdown-item.active");
+    const search = document.getElementById("total-search-input").value;
 
     let category;
     let sort;
@@ -95,7 +103,8 @@ function selectProducts() {
         method: 'POST',
         data: {
             category: category,
-            sort: sort
+            sort: sort,
+            search: search
         },
         success: function (response) {
             $("#product-list").html(response);
@@ -106,6 +115,7 @@ function selectProducts() {
     });
 }
 
+// 로그인을 하지 않았을 때 좋아요 클릭
 function notLoginLike() {
     if (confirm("로그인 후 이용할 수 있습니다. 로그인 페이지로 이동하시겠습니까?")) {
         window.location.href = "Controller?type=showlogin";

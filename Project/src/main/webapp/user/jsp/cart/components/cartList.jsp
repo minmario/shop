@@ -27,8 +27,7 @@
                                 <div class="prod_brand">${item.brand}</div>
                                 <div class="prod_name">${item.p_name}</div>
                                 <div class="prod_option">
-                                    <div class="prod_option_left">옵션&nbsp;:</div>
-                                    <div class="prod_option_center cart-prod-size">${item.option_name}</div>
+                                    <div class="prod_option_left">옵션&nbsp;:&nbsp;${item.option_name}</div>
                                     <div class="prod_option_right">
                                         <button type="button" class="btn btn-outline-secondary option-change-btn" onclick="onShowOptionModal(${item.id}, ${item.prod_no})">옵션 변경</button>
                                     </div>

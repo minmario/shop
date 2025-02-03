@@ -178,14 +178,14 @@ function updateProductPriceWithDiscount(productNo, salePer) {
 }
 
 // 쿠폰 사용 취소 함수
-function cancelCoupon() {
-    if (appliedCoupons[currentCartNo]) {
+function cancelCoupon(cartNo) {
+    if (appliedCoupons[cartNo]) {
         // 사용 중인 쿠폰 제거
-        usedCoupons.delete(appliedCoupons[currentCartNo]);
-        delete appliedCoupons[currentCartNo];
+        usedCoupons.delete(appliedCoupons[cartNo]);
+        delete appliedCoupons[cartNo];
 
         // 상품 가격 원래 금액으로 복구
-        resetProductPriceToOriginal(currentCartNo);
+        resetProductPriceToOriginal(cartNo);
 
         alert('쿠폰이 취소되었습니다.');
         renderCouponList();  // 상태 갱신을 위해 다시 렌더링
@@ -297,6 +297,11 @@ function renderCouponList() {
             couponItem.appendChild(label);
             couponList.appendChild(couponItem);
         });
+    } else {
+        const description = document.createElement('div');
+        description.innerText = "사용할 수 있는 쿠폰이 없습니다.";
+
+        couponList.appendChild(description);
     }
 }
 
@@ -400,8 +405,6 @@ function mergeProducts() {
             mergedProducts[cartNo].coupon = appliedCoupons[cartNo];
         }
     }
-
-    console.log('Merged Products:', JSON.stringify(mergedProducts, null, 2));
 
     return mergedProducts;
 }
@@ -560,7 +563,7 @@ function applyPoint() {
             pointInputElement.value = savePoints.toLocaleString();
             usedPointElement.textContent = "- " + savePoints.toLocaleString() + "원";
         } else {
-            usedPointElement.textContent = "- " + savePoints.toLocaleString() + "원";
+            usedPointElement.textContent = "- " + inputValue.toLocaleString() + "원";
         }
 
         calcTotalPaymentPrice();

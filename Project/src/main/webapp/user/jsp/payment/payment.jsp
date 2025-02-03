@@ -82,7 +82,7 @@
                                             </p>
                                         </div>
                                         <button type="button" class="btn btn-outline-secondary coupon-btn" onclick="onShowCouponModal(${item.id}, ${item.prod_no})">쿠폰 사용</button>
-                                        <button type="button" class="btn btn-outline-danger cancel-coupon-btn" onclick="cancelCoupon()">사용 취소</button>
+                                        <button type="button" class="btn btn-outline-danger cancel-coupon-btn" onclick="cancelCoupon(${item.id})">사용 취소</button>
                                     </div>
                                 </c:forEach>
                             </c:if>

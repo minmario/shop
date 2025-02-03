@@ -2,6 +2,39 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:if test="${requestScope.paging ne null}">
+    <c:set var="paging" value="${requestScope.paging}"/>
+    <nav aria-label="Page navigation" class="navigation">
+        <ul class="pagination">
+            <c:if test="${paging.startPage >= paging.pagePerBlock}">
+                <li class="page-item">
+                    <a class="page-link" href="Controller?type=index&action=select&page=${paging.startPage - paging.pagePerBlock}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            </c:if>
+            <c:forEach begin="${paging.startPage}" end="${paging.endPage}" varStatus="st">
+                <c:if test="${st.index eq paging.nowPage}">
+                    <li class="page-item">
+                        <a class="page-link active" href="#">${st.index}</a>
+                    </li>
+                </c:if>
+                <c:if test="${st.index ne paging.nowPage}">
+                    <li class="page-item">
+                        <a class="page-link" href="Controller?type=index&action=select&page=${st.index}">${st.index}</a>
+                    </li>
+                </c:if>
+            </c:forEach>
+            <c:if test="${paging.endPage < paging.totalPage}">
+                <li class="page-item">
+                    <a class="page-link" href="Controller?type=index&action=select&page=${paging.startPage - paging.pagePerBlock}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </c:if>
+        </ul>
+    </nav>
+</c:if>
 <c:if test="${requestScope.products ne null}">
     <c:forEach var="item" items="${requestScope.products}">
         <div class="product-item">

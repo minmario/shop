@@ -3,133 +3,197 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="product">
+    <!-- 상품 수 가져오기 -->
+    <select id="select_total_count_product" resultType="int" parameterType="Map">
+        SELECT COUNT(*) FROM product
+        WHERE active = 1 AND is_del = 0 AND category_no = #{category_no}
+        <if test="search != null and search != ''">
+            AND name LIKE CONCAT('%', #{search}, '%')
+        </if>
+    </select>
+
     <!-- 상품 목록 가져오기 -->
     <select id="select_product" resultType="user.vo.ProductVO" parameterType="Map">
         <if test="sort != null and sort == 1">
-            SELECT
-                s.name AS brand,
-                p.*,
-                COALESCE((
-                    SELECT COUNT(*)
-                    FROM prod_like l
-                    WHERE l.prod_no = p.id AND l.like_status IN ('1', '3')
-                    GROUP BY l.prod_no
-                ), 0) AS like_count,
-                (SELECT FORMAT(AVG(score), 1) FROM board b WHERE b.prod_no = p.id AND b.bname = 'review') AS avg_score,
-                (SELECT COUNT(*) FROM board b WHERE b.prod_no = p.id AND b.bname = 'review') AS review_count,
-                COALESCE(pl.like_status, '0') AS user_like_status
-            FROM product p
-            INNER JOIN seller s ON p.seller_no = s.id
-            LEFT JOIN (
-                SELECT prod_no, like_status
-                FROM prod_like
-                WHERE cus_no = #{cus_no} AND like_status IN ('1', '3')
-            ) pl ON p.id = pl.prod_no
-            WHERE p.category_no = #{category_no} AND p.active = 1 AND p.is_del = 0
-            ORDER BY p.add_date DESC
+            SELECT * FROM (
+                SELECT
+                    @RN := @RN + 1 AS rnum,
+                    inner_query.*
+                FROM (
+                    SELECT
+                        s.name AS brand,
+                        p.*,
+                        COALESCE((
+                            SELECT COUNT(*)
+                            FROM prod_like l
+                            WHERE l.prod_no = p.id AND l.like_status IN ('1', '3')
+                            GROUP BY l.prod_no
+                        ), 0) AS like_count,
+                        (SELECT FORMAT(AVG(score), 1) FROM board b WHERE b.prod_no = p.id AND b.bname = 'review') AS avg_score,
+                        (SELECT COUNT(*) FROM board b WHERE b.prod_no = p.id AND b.bname = 'review') AS review_count,
+                        COALESCE(pl.like_status, '0') AS user_like_status
+                FROM product p
+                INNER JOIN seller s ON p.seller_no = s.id
+                LEFT JOIN (
+                    SELECT prod_no, like_status
+                    FROM prod_like
+                    WHERE cus_no = #{cus_no} AND like_status IN ('1', '3')
+                ) pl ON p.id = pl.prod_no
+                WHERE p.category_no = #{category_no} AND p.active = 1 AND p.is_del = 0
+                <if test="search != null">
+                    AND p.name LIKE CONCAT('%', #{search}, '%')
+                </if>
+                ORDER BY p.add_date DESC
+            ) inner_query, (SELECT @RN := 0) init_var
+        ) paginated_query
+        WHERE paginated_query.rnum BETWEEN #{begin} AND #{end}
         </if>
         <if test="sort != null and sort == 2">
-            SELECT
-                s.name AS brand,
-                p.*,
-                COALESCE((
-                    SELECT COUNT(*)
-                    FROM prod_like l
-                    WHERE l.prod_no = p.id AND l.like_status IN ('1', '3')
-                    GROUP BY l.prod_no
-                ), 0) AS like_count,
-                (SELECT FORMAT(AVG(score), 1) FROM board b WHERE b.prod_no = p.id AND b.bname = 'review') AS avg_score,
-                (SELECT COUNT(*) FROM board b WHERE b.prod_no = p.id AND b.bname = 'review') AS review_count,
-                COALESCE(pl.like_status, '0') AS user_like_status
-            FROM product p
-            INNER JOIN seller s ON p.seller_no = s.id
-            LEFT JOIN (
-                SELECT prod_no, like_status
-                FROM prod_like
-                WHERE cus_no = #{cus_no} AND like_status IN ('1', '3')
-            ) pl ON p.id = pl.prod_no
-            WHERE p.category_no = #{category_no} AND p.active = 1 AND p.is_del = 0
-            ORDER BY p.saled_price
+            SELECT * FROM (
+                SELECT
+                    @RN := @RN + 1 AS rnum,
+                    inner_query.*
+                FROM (
+                    SELECT
+                        s.name AS brand,
+                        p.*,
+                        COALESCE((
+                            SELECT COUNT(*)
+                            FROM prod_like l
+                            WHERE l.prod_no = p.id AND l.like_status IN ('1', '3')
+                            GROUP BY l.prod_no
+                        ), 0) AS like_count,
+                        (SELECT FORMAT(AVG(score), 1) FROM board b WHERE b.prod_no = p.id AND b.bname = 'review') AS avg_score,
+                        (SELECT COUNT(*) FROM board b WHERE b.prod_no = p.id AND b.bname = 'review') AS review_count,
+                        COALESCE(pl.like_status, '0') AS user_like_status
+                FROM product p
+                INNER JOIN seller s ON p.seller_no = s.id
+                LEFT JOIN (
+                    SELECT prod_no, like_status
+                    FROM prod_like
+                    WHERE cus_no = #{cus_no} AND like_status IN ('1', '3')
+                ) pl ON p.id = pl.prod_no
+                WHERE p.category_no = #{category_no} AND p.active = 1 AND p.is_del = 0
+                <if test="search != null">
+                    AND p.name LIKE CONCAT('%', #{search}, '%')
+                </if>
+                ORDER BY p.saled_price
+                ) inner_query, (SELECT @RN := 0) init_var
+            ) paginated_query
+            WHERE paginated_query.rnum BETWEEN #{begin} AND #{end}
         </if>
         <if test="sort != null and sort == 3">
-            SELECT
-                s.name AS brand,
-                p.*,
-                COALESCE((
-                SELECT COUNT(*)
-                    FROM prod_like l
-                    WHERE l.prod_no = p.id AND l.like_status IN ('1', '3')
-                    GROUP BY l.prod_no
-                ), 0) AS like_count,
-                (SELECT FORMAT(AVG(score), 1) FROM board b WHERE b.prod_no = p.id AND b.bname = 'review') AS avg_score,
-                (SELECT COUNT(*) FROM board b WHERE b.prod_no = p.id AND b.bname = 'review') AS review_count,
-                COALESCE(pl.like_status, '0') AS user_like_status
-            FROM product p
-            INNER JOIN seller s ON p.seller_no = s.id
-            LEFT JOIN (
-                SELECT prod_no, like_status
-                FROM prod_like
-                WHERE cus_no = #{cus_no} AND like_status IN ('1', '3')
-            ) pl ON p.id = pl.prod_no
-            WHERE p.category_no = #{category_no} AND p.active = 1 AND p.is_del = 0
-            ORDER BY p.saled_price DESC
+            SELECT * FROM (
+                SELECT
+                    @RN := @RN + 1 AS rnum,
+                    inner_query.*
+                FROM (
+                    SELECT
+                        s.name AS brand,
+                        p.*,
+                        COALESCE((
+                            SELECT COUNT(*)
+                            FROM prod_like l
+                            WHERE l.prod_no = p.id AND l.like_status IN ('1', '3')
+                            GROUP BY l.prod_no
+                        ), 0) AS like_count,
+                        (SELECT FORMAT(AVG(score), 1) FROM board b WHERE b.prod_no = p.id AND b.bname = 'review') AS avg_score,
+                        (SELECT COUNT(*) FROM board b WHERE b.prod_no = p.id AND b.bname = 'review') AS review_count,
+                        COALESCE(pl.like_status, '0') AS user_like_status
+                FROM product p
+                INNER JOIN seller s ON p.seller_no = s.id
+                LEFT JOIN (
+                    SELECT prod_no, like_status
+                    FROM prod_like
+                    WHERE cus_no = #{cus_no} AND like_status IN ('1', '3')
+                ) pl ON p.id = pl.prod_no
+                WHERE p.category_no = #{category_no} AND p.active = 1 AND p.is_del = 0
+                <if test="search != null">
+                    AND p.name LIKE CONCAT('%', #{search}, '%')
+                </if>
+                ORDER BY p.saled_price DESC
+                ) inner_query, (SELECT @RN := 0) init_var
+            ) paginated_query
+            WHERE paginated_query.rnum BETWEEN #{begin} AND #{end}
         </if>
         <if test="sort != null and sort == 4">
-            SELECT
-                s.name AS brand,
-                p.*,
-                COALESCE((
-                    SELECT COUNT(*)
-                    FROM prod_like l
-                    WHERE l.prod_no = p.id AND l.like_status IN ('1', '3')
-                    GROUP BY l.prod_no
-                ), 0) AS like_count,
-                (SELECT FORMAT(AVG(score), 1) FROM board b WHERE b.prod_no = p.id AND b.bname = 'review') AS avg_score,
-                (SELECT COUNT(*) FROM board b WHERE b.prod_no = p.id AND b.bname = 'review') AS review_count,
-                COALESCE(pl.like_status, '0') AS user_like_status
-            FROM product p
-            INNER JOIN seller s ON p.seller_no = s.id
-            LEFT JOIN (
-                SELECT prod_no, like_status
-                FROM prod_like
-                WHERE cus_no = #{cus_no} AND like_status IN ('1', '3')
-            ) pl ON p.id = pl.prod_no
-            WHERE p.category_no = #{category_no} AND p.active = 1 AND p.is_del = 0
-            ORDER BY p.sale DESC
+            SELECT * FROM (
+                SELECT
+                    @RN := @RN + 1 AS rnum,
+                    inner_query.*
+                FROM (
+                    SELECT
+                        s.name AS brand,
+                        p.*,
+                        COALESCE((
+                            SELECT COUNT(*)
+                            FROM prod_like l
+                            WHERE l.prod_no = p.id AND l.like_status IN ('1', '3')
+                            GROUP BY l.prod_no
+                    ), 0) AS like_count,
+                    (SELECT FORMAT(AVG(score), 1) FROM board b WHERE b.prod_no = p.id AND b.bname = 'review') AS avg_score,
+                    (SELECT COUNT(*) FROM board b WHERE b.prod_no = p.id AND b.bname = 'review') AS review_count,
+                    COALESCE(pl.like_status, '0') AS user_like_status
+                FROM product p
+                INNER JOIN seller s ON p.seller_no = s.id
+                LEFT JOIN (
+                    SELECT prod_no, like_status
+                    FROM prod_like
+                    WHERE cus_no = #{cus_no} AND like_status IN ('1', '3')
+                ) pl ON p.id = pl.prod_no
+                WHERE p.category_no = #{category_no} AND p.active = 1 AND p.is_del = 0
+                <if test="search != null">
+                    AND p.name LIKE CONCAT('%', #{search}, '%')
+                </if>
+                ORDER BY p.sale DESC
+                ) inner_query, (SELECT @RN := 0) init_var
+            ) paginated_query
+            WHERE paginated_query.rnum BETWEEN #{begin} AND #{end}
         </if>
         <if test="sort != null and sort == 5">
-            SELECT
-                s.name AS brand,
-                p.*,
-                COALESCE(o.count, 0) AS order_count,
-                COALESCE((
-                SELECT COUNT(*)
-                FROM prod_like l
-                WHERE l.prod_no = p.id AND l.like_status IN ('1', '3')
-                GROUP BY l.prod_no
-                ), 0) AS like_count,
-                (SELECT FORMAT(AVG(score), 1) FROM board b WHERE b.prod_no = p.id AND b.bname = 'review') AS avg_score,
-                (SELECT COUNT(*) FROM board b WHERE b.prod_no = p.id AND b.bname = 'review') AS review_count,
-                COALESCE(pl.like_status, '0') AS user_like_status
-            FROM product p
-            INNER JOIN seller s ON p.seller_no = s.id
-            LEFT JOIN (
+            SELECT * FROM (
                 SELECT
-                prod_no,
-                COUNT(*) AS count
-                FROM shop.order
-                WHERE prod_no IS NOT NULL
-                GROUP BY prod_no
-            ) o ON p.id = o.prod_no
-            LEFT JOIN (
-                SELECT
-                prod_no,
-                like_status
-                FROM prod_like
+                    @RN := @RN + 1 AS rnum,
+                    inner_query.*
+                FROM (
+                    SELECT
+                    s.name AS brand,
+                    p.*,
+                    COALESCE(o.count, 0) AS order_count,
+                    COALESCE((
+                        SELECT COUNT(*)
+                        FROM prod_like l
+                        WHERE l.prod_no = p.id AND l.like_status IN ('1', '3')
+                        GROUP BY l.prod_no
+                    ), 0) AS like_count,
+                    (SELECT FORMAT(AVG(score), 1) FROM board b WHERE b.prod_no = p.id AND b.bname = 'review') AS avg_score,
+                    (SELECT COUNT(*) FROM board b WHERE b.prod_no = p.id AND b.bname = 'review') AS review_count,
+                    COALESCE(pl.like_status, '0') AS user_like_status
+                FROM product p
+                INNER JOIN seller s ON p.seller_no = s.id
+                LEFT JOIN (
+                    SELECT
+                        prod_no,
+                        COUNT(*) AS count
+                    FROM shop.order
+                    WHERE prod_no IS NOT NULL
+                    GROUP BY prod_no
+                ) o ON p.id = o.prod_no
+                LEFT JOIN (
+                    SELECT
+                        prod_no,
+                        like_status
+                    FROM prod_like
                 WHERE cus_no = #{cus_no} AND like_status IN ('1', '3')
-            ) pl ON p.id = pl.prod_no
-            WHERE p.category_no = #{category_no} AND p.active = 1 AND p.is_del = 0
-            ORDER BY order_count DESC
+                ) pl ON p.id = pl.prod_no
+                WHERE p.category_no = #{category_no} AND p.active = 1 AND p.is_del = 0
+                <if test="search != null">
+                    AND p.name LIKE CONCAT('%', #{search}, '%')
+                </if>
+                ORDER BY order_count DESC
+                ) inner_query, (SELECT @RN := 0) init_var
+            ) paginated_query
+            WHERE paginated_query.rnum BETWEEN #{begin} AND #{end}
         </if>
     </select>
 
