@@ -57,17 +57,19 @@ public class ExchangeRequestAction implements Action{
                         out.print("\"success\": true,");
                         out.print("\"data\": [");
 
-                        for (int i = 0; i < productSize.size(); i++) {
-                            ProductVO pvo = productSize.get(i);
+                        if (productSize != null && productSize.size() > 0) {
+                            for (int i = 0; i < productSize.size(); i++) {
+                                ProductVO pvo = productSize.get(i);
 
-                            out.print("{");
-                            out.print("\"prod_no\": \"" + pvo.getId() + "\",");
-                            out.print("\"inventory_no\": \"" + pvo.getInventory_no() + "\",");
-                            out.print("\"option_name\": \"" + pvo.getI_option_name() + "\"");
-                            out.print("}");
+                                out.print("{");
+                                out.print("\"prod_no\": \"" + pvo.getId() + "\",");
+                                out.print("\"inventory_no\": \"" + pvo.getInventory_no() + "\",");
+                                out.print("\"option_name\": \"" + pvo.getI_option_name() + "\"");
+                                out.print("}");
 
-                            if (i < productSize.size() - 1) {
-                                out.print(",");
+                                if (i < productSize.size() - 1) {
+                                    out.print(",");
+                                }
                             }
                         }
 

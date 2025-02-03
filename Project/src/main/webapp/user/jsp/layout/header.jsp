@@ -9,10 +9,10 @@
         <%-- CSS --%>
         <link href="./user/css/common/common.css" rel="stylesheet" type="text/css">
         <link href="./user/css/layout/header.css" rel="stylesheet" type="text/css">
-        <link href="./user/css/alarm/alarm.css" rel="stylesheet" type="text/css">
+        <link href="./user/css/event/event.css" rel="stylesheet" type="text/css">
 
         <%-- JS --%>
-        <script src="./user/js/alarm/alarm.js"></script>
+        <script src="./user/js/event/event.js"></script>
 
         <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
             <div class="container-fluid">
@@ -87,7 +87,7 @@
                                 <span class="like_title">좋아요</span>
                             </a>
                             <%-- 알림 --%>
-                            <a href="#" class="text-decoration-none text-dark position-relative" id="alarm-toggle">
+                            <a href="#" class="text-decoration-none text-dark position-relative" id="event-toggle">
                                 <i class="bi bi-bell-fill"></i>
                                 <span>알림</span>
                                 <span class="new_alert"></span>
@@ -123,8 +123,8 @@
         </div>
     </header>
 
-    <%-- alarm --%>
-    <div class="alarm-container d-none">
-        <jsp:include page="../alarm/alarm.jsp"></jsp:include>
+    <%-- event --%>
+    <div class="event-container d-none">
+        <jsp:include page="../event/event.jsp"></jsp:include>
     </div>
 </html>

@@ -44,9 +44,9 @@
                     AND p.name LIKE CONCAT('%', #{search}, '%')
                 </if>
                 ORDER BY p.add_date DESC
-            ) inner_query, (SELECT @RN := 0) init_var
-        ) paginated_query
-        WHERE paginated_query.rnum BETWEEN #{begin} AND #{end}
+                ) inner_query, (SELECT @RN := 0) init_var
+            ) paginated_query
+            WHERE paginated_query.rnum BETWEEN #{begin} AND #{end}
         </if>
         <if test="sort != null and sort == 2">
             SELECT * FROM (

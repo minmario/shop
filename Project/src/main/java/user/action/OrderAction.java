@@ -66,20 +66,22 @@ public class OrderAction implements Action {
                         out.print("\"success\": true,");
                         out.print("\"data\": [");
 
-                        for (int i = 0; i < coupons.size(); i++) {
-                            CouponVO vo = coupons.get(i);
+                        if (coupons != null && coupons.size() > 0) {
+                            for (int i = 0; i < coupons.size(); i++) {
+                                CouponVO vo = coupons.get(i);
 
-                            // JSON 객체 시작
-                            out.print("{");
-                            out.print("\"coupon_id\": \"" + vo.getId() + "\",");
-                            out.print("\"name\": \"" + vo.getName() + "\",");
-                            out.print("\"sale_per\": \"" + vo.getSale_per() + "\",");
-                            out.print("\"end_date\": \"" + vo.getEnd_date() + "\"");
-                            out.print("}");
+                                // JSON 객체 시작
+                                out.print("{");
+                                out.print("\"coupon_id\": \"" + vo.getId() + "\",");
+                                out.print("\"name\": \"" + vo.getName() + "\",");
+                                out.print("\"sale_per\": \"" + vo.getSale_per() + "\",");
+                                out.print("\"end_date\": \"" + vo.getEnd_date() + "\"");
+                                out.print("}");
 
-                            // 마지막 요소가 아니면 쉼표 추가
-                            if (i < coupons.size() - 1) {
-                                out.print(",");
+                                // 마지막 요소가 아니면 쉼표 추가
+                                if (i < coupons.size() - 1) {
+                                    out.print(",");
+                                }
                             }
                         }
 

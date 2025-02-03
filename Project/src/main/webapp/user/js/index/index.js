@@ -73,26 +73,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// 상품 조회
-function selectProducts() {
+// 카테고리와 정렬 값 추출
+function getCategoryAndSort() {
     const categoryItem = document.getElementById("list-unstyled");
     const sortItem = document.querySelector(".dropdown-items .dropdown-item.active");
+
+    const category = categoryItem ? categoryItem.querySelector(".unstyled-btn.active")?.getAttribute("data-value") : null;
+    const sort = sortItem ? sortItem.getAttribute("data-value") : null;
+
+    return { category, sort };
+}
+
+// 상품 조회
+function selectProducts(page = 1) {
+    const { category, sort } = getCategoryAndSort();
     const search = document.getElementById("total-search-input").value;
-
-    let category;
-    let sort;
-
-    if (categoryItem) {
-        const activeButton = categoryItem.querySelector(".unstyled-btn.active");
-
-        if (activeButton) {
-            category = activeButton.getAttribute("data-value");
-        }
-    }
-
-    if (sortItem) {
-        sort = sortItem.getAttribute("data-value");
-    }
 
     if (!category || !sort) {
         return;
@@ -104,7 +99,8 @@ function selectProducts() {
         data: {
             category: category,
             sort: sort,
-            search: search
+            search: search,
+            page: page,
         },
         success: function (response) {
             $("#product-list").html(response);
@@ -131,7 +127,7 @@ function likeProduct(value) {
             prod_no: value
         },
         success: function () {
-            window.location.href = "Controller";
+            selectProducts();
         },
         error: function (error) {
             alert("요청 처리 중 오류가 발생했습니다.");
@@ -149,7 +145,7 @@ function unlikeProduct(value) {
             prod_no: value
         },
         success: function () {
-            window.location.href = "Controller";
+            selectProducts();
         },
         error: function (error) {
             alert("요청 처리 중 오류가 발생했습니다.");

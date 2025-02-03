@@ -161,17 +161,19 @@ public class CartAction implements Action {
                         out.print("\"success\": true,");
                         out.print("\"data\": [");
 
-                        for (int i = 0; i < productSize.size(); i++) {
-                            ProductVO vo = productSize.get(i);
+                        if (productSize != null && productSize.size() > 0) {
+                            for (int i = 0; i < productSize.size(); i++) {
+                                ProductVO vo = productSize.get(i);
 
-                            out.print("{");
-                            out.print("\"prod_no\": \"" + vo.getId() + "\",");
-                            out.print("\"inventory_no\": \"" + vo.getInventory_no() + "\",");
-                            out.print("\"option_name\": \"" + vo.getI_option_name() + "\"");
-                            out.print("}");
+                                out.print("{");
+                                out.print("\"prod_no\": \"" + vo.getId() + "\",");
+                                out.print("\"inventory_no\": \"" + vo.getInventory_no() + "\",");
+                                out.print("\"option_name\": \"" + vo.getI_option_name() + "\"");
+                                out.print("}");
 
-                            if (i < productSize.size() - 1) {
-                                out.print(",");
+                                if (i < productSize.size() - 1) {
+                                    out.print(",");
+                                }
                             }
                         }
 

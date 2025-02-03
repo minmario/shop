@@ -3,11 +3,13 @@ package user.action;
 import user.dao.CategoryDAO;
 import user.dao.ProductDAO;
 import user.util.Paging;
+import user.vo.CustomerVO;
 import user.vo.MajorCategoryVO;
 import user.vo.ProductVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class IndexAction implements Action {
@@ -22,22 +24,17 @@ public class IndexAction implements Action {
                       String category = request.getParameter("category");
                       String sort = request.getParameter("sort");
                       String search = request.getParameter("search");
-
-                      System.out.println("category:" + category);
-                      System.out.println("sort:" + sort);
-                      System.out.println("search:" + search);
+                      String is_login = request.getParameter("is_login");
 
                       // 페이징
-                      Paging paging = new Paging(14, 3);
+                      Paging paging = new Paging(12, 3);
 
                       // 상품 수 가져오기
                       int totalCount = ProductDAO.selectTotalCountProduct(category, search);
-                      System.out.println("totalCount : " + totalCount);
                       paging.setTotalRecord(totalCount);
 
                       // 현재 페이지 값을 파라미터로 받는다.
                       String current_page = request.getParameter("page");
-                      System.out.println("paging current_page : " + current_page);
 
                       if (current_page == null) {
                           paging.setNowPage(1);
@@ -46,9 +43,16 @@ public class IndexAction implements Action {
                           paging.setNowPage(currentPage);
                       }
 
-                      // 상품 목록
-                      ProductVO[] products = ProductDAO.selectProduct(category, sort, search, paging.getBegin(), paging.getEnd());
-                      System.out.println("products : " + products.length);
+                      HttpSession session = request.getSession();
+                      CustomerVO cvo = (CustomerVO) session.getAttribute("customer_info");
+                      ProductVO[] products = null;
+                      if (cvo == null) {
+                          // 상품 목록(비회원)
+                          products = ProductDAO.selectProduct(category, sort, search, paging.getBegin(), paging.getEnd());
+                      } else {
+                          // 상품 목록(회원)
+                          products = ProductDAO.selectProduct(cvo.getId(), category, sort, search, paging.getBegin(), paging.getEnd());
+                      }
 
                       request.setAttribute("products", products);
                       request.setAttribute("paging", paging);

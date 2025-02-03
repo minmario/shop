@@ -1,10 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="alarm-header">
+<div class="event-header">
     <h2>알림</h2>
 </div>
-<div class="alarm-tabs">
-    <ul class="nav nav-tabs" id="alarmTab" role="tablist">
+<div class="event-tabs">
+    <ul class="nav nav-tabs" id="eventTab" role="tablist">
         <li class="nav-item">
             <a class="nav-link active" id="tab-all" data-toggle="tab" href="#table-all" role="tab">전체</a>
         </li>
@@ -28,13 +28,13 @@
             <c:forEach begin="0" end="9">
                 <tr>
                     <td>
-                        <div class="alarm-item">
-                            <div class="alarm-content">
+                        <div class="event-item">
+                            <div class="event-content">
                                 <h5>무신사 체험단</h5>
                                 <p>피곤한워싱턴버튼님! 체험단 당첨 확률이 약 20명 중 1명인 거 알고 계신가요?</p>
-                                <span class="alarm-time">8시간 전</span>
+                                <span class="event-time">8시간 전</span>
                             </div>
-                            <div class="alarm-img">
+                            <div class="event-img">
                                 <img src="./user/images/share_musinsa.png" alt="Logo">
                             </div>
                         </div>
@@ -48,13 +48,13 @@
             <c:forEach begin="0" end="1">
                 <tr>
                     <td>
-                        <div class="alarm-item">
-                            <div class="alarm-content">
+                        <div class="event-item">
+                            <div class="event-content">
                                 <h5>무신사 체험단</h5>
                                 <p>피곤한워싱턴버튼님! 체험단 당첨 확률이 약 20명 중 1명인 거 알고 계신가요?</p>
-                                <span class="alarm-time">8시간 전</span>
+                                <span class="event-time">8시간 전</span>
                             </div>
-                            <div class="alarm-img">
+                            <div class="event-img">
                                 <img src="./user/images/share_musinsa.png" alt="Logo">
                             </div>
                         </div>
@@ -68,13 +68,13 @@
             <c:forEach begin="0" end="3">
                 <tr>
                     <td>
-                        <div class="alarm-item">
-                            <div class="alarm-content">
+                        <div class="event-item">
+                            <div class="event-content">
                                 <h5>무신사 체험단</h5>
                                 <p>피곤한워싱턴버튼님! 체험단 당첨 확률이 약 20명 중 1명인 거 알고 계신가요?</p>
-                                <span class="alarm-time">8시간 전</span>
+                                <span class="event-time">8시간 전</span>
                             </div>
-                            <div class="alarm-img">
+                            <div class="event-img">
                                 <img src="./user/images/share_musinsa.png" alt="Logo">
                             </div>
                         </div>
@@ -88,13 +88,13 @@
             <c:forEach begin="0" end="6">
                 <tr>
                     <td>
-                        <div class="alarm-item">
-                            <div class="alarm-content">
+                        <div class="event-item">
+                            <div class="event-content">
                                 <h5>무신사 체험단</h5>
                                 <p>피곤한워싱턴버튼님! 체험단 당첨 확률이 약 20명 중 1명인 거 알고 계신가요?</p>
-                                <span class="alarm-time">8시간 전</span>
+                                <span class="event-time">8시간 전</span>
                             </div>
-                            <div class="alarm-img">
+                            <div class="event-img">
                                 <img src="./user/images/share_musinsa.png" alt="Logo">
                             </div>
                         </div>
@@ -108,13 +108,13 @@
             <c:forEach begin="0" end="2">
                 <tr>
                     <td>
-                        <div class="alarm-item">
-                            <div class="alarm-content">
+                        <div class="event-item">
+                            <div class="event-content">
                                 <h5>무신사 체험단</h5>
                                 <p>피곤한워싱턴버튼님! 체험단 당첨 확률이 약 20명 중 1명인 거 알고 계신가요?</p>
-                                <span class="alarm-time">8시간 전</span>
+                                <span class="event-time">8시간 전</span>
                             </div>
-                            <div class="alarm-img">
+                            <div class="event-img">
                                 <img src="./user/images/share_musinsa.png" alt="Logo">
                             </div>
                         </div>
