@@ -13,7 +13,7 @@
 
     <!-- 쿠폰 사용 이력 추가 -->
     <insert id="insert_cus_coupon" parameterType="Map">
-        INSERT INTO cus_coupon (cus_no, coupon_no, used_date, status)
-        VALUES (#{cus_no}, #{coupon_no}, NOW(), 2)
+        INSERT INTO cus_coupon (cus_no, coupon_no, order_code, used_date, status)
+        VALUES (#{cus_no}, #{coupon_no}, #{order_code}, NOW(), 2)
     </insert>
 </mapper>

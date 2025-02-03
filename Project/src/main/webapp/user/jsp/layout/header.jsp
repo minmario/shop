@@ -16,16 +16,20 @@
 
         <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
             <div class="container-fluid">
-                <!-- 로고 -->
-                <a class="navbar-brand fw-bold text-white" href="${pageContext.request.contextPath}/Controller" style="font-size: 1.8rem;">MUSINSA</a>
+                <div class="d-flex align-items-center justify-content-between">
+                    <!-- 로고 -->
+                    <a class="navbar-brand fw-bold text-white me-3" href="${pageContext.request.contextPath}/Controller" style="font-size: 1.8rem;">
+                        MUSINSA
+                    </a>
 
-                <!-- 검색창 -->
-                <form class="d-flex align-items-center" role="search">
-                    <input class="form-control me-2" type="search" placeholder="무신사 틱톡버스터 체험 🔥" aria-label="Search"
-                           style="width: 300px; border-radius: 20px; padding: 0.5rem;">
-                    <i class="bi bi-camera text-white me-2" style="font-size: 1.5rem;"></i>
-                    <i class="bi bi-search text-white" style="font-size: 1.5rem;"></i>
-                </form>
+                    <!-- 검색창 -->
+                    <div class="prod-search-container flex-grow-1">
+                        <div class="form-group position-relative">
+                            <i class="bi bi-search form-control-icon"></i>
+                            <input type="text" class="form-control me-2" id="total-search-input" placeholder="검색어를 입력하세요">
+                        </div>
+                    </div>
+                </div>
 
                 <!-- 네비게이션 메뉴 -->
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">

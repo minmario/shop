@@ -1,10 +1,22 @@
+.navbar-expand-lg .navbar-collapse {
+    width: 620px;
+    max-width: 620px;
+    min-width: 620px;
+}
+
 .user-header-menu {
     gap: 25px !important;
+    width: 465px;
+    max-width: 465px;
+    min-width: 465px;
 }
 
 .nickname {
     font-size: 15px;
     margin-left: 10px;
+    width: 155px;
+    max-width: 155px;
+    min-width: 155px;
 }
 
 .like_title {
@@ -27,4 +39,31 @@
     position: relative;
     bottom: 10px;
     right: 12px;
+}
+
+.prod-search-container .form-group {
+    position: relative;
+    margin-bottom: 0;
+}
+
+.prod-search-container .form-group input {
+    width: 300px;
+    border-radius: 20px;
+    padding: 4px 15px;
+}
+
+.prod-search-container .form-group .form-control-icon {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    line-height: 2rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+    right: 20px;
+    top: 20px;
+    transform: translateY(-50%);
+    font-size: 1.25rem;
 }

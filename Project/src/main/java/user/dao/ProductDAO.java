@@ -9,17 +9,45 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ProductDAO {
-    // 상품 조회
-    public static List<ProductVO> selectProduct(String category, String sort) {
-        List<ProductVO> products = null;
-        SqlSession ss= FactoryService.getFactory().openSession();
+    // 상품 수 조회
+    public static int selectTotalCountProduct(String category_no, String search) {
+        int cnt = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
 
         try {
             HashMap<String, String> map = new HashMap<>();
+            map.put("category_no", category_no);
+            map.put("search", search);
+
+            cnt = ss.selectOne("product.select_total_count_product", map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
+    }
+
+    // 상품 조회
+    public static ProductVO[] selectProduct(String category, String sort, String search, int begin, int end) {
+        ProductVO[] products = null;
+        SqlSession ss= FactoryService.getFactory().openSession();
+
+        try {
+            HashMap<String, Object> map = new HashMap<>();
             map.put("category_no", category);
             map.put("sort", sort);
+            map.put("search", search);
+            map.put("begin", begin);
+            map.put("end", end);
 
-            products = ss.selectList("product.select_product", map);
+            List<ProductVO> p_list = ss.selectList("product.select_product", map);
+
+            if (p_list != null && !p_list.isEmpty()) {
+                products = new ProductVO[p_list.size()];
+                p_list.toArray(products);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

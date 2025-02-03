@@ -29,7 +29,7 @@ public class CouponDAO {
     }
 
     // 쿠폰 사용 이력 추가
-    public static int insertCusCoupon(String cus_no, String coupon_no) {
+    public static int insertCusCoupon(String cus_no, String coupon_no, String order_code) {
         int cnt = 0;
         SqlSession ss = FactoryService.getFactory().openSession();
 
@@ -37,8 +37,7 @@ public class CouponDAO {
             HashMap<String, String> map = new HashMap<>();
             map.put("cus_no", cus_no);
             map.put("coupon_no", coupon_no);
-
-            System.out.println("cus_no = " + cus_no + ", coupon_no = " + coupon_no);
+            map.put("order_code", order_code);
 
             cnt = ss.insert("coupon.insert_cus_coupon", map);
 

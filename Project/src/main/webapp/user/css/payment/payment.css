@@ -76,6 +76,10 @@
     color: #555;
 }
 
+.phone {
+    margin-bottom: 7px;
+}
+
 .delivery-options {
     width: 100%;
     padding: 10px;

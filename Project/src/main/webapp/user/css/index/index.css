@@ -143,6 +143,7 @@ button.unstyled-btn.active {
     display: flex;
     align-items: center;
     white-space: nowrap;
+    margin-right: 15px;
 }
 
 .dropdown-items {
@@ -219,9 +220,11 @@ button.unstyled-btn.active {
 }
 
 .product-image {
-    width: 160px;
-    height: 160px;
+    width: 100%;
+    max-width: 160px;
+    height: 200px;
     border-radius: 4px;
+    object-fit: cover;
 }
 
 .product-info {

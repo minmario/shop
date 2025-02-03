@@ -295,11 +295,8 @@ public class OrderAction implements Action {
                                         // DB customer 테이블, total 수정
                                         CustomerDAO.updateAddTotal(cvo.getId(), String.valueOf(amount));
 
-                                        System.out.println("cus_no : " + cvo.getId());
-                                        System.out.println("coupon_no : " + coupon);
-
                                         // DB cus_coupon 테이블, 사용 쿠폰 저장
-                                        CouponDAO.insertCusCoupon(cvo.getId(), coupon);
+                                        CouponDAO.insertCusCoupon(cvo.getId(), coupon, i_order_code);
 
                                         // DB log 테이블, 로그 저장
                                         LogVO lvo = new LogVO();
