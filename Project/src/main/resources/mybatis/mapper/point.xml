@@ -72,12 +72,23 @@
         WHERE cus_no = #{cus_no}
     </select>
 
+    <!-- order_code로 이전 사용 적립금 찾기(환불) -->
+    <select id="select_point_amount" resultType="int" parameterType="map">
+        SELECT amount FROM point
+        WHERE cus_no = #{cus_no} AND order_code = #{order_code} AND p_type = 1
+    </select>
+
     <!-- 사용한 적립금 복구(환불) -->
-    <update id="update_point" parameterType="map">
-        UPDATE point
-        SET use_date = NULL, p_type = 0
+    <insert id="insert_point_refund" parameterType="map">
+        INSERT point(cus_no, amount, save_date, order_code, p_type)
+        VALUES(#{cus_no}, #{amount}, NOW(), #{order_code}, 0)
+    </insert>
+
+    <!-- 환불 시 적립금 내역 삭제 -->
+    <delete id="delete_point" parameterType="map">
+        DELETE FROM point
         WHERE cus_no = #{cus_no} AND order_code = #{order_code}
-    </update>
+    </delete>
 
     <!-- 적립금 추가 -->
     <insert id="insert_use_point" parameterType="user.vo.PointVO">

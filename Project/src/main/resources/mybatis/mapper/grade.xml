@@ -12,4 +12,11 @@
     <select id="select_grade_by_id" resultType="user.vo.GradeVO" parameterType="String">
         SELECT * FROM grade WHERE is_del = 0 AND id = #{id}
     </select>
+
+    <!-- 특정 회원의 등급 정보 조회 -->
+    <select id="select_grade_customer" resultType="user.vo.GradeVO" parameterType="String">
+        SELECT g.name, g.sale_condition FROM grade g
+        INNER JOIN customer c ON g.id = c.grade_no
+        WHERE c.cus_id = #{cus_no}
+    </select>
 </mapper>

@@ -120,17 +120,38 @@ public class PointDAO {
         return point;
     }
 
-    //사용 적립금 복구
-    public static int updatePoint(String cus_no, String order_code){
+    // 이전 사용 포인트 찾기
+    public static int selectPointAmount(String cus_no, String order_code) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("cus_no", cus_no);
+        map.put("order_code", order_code);
+
+        int amount = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            amount = ss.selectOne("point.select_point_amount", map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return amount;
+    }
+
+    // 사용 적립금 복구
+    public static int insertPoint(String cus_no, String amount, String order_code){
         int cnt = 0;
         SqlSession ss = FactoryService.getFactory().openSession();
 
         HashMap<String, String> map = new HashMap<>();
         map.put("cus_no", cus_no);
+        map.put("amount", amount);
         map.put("order_code", order_code);
 
         try {
-            cnt = ss.update("point.update_point", map);
+            cnt = ss.insert("point.insert_point_refund", map);
 
             if (cnt > 0) {
                 ss.commit();
@@ -142,6 +163,33 @@ public class PointDAO {
         } finally {
             ss.close();
         }
+        return cnt;
+    }
+
+    // 환불 시 적립금 내역 삭제
+    public int deletePoint(String cus_no, String order_code) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("cus_no", cus_no);
+        map.put("order_code", order_code);
+
+        SqlSession ss = FactoryService.getFactory().openSession();
+        int cnt = 0;
+
+        try {
+            cnt = ss.delete("point.delete_point", map);
+
+            if (cnt > 0) {
+                ss.commit();
+            } else {
+                ss.rollback();
+            }
+            ss.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
         return cnt;
     }
 

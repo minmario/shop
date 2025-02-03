@@ -5,7 +5,32 @@ import java.util.List;
 public class OrderVO {
     private String id, tid, cus_no, prod_no, coupon_no, deli_no, order_code, count, order_date,
             pay_type, order_bank, order_account, card_name, is_install, install_month, status, refund_bank, refund_account, reason, retrieve_deli_no, prod_code, prod_name, prod_price,
-            prod_sale, prod_image, prod_saled_price, brand, option_name, deli_name, pos_code, addr1, addr2, phone, deli_request, is_default, point_amount;
+            prod_sale, prod_image, prod_saled_price, brand, option_name, deli_name, pos_code, addr1, addr2, phone, deli_request, is_default, point_amount, inventory_no, coupon_name, sale_per ;
+
+    public String getInventory_no() {
+        return inventory_no;
+    }
+
+    public void setInventory_no(String inventory_no) {
+        this.inventory_no = inventory_no;
+    }
+
+    public String getCoupon_name() {
+        return coupon_name;
+    }
+
+    public void setCoupon_name(String coupon_name) {
+        this.coupon_name = coupon_name;
+    }
+
+    public String getSale_per() {
+        return sale_per;
+    }
+
+    public void setSale_per(String sale_per) {
+        this.sale_per = sale_per;
+    }
+
     private List<OrderVO> list;
 
     public String getRetrieve_deli_no() {
