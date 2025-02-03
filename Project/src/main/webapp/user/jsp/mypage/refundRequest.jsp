@@ -30,36 +30,28 @@
             <div class="wrap">
                 <div class="row">
                     <div class="container">
-                        <c:if test="${requestScope.o_list ne null and requestScope.d_list ne null}">
+                        <c:if test="${requestScope.o_vo ne null and requestScope.d_list ne null}">
+                        <c:set var="o_vo" value="${requestScope.o_vo}"/>
                             <div class="wrap-title">
                                 <span class="left bold">반품요청</span>
-                                <input type="hidden" id="orderCode" name="orderCode" value="${requestScope.o_list[0].order_code}"/>
+
                             </div>
 
                             <div class="box">
                                 <!-- 반품 상품 정보 -->
                                 <section class="wrap-product">
-                                    <div class="select-refund-all">
-                                        <input type="checkbox" id="select-refund-all">
-                                        <label for="select-refund-all">전체 선택</label>
-                                    </div>
                                     <div class="wrap-product-content">
-                                        <c:forEach var="product" items="${requestScope.o_list}" varStatus="status">
                                         <div class="product-content">
-                                            <input type="hidden" name="prod_no" value="${product.prod_no}"/>
-                                            <input type="hidden" id="point-used" value="${requestScope.o_list[0].point_amount}"/>
-                                            <input type="checkbox" id="refund-product${status.index}" class="refund-checkbox"
-                                                   data-price="${product.prod_saled_price}" data-count="${product.count}">
-                                            <label for="refund-product${status.index}" class="refund-product-label">
-                                                <img src="${product.prod_image != null && not empty product.prod_image ? fn:split(product.prod_image, ',')[0] : './user/images/product1.jpg'}" alt="상품 이미지" class="product-img">
-                                                <div class="product-detail">
-                                                    <span>${product.brand}</span><br/>
-                                                    ${product.prod_name}
-                                                    <div class="option-text">${product.option_name} / ${product.count}</div>
-                                                </div>
-                                            </label>
+                                            <input type="hidden" name="prod_no" value="${o_vo.prod_no}"/>
+                                            <input type="hidden" id="point-used" value="${o_vo.point_amount}"/>
+                                            <input type="hidden" name="orderCode" value="${o_vo.order_code}"/>
+                                            <img src="${fn:split(o_vo.prod_image, ',')[0]}" alt="상품 이미지" class="product-img">
+                                            <div class="product-detail">
+                                                <span>${o_vo.brand}</span><br/>
+                                                ${o_vo.prod_name}
+                                                <div class="option-text">${o_vo.size} / ${o_vo.count}</div>
+                                            </div>
                                         </div>
-                                        </c:forEach>
                                     </div>
                                 </section>
                                 <hr/>
@@ -133,10 +125,24 @@
                                     <div class="refund-info">
                                         <span class="bold">환불 정보</span><br/>
                                         <ul>
-                                            <li><span>상품 결제 금액</span><span class="item-price">0원</span></li>
-                                            <li><span>적립금 사용</span><span class="points-used">0원</span></li>
+                                                <%-- 상품 결제 금액 및 적립금 사용 값 변환 및 계산 --%>
+                                            <c:set var="prodPrice" value="${not empty o_vo.prod_saled_price ? o_vo.prod_saled_price : o_vo.prod_price}" />
+                                            <c:set var="pointUsed" value="${not empty o_vo.point_amount ? o_vo.point_amount : '0'}" />
+                                            <c:set var="prodCount" value="${o_vo.count}" />
+
+                                                <%-- 숫자만 추출하여 int형으로 변환 --%>
+                                            <c:set var="prodPriceInt" value="${fn:replace(prodPrice, ',', '')}" />
+                                            <c:set var="pointUsedInt" value="${fn:replace(pointUsed, ',', '')}" />
+
+                                            <!-- 상품 가격에 수량을 곱하여 총 결제 금액 계산 -->
+                                            <c:set var="totalPrice" value="${prodPriceInt * prodCount}" />
+
+                                            <!-- 환불 예정 금액 계산 (총 결제 금액 - 적립금) -->
+                                            <c:set var="refundAmount" value="${totalPrice - pointUsedInt}" />
+                                            <li><span>상품 결제 금액</span><span class="item-price"><fmt:formatNumber value="${totalPrice}"/>원</span></li>
+                                            <li><span>적립금 사용</span><span class="points-used"><fmt:formatNumber value="${pointUsedInt}"/>원</span></li>
                                             <li><span>기본 배송비</span><span>무료</span></li>
-                                            <li><span>환불 예정 금액</span><span class="refund-amount">0원</span></li>
+                                            <li><span>환불 예정 금액</span><span class="refund-amount"><fmt:formatNumber value="${refundAmount}"/>원</span></li>
                                         </ul>
                                     </div>
                                     <!-- 반품요청 버튼-->

@@ -135,10 +135,17 @@
     margin: 0;
 }
 
+/*.product-actions {*/
+/*    display: flex;*/
+/*    gap: 10px;*/
+/*    margin-top: 10px;*/
+/*}*/
+
 .product-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
+    display: flex;             /* 버튼들을 가로로 정렬 */
+    flex-wrap: wrap;           /* 버튼이 화면을 벗어날 경우 줄바꿈 */
+    justify-content: center;   /* 버튼을 가운데 정렬 */
+    gap: 10px;                 /* 버튼 간격 */
 }
 
 .product-actions button {

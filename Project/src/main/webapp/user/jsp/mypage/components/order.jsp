@@ -44,7 +44,6 @@
                     <div class="custom-order-block">
                         <div class="custom-order-header">
                             <c:choose>
-                                <c:when test="${item.status == '0'}"><span class="custom-order-status">입금 대기</span></c:when>
                                 <c:when test="${item.status == '1'}"><span class="custom-order-status">결제 완료</span></c:when>
                                 <c:when test="${item.status == '2'}"><span class="custom-order-status">배송전</span></c:when>
                                 <c:when test="${item.status == '3'}"><span class="custom-order-status">배송중</span></c:when>
@@ -63,8 +62,8 @@
                             <div class="custom-product-details">
                                 <p class="custom-product-name">${item.brand}</p>
                                 <p class="custom-product-description">${item.prod_name}</p>
-                                <p class="custom-product-size">${not empty item.option_name ? item.option_name : '기본 옵션'} / ${item.count}개</p>
-                                <p class="custom-product-price"><fmt:formatNumber value="${not empty item.prod_saled_price ? item.prod_saled_price : item.prod_price}"/>원</p>
+                                <p class="custom-product-size">${item.option_name} / ${item.count}개</p>
+                                <p class="custom-product-price"><fmt:formatNumber value="${item.amount}"/>원</p>
                             </div>
                         </div>
                         <c:if test="${item.status == '5'}">
@@ -76,10 +75,6 @@
                         </div>
                     </div>
 
-                    <!-- 날짜의 마지막 항목인지 확인 -->
-                    <c:if test="${status.index == lastItem || currentDate != requestScope.o_list[status.index + 1].order_date}">
-                        <hr class="custom-order-separator"/>
-                    </c:if>
                 </c:when>
                 <c:otherwise>
                     <div class="custom-order">

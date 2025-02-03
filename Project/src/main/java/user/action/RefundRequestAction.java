@@ -23,17 +23,20 @@ public class RefundRequestAction implements Action {
         }
 
         String action = request.getParameter("action");
+        String id = request.getParameter("order_id");
         String order_code = request.getParameter("order_code");
 
         if (action != null) {
             switch (action) {
                 case "select":
                     try {
-                        List<OrderVO> o_list = OrderDAO.selectOrderCode(cvo.getId(), order_code);
+                        OrderVO o_vo = OrderDAO.selectOrderProduct(id, cvo.getId(), order_code);
                         List<DeliveryVO> d_list = DeliveryDAO.selectDelivery(cvo.getId());
+                        int point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code);
 
-                        request.setAttribute("o_list", o_list);
+                        request.setAttribute("o_vo", o_vo);
                         request.setAttribute("d_list", d_list);
+                        request.setAttribute("point_amount", point_amount);
 
                         return "/user/jsp/mypage/refundRequest.jsp";
                     } catch (Exception e) {
@@ -43,13 +46,14 @@ public class RefundRequestAction implements Action {
                 case "update":
                     try {
                         // 요청 데이터 가져오기
-                        String[] prodNos = request.getParameterValues("prod_no_list[]");
+                        String prodNo = request.getParameter("prod_no");
                         String orderCode = request.getParameter("orderCode");
                         String reason = request.getParameter("reason");
                         String retrieve_deli_no = request.getParameter("retrieve_deli_no");
                         String refund_bank = request.getParameter("bank");
                         String refund_account = request.getParameter("account_number");
                         String refundAmount = request.getParameter("refund_amount");
+                        String point_used = request.getParameter("point_used");
 
                         // String 값을 숫자로 변환
                         int currentTotal = Integer.parseInt(cvo.getTotal());  // cvo.getTotal()을 정수로 변환
@@ -60,14 +64,15 @@ public class RefundRequestAction implements Action {
 
                         // 결과를 다시 문자열로 변환하여 저장
                         String total = String.valueOf(totalINT);
-                        System.out.println(total);
-
 
                         // 주문 정보 업데이트 (반품 상태로 변경)
-                        int u_o_cnt = OrderDAO.updateOrderRefund(cvo.getId(), prodNos, orderCode, refund_bank, refund_account, reason, retrieve_deli_no);
+                        int u_o_cnt = OrderDAO.updateOrderRefund(cvo.getId(), prodNo, orderCode, refund_bank, refund_account, reason, retrieve_deli_no);
 
-                        // 사용한 적립금 복구
-                        int u_p_cnt = PointDAO.updatePoint(cvo.getId(), orderCode);
+                        // 사용한 적립금 복구 (point_used null이 아닌 경우에만 실행)
+                        int u_p_cnt = 0;
+                        if (point_used != null && !point_used.isEmpty()) {
+                            u_p_cnt = PointDAO.insertPoint(cvo.getId(), point_used, orderCode);
+                        }
 
                         // 해당 고객의 누적 금액에서 환불금액 차감
                         int u_c_cnt = CustomerDAO.updateTotal(cvo.getId(), total);

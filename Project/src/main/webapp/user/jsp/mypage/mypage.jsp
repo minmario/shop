@@ -96,7 +96,7 @@
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-order" autocomplete="off">
                                 <label class="btn btn-outline-dark" for="btnradio-order" onclick="selectOrder()">주문내역</label>
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-refund" autocomplete="off">
-                                <label class="btn btn-outline-dark" for="btnradio-refund">취소/반품/교환</label>
+                                <label class="btn btn-outline-dark" for="btnradio-refund" onclick="selectRefund()">취소/반품/교환</label>
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-review" autocomplete="off">
                                 <label class="btn btn-outline-dark" for="btnradio-review">구매후기</label>
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-inquiry" autocomplete="off">

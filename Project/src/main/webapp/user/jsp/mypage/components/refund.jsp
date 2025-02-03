@@ -1,4 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="point-section">
     <div class="point-header">
         <span class="point-title">취소/반품/교환</span>
@@ -7,13 +10,13 @@
 <div class="refund-tabs">
     <ul class="nav nav-tabs" id="refund-nav-tabs">
         <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#" data-target="#list-all">전체</a>
+            <a class="nav-link active" aria-current="page" href="#" data-target="#list-all" onclick="selectRefundTab('all')">전체</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#" data-target="#list-cancelRefund">취소/반품</a>
+            <a class="nav-link" href="#" data-target="#list-cancelRefund" onclick="selectRefundTab('cancelRefund')">취소/반품</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#" data-target="#list-exchange">교환</a>
+            <a class="nav-link" href="#" data-target="#list-exchange" onclick="selectRefundTab('exchange')">교환</a>
         </li>
     </ul>
 </div>
@@ -21,166 +24,95 @@
     <%-- 전체 조회 --%>
     <div id="list-all" class="list">
         <div class="wrap-refund-list">
-            <div class="refund-summary">
-                <div class="refund-header">
-                    <div class="refund-date">24.12.16</div>
-                    <div class="refund-details-link">
-                        <a href="Controller?type=orderDetails">주문 상세</a>
-                    </div>
+            <c:if test="${requestScope.all eq null}">
+                <div class="refund-summary">
+                    <span>조회 내역이 없습니다.</span>
                 </div>
-                <div class="refund-status">취소완료</div>
-                <div class="order-product">
-                    <div class="product-image"></div>
-                    <div class="product-info">
-                        <p class="product-brand">thisisnever</p>
-                        <p class="product-name">Mesh Football Jersey Navy</p>
-                        <p class="product-options">M / 1개</p>
-                        <p class="product-price">25,770원</p>
-                    </div>
-                </div>
-                <div class="wrap-buttons">
-                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=cancelDetails'">취소 상세</button>
-                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#repurchaseModal">재구매</button>
-                </div>
-            </div><hr/>
+            </c:if>
+            <c:if test="${requestScope.all ne null}">
+                <c:forEach var="all" items="${requestScope.all}" varStatus="status">
+                    <div class="refund-summary">
+                        <div class="refund-header">
+                            <div class="refund-date">${all.order_date}</div>
+                            <div class="refund-details-link">
+                                <a href="Controller?type=orderDetails&action=select&order_code=${all.order_code}">주문 상세</a>
+                            </div>
+                        </div>
+                        <c:choose>
+                            <c:when test="${all.status == '6'}">
+                                <div class="refund-status">상품 취소</div>
+                            </c:when>
+                            <c:when test="${all.status == '7'}">
+                                <div class="refund-status">상품 반품</div>
+                            </c:when>
+                            <c:when test="${all.status == '8'}">
+                                <div class="refund-status">상품 교환</div>
+                            </c:when>
+                        </c:choose>
+                        <div class="order-product">
+                            <img src="${fn:split(o_vo.prod_image, ',')[0]}" alt="상품 이미지" class="product-img">
+                            <div class="product-info">
+                                <p class="product-brand">${all.brand}</p>
+                                <p class="product-name">${all.prod_name}</p>
+                                <p class="product-options">${all.option_name} / ${all.count}</p>
+                                <p class="product-price"><fmt:formatNumber value="${all.amount}"/>원</p>
+                            </div>
+                        </div>
+                        <div class="wrap-buttons">
+                            <c:if test="${all.status == '6'}">
+                                <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=cancelDetails'">취소 상세</button>
 
-            <div class="refund-summary">
-                <div class="refund-header">
-                    <div class="refund-date">24.12.16</div>
-                    <div class="refund-details-link"><a href="Controller?type=orderDetails">주문 상세</a></div>
-                </div>
-                <div class="refund-status">반품완료</div>
-                <div class="order-product">
-                    <div class="product-image"></div>
-                    <div class="product-info">
-                        <p class="product-brand">thisisnever</p>
-                        <p class="product-name">Mesh Football Jersey Navy</p>
-                        <p class="product-options">M / 1개</p>
-                        <p class="product-price">25,770원</p>
-                    </div>
-                </div>
-                <div class="wrap-buttons">
-                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=refundDetails'">반품 상세</button>
-                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#repurchaseModal">재구매</button>
-                    <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
-                </div>
-            </div><hr/>
+                            </c:if>
+                            <c:if test="${all.status == '7'}">
+                                <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=cancelDetails'">반품 상세</button>
+                                <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">반품 배송 조회</button>
+                                <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">회수 배송 조회</button>
 
-            <div class="exchange-summary">
-                <div class="exchange-header">
-                    <div class="exchange-date">22.05.16</div>
-                    <div class="exchange-details-link">
-                        <a href="Controller?type=orderDetails">주문 상세</a>
+                            </c:if>
+                            <c:if test="${all.status == '8'}">
+                                <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=cancelDetails'">교환 상세</button>
+                                <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">교환 배송 조회</button>
+                                <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">회수 배송 조회</button>
+                            </c:if>
+                        </div>
                     </div>
-                </div>
-                <div class="exchange-status">교환완료</div>
-                <div class="order-product">
-                    <div class="product-image"></div>
-                    <div class="product-info">
-                        <p class="product-brand">thisisnever</p>
-                        <p class="product-name">Mesh Football Jersey Navy</p>
-                        <p class="product-options">M / 1개</p>
-                        <p class="product-price">25,770원</p>
-                    </div>
-                </div>
-                <div class="wrap-buttons">
-                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=exchangeDetails'">교환 상세</button>
-                    <button type="button" class="btn btn-outline-secondary">교환 배송 조회</button>
-                    <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
-                </div>
-            </div>
+                </c:forEach>
+            </c:if>
+            <hr/>
         </div>
     </div>
 
     <%-- 반품/취소 조회 --%>
     <div id="list-cancelRefund" class="list" style="display: none;">
         <div class="wrap-refund-list">
-            <div class="refund-summary">
-                <div class="refund-header">
-                    <div class="refund-date">24.12.16</div>
-                    <div class="refund-details-link">
-                        <a href="#">주문 상세</a>
+            <c:forEach var="cancelRefund" items="${requestScope.cancelRefund}" varStatus="status">
+                <div class="refund-summary">
+                    <div class="refund-header">
+                        <div class="refund-date">${cancelRefund.order_date}</div>
+                        <div class="refund-details-link"><a href="Controller?type=orderDetails&action=select&order_code=${cancelRefund.order_code}">주문 상세</a></div>
                     </div>
-                </div>
-                <div class="refund-status">취소완료</div>
-                <div class="order-product">
-                    <div class="product-image"></div>
-                    <div class="product-info">
-                        <p class="product-brand">thisisnever</p>
-                        <p class="product-name">Mesh Football Jersey Navy</p>
-                        <p class="product-options">M / 1개</p>
-                        <p class="product-price">25,770원</p>
+                    <c:if test="${cancelRefund.status == '6'}">
+                        <div class="refund-status">취소</div>
+                    </c:if>
+                    <c:if test="${cancelRefund.status == '7'}">
+                        <div class="refund-status">반품</div>
+                    </c:if>
+                    <div class="order-product">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <p class="product-brand">${cancelRefund.brand}</p>
+                            <p class="product-name">${cancelRefund.prod_name}</p>
+                            <p class="product-options">${cancelRefund.option_name} / ${cancelRefund.count}</p>
+                            <p class="product-price"><fmt:formatNumber value="${cancelRefund.amount}"/>원</p>
+                        </div>
                     </div>
-                </div>
-                <div class="wrap-buttons">
-                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=cancelDetails'">취소 상세</button>
-                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#repurchaseModal">재구매</button>
-                </div>
-            </div><hr/>
-            <div class="refund-summary">
-                <div class="refund-header">
-                    <div class="refund-date">24.12.16</div>
-                    <div class="refund-details-link"><a href="#">주문 상세</a></div>
-                </div>
-                <div class="refund-status">반품완료</div>
-                <div class="order-product">
-                    <div class="product-image"></div>
-                    <div class="product-info">
-                        <p class="product-brand">thisisnever</p>
-                        <p class="product-name">Mesh Football Jersey Navy</p>
-                        <p class="product-options">M / 1개</p>
-                        <p class="product-price">25,770원</p>
+                    <div class="wrap-buttons">
+                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=refundDetails'">반품 상세</button>
+                        <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#repurchaseModal">재구매</button>
+                        <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
                     </div>
-                </div>
-                <div class="wrap-buttons">
-                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=refundDetails'">반품 상세</button>
-                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#repurchaseModal">재구매</button>
-                    <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
-                </div>
-            </div><hr/>
-            <div class="refund-summary">
-                <div class="refund-header">
-                    <div class="refund-date">24.12.16</div>
-                    <div class="refund-details-link"><a href="#">주문 상세</a></div>
-                </div>
-                <div class="refund-status">반품신청완료</div>
-                <div class="order-product">
-                    <div class="product-image"></div>
-                    <div class="product-info">
-                        <p class="product-brand">thisisnever</p>
-                        <p class="product-name">Mesh Football Jersey Navy</p>
-                        <p class="product-options">M / 1개</p>
-                        <p class="product-price">25,770원</p>
-                    </div>
-                </div>
-                <div class="wrap-buttons">
-                    <button type="button" class="btn btn-outline-secondary">환불 취소</button>
-                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#returnModal">반송장 입력</button>
-                    <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
-                </div>
-            </div><hr/>
-            <div class="refund-summary">
-                <div class="refund-header">
-                    <div class="refund-date">24.12.16</div>
-                    <div class="refund-details-link"><a href="#">주문 상세</a></div>
-                </div>
-                <div class="refund-status">반품신청완료</div>
-                <div class="order-product">
-                    <div class="product-image"></div>
-                    <div class="product-info">
-                        <p class="product-brand">thisisnever</p>
-                        <p class="product-name">Mesh Football Jersey Navy</p>
-                        <p class="product-options">M / 1개</p>
-                        <p class="product-price">25,770원</p>
-                    </div>
-                </div>
-                <div class="wrap-buttons">
-                    <button type="button" class="btn btn-outline-secondary">환불 취소</button>
-                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#returnModal">반송장 수정</button>
-                    <button type="button" class="btn btn-outline-secondary">반송 조회</button>
-                    <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
-                </div>
-            </div>
+                </div><hr/>
+            </c:forEach>
         </div>
     </div>
 
@@ -188,51 +120,31 @@
     <div id="list-exchange" class="list" style="display: none;">
         <div class="wrap-refund-list">
 
-            <div class="exchange-summary">
-                <div class="exchange-header">
-                    <div class="exchange-date">22.05.16</div>
-                    <div class="exchange-details-link">
-                        <a href="#">주문 상세</a>
+            <c:forEach var="exchange" items="${requestScope.exchange}" varStatus="status">
+                <div class="exchange-summary">
+                    <div class="exchange-header">
+                        <div class="exchange-date">${exchange.order_date}</div>
+                        <div class="exchange-details-link">
+                            <a href="Controller?type=orderDetails&action=select&order_code=${exchange.order_code}">주문 상세</a>
+                        </div>
                     </div>
-                </div>
-                <div class="exchange-status">교환완료</div>
-                <div class="order-product">
-                    <div class="product-image"></div>
-                    <div class="product-info">
-                        <p class="product-brand">thisisnever</p>
-                        <p class="product-name">Mesh Football Jersey Navy</p>
-                        <p class="product-options">M / 1개</p>
-                        <p class="product-price">25,770원</p>
+                    <div class="exchange-status">교환</div>
+                    <div class="order-product">
+                        <div class="product-image"></div>
+                        <div class="product-info">
+                            <p class="product-brand">${exchange.brand}</p>
+                            <p class="product-name">${exchange.prod_name}</p>
+                            <p class="product-options">${exchange.option_name} / ${exchange.count}</p>
+                            <p class="product-price"><fmt:formatNumber value="${exchange.amount}"/>원</p>
+                        </div>
                     </div>
-                </div>
-                <div class="wrap-buttons">
-                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=exchangeDetails'">교환 상세</button>
-                    <button type="button" class="btn btn-outline-secondary">교환 배송 조회</button>
-                    <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
-                </div>
-            </div><hr/>
-
-            <div class="exchange-summary">
-                <div class="exchange-header">
-                    <div class="exchange-date">22.05.16</div>
-                    <div class="exchange-details-link"><a href="#">주문 상세</a></div>
-                </div>
-                <div class="exchange-status">교환완료</div>
-                <div class="order-product">
-                    <div class="product-image"></div>
-                    <div class="product-info">
-                        <p class="product-brand">thisisnever</p>
-                        <p class="product-name">Mesh Football Jersey Navy</p>
-                        <p class="product-options">M / 1개</p>
-                        <p class="product-price">25,770원</p>
+                    <div class="wrap-buttons">
+                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=exchangeDetails'">교환 상세</button>
+                        <button type="button" class="btn btn-outline-secondary">교환 배송 조회</button>
+                        <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
                     </div>
-                </div>
-                <div class="wrap-buttons">
-                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=exchangeDetails'">교환 상세</button>
-                    <button type="button" class="btn btn-outline-secondary">교환 배송 조회</button>
-                    <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
-                </div>
-            </div>
+                </div><hr/>
+            </c:forEach>
         </div>
     </div>
 </div>

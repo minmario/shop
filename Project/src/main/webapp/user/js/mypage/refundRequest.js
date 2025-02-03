@@ -22,79 +22,12 @@ function addInputRequest() {
     }
 }
 
-$(document).ready(function () {
-    // 전체 선택 체크박스 이벤트
-    $('#select-refund-all').on('change', function () {
-        const isChecked = $(this).is(':checked');
-        $('.refund-checkbox').prop('checked', isChecked);
-
-        // 상품 결제 금액, 환불 금액 갱신
-        updateRefundInfo();
-    });
-
-    // 개별 상품 체크박스 이벤트
-    $('.refund-checkbox').on('change', function () {
-        // 모든 상품 체크박스가 선택되었는지 확인
-        const allChecked = $('.refund-checkbox').length === $('.refund-checkbox:checked').length;
-        $('#select-refund-all').prop('checked', allChecked);
-
-        // 상품 결제 금액, 환불 금액 갱신
-        updateRefundInfo();
-    });
-
-    function updateRefundInfo() {
-        let totalAmount = 0;
-        let pointUsed = parseInt($('#point-used').val(), 10);
-        if (isNaN(pointUsed)) pointUsed = 0;
-
-        // 체크된 상품의 가격을 합산
-        const checkedProducts = $('.refund-checkbox:checked');
-        if (checkedProducts.length === 0) {
-            // 체크된 상품이 없으면 금액을 0으로 설정
-            $('.refund-info .item-price').text('0원');
-            $('.refund-info .points-used').text('0원');
-            $('.refund-info .refund-amount').text('0원');
-            return;  // 함수 종료
-        }
-
-        checkedProducts.each(function () {
-            const price = parseInt($(this).data('price'), 10) || 0;
-            const count = parseInt($(this).data('count'), 10) || 1;
-
-            totalAmount += price * count;
-        });
-
-        // 적립금 사용액을 표시
-        $('.refund-info .points-used').text(formatCurrency(pointUsed) + '원');
-
-        // 환불 예정 금액 (상품 총 결제 금액에서 사용된 포인트 차감)
-        const finalRefundAmount = Math.max(totalAmount - pointUsed, 0);
-
-        // 각 금액을 표시 (숫자 3자리마다 쉼표 추가)
-        $('.refund-info .item-price').text(formatCurrency(totalAmount) + '원');
-        $('.refund-info .refund-amount').text(formatCurrency(finalRefundAmount) + '원');
-    }
-
-    // 숫자를 3자리마다 쉼표로 포맷하는 함수
-    function formatCurrency(number) {
-        return number.toLocaleString('ko-KR');
-    }
-});
-
 function refundRequest() {
-    // 선택된 상품의 prod_no 목록 가져오기
-    let selectedProducts = [];
-    $('.refund-checkbox:checked').each(function () {
-        selectedProducts.push($(this).closest('.product-content').find('input[name="prod_no"]').val());
-    });
-
-    if (selectedProducts.length === 0) {
-        alert("반품할 상품을 선택해 주세요.");
-        return;
-    }
+    // 상품의 prod_no 가져오기
+    const prodNo = $('input[name="prod_no"]').val();
 
     // ordercode 값을 가져오기
-    const orderCode = $('#orderCode').val();
+    const orderCode = $('input[name="orderCode"]').val();
 
     // 반품 사유 가져오기
     let reason = $('#select').val();
@@ -108,11 +41,6 @@ function refundRequest() {
             alert("반품 사유를 입력해 주세요.");
             return;
         }
-    }
-
-    // 반품 신청 확인 경고창
-    if (!confirm("반품 신청하시겠습니까?")) {
-        return;  // 사용자가 취소를 누르면 함수 종료
     }
 
     // 회수지 번호 가져오기
@@ -135,19 +63,24 @@ function refundRequest() {
     // 환불 예정 금액 가져오기
     const refundAmount = $('.refund-info .refund-amount').text().replace(/[^0-9]/g, '');
 
+    // 반품 신청 확인 경고창
+    if (!confirm("반품 신청하시겠습니까?")) {
+        return;  // 사용자가 취소를 누르면 함수 종료
+    }
+
     // AJAX 요청
     $.ajax({
         url: 'Controller?type=refundRequest&action=update',
         type: 'POST',
         data: {
-
-            prod_no_list: selectedProducts,
+            prod_no: prodNo,
             reason: reason,
             retrieve_deli_no: retrieveDeliNo,
-            bank: encodeURIComponent(bank),
+            bank: bank,
             account_number: accountNumber,
             orderCode: orderCode,
-            refund_amount: refundAmount
+            refund_amount: refundAmount,
+            point_used: pointUsed || null
         },
         success: function (response) {
             if (response && response.success) {

@@ -54,88 +54,93 @@
                             </div>
                             <div class="product-section">
                                 <h5>주문 상품 ${fn:length(o_list)}개</h5>
-                                <c:choose>
-                                    <c:when test="${requestScope.o_list[0].status == '0'}"><p class="payment-status">입금 대기</p></c:when>
-                                    <c:when test="${requestScope.o_list[0].status == '1'}"><p class="payment-status">결제 완료</p></c:when>
-                                    <c:when test="${requestScope.o_list[0].status == '2'}"><p class="payment-status">배송전</p></c:when>
-                                    <c:when test="${requestScope.o_list[0].status == '3'}"><p class="payment-status">배송중</p></c:when>
-                                    <c:when test="${requestScope.o_list[0].status == '4'}"><p class="payment-status">배송완료</p></c:when>
-                                    <c:when test="${requestScope.o_list[0].status == '5'}"><p class="payment-status">구매확정</p></c:when>
-                                    <c:when test="${requestScope.o_list[0].status == '6'}"><p class="payment-status">취소</p></c:when>
-                                    <c:when test="${requestScope.o_list[0].status == '7'}"><p class="payment-status">반품</p></c:when>
-                                    <c:when test="${requestScope.o_list[0].status == '8'}"><p class="payment-status">교환</p></c:when>
-                                </c:choose>
-                                <c:forEach var="item" items="${requestScope.o_list}">
+                                <c:forEach var="item" items="${requestScope.o_list}" varStatus="status">
+                                    <c:choose>
+                                        <c:when test="${item.status == '1'}"><p class="payment-status">결제 완료</p></c:when>
+                                        <c:when test="${item.status == '2'}"><p class="payment-status">배송전</p></c:when>
+                                        <c:when test="${item.status == '3'}"><p class="payment-status">배송중</p></c:when>
+                                        <c:when test="${item.status == '4'}"><p class="payment-status">배송완료</p></c:when>
+                                        <c:when test="${item.status == '5'}"><p class="payment-status">구매확정</p></c:when>
+                                        <c:when test="${item.status == '6'}"><p class="payment-status">취소</p></c:when>
+                                        <c:when test="${item.status == '7'}"><p class="payment-status">반품</p></c:when>
+                                        <c:when test="${item.status == '8'}"><p class="payment-status">교환</p></c:when>
+                                    </c:choose>
                                     <div class="product-item">
                                         <img src="${fn:split(item.prod_image, ',')[0]}" alt="상품 이미지" class="product-img">
                                         <div class="product-details">
                                             <div class="product-header">
                                                 <p class="product-brand"><strong>${item.brand}</strong></p>
                                             </div>
-                                            <p class="product-name">${item.prod_name}<br>${not empty item.option_name ? item.option_name : 'FREE'} / ${item.count}개</p>
+                                            <p class="product-name">${item.prod_name}<br>${item.option_name} / ${item.count}개</p>
                                             <div class="product-price-row">
                                                 <p class="product-price">
-                                                    <fmt:formatNumber value="${not empty item.prod_saled_price ? item.prod_saled_price : item.prod_price}"/>원
+                                                    <fmt:formatNumber value="${item.amount}"/>원
                                                 </p>
                                             </div>
                                         </div>
-                                        <c:if test="${requestScope.o_list[0].status == '0' or requestScope.o_list[0].status == '1'}">
+                                        <c:if test="${item.status == '1'}">
                                             <input type="hidden" class="prod-no" value="${item.prod_no}">
                                             <button class="btn btn-outline-secondary option-button" data-toggle="modal" data-target="#optionModal">옵션 변경</button>
                                         </c:if>
                                     </div>
+                                    <div class="product-actions">
+                                        <c:choose>
+                                            <c:when test="${item.status == '1'}">
+                                                <button class="btn btn-outline-secondary cancel-button" onclick="location.href='Controller?type=cancelOrder&action=select&order_id=${item.id}&order_code=${item.order_code}&prod_no=${item.prod_no}'">주문 취소</button>
+                                            </c:when>
+                                            <c:when test="${item.status == '2' or item.status == '3' or item.status == '4'}">
+                                                <button class="btn btn-outline-secondary refund-button" onclick="location.href='Controller?type=refundRequest&action=select&order_id=${item.id}&order_code=${item.order_code}&prod_no=${item.prod_no}'">반품 요청</button>
+                                                <button class="btn btn-outline-secondary exchange-button" onclick="location.href='Controller?type=exchangeRequest&action=select&order_id=${item.id}&order_code=${item.order_code}&prod_no=${item.prod_no}'">교환 요청</button>
+                                                <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">배송 조회</button>
+                                            </c:when>
+                                            <c:when test="${item.status == '5'}">
+                                                <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">배송 조회</button>
+                                            </c:when>
+                                            <c:when test="${item.status == '6'}">
+                                                <button class="btn btn-outline-secondary cancel-details-button" onclick="location.href='Controller?type=cancelDetails&action=select&order_id=${item.id}&order_code=${item.order_code}&prod_no=${item.prod_no}'">취소 상세</button>
+                                            </c:when>
+                                            <c:when test="${item.status == '7'}">
+                                                <button class="btn btn-outline-secondary refund-details-button" onclick="location.href='Controller?type=refundDetails&action=select&order_id=${item.id}&order_code=${item.order_code}&prod_no=${item.prod_no}'">반품 상세</button>
+                                                <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">반품 배송 조회</button>
+                                                <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">배송 조회</button>
+                                            </c:when>
+                                            <c:when test="${item.status == '8'}">
+                                                <button class="btn btn-outline-secondary exchange-details-button" onclick="location.href='Controller?type=exchangeDetails&action=select&order_id=${item.id}&order_code=${item.order_code}&prod_no=${item.prod_no}'">교환 상세</button>
+                                                <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">교환 배송 조회</button>
+                                                <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">배송 조회</button>
+                                            </c:when>
+                                        </c:choose>
+                                    </div>
                                 </c:forEach>
-                                <div class="product-actions">
-                                    <c:choose>
-                                        <c:when test="${requestScope.o_list[0].status == '0' or requestScope.o_list[0].status == '1'}">
-                                            <button class="btn btn-outline-secondary cancel-button" onclick="location.href='Controller?type=cancelOrder&action=select&order_code=${requestScope.o_list[0].order_code}'">주문 취소</button>
-                                        </c:when>
-                                        <c:when test="${requestScope.o_list[0].status == '2' or requestScope.o_list[0].status == '3' or requestScope.o_list[0].status == '4'}">
-                                            <button class="btn btn-outline-secondary refund-button" onclick="location.href='Controller?type=refundRequest&action=select&order_code=${requestScope.o_list[0].order_code}'">반품 요청</button>
-                                            <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">배송 조회</button>
-                                        </c:when>
-                                        <c:when test="${requestScope.o_list[0].status == '5'}">
-                                            <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">배송 조회</button>
-                                        </c:when>
-                                        <c:when test="${requestScope.o_list[0].status == '6'}">
-                                            <button class="btn btn-outline-secondary cancel-details-button" onclick="location.href='Controller?type=cancelDetails&action=select&order_code=${requestScope.o_list[0].order_code}'">취소 상세</button>
-                                        </c:when>
-                                        <c:when test="${requestScope.o_list[0].status == '7'}">
-                                            <button class="btn btn-outline-secondary refund-details-button" onclick="location.href='Controller?type=refundDetails&action=select&order_code=${requestScope.o_list[0].order_code}'">반품 상세</button>
-                                            <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">환불 배송 조회</button>
-                                            <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">배송 조회</button>
-                                        </c:when>
-                                        <c:when test="${requestScope.o_list[0].status == '8'}">
-                                            <button class="btn btn-outline-secondary exchange-details-button" onclick="location.href='Controller?type=exchangeDetails&action=select&order_code=${requestScope.o_list[0].order_code}'">교환 상세</button>
-                                            <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">환불 배송 조회</button>
-                                            <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">배송 조회</button>
-                                        </c:when>
-                                    </c:choose>
-                                </div>
                             </div>
                             <div class="payment-info">
                                 <h5>결제 정보</h5>
                                 <ul class="payment-list">
-                                    <c:set var="totalPrice" value="${requestScope.totalPrice ne null ? requestScope.totalPrice : 0}" />
-                                    <c:set var="totalSaledPrice" value="${requestScope.totalSaledPrice ne null ? requestScope.totalSaledPrice : 0}" />
-                                    <c:set var="pointString" value="${requestScope.o_list[0].point_amount ne null ? requestScope.o_list[0].point_amount : 0}" />
-                                    <c:set var="pointAmount" value="${pointString + 0}" />
-                                    <c:set var="finalPrice" value="${totalSaledPrice - pointAmount}" />
-                                    <c:set var="discountAmount" value="${requestScope.totalPrice - requestScope.totalSaledPrice}" />
+                                    <c:set var="totalPrice" value="${requestScope.totalPrice}" />
+                                    <c:set var="discountAmount" value="${requestScope.totalPrice - requestScope.totalAmount}" />
+                                    <c:set var="pointAmount" value="${requestScope.point_amount}" />
+                                    <c:set var="couponSalePer" value="${requestScope.coupon.sale_per}" />
+
+                                    <!-- 1. 상품 금액에서 할인 금액을 뺌 -->
+                                    <c:set var="priceAfterDiscount" value="${totalPrice - discountAmount}" />
+
+                                    <!-- 2. 쿠폰 할인율을 적용하여 할인 금액 계산 (예: 10% 할인) -->
+                                    <c:set var="couponDiscount" value="${priceAfterDiscount * (couponSalePer / 100)}" />
+
+                                    <!-- 3. 쿠폰 할인 금액을 차감한 후 적립금 사용 금액을 차감 -->
+                                    <c:set var="finalPrice" value="${priceAfterDiscount - couponDiscount - pointAmount}" />
+
+                                    <!-- 화면에 표시 -->
                                     <li><span>상품 금액</span> <span class="item-price"><fmt:formatNumber value="${totalPrice}"/>원</span></li>
                                     <li><span>할인 금액</span> <span class="discount">-<fmt:formatNumber value="${discountAmount}"/>원</span></li>
-                                    <li><span>적립금</span> <span class="points-amount">-<fmt:formatNumber value="${pointAmount}"/>원</span></li>
-                                    <li><span>배송비</span> <span class="shipping-fee">무료</span></li>
+                                    <li><span>쿠폰 할인</span> <span class="coupon-discount">-<fmt:formatNumber value="${couponDiscount}"/>원</span></li>
+                                    <li><span>적립금 사용</span> <span class="points-amount">-<fmt:formatNumber value="${pointAmount}"/>원</span></li>
                                     <li class="total">
                                         <span class="payment-price">결제 금액</span>
-                                        <span class="final-price">
-                                            <%-- <span class="discount-percent">43%</span> --%>
-                                            <span class="payment-amount"><fmt:formatNumber value="${finalPrice}"/>원</span>
-                                        </span>
+                                        <span class="final-price"><fmt:formatNumber value="${finalPrice}"/>원</span>
                                     </li>
                                     <li><span>결제 수단</span>
                                         <c:choose>
-                                            <c:when test="${requestScope.o_list[0].pay_type == '0'}"><span class="payment-method">무통장입금-[농협]301-1111-2222-3333</span></c:when>
                                             <c:when test="${requestScope.o_list[0].pay_type == '1'}"><span class="payment-method">계좌이체-[${requestScope.o_list[0].order_bank}]${requestScope.o_list[0].order_account}</span></c:when>
                                             <c:when test="${requestScope.o_list[0].pay_type == '2'}"><span class="payment-method">카카오페이</span></c:when>
                                             <c:when test="${requestScope.o_list[0].pay_type == '3'}"><span class="payment-method">토스페이</span></c:when>
@@ -155,12 +160,17 @@
                                 </span>
                                 </div>
                                 <ul class="benefits-list">
-                                    <li><span>총 할인 금액</span> <span><fmt:formatNumber value="${discountAmount}"/>원</span></li>
-                                    <li><span>LV. 5 실버 2% 적립</span> <span>678원</span></li>
-                                    <li><span>구매 추가 적립</span> <span>34원</span></li>
+                                    <!-- 총 할인 금액 계산 -->
+                                    <c:set var="totalDiscount" value="${totalPrice - finalPrice}" />
+
+                                    <!-- 받은 총 혜택 계산 -->
+                                    <c:set var="gradeBenefit" value="${requestScope.grade.sale_condition * totalPrice / 100}" />
+                                    <c:set var="totalBenefits" value="${totalDiscount + gradeBenefit}" />
+                                    <li><span>총 할인 금액</span> <span><fmt:formatNumber value="${totalDiscount}"/>원</span></li>
+                                    <li><span>${requestScope.grade.name} ${requestScope.grade.sale_condition}% 적립</span> <span><fmt:formatNumber value="${gradeBenefit}"/>원</span></li>
                                     <li><span>배송비</span> <span>무료</span></li>
-                                    <li><span>후기 적립</span> <span>최대 3,500원</span></li>
-                                    <li class="total-benefits"><span class="result-benefits">받은 총 혜택</span> <span class="result-price"><fmt:formatNumber value="${discountAmount}"/>원</span></li>
+<%--                                    <li><span>후기 적립</span> <span>최대 3,500원</span></li>--%>
+                                    <li class="total-benefits"><span class="result-benefits">받은 총 혜택</span> <span><fmt:formatNumber value="${totalBenefits}"/>원</span></li>
                                 </ul>
                             </div>
                         </c:if>

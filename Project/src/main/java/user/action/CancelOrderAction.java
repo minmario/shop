@@ -27,28 +27,65 @@ public class CancelOrderAction implements Action {
         }
 
         String action = request.getParameter("action");
+        String id = request.getParameter("order_id");
         String order_code = request.getParameter("order_code");
 
         if (action != null) {
             switch (action) {
                 case "select":
-                    List<OrderVO> o_list = OrderDAO.selectOrderCode(cvo.getId(), order_code);
+                    OrderVO o_vo = OrderDAO.selectOrderProduct(id, cvo.getId(), order_code);
                     List<DeliveryVO> d_list = DeliveryDAO.selectDelivery(cvo.getId());
+                    int point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code);
 
-                    request.setAttribute("o_list", o_list);
+                    request.setAttribute("o_vo", o_vo);
                     request.setAttribute("d_list", d_list);
+                    request.setAttribute("point_amount", point_amount);
 
                     return "/user/jsp/mypage/cancelOrder.jsp";
                 case "update":
                     try {
                         // 요청 데이터 가져오기
-                        String[] prodNos = request.getParameterValues("prod_no_list[]");
+                        String prodNo = request.getParameter("prod_no");
                         String orderCode = request.getParameter("orderCode");
                         String reason = request.getParameter("reason");
-                        String retrieve_deli_no = request.getParameter("retrieve_deli_no");
                         String refund_bank = request.getParameter("bank");
                         String refund_account = request.getParameter("account_number");
                         String refundAmount = request.getParameter("refund_amount");
+                        String point_used = request.getParameter("point_used");
+
+                        // 주문 정보 업데이트 (취소 상태로 변경)
+                        int u_o_cnt = OrderDAO.updateOrderCancel(cvo.getId(), prodNo, orderCode, refund_bank, refund_account, reason);
+
+                        if (u_o_cnt == 0) {
+                            response.setContentType("application/json");
+                            response.setCharacterEncoding("UTF-8");
+                            try (PrintWriter out = response.getWriter()) {
+                                out.print("{\"success\": false, \"message\": \"주문 상태 업데이트 실패\"}");
+                                out.flush();
+                            }
+                            return null;
+                        }
+
+                        // null 또는 빈 문자열 값 확인
+                        boolean isRefundDataMissing = (refund_bank == null || refund_bank.isEmpty()) ||
+                                (refund_account == null || refund_account.isEmpty()) ||
+                                (refundAmount == null || refundAmount.isEmpty());
+
+                        if (isRefundDataMissing) {
+                            // 필수 데이터가 없을 경우, 주문 상태 업데이트 후 함수 종료
+                            response.setContentType("application/json");
+                            response.setCharacterEncoding("UTF-8");
+
+                            try (PrintWriter out = response.getWriter()) {
+                                if (u_o_cnt > 0) {
+                                    out.print("{\"success\": true, \"message\": \"주문 상태가 업데이트되었습니다.\"}");
+                                } else {
+                                    out.print("{\"success\": false, \"message\": \"주문 업데이트 실패\"}");
+                                }
+                                out.flush();
+                            }
+                            return null;  // 이후 로직 건너뜀
+                        }
 
                         // String 값을 숫자로 변환
                         int currentTotal = Integer.parseInt(cvo.getTotal());  // cvo.getTotal()을 정수로 변환
@@ -59,27 +96,22 @@ public class CancelOrderAction implements Action {
 
                         // 결과를 다시 문자열로 변환하여 저장
                         String total = String.valueOf(totalINT);
-                        System.out.println(total);
 
-
-                        // 주문 정보 업데이트 (취소 상태로 변경)
-                        int u_o_cnt = OrderDAO.updateOrderCancel(cvo.getId(), prodNos, orderCode, refund_bank, refund_account, reason, retrieve_deli_no);
-                        System.out.println("Order update result: " + u_o_cnt);
-
-                        // 사용한 적립금 복구
-                        int u_p_cnt = PointDAO.updatePoint(cvo.getId(), orderCode);
-                        System.out.println("Point update result: " + u_p_cnt);
+                        // 사용한 적립금 복구 (point_used가 null이 아닌 경우에만 실행)
+                        int u_p_cnt = 0;
+                        if (point_used != null && !point_used.isEmpty()) {
+                            u_p_cnt = PointDAO.insertPoint(cvo.getId(), point_used, orderCode);
+                        }
 
                         // 해당 고객의 누적 금액에서 환불금액 차감
                         int u_c_cnt = CustomerDAO.updateTotal(cvo.getId(), total);
-                        System.out.println("Customer update result: " + u_c_cnt);
 
                         // JSON 응답 설정
                         response.setContentType("application/json");
                         response.setCharacterEncoding("UTF-8");
 
                         try (PrintWriter out = response.getWriter()) {
-                            if (u_o_cnt > 0 && u_c_cnt > 0) {
+                            if (u_o_cnt > 0) {
                                 out.print("{\"success\": true}");
                             } else {
                                 System.err.println("Database update failed: Order or Point update affected 0 rows.");

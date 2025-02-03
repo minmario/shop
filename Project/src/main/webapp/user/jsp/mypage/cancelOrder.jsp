@@ -26,7 +26,7 @@
             <%-- header --%>
             <jsp:include page="../layout/header.jsp"></jsp:include>
 
-            <c:if test="${requestScope.o_list eq null}">
+            <c:if test="${requestScope.o_vo eq null}">
                 <script>
                     // alert("해당 주문의 정보를 불러올 수 없습니다.");
                     // window.location.href = "Controller?type=mypage";
@@ -36,30 +36,24 @@
             <div class="wrap">
                 <div class="row">
                     <div class="container">
-                        <c:if test="${requestScope.o_list ne null and requestScope.d_list ne null}">
+                        <c:if test="${requestScope.o_vo ne null}">
+                        <c:set var="o_vo" value="${requestScope.o_vo}"/>
                             <div class="cancel-order-title">주문 취소</div>
                             <div class="cancel-order-container">
-                                <div class="select-all">
-                                    <input type="checkbox" id="select-all">
-                                    <label for="select-all">전체 선택</label>
-                                </div>
-                                <c:forEach var="product" items="${requestScope.o_list}" varStatus="status">
-                                    <div class="product-item">
-                                        <input type="hidden" name="prod_no" value="${product.prod_no}"/>
-                                        <input type="hidden" id="cancel-point-used" value="${requestScope.o_list[0].point_amount}"/>
-                                        <input type="checkbox" id="product${status.index}">
-                                        <label for="product${status.index}" class="product-label">
-                                            <img src="${product.prod_image != null && not empty product.prod_image ? fn:split(product.prod_image, ',')[0] : './user/images/product1.jpg'}" alt="상품 이미지" class="product-img">
-                                            <div class="product-details">
-                                                <p class="product-brand">${product.brand}</p>
-                                                <p class="product-name">${product.prod_name}<br>${product.option_name} / ${product.count}개</p>
-                                                <p class="product-price" data-price="${not empty product.prod_saled_price ? product.prod_saled_price : product.prod_price}">
-                                                    <fmt:formatNumber value="${not empty product.prod_saled_price ? product.prod_saled_price : product.prod_price}"/>원
-                                                </p>
-                                            </div>
-                                        </label>
+                                <h5>취소 상품</h5>
+                                <div class="product-item">
+                                    <input type="hidden" id="orderCode" value="${o_vo.order_code}">
+                                    <input type="hidden" name="prod_no" value="${o_vo.prod_no}"/>
+                                    <input type="hidden" id="cancel-point-used" value="${o_vo.point_amount}"/>
+                                    <img src="${fn:split(o_vo.prod_image, ',')[0]}" alt="상품 이미지" class="product-img">
+                                    <div class="product-details">
+                                        <p class="product-brand">${o_vo.brand}</p>
+                                        <p class="product-name">${o_vo.prod_name}<br>${o_vo.option_name} / <span class="product-count">${o_vo.count}</span>개</p>
+                                        <p class="product-price" data-price="${o_vo.amount}">
+                                            <fmt:formatNumber value="${o_vo.amount}"/>원
+                                        </p>
                                     </div>
-                                </c:forEach>
+                                </div>
                                 <div class="cancel-reason">
                                     <h5>취소 사유</h5>
                                     <div class="reason-item">
@@ -83,7 +77,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <c:if test="${requestScope.o_list[0].status != '0'}">
+                                <c:if test="${o_vo.status != '0'}">
                                     <div class="refund-account">
                                         <h5>취소 계좌 정보</h5>
 
@@ -105,22 +99,37 @@
                                             <input type="text" class="toggle" id="account-number" name="account-number" placeholder="계좌번호를 입력하세요"/><br/>
                                         </div>
                                     </div>
-                                </c:if>
+
                                     <div class="cancel-refund-info">
                                         <h5>환불 정보</h5>
                                         <ul>
-                                            <li><span>상품 결제 금액</span><span class="cancel-item-price">0원</span></li>
-                                            <li><span>적립금 사용</span><span class="cancel-points-used">0원</span></li>
+                                                <%-- 상품 결제 금액 및 적립금 사용 값 변환 및 계산 --%>
+                                            <c:set var="prodPrice" value="${o_vo.amount}" />
+                                            <c:set var="pointUsed" value="${not empty o_vo.point_amount ? o_vo.point_amount : '0'}" />
+                                            <c:set var="prodCount" value="${o_vo.count}" />
+
+                                                <%-- 숫자만 추출하여 int형으로 변환 --%>
+                                            <c:set var="prodPriceInt" value="${fn:replace(prodPrice, ',', '')}" />
+                                            <c:set var="pointUsedInt" value="${fn:replace(pointUsed, ',', '')}" />
+
+                                            <!-- 상품 가격에 수량을 곱하여 총 결제 금액 계산 -->
+                                            <c:set var="totalPrice" value="${prodPriceInt * prodCount}" />
+
+                                            <!-- 환불 예정 금액 계산 (총 결제 금액 - 적립금) -->
+                                            <c:set var="refundAmount" value="${totalPrice - pointUsedInt}" />
+                                            <li><span>상품 결제 금액</span><span class="cancel-item-price"><fmt:formatNumber value="${totalPrice}"/>원</span></li>
+                                            <li><span>적립금 사용</span><span class="cancel-point-amount"><fmt:formatNumber value="${pointUsedInt}"/>원</span></li>
                                             <li><span>기본 배송비</span><span>무료</span></li>
-                                            <li><span>환불 예정 금액</span><span class="cancel-refund-amount">0원</span></li>
+                                            <li><span>환불 예정 금액</span><span class="cancel-refund-amount"><fmt:formatNumber value="${refundAmount}"/>원</span></li>
                                         </ul>
                                     </div>
+                                </c:if>
                                 <div class="notice">
                                     <p>결제 시 사용한 적립금 및 할인 쿠폰은 취소 완료 즉시 반환됩니다.</p>
                                     <p>가상계좌(무통장입금)의 경우 최근 7일 이내 3회 이상 주문취소 시 결제수단 이용에 제한이 될 수 있습니다.</p>
                                 </div>
                                 <div class="cancel-button-container">
-                                    <button class="btn btn-dark cancel-request-btn" onclick="cancelRequest()">취소 요청하기</button>
+                                    <button type="button" class="btn btn-dark cancel-request-btn" onclick="cancelRequest()">취소 요청하기</button>
                                 </div>
                             </div>
                         </c:if>
