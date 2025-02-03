@@ -79,8 +79,11 @@
                                             </div>
                                         </div>
                                         <c:if test="${item.status == '1'}">
-                                            <input type="hidden" class="prod-no" value="${item.prod_no}">
-                                            <button class="btn btn-outline-secondary option-button" data-toggle="modal" data-target="#optionModal">옵션 변경</button>
+                                            <input type="hidden" id="prod-no" class="prod-no" value="${item.prod_no}">
+                                            <input type="hidden" id="orderId" value="${item.id}">
+                                            <input type="hidden" id="orderCode" value="${item.order_code}">
+                                            <input type="hidden" id="inventoryNo" value="">
+                                            <button class="btn btn-outline-secondary option-button" data-toggle="modal" data-target="#orderDetails_optionModal" onclick="ShowOptionModal(${item.prod_no})">옵션 변경</button>
                                         </c:if>
                                     </div>
                                     <div class="product-actions">
@@ -132,9 +135,9 @@
 
                                     <!-- 화면에 표시 -->
                                     <li><span>상품 금액</span> <span class="item-price"><fmt:formatNumber value="${totalPrice}"/>원</span></li>
-                                    <li><span>할인 금액</span> <span class="discount">-<fmt:formatNumber value="${discountAmount}"/>원</span></li>
-                                    <li><span>쿠폰 할인</span> <span class="coupon-discount">-<fmt:formatNumber value="${couponDiscount}"/>원</span></li>
-                                    <li><span>적립금 사용</span> <span class="points-amount">-<fmt:formatNumber value="${pointAmount}"/>원</span></li>
+                                    <li><span>할인 금액</span> <span class="discount"><fmt:formatNumber value="${discountAmount}"/>원</span></li>
+                                    <li><span>쿠폰 할인</span> <span class="coupon-discount"><fmt:formatNumber value="${couponDiscount}"/>원</span></li>
+                                    <li><span>적립금 사용</span> <span class="points-amount"><fmt:formatNumber value="${pointAmount}"/>원</span></li>
                                     <li class="total">
                                         <span class="payment-price">결제 금액</span>
                                         <span class="final-price"><fmt:formatNumber value="${finalPrice}"/>원</span>
@@ -268,7 +271,7 @@
     </div>
 
     <%-- 옵션 변경 modal --%>
-    <div class="modal fade" id="optionModal" tabindex="-1" role="dialog" aria-labelledby="optionModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="orderDetails_optionModal" tabindex="-1" role="dialog" aria-labelledby="orderDetails_optionModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -278,13 +281,13 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <select class="form-select size-select" id="size-options">
+                    <select class="form-select size-select" id="orderDetails-size-options">
                         <!-- 동적으로 사이즈 정보 조회 -->
                     </select>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-outline-secondary">변경</button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="ChangeProdSize()">변경</button>
                 </div>
             </div>
         </div>

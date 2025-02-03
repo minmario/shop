@@ -126,7 +126,7 @@ public class PointDAO {
         map.put("cus_no", cus_no);
         map.put("order_code", order_code);
 
-        int amount = 0;
+        Integer amount = null;
         SqlSession ss = FactoryService.getFactory().openSession();
 
         try {
@@ -137,7 +137,7 @@ public class PointDAO {
             ss.close();
         }
 
-        return amount;
+        return amount != null ? amount : 0;
     }
 
     // 사용 적립금 복구

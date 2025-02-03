@@ -49,7 +49,7 @@
                                             <div class="product-detail">
                                                 <span>${o_vo.brand}</span><br/>
                                                 ${o_vo.prod_name}
-                                                <div class="option-text">${o_vo.size} / ${o_vo.count}</div>
+                                                <div class="option-text">${o_vo.option_name} / ${o_vo.count}개</div>
                                             </div>
                                         </div>
                                     </div>
@@ -78,9 +78,6 @@
                                 <div class="custom-addr">
                                     <span class="bold">회수지 선택</span><br/>
                                     <div class="wrap-addrList">
-                                        <button type="button" class="btn btn-outline-secondary add-address-button" data-toggle="modal" data-target="#addrModal">
-                                            배송지 추가하기
-                                        </button>
                                         <c:forEach var="delivery" items="${requestScope.d_list}" varStatus="status">
                                             <div class="address-box">
                                                 <input type="radio" id="address-${status.index}" name="retrieve_deli_no" value="${delivery.id}">
@@ -157,89 +154,6 @@
                 <jsp:include page="../layout/footer.jsp"></jsp:include>
             </div>
 
-            <!-- 배송지 추가 모달 -->
-            <div class="modal fade" id="addrModal" tabindex="-1" role="dialog" aria-labelledby="addrModalTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="addrModalTitle">배송지 추가</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="modal-table-container">
-                                <table class="modal-table">
-                                    <caption>배송지 정보 입력 테이블</caption>
-                                    <tbody>
-                                    <tr>
-                                        <th class="modal-table-info">
-                                            <span>이름</span>
-                                            <span class="asterisk"></span>
-                                        </th>
-                                        <td>
-                                            <input type="text" class="text" name="name" placeholder="받는 분의 이름을 입력하세요"/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th class="modal-table-info">
-                                            <span>연락처</span>
-                                            <span class="asterisk"></span>
-                                        </th>
-                                        <td>
-                                            <input type="text" class="text" name="phone" placeholder="받는 분의 연락처를 입력하세요"/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th class="modal-table-info">
-                                            <span>주소</span>
-                                            <span class="asterisk"></span>
-                                        </th>
-                                        <td>
-                                            <input type="text" class="addr1" name="pos_code" placeholder="우편번호"/>
-                                            <button class="btn btn-primary" type="submit">주소검색</button>
-                                            <br/>
-                                            <input type="text" class="addr2" name="addr1" placeholder="주소"/><br/>
-                                            <input type="text" class="addr2" name="addr2" placeholder="상세주소"/><br/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th class="modal-table-info">
-                                            <span>배송 요청사항 (선택)</span>
-                                        </th>
-                                        <td>
-                                            <select class="form-select" id="request-select" name="select" onchange="addInputRequest()">
-                                                <option selected="selected">:: 배송 요청사항을 선택하세요 ::</option>
-                                                <option value="1">문 앞에 놔주세요</option>
-                                                <option value="2">경비실에 맡겨주세요</option>
-                                                <option value="3">택배함에 넣어주세요</option>
-                                                <option value="4">배송 전에 연락주세요</option>
-                                                <option value="5">직접 입력</option>
-                                            </select>
-                                            <br/>
-                                            <!-- '직접 입력'을 선택할 때만 보이는 새로운 입력 필드 -->
-                                            <div id="custom-input">
-                                                <input type="text" class="toggle" name="deli_request" placeholder="배송 요청 사항을 직접 입력하세요"/>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <div class="modal-footer-left">
-                                <input type="checkbox" id="chkDefault" name="chk-default"/>
-                                <label for="chkDefault">기본 배송지로 설정</label>
-                            </div>
-                            <div class="modal-footer-right">
-                                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">닫기</button>
-                                <button type="button" class="btn btn-outline-primary">등록</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </c:when>
         <c:otherwise>
             <script>

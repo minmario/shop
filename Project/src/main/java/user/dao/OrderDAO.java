@@ -181,6 +181,35 @@ public class OrderDAO {
         return cnt;
     }
 
+    // 배송 전 상품 사이즈 변경
+    public static int updateOrderSize(String id, String cus_no, String prod_no, String order_code, String inventory_no){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("id", id);
+        map.put("cus_no", cus_no);
+        map.put("prod_no", prod_no);
+        map.put("order_code", order_code);
+        map.put("inventory_no", inventory_no);
+
+        SqlSession ss = FactoryService.getFactory().openSession();
+        int cnt = 0;
+
+        try {
+            cnt = ss.update("order.update_order_size", map);
+
+            if (cnt > 0)
+                ss.commit();
+            else
+                ss.rollback();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
+    }
+
+
     // 반품 요청
     public static int updateOrderRefund(String cus_no, String prod_no, String order_code, String refund_bank, String refund_account, String reason, String retrieve_deli_no){
         HashMap<String, Object> map = new HashMap<>();
@@ -212,14 +241,14 @@ public class OrderDAO {
     }
 
     // 교환 요청
-    public static int updateOrderExchange(String cus_no, String prod_no, String order_code, String reason, String exchange_option, String retrieve_deli_no){
+    public static int updateOrderExchange(String cus_no, String prod_no, String order_code, String reason, String retrieve_deli_no, String inventory_no){
         HashMap<String, String> map = new HashMap<>();
         map.put("cus_no", cus_no);
         map.put("prod_no", prod_no);
         map.put("order_code", order_code);
         map.put("reason", reason);
-        map.put("exchange_option", exchange_option);
         map.put("retrieve_deli_no", retrieve_deli_no);
+        map.put("inventory_no", inventory_no);
 
         SqlSession ss = FactoryService.getFactory().openSession();
         int cnt = 0;

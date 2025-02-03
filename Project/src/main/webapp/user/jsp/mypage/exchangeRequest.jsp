@@ -39,14 +39,15 @@
                                 <section class="wrap-product">
                                     <div class="product-content">
                                         <input type="hidden" name="prod_no" value="${o_vo.prod_no}"/>
+                                        <input type="hidden" name="inventory_no" value="${o_vo.inventory_no}"/>
                                         <input type="hidden" name="orderCode" value="${o_vo.order_code}"/>
                                         <input type="hidden" name="order_count" value="${o_vo.count}"/>
-                                        <input type="hidden" name="current_option" value="${o_vo.size}"/>
+                                        <input type="hidden" name="current_option" value="${o_vo.option_name}"/>
                                         <img src="${fn:split(o_vo.prod_image, ',')[0]}" alt="상품 이미지" class="product-img">
                                         <div class="product-detail">
                                             <span>${o_vo.brand}</span><br/>
                                             ${o_vo.prod_name}
-                                            <div class="option-text">${o_vo.size} / ${o_vo.count}</div>
+                                            <div class="option-text">${o_vo.option_name} / ${o_vo.count}개</div>
                                         </div>
                                     </div>
                                 </section>
@@ -81,7 +82,6 @@
 
                                 <div class="custom-addr">
                                     <div class="wrap-addrList">
-                                        <button type="button" class="btn btn-outline-secondary add-address-button" data-toggle="modal" data-target="#addrModalCenter">배송지 추가하기</button>
                                         <c:forEach var="delivery" items="${requestScope.d_list}" varStatus="status">
                                             <div class="address-box">
                                                 <input type="radio" id="address-${status.index}" name="retrieve_deli_no" value="${delivery.id}">
@@ -118,92 +118,6 @@
             </script>
         </c:otherwise>
     </c:choose>
-
-    <!-- 배송지 추가 모달 -->
-    <div class="modal fade" id="addrModalCenter" tabindex="-1" role="dialog" aria-labelledby="addrModalCenterTitle"
-         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addrModalCenterTitle">배송지 추가</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="modal-table-container">
-                        <table class="modal-table">
-                            <caption>배송지 정보 입력 테이블</caption>
-                            <tbody>
-                            <tr>
-                                <th class="modal-table-info">
-                                    <span>이름</span>
-                                    <span class="asterisk"></span>
-                                </th>
-                                <td>
-                                    <input type="text" class="text" name="name" placeholder="받는 분의 이름을 입력하세요"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th class="modal-table-info">
-                                    <span>연락처</span>
-                                    <span class="asterisk"></span>
-                                </th>
-                                <td>
-                                    <input type="text" class="text" name="phone" placeholder="받는 분의 연락처를 입력하세요"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th class="modal-table-info">
-                                    <span>주소</span>
-                                    <span class="asterisk"></span>
-                                </th>
-                                <td>
-                                    <input type="text" class="addr1" name="pos_code" placeholder="우편번호"/>
-                                    <button class="btn btn-primary" type="submit">주소검색</button>
-                                    <br/>
-                                    <input type="text" class="addr2" name="addr1" placeholder="주소"/><br/>
-                                    <input type="text" class="addr2" name="addr2" placeholder="상세주소"/><br/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th class="modal-table-info">
-                                    <span>배송 요청사항 (선택)</span>
-                                </th>
-                                <td>
-                                    <select class="form-select" id="request-select" name="select" onchange="addInputRequest()">
-                                        <option selected="selected">:: 배송 요청사항을 선택하세요 ::</option>
-                                        <!--가장 먼저 작성하는 것이 선택되기 때문에 selected로 지정한다. -->
-                                        <option value="1">문 앞에 놔주세요</option>
-                                        <option value="2">경비실에 맡겨주세요</option>
-                                        <option value="3">택배함에 넣어주세요</option>
-                                        <option value="4">배송 전에 연락주세요</option>
-                                        <option value="5">직접 입력</option>
-                                    </select>
-                                    <br/>
-                                    <!-- '직접 입력'을 선택할 때만 보이는 새로운 입력 필드 -->
-                                    <div id="custom-input">
-                                        <input type="text" class="toggle" name="deli_request" placeholder="배송 요청 사항을 직접 입력하세요"/>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="modal-footer-left">
-                        <input type="checkbox" id="chkDefault" name="chk-default"/>
-                        <label for="chkDefault">기본 배송지로 설정</label>
-                    </div>
-                    <div class="modal-footer-right">
-                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">닫기</button>
-                        <button type="button" class="btn btn-outline-primary" onclick="save()">등록</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <%-- JQuery --%>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>

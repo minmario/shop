@@ -46,32 +46,38 @@ public class ExchangeRequestAction implements Action{
                     }
 
                 case "select_size":
-                    try {
-                        List<ProductVO> productSize = ProductDAO.selectSize(prod_no);
+                    // 상품 사이즈 목록
+                    List<ProductVO> productSize = ProductDAO.selectSize(prod_no);
 
-                        response.setContentType("application/json");
-                        response.setCharacterEncoding("UTF-8");
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
 
-                        StringBuilder jsonResponse = new StringBuilder("{\"success\": true, \"data\": [");
+                    try (PrintWriter out = response.getWriter()) {
+                        out.print("{");
+                        out.print("\"success\": true,");
+                        out.print("\"data\": [");
 
                         for (int i = 0; i < productSize.size(); i++) {
-                            ProductVO vo = productSize.get(i);
-                            jsonResponse.append("{\"option_name\": \"").append(vo.getI_option_name()).append("\"}");
+                            ProductVO pvo = productSize.get(i);
+
+                            out.print("{");
+                            out.print("\"prod_no\": \"" + pvo.getId() + "\",");
+                            out.print("\"inventory_no\": \"" + pvo.getInventory_no() + "\",");
+                            out.print("\"option_name\": \"" + pvo.getI_option_name() + "\"");
+                            out.print("}");
+
                             if (i < productSize.size() - 1) {
-                                jsonResponse.append(",");
+                                out.print(",");
                             }
                         }
 
-                        jsonResponse.append("]}");
-
-                        try (PrintWriter out = response.getWriter()) {
-                            out.print(jsonResponse.toString());
-                            out.flush();
-                        }
+                        out.print("]");
+                        out.print("}");
+                        out.flush();
                     } catch (Exception e) {
                         e.printStackTrace();
-                        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     }
+
                     return null;
 
                 case "update":
@@ -80,16 +86,15 @@ public class ExchangeRequestAction implements Action{
                         String reason = request.getParameter("reason");
                         String orderCode = request.getParameter("orderCode");
                         String retrieve_deli_no = request.getParameter("retrieve_deli_no");
-                        String exchange_size = request.getParameter("exchange_size");
+                        String inventory_vo = request.getParameter("inventory_no");
 
                         System.out.println(reason);
                         System.out.println(orderCode);
                         System.out.println(retrieve_deli_no);
-                        System.out.println(exchange_size);
                         System.out.println(prod_no);
 
                         // 주문 정보 업데이트 (반품 상태로 변경)
-                        int u_o_cnt = OrderDAO.updateOrderExchange(cvo.getId(), prod_no, orderCode, reason, exchange_size, retrieve_deli_no);
+                        int u_o_cnt = OrderDAO.updateOrderExchange(cvo.getId(), prod_no, orderCode, reason, retrieve_deli_no, inventory_vo);
 
                         // JSON 응답 설정
                         response.setContentType("application/json");

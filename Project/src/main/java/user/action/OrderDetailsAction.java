@@ -110,31 +110,65 @@ public class OrderDetailsAction implements Action {
                     }
                     return null;
 
-//                case "select_size":
-//                    String prod_no = request.getParameter("prod_no");
-//                    List<String> size_list = OrderDAO.selectSize(prod_no);
-//
-//                    response.setContentType("application/json");
-//                    response.setCharacterEncoding("UTF-8");
-//
-//                    try (PrintWriter out = response.getWriter()) {
-//                        if (size_list != null && !size_list.isEmpty()) {
-//                            out.print("{\"success\": true, \"options\": [");
-//                            for (int i = 0; i < size_list.size(); i++) {
-//                                out.print("\"" + size_list.get(i) + "\"");
-//                                if (i < size_list.size() - 1) {
-//                                    out.print(",");
-//                                }
-//                            }
-//                            out.print("]}");
-//                        } else {
-//                            out.print("{\"success\": false, \"message\": \"옵션이 없습니다.\"}");
-//                        }
-//                        out.flush();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                    return null;
+                case "select_size":
+                    String prod_no = request.getParameter("prod_no");
+
+                    // 상품 사이즈 목록
+                    List<ProductVO> productSize = ProductDAO.selectSize(prod_no);
+
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+
+                    try (PrintWriter out = response.getWriter()) {
+                        out.print("{");
+                        out.print("\"success\": true,");
+                        out.print("\"data\": [");
+
+                        for (int i = 0; i < productSize.size(); i++) {
+                            ProductVO pvo = productSize.get(i);
+
+                            out.print("{");
+                            out.print("\"prod_no\": \"" + pvo.getId() + "\",");
+                            out.print("\"inventory_no\": \"" + pvo.getInventory_no() + "\",");
+                            out.print("\"option_name\": \"" + pvo.getI_option_name() + "\"");
+                            out.print("}");
+
+                            if (i < productSize.size() - 1) {
+                                out.print(",");
+                            }
+                        }
+
+                        out.print("]");
+                        out.print("}");
+                        out.flush();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    return null;
+
+                case "update_size":
+                    // 사이즈 변경
+                    String us_id = request.getParameter("order_id");
+                    String us_order_code = request.getParameter("order_code");
+                    String us_prod_no = request.getParameter("prod_no");
+                    String us_inventory_no = request.getParameter("inventory_no");
+
+                    int u_cnt = OrderDAO.updateOrderSize(us_id, cvo.getId(), us_prod_no, us_order_code, us_inventory_no);
+
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+
+                    try (PrintWriter out = response.getWriter()) {
+                        if (u_cnt > 0) {
+                            out.print("{\"success\": true}");
+                        } else {
+                            out.print("{\"success\": false, \"message\": \"업데이트 실패\"}");
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return null;
             }
 
         }

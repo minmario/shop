@@ -25,8 +25,9 @@ function addInputRequest() {
 $(document).ready(function () {
     // 페이지 로드 후 즉시 옵션 가져오기
     const prodNo = $('input[name="prod_no"]').val();
+    const inventoryNo = $('input[name="inventory_no"]').val();
     if (prodNo) {
-        productOptions(prodNo);
+        productOptions(prodNo, inventoryNo);
     }
 
     // 사이즈 옵션이 변경될 때 이벤트 바인딩
@@ -34,11 +35,14 @@ $(document).ready(function () {
 });
 
 // 상품 옵션 목록을 비동기로 가져오기
-function productOptions(prodNo) {
+function productOptions(prodNo, inventoryNo) {
     $.ajax({
         url: 'Controller?type=exchangeRequest&action=select_size',
         type: 'POST',
-        data: { prod_no: prodNo },
+        data: {
+            prod_no: prodNo,
+            inventory_no: inventoryNo
+        },
         success: function (response) {
             if (response.success) {
                 // 기존 옵션 초기화
@@ -48,7 +52,7 @@ function productOptions(prodNo) {
 
                 // 응답 데이터를 기반으로 옵션 추가
                 response.data.forEach(function (item) {
-                    optionSelect.append(`<option value="${item.option_name}">${item.option_name}</option>`);
+                    optionSelect.append(`<option value="${item.inventory_no}">${item.option_name}</option>`);
                 });
             } else {
                 alert('옵션 목록을 가져오는 데 실패했습니다.');
@@ -67,6 +71,9 @@ function exchangeRequest() {
 
     // ordercode 값을 가져오기
     const orderCode = $('input[name="orderCode"]').val();
+
+    // 현재 inventory_no 값 가져오기
+    const currentInventoryNo = $('input[name="inventory_no"]').val();
 
     // 교환 사유 가져오기
     let reason = $('#select-reason').val();
@@ -101,8 +108,8 @@ function exchangeRequest() {
         return;
     }
 
-    // 선택된 사이즈가 기존 사이즈와 동일할 경우 경고 표시
-    if (currentOption.includes(selectedSize)) {
+    // 선택된 사이즈가 현재 사이즈와 동일할 경우 경고 표시
+    if (selectedInventoryNo === currentInventoryNo) {
         alert("현재 선택한 사이즈가 기존 사이즈와 동일합니다. 다른 사이즈를 선택해 주세요.");
         return;
     }
@@ -121,7 +128,7 @@ function exchangeRequest() {
             reason: reason,
             retrieve_deli_no: retrieveDeliNo,
             orderCode: orderCode,
-            exchange_size: selectedSize
+            inventory_no: currentOption
         },
         success: function (response) {
             if (response && response.success) {

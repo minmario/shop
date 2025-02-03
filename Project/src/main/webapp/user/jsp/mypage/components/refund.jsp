@@ -54,7 +54,7 @@
                             <div class="product-info">
                                 <p class="product-brand">${all.brand}</p>
                                 <p class="product-name">${all.prod_name}</p>
-                                <p class="product-options">${all.option_name} / ${all.count}</p>
+                                <p class="product-options">${all.option_name} / ${all.count}개</p>
                                 <p class="product-price"><fmt:formatNumber value="${all.amount}"/>원</p>
                             </div>
                         </div>
@@ -102,7 +102,7 @@
                         <div class="product-info">
                             <p class="product-brand">${cancelRefund.brand}</p>
                             <p class="product-name">${cancelRefund.prod_name}</p>
-                            <p class="product-options">${cancelRefund.option_name} / ${cancelRefund.count}</p>
+                            <p class="product-options">${cancelRefund.option_name} / ${cancelRefund.count}개</p>
                             <p class="product-price"><fmt:formatNumber value="${cancelRefund.amount}"/>원</p>
                         </div>
                     </div>
@@ -134,7 +134,7 @@
                         <div class="product-info">
                             <p class="product-brand">${exchange.brand}</p>
                             <p class="product-name">${exchange.prod_name}</p>
-                            <p class="product-options">${exchange.option_name} / ${exchange.count}</p>
+                            <p class="product-options">${exchange.option_name} / ${exchange.count}개</p>
                             <p class="product-price"><fmt:formatNumber value="${exchange.amount}"/>원</p>
                         </div>
                     </div>

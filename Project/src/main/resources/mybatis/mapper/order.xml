@@ -39,7 +39,6 @@
         INNER JOIN delivery d ON o.deli_no = d.id
         INNER JOIN seller s ON p.seller_no = s.id
         LEFT JOIN inventory i ON i.id = o.inventory_no
-        LEFT JOIN point po ON
         WHERE o.order_code = #{order_code} AND o.cus_no = #{cus_no}
     </select>
 
@@ -99,9 +98,14 @@
 
     <!-- 주문코드 별 원가 금액 총 합 -->
     <select id="select_total_price" resultType="int" parameterType="map">
-        SELECT SUM(p.price) FROM `order` o
+        SELECT SUM(re) AS total_re
+        FROM (
+        SELECT (p.price * o.count) AS re
+        FROM `order` o
         INNER JOIN product p ON o.prod_no = p.id
         WHERE order_code = #{order_code} AND cus_no = #{cus_no}
+        GROUP BY p.price, o.count
+        ) subquery
     </select>
 
     <!-- 주문 상세 조회(배송지 변경 로그 입력 시 사용) -->
@@ -137,6 +141,14 @@
         AND prod_no = #{prod_no}
     </update>
 
+    <!-- 배송 전 상품 사이즈 변경 -->
+    <update id="update_order_size" parameterType="map">
+        UPDATE `order`
+        SET inventory_no = #{inventory_no}
+        WHERE id = #{id} AND cus_no = #{cus_no} AND order_code = #{order_code}
+        AND prod_no = #{prod_no}
+    </update>
+
     <!-- 반품 요청 -->
     <update id="update_order_refund" parameterType="map">
         UPDATE `order`
@@ -149,7 +161,7 @@
     <!-- 교환 요청 -->
     <update id="update_order_exchange" parameterType="map">
         UPDATE `order`
-        SET status = 8, reason = #{reason}, exchange_option = #{exchange_option}, retrieve_deli_no = #{retrieve_deli_no}
+        SET status = 8, reason = #{reason}, retrieve_deli_no = #{retrieve_deli_no}, inventory_no = #{inventory_no}
         WHERE cus_no = #{cus_no} AND order_code = #{order_code}
         AND prod_no = #{prod_no}
     </update>
