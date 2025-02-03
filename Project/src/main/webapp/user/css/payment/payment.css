@@ -22,6 +22,7 @@
 
 .delivery-info-container {
     border-bottom: 1px solid #f3f3f3;
+    padding-bottom: 25px;
     margin-bottom: 25px;
 }
 
@@ -55,7 +56,16 @@
     cursor: pointer;
 }
 
-.change-address-btn:hover, .coupon-btn:hover, .cancel-btn:hover {
+.apply-btn {
+    width: 50px;
+    margin-right: 10px;
+}
+
+.cancel-btn {
+    width: 80px;
+}
+
+.change-address-btn:hover, .coupon-btn:hover, .apply-btn:hover, .cancel-btn:hover {
     background-color: #fff !important;
     color: #6c757d !important;
 }
@@ -115,6 +125,7 @@
 
 .order-product-container {
     border-bottom: 1px solid #f3f3f3;
+    padding-bottom: 25px;
     margin-bottom: 25px;
 }
 
@@ -127,7 +138,7 @@
 .order-product-container .product-info {
     display: flex;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 
@@ -141,6 +152,7 @@
 
 .product-details {
     font-size: 14px;
+    width: 100%;
 }
 
 .order-product-container .product-details .product-brand {
@@ -155,17 +167,19 @@
 
 .order-product-container .product-details .product-size {
     color: #777;
-    margin-bottom: 8px;
+    margin-bottom: 0;
 }
 
 .order-product-container .product-details .product-price {
     font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 0;
 }
 
 .order-product-container .product-details .original-price {
     text-decoration: line-through;
     color: #aaa;
-    margin-right: 10px;
+    margin-bottom: 5px;
 }
 
 .order-product-container .product-details .sale-percent {
@@ -179,23 +193,24 @@
 
 .coupon-btn {
     display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    text-align: center;
     font-size: 14px;
     cursor: pointer;
+    width: 100px;
+    margin-right: 5px;
 }
 
-.coupon-btn:hover {
-    background-color: #0056b3;
+.cancel-coupon-btn {
+    width: 100px;
+}
+
+.cancel-coupon-btn:hover {
+    background-color: #fff !important;
+    color: #dc3545 !important;
 }
 
 .points-container, .reward-container {
     border-bottom: 1px solid #f3f3f3;
+    padding-bottom: 10px;
     margin-bottom: 25px;
 }
 
@@ -230,14 +245,37 @@
     color: #777;
 }
 
+.max-points, .save-points {
+    font-size: 12px;
+    color: #777;
+}
+
 .reward-container .reward-top {
     height: 30px;
+}
+
+.reward-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.reward-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.reward-options input[type=radio] {
+    position: relative;
+    top: 2px;
 }
 
 .reward-options label {
     display: block;
     margin-bottom: 8px;
     font-size: 14px;
+    cursor: pointer;
 }
 
 .reward-info {
@@ -299,6 +337,7 @@
 
 .payment-methods-container {
     border-bottom: 1px solid #f3f3f3;
+    padding-bottom: 10px;
     margin-bottom: 25px;
 }
 
@@ -316,16 +355,18 @@
     display: block;
     margin-bottom: 10px;
     font-size: 14px;
+    cursor: pointer;
+}
+
+.radio-group input[type=radio] {
+    position: relative;
+    top: 3px;
 }
 
 .logo-finance {
     width: 20px;
     height: 20px;
     margin: 0 5px;
-}
-
-.radio-group label:last-child input {
-    margin-right: 5px;
 }
 
 .highlight {
@@ -455,6 +496,12 @@
     cursor: pointer;
 }
 
+.payment-button-container button span {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+}
+
 .payment-button-container button:hover {
     background-color: #333;
 }
@@ -528,6 +575,7 @@
 
 .modal .modal-body ul li {
     padding: 3px;
+    line-height: 15px;
 }
 
 .modal .modal-body .reward-title {
@@ -689,10 +737,12 @@
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #fff;
+    cursor: pointer;
 }
 
 #couponModal .coupon-radio {
-    margin-top: 5px;
+    position: relative;
+    top: 22px;
 }
 
 #couponModal .coupon-label {
@@ -700,6 +750,7 @@
     flex-direction: column;
     flex-grow: 1;
     margin-bottom: 0 !important;
+    cursor: pointer;
 }
 
 #couponModal .discount {

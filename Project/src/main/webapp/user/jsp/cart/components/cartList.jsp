@@ -8,7 +8,9 @@
             <th>상품정보</th>
             <th>개별 판매가</th>
             <th>수량</th>
-            <th><input type="checkbox" id="cart-all"/></th>
+            <th>
+                <input type="checkbox" id="cart-all" onclick="toggleAllCheckboxes(this)"/>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -26,11 +28,9 @@
                                 <div class="prod_name">${item.p_name}</div>
                                 <div class="prod_option">
                                     <div class="prod_option_left">옵션&nbsp;:</div>
-                                    <div class="prod_option_center cart-prod-size">${item.size}</div>
+                                    <div class="prod_option_center cart-prod-size">${item.option_name}</div>
                                     <div class="prod_option_right">
-                                        <button type="button" class="btn btn-outline-secondary option-change-btn"
-                                                data-toggle="modal" data-target="#optionModal">옵션 변경
-                                        </button>
+                                        <button type="button" class="btn btn-outline-secondary option-change-btn" onclick="onShowOptionModal(${item.id}, ${item.prod_no})">옵션 변경</button>
                                     </div>
                                 </div>
                             </div>
@@ -41,7 +41,7 @@
                         <c:choose>
                             <c:when test="${not empty item.saled_price}">
                                 <c:set var="total_count" value="${item.saled_price}"/>
-                                <del class="default-price"><fmt:formatNumber value="${item.price}"/>원</del>
+                                <del class="default-price"><fmt:formatNumber value="${item.price * item.count}"/>원</del>
                                 <div class="sale-price"><fmt:formatNumber value="${total_count * item.count}"/>원</div>
                             </c:when>
                             <c:otherwise>
@@ -56,7 +56,7 @@
                         <button type="button" class="btn btn-secondary btn-plus" onclick="plusCount(this)">+</button>
                     </td>
                     <td>
-                        <input type="checkbox" name="chk-cart" class="cart-checkbox" data-item-id="${item.id}"/>
+                        <input type="checkbox" name="chk-cart" class="cart-checkbox" data-item-id="${item.id}" onclick="toggleIndividualCheckbox()"/>
                     </td>
                 </tr>
             </c:forEach>

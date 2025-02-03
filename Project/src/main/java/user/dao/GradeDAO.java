@@ -38,4 +38,20 @@ public class GradeDAO {
 
         return vo;
     }
+
+    // 특정 회원의 등급 정보 조회
+    public static GradeVO selectGradeCustomer(String id) {
+        GradeVO vo = null;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            vo = ss.selectOne("grade.select_grade_customer", id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return vo;
+    }
 }

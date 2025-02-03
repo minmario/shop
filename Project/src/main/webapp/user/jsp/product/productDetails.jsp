@@ -153,8 +153,6 @@
                                 <h3>PRICE INFO <span class="info-subtitle">가격정보</span></h3>
                                 <p><i class="bi bi-dash"></i> 무신사 판매가 <span class="price-original"><strong><del><fmt:formatNumber value="${pvo.price}"/>원</del></strong></span></p>
                                 <p><i class="bi bi-dash"></i> 무신사 세일가 <span class="price-sale"><strong><fmt:formatNumber value="${pvo.saled_price}"/>원</strong></span> <span class="discount">(${pvo.sale}% 할인)</span></p>
-                                <%--<p><i class="bi bi-dash"></i> 무신사 회원가 <span class="price-member"><strong>17,472 ~ 18,816원</strong></span></p>--%>
-                                <%--<p><i class="bi bi-dash"></i> 적립금 최대 <span class="points"><strong><fmt:formatNumber value="${pvo.points}"/>원</strong></span></p>--%>
                             </div>
                             <c:if test="${empty sessionScope.isLoggedIn}">
                                 <div class="alert alert-danger" role="alert">
@@ -168,7 +166,7 @@
                                         <option value="0">:: 선택하세요 ::</option>
                                         <c:if test="${requestScope.productSize ne null}">
                                             <c:forEach var="size" items="${requestScope.productSize}">
-                                                <option value="${size.i_option_name}">
+                                                <option value="${size.i_option_name}" data-value="${size.inventory_no}">
                                                         ${size.i_option_name}
                                                     <c:choose>
                                                         <c:when test="${size.count < 5}">

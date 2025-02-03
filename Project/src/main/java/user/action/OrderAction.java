@@ -2,12 +2,8 @@ package user.action;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import user.dao.DeliveryDAO;
-import user.dao.OrderDAO;
-import user.dao.PointDAO;
-import user.vo.CustomerVO;
-import user.vo.DeliveryVO;
-import user.vo.OrderVO;
+import user.dao.*;
+import user.vo.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
@@ -52,12 +49,80 @@ public class OrderAction implements Action {
                     request.setAttribute("o_list", d_list);
                     viewPage = "/user/jsp/mypage/components/order.jsp";
                     break;
-                case "payment":
+                case "coupon":
+                    String prod_no = request.getParameter("prod_no");
+
+                    List<CouponVO> coupons = CouponDAO.selectProdCoupon(prod_no, cvo.getGrade_no());
+
+                    // 세션에 저장
+                    session.setAttribute("coupons", coupons);
+
+                    // JSON 응답을 클라이언트로 반환
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+
+                    try (PrintWriter out = response.getWriter()) {
+                        out.print("{");
+                        out.print("\"success\": true,");
+                        out.print("\"data\": [");
+
+                        for (int i = 0; i < coupons.size(); i++) {
+                            CouponVO vo = coupons.get(i);
+
+                            // JSON 객체 시작
+                            out.print("{");
+                            out.print("\"coupon_id\": \"" + vo.getId() + "\",");
+                            out.print("\"name\": \"" + vo.getName() + "\",");
+                            out.print("\"sale_per\": \"" + vo.getSale_per() + "\",");
+                            out.print("\"end_date\": \"" + vo.getEnd_date() + "\"");
+                            out.print("}");
+
+                            // 마지막 요소가 아니면 쉼표 추가
+                            if (i < coupons.size() - 1) {
+                                out.print(",");
+                            }
+                        }
+
+                        out.print("]");
+                        out.print("}");
+                        out.flush();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    return null;
+                case "kakaopay":
+                    // 쿠폰 목록
                     String order_code = request.getParameter("order_code");
-                    String prod_name = request.getParameter("prod_name");
-                    String quantity =  request.getParameter("quantity");
+                    String deli_no = request.getParameter("deli_no");
+                    String save_point = request.getParameter("save_point");
+                    String point_amount = request.getParameter("point_amount");
                     String total_amount = request.getParameter("total_amount");
                     String tax_free_amount = request.getParameter("tax_free_amount");
+                    String productsJson = request.getParameter("products");  // JSON 문자열로 받음
+
+                    List<CartVO> cartItems = (List<CartVO>) session.getAttribute("cartItems");
+
+                    String prod_name = null;
+                    String quantity = null;
+                    if (cartItems != null && !cartItems.isEmpty()) {
+                        if (cartItems.size() > 1) {
+                            // 첫 번째 상품 이름 + "외" + (나머지 상품 개수) + "개"
+                            prod_name = cartItems.get(0).getP_name() + " 외 " + (cartItems.size() - 1) + "개";
+
+                            int totalQuantity = 0;
+                            for (CartVO item : cartItems) {
+                                totalQuantity += Integer.parseInt(item.getCount()); // 모든 아이템의 count 값을 누적
+                            }
+                            quantity = String.valueOf(totalQuantity); // 누적된 값을 문자열로 변환하여 저장
+                        } else {
+                            // 상품이 1개일 경우, 해당 상품 이름만 설정
+                            prod_name = cartItems.get(0).getP_name();
+
+                            // cartItems.size()가 1인 경우 첫 번째 아이템의 count를 가져옴
+                            quantity = String.valueOf(cartItems.get(0).getCount());
+                        }
+                    }
 
                     try {
                         // 카카오페이 API에 보낼 파라미터 준비
@@ -107,31 +172,51 @@ public class OrderAction implements Action {
                         // 응답에서 TID 추출
                         String jsonResponse = responseStr.toString();
                         JSONObject responseJson = new JSONObject(jsonResponse);
-                        String tid = null;
 
                         if (responseCode == 200) {
                             System.out.println("payment API 요청 성공: " + jsonResponse);
 
-                            tid = responseJson.optString("tid");
+                            String tid = responseJson.optString("tid");
+
+                            session.setAttribute("tid", tid);
+                            session.setAttribute("deli_no", deli_no);
+                            session.setAttribute("save_point", save_point); // 적립할 적립금
+                            session.setAttribute("point_amount", point_amount); // 사용한 적립금
+                            session.setAttribute("order_code", order_code);
+
+                            if (productsJson != null) {
+                                session.setAttribute("products", productsJson);
+                            }
+
+                            // JSON 응답을 클라이언트로 반환
+                            response.setContentType("application/json");
+                            response.setCharacterEncoding("UTF-8");
+
+                            try (PrintWriter out = response.getWriter()) {
+                                out.print("{");
+                                out.print("\"success\": true,");
+                                out.print("\"data\": {");
+                                out.print("\"tid\": \"" + responseJson.optString("tid") + "\",");
+                                out.print("\"next_redirect_pc_url\": \"" + responseJson.optString("next_redirect_pc_url") + "\"");
+                                out.print("}");
+                                out.print("}");
+
+                                out.flush();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         } else {
                             System.out.println("payment API 요청 실패: " + jsonResponse);
                         }
-
-                        session.setAttribute("order_code", order_code);
-                        session.setAttribute("tid", tid);
-
-                        // JSON 응답을 클라이언트로 반환
-                        response.setContentType("application/json; charset=UTF-8");
-                        response.getWriter().write(responseJson.toString());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
 
-                    break;
+                    return null;
                 case "approve":
                     String pg_token = request.getParameter("pg_token");
-                    order_code = session.getAttribute("order_code").toString();
-                    String tid = session.getAttribute("tid").toString();
+                    order_code = (String) session.getAttribute("order_code");
+                    String tid = (String) session.getAttribute("tid");
 
                     HashMap<String, String> map = new HashMap<>();
                     map.put("cid", "TC0ONETIME"); // 가맹점 코드(테스트용)
@@ -176,21 +261,109 @@ public class OrderAction implements Action {
 
                         // 응답에서 TID 추출
                         String jsonResponse = responseStr.toString();
+                        JSONObject responseJson = new JSONObject(jsonResponse);
 
                         if (responseCode == 200) {
                             System.out.println("approve API 요청 성공: " + jsonResponse);
+
+                            String productsJsonString = (String) session.getAttribute("products");
+
+                            if (productsJsonString != null && !productsJsonString.isEmpty()) {
+                                try {
+                                    // JSON 파싱
+                                    JSONObject products = new JSONObject(productsJsonString);
+
+                                    // 각 제품 데이터 출력 및 처리
+                                    for (String cartNo : products.keySet()) {
+                                        JSONObject productData = products.getJSONObject(cartNo).getJSONObject("prod");
+
+                                        // amount와 count 값 가져오기
+                                        int amount = productData.optInt("amount", 0);
+                                        int count = productData.optInt("count", 0);
+                                        String a_prod_no = productData.optString("prodNo");
+                                        String inventory_no = productData.optString("inventoryNo");
+
+                                        // coupon 값 가져오기 (없을 경우 null 설정)
+                                        String coupon = products.getJSONObject(cartNo).optString("coupon", null);
+
+                                        // DB order 테이블, 주문 저장
+                                        String i_tid = responseJson.optString("tid");
+                                        String i_order_code = responseJson.optString("partner_order_id");
+                                        String i_deli_no = (String) session.getAttribute("deli_no");
+                                        OrderDAO.insertOrder(i_tid, cvo.getId(), a_prod_no, coupon, i_deli_no, i_order_code, String.valueOf(count), String.valueOf(amount), inventory_no);
+
+                                        // DB customer 테이블, total 수정
+                                        CustomerDAO.updateAddTotal(cvo.getId(), String.valueOf(amount));
+
+                                        System.out.println("cus_no : " + cvo.getId());
+                                        System.out.println("coupon_no : " + coupon);
+
+                                        // DB cus_coupon 테이블, 사용 쿠폰 저장
+                                        CouponDAO.insertCusCoupon(cvo.getId(), coupon);
+
+                                        // DB log 테이블, 로그 저장
+                                        LogVO lvo = new LogVO();
+                                        StringBuffer sb = new StringBuffer();
+                                        lvo.setCus_no(cvo.getId());
+                                        lvo.setTarget("order 추가");
+                                        sb.append("tid : " + i_tid + ", ");
+                                        sb.append("inventory_no : " + inventory_no);
+                                        lvo.setCurrent(sb.toString());
+                                        LogDAO.insertLog(lvo);
+                                    }
+
+                                    // DB point 테이블, 사용한 적립금 저장
+                                    String i_point_amount = (String) session.getAttribute("point_amount");
+                                    if (i_point_amount != null && !i_point_amount.isEmpty()) {
+                                        PointVO u_pvo = new PointVO();
+                                        u_pvo.setCus_no(cvo.getId());
+                                        u_pvo.setAmount(i_point_amount);
+                                        u_pvo.setOrder_code(order_code);
+                                        u_pvo.setP_type("1");
+                                        PointDAO.insertUsePoint(u_pvo);
+                                    }
+
+                                    // DB point 테이블, 적립할 적립금 저장
+                                    String i_save_point = (String) session.getAttribute("save_point");
+                                    if (i_save_point != null && !i_save_point.equals("0")) {
+                                        PointVO s_pvo = new PointVO();
+                                        s_pvo.setCus_no(cvo.getId());
+                                        s_pvo.setAmount(i_save_point);
+                                        s_pvo.setOrder_code(order_code);
+                                        s_pvo.setP_type("0");
+                                        PointDAO.insertUsePoint(s_pvo);
+                                    }
+
+                                    // DB 장바구니 테이블 삭제
+                                    cartItems = (List<CartVO>) session.getAttribute("cartItems");
+                                    for (CartVO item : cartItems) {
+                                        CartDAO.deleteCart(cvo.getId(), item.getId());
+                                    }
+
+                                    // 장바구니 수
+                                    int cart_count = CartDAO.selectCartCount(cvo.getId());
+                                    session.setAttribute("cart_count", cart_count);
+
+                                    // 세션 삭제
+                                    session.removeAttribute("cartItems");
+                                    session.removeAttribute("order_code");
+                                    session.removeAttribute("tid");
+                                    session.removeAttribute("deli_no");
+                                    session.removeAttribute("save_point");
+                                    session.removeAttribute("point_amount");
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    System.out.println("Error parsing products JSON.");
+                                }
+                            } else {
+                                System.out.println("No products data found in session.");
+                            }
                         } else {
                             System.out.println("approve API 요청 실패: " + jsonResponse);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
-                    viewPage = "/user/jsp/payment/orderCompleted.jsp";
-                    break;
-                case "complete":
-                    // DB order 테이블 저장
-                    // DB log 테이블 저장
 
                     viewPage = "/user/jsp/payment/orderCompleted.jsp";
                     break;

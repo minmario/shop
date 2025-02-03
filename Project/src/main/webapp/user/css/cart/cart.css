@@ -215,6 +215,10 @@
     top: 80px;
 }
 
+#cart-table thead tr th input[type=checkbox], .cart-checkbox {
+    cursor: pointer;
+}
+
 .option-change-btn:hover {
     background-color: transparent !important;
     color: #6c757d !important;

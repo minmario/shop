@@ -41,30 +41,22 @@
             </div>
 
             <%-- modal --%>
-            <div class="modal fade" id="optionModal" tabindex="-1" role="dialog" aria-labelledby="optionModalCenterTitle" aria-hidden="true">
+            <div class="modal fade" id="optionModal" tabindex="-1" role="dialog" aria-labelledby="optionModalCenterTitle">
                 <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">옵션 변경</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="onHideOptionModal()">
+                                <span>&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <select class="form-select color-select" id="color">
-                                <option>검정</option>
-                                <option>네이비</option>
-                                <option>아이보리</option>
-                            </select>
-                            <select class="form-select size-select" id="size">
-                                <option>S</option>
-                                <option>M</option>
-                                <option>L</option>
+                            <select class="form-select size-select" id="option-size-select">
                             </select>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-secondary cancel-btn" data-dismiss="modal">취소</button>
-                            <button type="button" class="btn btn-outline-secondary confirm-btn">변경</button>
+                            <button type="button" class="btn btn-outline-secondary cancel-btn" data-dismiss="modal" onclick="onHideOptionModal()">취소</button>
+                            <button type="button" class="btn btn-outline-secondary confirm-btn" onclick="onChangeProdSize()">변경</button>
                         </div>
                     </div>
                 </div>

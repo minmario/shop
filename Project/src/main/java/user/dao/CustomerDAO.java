@@ -123,4 +123,30 @@ public class CustomerDAO {
         }
         return cnt;
     }
+
+    // 누적 금액 추가
+    public static int updateAddTotal(String id, String total) {
+        int cnt = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("id", id);
+            map.put("total", total);
+
+            cnt = ss.update("customer.update_add_total", map);
+
+            if (cnt > 0) {
+                ss.commit();
+            } else {
+                ss.rollback();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
+    }
 }
