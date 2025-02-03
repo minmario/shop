@@ -21,6 +21,9 @@
         .row {
             line-height: 75px;
         }
+        .red{
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -29,12 +32,29 @@
         <div class="card-header bg-primary text-white">주문/배송 현황</div>
         <div class="card-body fix-height">
             <div class="row text-center">
-                <div class="col-md-4">신규 주문: <a href="">
-                    <span class="badge bg-secondary">0건</span>
+                <div class="col-md-4">
+                    <c:if test="${newOrder != 0}">
+                        <span class="red">new!</span>
+                    </c:if><label>신규 주문: </label>
+                    <a href="Controller?type=orderList">
+                    <span class="badge bg-secondary">${newOrder}건</span>
                 </a></div>
-                <div class="col-md-4 ">배송 준비: <span class="badge bg-secondary">0건</span></div>
-                <div class="col-md-4 ">반품/교환 신청: <span class="badge bg-secondary">0건</span></div>
-            </div>
+
+                <div class="col-md-4 ">
+                    <c:if test="${readyDeli != 0}">
+                        <span class="red">new!</span>
+                    </c:if><label>배송 준비: </label>
+                    <a href="Controller?type=orderList" id="ready">
+                    <span class="badge bg-secondary">${readyDeli}건</span>
+                </a></div>
+                <div class="col-md-4 ">
+                    <c:if test="${returnProd != 0 || changeProd != 0}">
+                        <span class="red">new!</span>
+                    </c:if><label>반품/교환 신청: </label>
+                    <a href="Controller?type=orderList">
+                    <span class="badge bg-secondary">${returnProd+changeProd}건</span>
+                </a></div>
+        </div>
         </div>
     </div>
 
@@ -42,7 +62,13 @@
         <div class="card-header bg-danger text-white">클레임/정산</div>
         <div class="card-body fix-height">
             <div class="row text-center">
-                <div class="col-md-4">문의: <span class="badge bg-secondary">0건</span></div>
+                <div class="col-md-4 ">
+                    <c:if test="${quest != 0}">
+                        <span class="red">new!</span>
+                    </c:if><label>문의 글: </label>
+                    <a href="Controller?type=question" id="ready">
+                        <span class="badge bg-secondary">${quest}건</span>
+                    </a></div>
                 <div class="col-md-4">구매 확정: <span class="badge bg-secondary">0건</span></div>
             </div>
         </div>

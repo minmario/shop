@@ -62,24 +62,22 @@
     <!-- 주문 현황 -->
     <h4>신규 주문</h4>
 
-    <form method="GET" action="orderStatus.jsp">
-        <div class="filter-section">
-            <div class="form-row flex" >
-                <div class="form-group col-md-3">
-                    <label for="orderStart">시작일</label>
-                    <input type="date" class="form-control" id="orderStart" name="orderStart">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="orderEnd">종료일</label>
-                    <input type="date" class="form-control" id="orderEnd" name="orderEnd">
-                </div>
-
-                <button type="submit" class="btn btn-primary mb-4 search">조회</button>
+<form>
+    <div class="filter-section">
+        <div class="form-row flex">
+            <div class="form-group col-md-3">
+                <label for="orderStart">시작일</label>
+                <input type="date" class="form-control" id="orderStart" name ="start" onchange="filterOrders()">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="orderEnd">종료일</label>
+                <input type="date" class="form-control" id="orderEnd" name="start" onchange="filterOrders()">
             </div>
         </div>
-    </form>
+    </div>
+</form>
     <div class="table-container ">
-        <table class="table table-bordered">
+        <table class="table table-bordered" id="orderTable">
             <colgroup>
                 <col width="50px">
                 <col width="120px">
@@ -120,7 +118,7 @@
                         <td>${order.option_name}</td>
                         <td>${order.option_count}</td>
                         <td>${order.order_date}</td>
-                        <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelReasonModal" style="height: 30px" onclick="cancelModal('${order.id}')" >
+                        <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelReasonModal" style="height: 30px" onclick="cancelModal('${order.id}',this.closest('table'),'${order.status}')" >
                             취소
                         </button> </td>
                     </tr>
@@ -134,32 +132,22 @@
     <hr/>
     <!-- 배송 관리 -->
     <h4>배송 관리</h4>
-    <form method="GET" action="delStatus.jsp">
+    <form>
         <div class="filter-section">
             <div class="form-row flex">
                 <div class="form-group col-md-3">
                     <label for="delStart">시작일</label>
-                    <input type="date" class="form-control" id="delStart" name="delStart">
+                    <input type="date" class="form-control" id="delStart"  onchange="filterDelis()">
                 </div>
                 <div class="form-group col-md-3">
                     <label for="delEnd">종료일</label>
-                    <input type="date" class="form-control" id="delEnd" name="delEnd">
+                    <input type="date" class="form-control" id="delEnd" onchange="filterDelis()">
                 </div>
-                <div class="form-group col-md-3">
-                    <label for="delStatus">주문 상태</label>
-                    <select id="delStatus" name="delStatus" class="form-control">
-                        <option value="">전체</option>
-                        <option value="ready">발송 준비</option>
-                        <option value="done">발송 완료</option>
-                        <option value="exchange">교환 준비</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary mb-4 search">조회</button>
             </div>
         </div>
     </form>
     <div class="table-container">
-        <table class="table table-bordered">
+        <table class="table table-bordered" id="deliTable">
             <colgroup>
                 <col width="50px">
                 <col width="100px">
@@ -192,7 +180,9 @@
                 <c:forEach var="order" items="${ar}">
                     <c:if test="${order.status eq '1' || order.status eq '2'}">
                         <tr class="list">
-                            <td><input type="checkbox" name="readyBox"></td>
+                            <td><c:if test="${order.status eq 1}">
+                                <input type="checkbox" name="returnBox">
+                            </c:if></td>
                             <td> <a href="#" class="text-primary" onclick="setModal('${order.id}')" >
                                 ${order.tid}
                             </a></td>
@@ -218,23 +208,23 @@
     <!-- 반품/교환 -->
     <h4>반품/교환</h4>
     <form method="GET" action="delStatus.jsp">
-        <div class="filter-section ">
-            <div class="form-row flex">
-                <div class="form-group col-md-3">
-                    <label for="Status">신청 상태</label>
-                    <select id="Status" name="Status" class="form-control">
-                        <option value="">전체</option>
-                        <option value="exchange">교환</option>
-                        <option value="return">반품</option>
-                        <option value="done">반품완료</option>
-                    </select>
+        <form>
+            <div class="filter-section">
+                <div class="form-row flex">
+                    <div class="form-group col-md-3">
+                        <label for="delStart">시작일</label>
+                        <input type="date" class="form-control" id="refundStart"  onchange="filterRefunds()">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="delEnd">종료일</label>
+                        <input type="date" class="form-control" id="refundEnd" onchange="filterRefunds()">
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary mb-4 search" >조회</button>
             </div>
-        </div>
+        </form>
     </form>
     <div class="table-container">
-        <table class="table table-bordered">
+        <table class="table table-bordered" id="refundTable">
             <colgroup>
                 <col width="50px">
                 <col width="120px">
@@ -260,27 +250,27 @@
                     <c:if test="${order.status eq 3 or order.status eq 4 or order.status eq 5 or order.status eq 6 or
                     order.status eq 7}">
                         <tr class="list">
-                            <td><c:if test="${order.status eq 3 or order.status eq 5}">
+                            <td><c:if test="${order.status eq 3 or order.status eq 4}">
                             <input type="checkbox" name="returnBox">
                             </c:if></td>
                             <td> <a href="#" class="text-primary" onclick="setModal('${order.id}')" >
                                     ${order.tid}
                             </a></td>
                             <td id="division">
-                                <c:if test="${order.status eq 3 or order.status eq 4}">교환</c:if>
-                                <c:if test="${order.status eq 5 or order.status eq 6 or order.status eq 7}">반품</c:if>
+                                <c:if test="${order.status eq 3 or order.status eq 5}">교환</c:if>
+                                <c:if test="${order.status eq 4 or order.status eq 6 or order.status eq 7}">반품</c:if>
                             </td>
                             <td>
                                 <c:if test="${order.status eq 3}">교환 신청</c:if>
-                                <c:if test="${order.status eq 4}">교환 거부</c:if>
-                                <c:if test="${order.status eq 5}">반품 신청</c:if>
-                                <c:if test="${order.status eq 6}">반품 완료</c:if>
-                                <c:if test="${order.status eq 7}">반품 거부</c:if>
+                                <c:if test="${order.status eq 4}">반품 신청</c:if>
+                                <c:if test="${order.status eq 5}">교환 거부</c:if>
+                                <c:if test="${order.status eq 6}">반품 거부</c:if>
+                                <c:if test="${order.status eq 7}">반품 완료</c:if>
                             </td>
                             <td>${order.order_date}</td>
-                            <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelReasonModal" style="height: 30px" onclick="cancelModal('${order.id}')" >
+                            <td><c:if test="${order.status eq 3 or order.status eq 4}"><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelReasonModal" style="height: 30px" onclick="cancelModal('${order.id}',this.closest('table'),'${order.status}')" >
                                 거부사유 입력
-                            </button> </td>
+                            </button></c:if>  </td>
                         </tr>
                     </c:if>
                 </c:forEach>
@@ -393,21 +383,18 @@
             <div class="modal-body">
                 <form id="cancelForm" method="post" action="cancelOrder">
                     <div class="mb-3">
-                        <label for="cancelReason" class="form-label">취소 사유 선택</label>
-                        <select class="form-select" id="cancelReason" name="cancelReason" required>
-                            <option value="" selected disabled>취소 사유를 선택하세요</option>
-                            <option value="1">상품 품절</option>
-                            <option value="2">상품 하자 발견</option>
-                            <option value="3">판매 임시 중지</option>
+                        <label for="cancelReason" class="form-label">사유 선택</label>
+                        <select class="form-select" id="cancelReason" name="cancelReason" required onchange="cancelChange()">
+
                         </select>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3" id="cancelDetailsContainer" style="display: none;">
                         <label for="cancelDetails" class="form-label">상세 취소 사유</label>
                         <textarea class="form-control" id="cancelDetails" name="cancelDetails" rows="4" required></textarea>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer" >
                 <button type="button" class="btn btn-primary" form="cancelForm" id="cancelSubmit">전송</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
             </div>
@@ -417,6 +404,17 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script>
+    function cancelChange(){
+        const reasonSelect = document.getElementById("cancelReason");
+        const detailsContainer = document.getElementById("cancelDetailsContainer");
+        if(reasonSelect.value == "4"){
+            detailsContainer.style.display="block";
+            document.getElementById("cancelDetails").setAttribute("required","true");
+        }else{
+            detailsContainer.style.display="none";
+            document.getElementById("cancelDetails").removeAttribute("required");
+        }
+    }
    /* window.onload = function() {
         const today = new Date();
 
@@ -431,6 +429,81 @@
         // orderEnd 입력 필드에 오늘 날짜 설정
         document.getElementById('orderEnd').value = formattedDate;
     };*/
+   function filterRefunds() {
+       var startDate = document.getElementById('refundStart').value;
+       var endDate = document.getElementById('refundEnd').value;
+       // 테이블의 모든 행을 가져옵니다.
+       var rows = document.querySelectorAll('#refundTable tbody tr');
+
+       rows.forEach(function(row) {
+           var orderDate = row.cells[4].textContent; // 주문일자 열을 가져옵니다.
+
+           // 날짜가 필터 범위 내에 있는지 확인
+           var showRow = true;
+           if (startDate && orderDate < startDate) {
+               showRow = false;
+           }
+           if (endDate && orderDate > endDate) {
+               showRow = false;
+           }
+
+           // 조건에 맞지 않으면 해당 행을 숨깁니다.
+           if (showRow) {
+               row.style.display = '';
+           } else {
+               row.style.display = 'none';
+           }
+       });
+   }
+   function filterOrders() {
+       var startDate = document.getElementById('orderStart').value;
+       var endDate = document.getElementById('orderEnd').value;
+       // 테이블의 모든 행을 가져옵니다.
+       var rows = document.querySelectorAll('#orderTable tbody tr');
+
+       rows.forEach(function(row) {
+           var orderDate = row.cells[7].textContent; // 주문일자 열을 가져옵니다.
+
+           // 날짜가 필터 범위 내에 있는지 확인
+           var showRow = true;
+           if (startDate && orderDate < startDate) {
+               showRow = false;
+           }
+           if (endDate && orderDate > endDate) {
+               showRow = false;
+           }
+
+           // 조건에 맞지 않으면 해당 행을 숨깁니다.
+           if (showRow) {
+               row.style.display = '';
+           } else {
+               row.style.display = 'none';
+           }
+       });
+   } function filterDelis() {
+       var startDate = document.getElementById('delStart').value;
+       var endDate = document.getElementById('delEnd').value;
+       // 테이블의 모든 행을 가져옵니다.
+       var rows = document.querySelectorAll('#deliTable tbody tr');
+
+       rows.forEach(function(row) {
+           var orderDate = row.cells[7].textContent; // 주문일자 열을 가져옵니다.
+           // 날짜가 필터 범위 내에 있는지 확인
+           var showRow = true;
+           if (startDate && orderDate < startDate) {
+               showRow = false;
+           }
+           if (endDate && orderDate > endDate) {
+               showRow = false;
+           }
+           // 조건에 맞지 않으면 해당 행을 숨깁니다.
+           if (showRow) {
+               row.style.display = '';
+           } else {
+               row.style.display = 'none';
+           }
+       });
+   }
     function setModal(order_no) {
         const param = "type=orderOne&order_no=" + encodeURIComponent(order_no);
         $.ajax({
@@ -514,7 +587,7 @@
            const division = row.querySelector('td:nth-child(3)').textContent.trim();
            if (chk) {
                if (division === '반품')
-                   status[i] = 6;
+                   status[i] = 7;
                else if (division === '교환')
                    status[i] = 2;
            }
@@ -539,13 +612,13 @@
                     case 2:
                         message="상품 발송 완료!";
                         break;
-                    case 6:
+                    case 7:
                         message="환불/반품 완료!"
                         break;
-                    case 4:
+                    case 5:
                         message="교환 거부 사유를 보냈습니다."
                         break;
-                    case 7:
+                    case 6:
                         message="반품 거부 사유를 보냈습니다.";
                         break;
                 }
@@ -557,41 +630,83 @@
         });
     }
     // 취소 모달
-   function cancelModal(order_no){
-        $("#cancelSubmit").on("click",function(){
+   function cancelModal(order_no,table,order_status){
+       const select = $("#cancelReason");
+       let status;
+       select.empty();
+       console.log("table: "+table.id);
+        if(table.id == "orderTable"){
+            let res = `
+                    <option value="" selected disabled>사유를 선택하세요</option>
+                    <option value="1">상품이 품절 상태입니다.</option>
+                    <option value="2">일시적으로 판매 중지 상태입니다.</option>
+                    <option value="3">상품에 문제가 발견하여 조치중입니다.</option>
+                    <option value="4">직접 입력</option>
+                    `;
+            status="-1";
+            select.html(res);
+       }else if(table.id == "refundTable"){
+            let res = `
+                    <option value="" selected disabled>사유를 선택하세요</option>
+                    <option value="1">이미 구매확정 상태입니다</option>
+                    <option value="2">상품에 문제가 없습니다</option>
+                    <option value="3">배송이 오질 않습니다</option>
+                    <option value="4">직접 입력</option>
+                    `;
+            select.html(res);
+            if(order_status=="3")
+                status="5";
+            else if(order_status=="4")
+                status="6";
+        }
+
+
+        $("#cancelSubmit").off("click").on("click",function(){
             const cancelReason = $("#cancelReason").val();
             const cancelDetails = $("#cancelDetails").val();
-
+            let reason;
             // 취소 사유와 상세 사유가 입력되지 않았다면 처리하지 않도록 조건 추가
-            if (!cancelReason || !cancelDetails) {
-                alert("취소 사유와 상세 사유를 모두 입력해주세요.");
+            if (!cancelReason) {
+                alert("취소 사유를 입력해주세요.");
+                return;
+            } else if(cancelReason == "4" && !cancelDetails){
+                alert("취소 사유를 직접 입력해주세요")
                 return;
             }
+            if(cancelReason != "4"){
+                reason=$("#cancelReason option:selected").text();
+            } else{
+                reason=$("#cancelDetails").val();
+            }
+
             const userConfirmed = confirm("정말로 삭제하시겠습니까?");
             if (!userConfirmed) {
                 return; // 사용자가 "취소"를 클릭하면 아무 작업도 하지 않음
             }
+            const param = "type=cancelOrder&order_no="+encodeURIComponent(order_no)+"&reason_seller="+encodeURIComponent(reason)+"&status="+encodeURIComponent(status);
             // 예시로, 서버에 데이터를 전송하는 코드 (AJAX)
             $.ajax({
-                url: "cancelOrder?type=cancelOrder",  // 취소 요청을 처리할 서버 URL
+                url: "Controller",  // 취소 요청을 처리할 서버 URL
                 type: "POST",
-                data: {
-                    order_no: order_no,
-                    cancelReason: cancelReason,
-                    cancelDetails: cancelDetails
-                },
+                data: param,
+                dataType: "json",
                 success: function(response) {
                     // 서버에서 취소가 정상적으로 처리되었을 때의 동작
-                    alert("주문 취소가 완료되었습니다.");
-                    // 취소 후 모달 닫기
-                    $('#cancelReasonModal').modal('hide');
+                    if(response.cnt>0) {
+                        alert("주문 취소가 완료되었습니다.");
+                        // 취소 후 모달 닫기
+                        $('#cancelReasonModal').modal('hide');
+                        location.reload();
+                    }
                 },
                 error: function(xhr, status, error) {
                     // 서버 요청 실패 시의 처리
                     console.error("취소 요청 실패:", error);
                     alert("취소 요청에 실패했습니다. 다시 시도해주세요.");
                 }
+
             });
+
         });
    }
 </script>

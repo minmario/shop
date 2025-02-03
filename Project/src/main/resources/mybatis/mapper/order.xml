@@ -10,6 +10,7 @@
     LEFT JOIN customer as c ON c.id = o.cus_no
     LEFT JOIN inventory as i ON o.inventory_no = i.id
     WHERE p.seller_no = #{seller_no}
+
   </select>
   <select id="get_order_one" parameterType="String" resultType="comm.vo.OrderVO">
     SELECT o.*,p.name as prod_name,d.*,i.option_name,i.count as option_count,c.cus_id,c.name as cus_name
@@ -24,5 +25,19 @@
     UPDATE `order`
     SET status=#{status}
     WHERE tid = #{tid}
+  </update>
+  <select id="count" parameterType="String" resultType="java.util.Map">
+    SELECT status,COUNT(*) as count
+    FROM `order` as o
+    JOIN product as p on p.id = o.prod_no
+    WHERE p.seller_no = #{seller_no}
+    group by status;
+  </select>
+  <update id="cancel_order" parameterType="Map" >
+    UPDATE `order`
+    SET
+    reason_seller=#{reason_seller},
+    status=#{status}
+    WHERE id = #{order_no}
   </update>
 </mapper>

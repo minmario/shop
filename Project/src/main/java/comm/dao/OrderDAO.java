@@ -57,4 +57,20 @@ public class OrderDAO {
         ss.close();
         return cnt;
     }
+    public static int cancelOrder(String order_no,String reason_seller,String status){
+        SqlSession ss = FactoryService.getFactory().openSession();
+        HashMap<String,String> map = new HashMap<>();
+        map.put("order_no",order_no);
+        map.put("reason_seller",reason_seller);
+        map.put("status",status);
+        int cnt = ss.update("order.cancel_order",map);
+        if(cnt>0){
+            ss.commit();
+        }else
+            ss.rollback();
+
+        ss.close();
+        return cnt;
+
+    }
 }

@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import comm.action.Action;
 
@@ -125,7 +126,8 @@ public class Controller extends HttpServlet {
 			// type이라는 파라미터를 받기
 			request.setCharacterEncoding("UTF-8");
 			String type = request.getParameter("type");
-
+			HttpSession session = request.getSession();
+			session.setAttribute("seller_no","2");
 			// 만약! type이 null이면 기본객체(DateAction)을 지정한다.
 			if(type == null)
 				type = "dashBoard";
