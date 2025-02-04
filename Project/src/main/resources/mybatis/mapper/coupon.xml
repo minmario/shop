@@ -16,4 +16,13 @@
         INSERT INTO cus_coupon (cus_no, coupon_no, order_code, used_date, status)
         VALUES (#{cus_no}, #{coupon_no}, #{order_code}, NOW(), 2)
     </insert>
+
+    <!-- 사용한 쿠폰 복구 -->
+    <update id="update_cus_coupon" parameterType="map">
+        UPDATE cus_coupon
+        SET status = '1'
+        WHERE cus_no = #{cus_no} AND coupon_no IN (
+        SELECT coupon_no FROM `order` WHERE order_code = #{order_code}
+        )
+    </update>
 </mapper>

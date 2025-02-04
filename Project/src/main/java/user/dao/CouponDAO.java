@@ -54,4 +54,29 @@ public class CouponDAO {
 
         return cnt;
     }
+
+    // 사용한 쿠폰 복구
+    public static int updateCusCoupon(String cus_no, String order_code){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("cus_no", cus_no);
+        map.put("order_code", order_code);
+
+        SqlSession ss = FactoryService.getFactory().openSession();
+        int cnt = 0;
+
+        try {
+            cnt = ss.update("coupon.update_cus_coupon", map);
+
+            if (cnt > 0)
+                ss.commit();
+            else
+                ss.rollback();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
+    }
 }

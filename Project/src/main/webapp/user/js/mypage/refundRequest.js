@@ -10,19 +10,10 @@ function addReasonInput() {
     }
 }
 
-// 배송지 모달 > 요청 사항 필드 추가
-function addInputRequest() {
-    let selectValue = document.getElementById("request-select").value;
-    let customInput = document.getElementById("custom-input");
-
-    if (selectValue == "5") {
-        customInput.style.display = "block";
-    } else {
-        customInput.style.display = "none";
-    }
-}
-
 function refundRequest() {
+    // 상품의 order_id 가져오기
+    const order_id = $('input[name="order_id"]').val();
+
     // 상품의 prod_no 가져오기
     const prodNo = $('input[name="prod_no"]').val();
 
@@ -63,6 +54,8 @@ function refundRequest() {
     // 환불 예정 금액 가져오기
     const refundAmount = $('.refund-info .refund-amount').text().replace(/[^0-9]/g, '');
 
+    const pointUsed = $('#cancel-point-used').val();
+
     // 반품 신청 확인 경고창
     if (!confirm("반품 신청하시겠습니까?")) {
         return;  // 사용자가 취소를 누르면 함수 종료
@@ -73,6 +66,7 @@ function refundRequest() {
         url: 'Controller?type=refundRequest&action=update',
         type: 'POST',
         data: {
+            order_id: order_id,
             prod_no: prodNo,
             reason: reason,
             retrieve_deli_no: retrieveDeliNo,
@@ -80,7 +74,7 @@ function refundRequest() {
             account_number: accountNumber,
             orderCode: orderCode,
             refund_amount: refundAmount,
-            point_used: pointUsed || null
+            point_used: pointUsed || null                                                                                               ,
         },
         success: function (response) {
             if (response && response.success) {

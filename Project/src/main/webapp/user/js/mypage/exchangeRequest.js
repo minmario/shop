@@ -10,18 +10,6 @@ function addReasonInput() {
     }
 }
 
-// 배송지 모달 > 요청 사항 필드 추가
-function addInputRequest() {
-    let selectValue = document.getElementById("request-select").value;
-    let customInput = document.getElementById("custom-input");
-
-    if (selectValue == "직접 입력") {
-        customInput.style.display = "block";
-    } else {
-        customInput.style.display = "none";
-    }
-}
-
 $(document).ready(function () {
     // 페이지 로드 후 즉시 옵션 가져오기
     const prodNo = $('input[name="prod_no"]').val();
@@ -35,13 +23,12 @@ $(document).ready(function () {
 });
 
 // 상품 옵션 목록을 비동기로 가져오기
-function productOptions(prodNo, inventoryNo) {
+function productOptions(prodNo) {
     $.ajax({
         url: 'Controller?type=exchangeRequest&action=select_size',
         type: 'POST',
         data: {
             prod_no: prodNo,
-            inventory_no: inventoryNo
         },
         success: function (response) {
             if (response.success) {
@@ -52,6 +39,7 @@ function productOptions(prodNo, inventoryNo) {
 
                 // 응답 데이터를 기반으로 옵션 추가
                 response.data.forEach(function (item) {
+                    // option의 value는 inventory_no, text는 option_name으로 설정
                     optionSelect.append(`<option value="${item.inventory_no}">${item.option_name}</option>`);
                 });
             } else {
@@ -64,8 +52,10 @@ function productOptions(prodNo, inventoryNo) {
     });
 }
 
-
 function exchangeRequest() {
+    // 상품의 order_id 가져오기
+    const order_id = $('input[name="id"]').val();
+
     // 상품의 prod_no 값을 가져오기
     const prodNo = $('input[name="prod_no"]').val();
 
@@ -98,12 +88,9 @@ function exchangeRequest() {
     }
     const retrieveDeliNo = retrieveDeliElement.value;
 
-    // 기존 사이즈 정보 가져오기
-    const currentOption = $('input[name="current_option"]').val().trim();
-
     // 사이즈 옵션 가져오기
-    const selectedSize = $('#exchange-option-size').val();
-    if (selectedSize === ":: 사이즈 ::") {
+    const selectedInventoryNo = $('#exchange-option-size').val();
+    if (selectedInventoryNo === ":: 사이즈 ::") {
         alert("교환할 사이즈를 선택해 주세요.");
         return;
     }
@@ -124,11 +111,12 @@ function exchangeRequest() {
         url: 'Controller?type=exchangeRequest&action=update',
         type: 'POST',
         data: {
+            order_id: order_id,
             prod_no: prodNo,
             reason: reason,
             retrieve_deli_no: retrieveDeliNo,
             orderCode: orderCode,
-            inventory_no: currentOption
+            inventory_no: selectedInventoryNo
         },
         success: function (response) {
             if (response && response.success) {

@@ -153,8 +153,9 @@ public class OrderDAO {
     }
 
     // 취소 요청
-    public static int updateOrderCancel(String cus_no, String prod_no, String order_code, String refund_bank, String refund_account, String reason){
+    public static int updateOrderCancel(String id, String cus_no, String prod_no, String order_code, String refund_bank, String refund_account, String reason){
         HashMap<String, Object> map = new HashMap<>();
+        map.put("id", id);
         map.put("cus_no", cus_no);
         map.put("prod_no", prod_no);
         map.put("order_code", order_code);
@@ -211,8 +212,9 @@ public class OrderDAO {
 
 
     // 반품 요청
-    public static int updateOrderRefund(String cus_no, String prod_no, String order_code, String refund_bank, String refund_account, String reason, String retrieve_deli_no){
+    public static int updateOrderRefund(String id, String cus_no, String prod_no, String order_code, String refund_bank, String refund_account, String reason, String retrieve_deli_no){
         HashMap<String, Object> map = new HashMap<>();
+        map.put("id", id);
         map.put("cus_no", cus_no);
         map.put("prod_no", prod_no);
         map.put("order_code", order_code);
@@ -241,8 +243,9 @@ public class OrderDAO {
     }
 
     // 교환 요청
-    public static int updateOrderExchange(String cus_no, String prod_no, String order_code, String reason, String retrieve_deli_no, String inventory_no){
+    public static int updateOrderExchange(String id, String cus_no, String prod_no, String order_code, String reason, String retrieve_deli_no, String inventory_no){
         HashMap<String, String> map = new HashMap<>();
+        map.put("id", id);
         map.put("cus_no", cus_no);
         map.put("prod_no", prod_no);
         map.put("order_code", order_code);
@@ -317,11 +320,34 @@ public class OrderDAO {
         return list;
     }
 
-    // 교환 전체 상품 조회
-    public static OrderVO selectOrderCoupon(String cus_no, String order_code){
+    // 주문 시 사용한 쿠폰 조회(주문 상세 조회)
+    public static List<OrderVO> selectOrderCouponList(String cus_no, String order_code){
         HashMap<String, String> map = new HashMap<>();
         map.put("cus_no", cus_no);
         map.put("order_code", order_code);
+
+        SqlSession ss = FactoryService.getFactory().openSession();
+        List<OrderVO> list = null;
+
+        try{
+            list = ss.selectList("order.select_order_coupon_list", map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return list;
+    }
+
+    // 주문 시 사용한 쿠폰 조회(개별 상품 환불)
+    public static OrderVO selectOrderCoupon(String cus_no, String prod_no, String order_code){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("cus_no", cus_no);
+        map.put("order_code", order_code);
+        if (prod_no != null) {
+            map.put("prod_no", prod_no);
+        }
 
         SqlSession ss = FactoryService.getFactory().openSession();
         OrderVO vo = null;

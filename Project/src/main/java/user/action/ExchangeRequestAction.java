@@ -46,7 +46,7 @@ public class ExchangeRequestAction implements Action{
                     }
 
                 case "select_size":
-                    // 상품 사이즈 목록
+                    // 상품 사이즈 목록 조회
                     List<ProductVO> productSize = ProductDAO.selectSize(prod_no);
 
                     response.setContentType("application/json");
@@ -57,17 +57,19 @@ public class ExchangeRequestAction implements Action{
                         out.print("\"success\": true,");
                         out.print("\"data\": [");
 
-                        for (int i = 0; i < productSize.size(); i++) {
-                            ProductVO pvo = productSize.get(i);
+                        if (productSize != null && productSize.size() > 0) {
+                            for (int i = 0; i < productSize.size(); i++) {
+                                ProductVO pvo = productSize.get(i);
 
-                            out.print("{");
-                            out.print("\"prod_no\": \"" + pvo.getId() + "\",");
-                            out.print("\"inventory_no\": \"" + pvo.getInventory_no() + "\",");
-                            out.print("\"option_name\": \"" + pvo.getI_option_name() + "\"");
-                            out.print("}");
+                                out.print("{");
+                                out.print("\"prod_no\": \"" + pvo.getId() + "\",");
+                                out.print("\"inventory_no\": \"" + pvo.getInventory_no() + "\",");
+                                out.print("\"option_name\": \"" + pvo.getI_option_name() + "\"");
+                                out.print("}");
 
-                            if (i < productSize.size() - 1) {
-                                out.print(",");
+                                if (i < productSize.size() - 1) {
+                                    out.print(",");
+                                }
                             }
                         }
 
@@ -77,7 +79,6 @@ public class ExchangeRequestAction implements Action{
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                     return null;
 
                 case "update":
@@ -88,13 +89,8 @@ public class ExchangeRequestAction implements Action{
                         String retrieve_deli_no = request.getParameter("retrieve_deli_no");
                         String inventory_vo = request.getParameter("inventory_no");
 
-                        System.out.println(reason);
-                        System.out.println(orderCode);
-                        System.out.println(retrieve_deli_no);
-                        System.out.println(prod_no);
-
                         // 주문 정보 업데이트 (반품 상태로 변경)
-                        int u_o_cnt = OrderDAO.updateOrderExchange(cvo.getId(), prod_no, orderCode, reason, retrieve_deli_no, inventory_vo);
+                        int u_o_cnt = OrderDAO.updateOrderExchange(id, cvo.getId(), prod_no, orderCode, reason, retrieve_deli_no, inventory_vo);
 
                         // JSON 응답 설정
                         response.setContentType("application/json");
