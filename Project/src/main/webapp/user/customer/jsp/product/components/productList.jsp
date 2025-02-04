@@ -54,7 +54,7 @@
                                             <i class="bi bi-heart-fill" onclick="toggleProdHeart(this, ${item.id})"></i>
                                         </c:when>
                                         <c:otherwise>
-                                            <i class="bi bi-heart" onclick="toggleProdHeart(this, 1102)"></i>
+                                            <i class="bi bi-heart" onclick="toggleProdHeart(this, ${item.id})"></i>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:when>

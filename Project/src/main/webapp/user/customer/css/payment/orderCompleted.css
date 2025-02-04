@@ -1,23 +1,223 @@
 .container {
     width: 800px !important;
+    position: relative;
+    margin: 0 auto;
 }
 
-.redirect-message {
-    font-size: 14px;
-    color: #666;
-}
-
-.order-completed {
+.timer-container {
+    position: absolute;
+    top: 20px;
+    width: 30px;
+    height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80vh;
-    position: relative;
+}
+
+svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.circle-bg {
+    fill: none;
+    stroke: #e6e6e6;
+    stroke-width: 12;
+}
+
+.circle-progress {
+    fill: none;
+    stroke: black;
+    stroke-width: 12;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s linear;
+}
+
+.number {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    color: black;
+    text-align: center;
+}
+
+.order-completed {
+    position: absolute;
+    top: 30px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    transition: all 1s linear;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
 }
 
 .completed-text {
-    font-size: 36px;
+    font-size: 60px;
     font-weight: bold;
-    text-align: center;
+    transition: font-size 1s ease;
+    margin-left: 60px;
+}
+
+/* 주문 상세 내역 */
+.order-details-container {
+    margin-top: 60px;
+}
+
+.order-details-title {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 0;
+}
+
+.delivery-info, .product-section, .payment-info, .benefits-info {
+    background-color: #fff;
+    margin: 10px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.delivery-info .info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.delivery-info .name {
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+.address-row p.request {
+    margin-bottom: 0;
+}
+
+.product-section h5, .payment-info h5, .benefits-info h5 {
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.product-item {
+    display: flex;
+    align-items: flex-start;
+    margin: 10px 0;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.product-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.product-details {
+    flex: 1;
+}
+
+.product-name {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 5px 0;
+}
+
+.product-price-row {
+    font-weight: bold;
+    font-size: 1rem;
     color: #000;
 }
+
+.payment-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.payment-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.payment-list li:last-child {
+    border-bottom: none;
+}
+
+.discount {
+    color: #e74c3c;
+}
+
+.final-price {
+    font-weight: bold;
+    font-size: 14px;
+    color: #007bff;
+}
+
+.benefits-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+.svg-icon {
+    margin-left: 5px;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.svg-icon svg {
+    width: 10px;
+    height: 10px;
+}
+
+.benefits-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.benefits-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.benefits-list li:last-child {
+    border-bottom: none;
+}
+
+.product-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.product-actions .btn {
+    flex: 1;
+}
+
+.product-actions .btn-outline-secondary:hover, .product-actions .btn-outline-secondary:active {
+    background-color: #fff !important;
+    color: #6c757d !important;
+}
+
+.product-actions .btn-btn-dark:hover, .product-actions .btn-btn-dark:active {
+    background-color: #000 !important;
+    color: #fff !important;
+}
+
+

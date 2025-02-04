@@ -33,18 +33,19 @@
                         </div>
 
                         <div id="prod-like-list" class="product-list">
-                            <c:if test="${requestScope.like_list ne null}">
-                                <c:forEach var="item" items="${requestScope.like_list}">
-                                    <div class="product-item">
-                                        <img src="${fn:split(item.prod_image, ',')[0]}" alt="상품 이미지" onclick="location.href='Controller?type=productDetails&action=select&prod_no=${item.prod_no}'">
-                                        <div class="product-info">
-                                            <div class="brand-like">
-                                                <h4 onclick="location.href='Controller?type=productDetails&action=select&prod_no=${item.prod_no}'">${item.brand}</h4>
-                                                <i class="bi bi-heart-fill" onclick="toggleHeart(this, ${item.prod_no})"></i>
-                                            </div>
-                                            <div class="product-card" onclick="location.href='Controller?type=productDetails&action=select&prod_no=${item.prod_no}'">
-                                                <p>${item.p_name}</p>
-                                                <span class="price">
+                            <c:choose>
+                                <c:when test="${not empty requestScope.like_list}">
+                                    <c:forEach var="item" items="${requestScope.like_list}">
+                                        <div class="product-item">
+                                            <img src="${fn:split(item.prod_image, ',')[0]}" alt="상품 이미지" onclick="location.href='Controller?type=productDetails&action=select&prod_no=${item.prod_no}'">
+                                            <div class="product-info">
+                                                <div class="brand-like">
+                                                    <h4 onclick="location.href='Controller?type=productDetails&action=select&prod_no=${item.prod_no}'">${item.brand}</h4>
+                                                    <i class="bi bi-heart-fill" onclick="toggleHeart(this, ${item.prod_no})"></i>
+                                                </div>
+                                                <div class="product-card" onclick="location.href='Controller?type=productDetails&action=select&prod_no=${item.prod_no}'">
+                                                    <p>${item.p_name}</p>
+                                                    <span class="price">
                                                 <c:if test="${item.sale ne null}">
                                                     <span class="discount">${item.sale}%</span>
                                                 </c:if>
@@ -65,11 +66,21 @@
                                                     <i class="bi bi-star-fill"></i>
                                                     <fmt:formatNumber value="${item.avg_score}"/> (<fmt:formatNumber value="${item.review_count}"/>)
                                                 </span>
+                                                </div>
                                             </div>
                                         </div>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="empty-message-container">
+                                        <span>좋아요한 상품이 없습니다.</span>
+                                        <span>관심 있는 상품을 모아보세요.</span>
+                                        <a href="Controller">
+                                            <button type="button" class="btn btn-outline-secondary">상품 보러가기</button>
+                                        </a>
                                     </div>
-                                </c:forEach>
-                            </c:if>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </div>
                 </div>

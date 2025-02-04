@@ -95,6 +95,43 @@
     color: #ffbf00;
 }
 
+.empty-message-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 400px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    margin: auto;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.empty-message-container span {
+    font-size: 14px;
+    color: #333;
+}
+
+.btn-outline-secondary {
+    padding: 8px 16px;
+    border: 1px solid #6c757d;
+    background: none;
+    color: #6c757d;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #fff !important;
+    color: #6c757d !important;
+}
+
 /* 클릭 시 하트가 커지는 애니메이션 */
 .heart-animation {
     animation: pop 0.3s ease forwards;

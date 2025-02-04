@@ -47,9 +47,8 @@ public class OrderDetailsAction implements Action {
                     request.setAttribute("totalPrice", totalPrice);
                     request.setAttribute("point_amount", point_amount);
 
-                    viewPage = "/user/customer/jsp/mypage/orderDetails.jsp";
+                    viewPage = "/user/customer/jsp/mypage/completedDetails.jsp";
                     break;
-
                 case "update":
                     String prev_deli_no = request.getParameter("pre_delivery_id");
                     String deli_no = request.getParameter("delivery_id");

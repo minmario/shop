@@ -97,11 +97,10 @@ public class OrderAction implements Action {
                     // 쿠폰 목록
                     String order_code = request.getParameter("order_code");
                     String deli_no = request.getParameter("deli_no");
-                    String save_point = request.getParameter("save_point");
-                    String point_amount = request.getParameter("point_amount");
+                    String used_point = request.getParameter("used_point"); // 사용한 적립금
                     String total_amount = request.getParameter("total_amount");
                     String tax_free_amount = request.getParameter("tax_free_amount");
-                    String productsJson = request.getParameter("products");  // JSON 문자열로 받음
+                    String productsJson = request.getParameter("products");  // 구매 상품
 
                     List<CartVO> cartItems = (List<CartVO>) session.getAttribute("cartItems");
 
@@ -182,8 +181,7 @@ public class OrderAction implements Action {
 
                             session.setAttribute("tid", tid);
                             session.setAttribute("deli_no", deli_no);
-                            session.setAttribute("save_point", save_point); // 적립할 적립금
-                            session.setAttribute("point_amount", point_amount); // 사용한 적립금
+                            session.setAttribute("used_point", used_point); // 사용한 적립금
                             session.setAttribute("order_code", order_code);
 
                             if (productsJson != null) {
@@ -281,36 +279,36 @@ public class OrderAction implements Action {
 
                                         int amount = productData.optInt("amount", 0);
                                         int count = productData.optInt("count", 0);
-                                        String a_prod_no = productData.optString("prodNo");
+                                        prod_no = productData.optString("prodNo");
                                         String inventory_no = productData.optString("inventoryNo");
-                                        String i_point_amount = productData.optString("point") != null && !productData.optString("point").isEmpty() ? productData.optString("point") : "0";
+                                        String save_point = productData.optString("point") != null && !productData.optString("point").isEmpty() ? productData.optString("point") : "0"; // 적립 예정 적립금
                                         String coupon = products.getJSONObject(cartNo).optString("coupon", null);
-                                        String i_tid = responseJson.optString("tid");
-                                        String i_order_code = responseJson.optString("partner_order_id");
-                                        String i_deli_no = (String) session.getAttribute("deli_no");
+                                        tid = responseJson.optString("tid");
+                                        order_code = responseJson.optString("partner_order_id");
+                                        deli_no = (String) session.getAttribute("deli_no");
 
                                         // DB order 테이블, 주문 저장
-                                        OrderDAO.insertOrder(i_tid, cvo.getId(), a_prod_no, coupon, i_deli_no, i_order_code, String.valueOf(count), String.valueOf(amount), i_point_amount, inventory_no);
+                                        OrderDAO.insertOrder(tid, cvo.getId(), prod_no, coupon, deli_no, order_code, String.valueOf(count), String.valueOf(amount), save_point, inventory_no);
 
                                         // DB customer 테이블, total 수정
                                         CustomerDAO.updateAddTotal(cvo.getId(), String.valueOf(amount));
 
                                         // DB cus_coupon 테이블, 사용 쿠폰 저장
-                                        CouponDAO.insertCusCoupon(cvo.getId(), coupon, i_order_code);
+                                        CouponDAO.insertCusCoupon(cvo.getId(), coupon, order_code);
 
                                         // DB log 테이블, 로그 저장
                                         LogVO lvo = new LogVO();
                                         StringBuffer sb = new StringBuffer();
                                         lvo.setCus_no(cvo.getId());
                                         lvo.setTarget("order 추가");
-                                        sb.append("tid : " + i_tid + ", ");
+                                        sb.append("tid : " + tid + ", ");
                                         sb.append("inventory_no : " + inventory_no);
                                         lvo.setCurrent(sb.toString());
                                         LogDAO.insertLog(lvo);
                                     }
 
                                     // DB point 테이블, 사용한 적립금 저장
-                                    String i_point_amount = (String) session.getAttribute("point_amount");
+                                    String i_point_amount = (String) session.getAttribute("used_point");
                                     if (i_point_amount != null && !i_point_amount.isEmpty()) {
                                         PointVO u_pvo = new PointVO();
                                         u_pvo.setCus_no(cvo.getId());
@@ -330,13 +328,15 @@ public class OrderAction implements Action {
                                     int cart_count = CartDAO.selectCartCount(cvo.getId());
                                     session.setAttribute("cart_count", cart_count);
 
+                                    // order_code만 request에 담기
+                                    request.setAttribute("order_code", order_code);
+
                                     // 세션 삭제
                                     session.removeAttribute("cartItems");
                                     session.removeAttribute("order_code");
                                     session.removeAttribute("tid");
                                     session.removeAttribute("deli_no");
-                                    session.removeAttribute("save_point");
-                                    session.removeAttribute("point_amount");
+                                    session.removeAttribute("used_point");
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     System.out.println("Error parsing products JSON.");
@@ -353,6 +353,27 @@ public class OrderAction implements Action {
 
                     viewPage = "/user/customer/jsp/payment/orderCompleted.jsp";
                     break;
+                case "completed":
+                    order_code = request.getParameter("order_code");
+                    System.out.println("order_code : " + order_code);
+
+                    List<OrderVO> o_list = OrderDAO.selectOrderCode(cvo.getId(), order_code); // 주문상세 정보 list
+                    List<DeliveryVO> deli_list = DeliveryDAO.selectDelivery(cvo.getId()); // 해당 주문의 배송지 정보
+                    List<OrderVO> coupon_list = OrderDAO.selectOrderCouponList(cvo.getId(), order_code);
+                    GradeVO grade = GradeDAO.selectGradeCustomer(cvo.getId());
+                    int totalAmount = OrderDAO.selectTotalAmount(cvo.getId(), order_code); // 원가 총 금액
+                    int totalPrice = OrderDAO.selectTotalPrice(cvo.getId(), order_code); // 원가 총 금액
+                    int point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code); // 사용한 적립금
+
+                    request.setAttribute("o_list", o_list);
+                    request.setAttribute("deli_list", deli_list);
+                    request.setAttribute("coupon_list", coupon_list);
+                    request.setAttribute("grade", grade);
+                    request.setAttribute("totalAmount", totalAmount);
+                    request.setAttribute("totalPrice", totalPrice);
+                    request.setAttribute("point_amount", point_amount);
+
+                    viewPage = "/user/customer/jsp/payment/components/completedDetails.jsp";
             }
         }
 

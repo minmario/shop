@@ -432,7 +432,7 @@ function onPayment() {
 
     const order_code = onGetOrderCode();
     const deli_no = onGetDeliveryId();
-    const point_amount = onGetUsedPoints();
+    const used_point = onGetUsedPoints();
     const products = mergeProducts();
 
     console.log('Final Products for Payment:', products);
@@ -469,8 +469,9 @@ function onPayment() {
             method: 'POST',
             data: {
                 order_code: order_code,
-                products: JSON.stringify(products),  // 문자열로 변환
+                products: JSON.stringify(products),
                 deli_no: deli_no,
+                used_point: used_point, // 사용한 적립금
                 total_amount: totalAmount,
                 tax_free_amount: taxFreeAmount,
             },

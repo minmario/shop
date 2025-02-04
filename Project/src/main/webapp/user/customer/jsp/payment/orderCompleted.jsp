@@ -27,13 +27,20 @@
             <div class="wrap">
                 <div class="row">
                     <div class="container">
-                        <div class="redirect-message" id="redirectMessage">
-                            5초 뒤에 메인 페이지로 돌아갑니다
+                        <div class="timer-container" id="timer-container">
+                            <svg viewBox="0 0 300 300">
+                                <circle class="circle-bg" cx="150" cy="150" r="130" />
+                                <circle class="circle-progress" cx="150" cy="150" r="130" />
+                            </svg>
+                            <div class="number" id="timer">3</div>
                         </div>
-                        <div class="order-completed">
-                            <div class="completed-text">
-                                주문완료
-                            </div>
+
+                        <div class="order-completed" id="order-completed">
+                            <div class="completed-text">주문 완료</div>
+                        </div>
+
+                        <div class="order-details-container" id="order-details" data-order="202502046515">
+                            <jsp:include page="./components/completedDetails.jsp"></jsp:include>
                         </div>
                     </div>
                 </div>
