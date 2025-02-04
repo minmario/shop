@@ -67,4 +67,26 @@ public class BoardDAO {
 
         return cnt;
     }
+
+    // 구매확정 리뷰 작성
+    public static int insertReview(BoardVO vo) {
+        int cnt = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            cnt = ss.insert("review.insert_review", vo);
+
+            if (cnt > 0) {
+                ss.commit();
+            } else {
+                ss.rollback();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
+    }
 }

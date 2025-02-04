@@ -80,9 +80,9 @@
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-order" autocomplete="off">
                                 <label class="btn btn-outline-dark" for="btnradio-order" onclick="selectOrder()">주문내역</label>
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-refund" autocomplete="off">
-                                <label class="btn btn-outline-dark" for="btnradio-refund" onclick="selectRefund()">취소/반품/교환</label>
+                                <label class="btn btn-outline-dark" for="btnradio-refund" onclick="selectRefundTab('all')">취소/반품/교환</label>
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-review" autocomplete="off">
-                                <label class="btn btn-outline-dark" for="btnradio-review">구매후기</label>
+                                <label class="btn btn-outline-dark" for="btnradio-review" onclick="selectMypageReview()">구매후기</label>
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-inquiry" autocomplete="off">
                                 <label class="btn btn-outline-dark" for="btnradio-inquiry" onclick="selectInquiry()">1:1문의</label>
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-question" autocomplete="off">
@@ -291,7 +291,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="reviewModalLabel">동일한 옵션/수량으로 재구매 하시겠습니까?</h5>
+                            <h5 class="modal-title" id="reviewModalLabel">후기 작성</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -301,21 +301,12 @@
                                 <li>
                                     <div class="review-item" onclick="location.href='Controller?type=writeReview'">
                                         <span class="review-title">후기</span>
-                                        <span class="review-subtitle">적립금 최대 0원 지급</span>
-                                        <span class="arrow-icon">&gt;</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="review-item" onclick="location.href='Controller?type=writeReview'">
-                                        <span class="review-title">한달 후기</span>
-                                        <span class="review-subtitle">적립금 최대 1,000원 지급</span>
                                         <span class="arrow-icon">&gt;</span>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="review-item" onclick="location.href='Controller?type=writeReview'">
                                         <span class="review-title">스타일 후기</span>
-                                        <span class="review-subtitle">적립금 최대 1,500원 지급</span>
                                         <span class="arrow-icon">&gt;</span>
                                     </div>
                                 </li>
@@ -398,6 +389,7 @@
     <script src="./user/customer/js/mypage/components/inquiry.js"></script>
     <script src="./user/customer/js/mypage/components/question.js"></script>
     <script src="./user/customer/js/mypage/components/order.js"></script>
+    <script src="./user/customer/js/mypage/components/review.js"></script>
 
     <script>
         $(function () {

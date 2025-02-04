@@ -5,7 +5,23 @@ import java.util.List;
 public class OrderVO {
     private String id, tid, cus_no, prod_no, coupon_no, deli_no, order_code, count, order_date, amount,
             pay_type, order_bank, order_account, card_name, is_install, install_month, status, refund_bank, refund_account, reason, retrieve_deli_no, prod_code, prod_name, prod_price,
-            prod_sale, prod_image, prod_saled_price, brand, option_name, deli_name, pos_code, addr1, addr2, phone, deli_request, is_default, point_amount, inventory_no, coupon_name, sale_per ;
+            prod_sale, prod_image, prod_saled_price, brand, option_name, deli_name, pos_code, addr1, addr2, phone, deli_request, is_default, point_amount, inventory_no, coupon_name, sale_per, delivery_date, purchase_confirm_date;
+
+    public String getDelivery_date() {
+        return delivery_date;
+    }
+
+    public void setDelivery_date(String delivery_date) {
+        this.delivery_date = delivery_date;
+    }
+
+    public String getPurchase_confirm_date() {
+        return purchase_confirm_date;
+    }
+
+    public void setPurchase_confirm_date(String purchase_confirm_date) {
+        this.purchase_confirm_date = purchase_confirm_date;
+    }
 
     public String getAmount() {
         return amount;

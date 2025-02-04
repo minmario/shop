@@ -8,13 +8,12 @@ import user.vo.customer.OrderVO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
-public class WriteReviewAction implements Action {
+public class ReviewAction implements Action {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String action = request.getParameter("action");
-        String prod_no = request.getParameter("prod_no");
-        String order_code = request.getParameter("order_code");
         HttpSession session = request.getSession();
         CustomerVO cvo = (CustomerVO) session.getAttribute("customer_info");
 
@@ -24,16 +23,15 @@ public class WriteReviewAction implements Action {
         }
 
         String viewPath = null;
-        if(action != null){
-            switch(action){
-                case "select":
-                    OrderVO o_vo = OrderDAO.selectReviewProduct(cvo.getId(), prod_no, order_code);
-                    request.setAttribute("o_vo", o_vo);
-                    viewPath = "/user/customer/jsp/mypage/writeReview.jsp";
+        if (action != null) {
+            switch (action) {
+                case "all":
+                    List<OrderVO> list = OrderDAO.selectPurchaseConfirm(cvo.getId());
+                    request.setAttribute("list", list);
+                    viewPath = "/user/customer/jsp/mypage/components/review.jsp";
                     break;
             }
         }
-
         return viewPath;
     }
 }
