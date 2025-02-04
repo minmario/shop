@@ -1,6 +1,6 @@
 package comm.dao;
 
-import comm.vo.ProductVO;
+import comm.vo.SellerVO;
 import org.apache.ibatis.session.SqlSession;
 import comm.service.FactoryService;
 
@@ -30,5 +30,21 @@ public class SellerDAO {
         ss.close();
         return cnt;
     }
-
+    public static SellerVO getSellerInfo() {
+        SqlSession session = FactoryService.getFactory().openSession();
+        SellerVO vo = session.selectOne("seller.getSellerInfo");  // ✅ MyBatis 매핑 확인
+        session.close();
+        return vo;
+    }
+    public static int updateSeller(SellerVO sellerVO) {
+        SqlSession ss = FactoryService.getFactory().openSession();
+        int cnt = ss.update("seller.updateSellerInfo",sellerVO);
+        if (cnt > 0) {
+            ss.commit();
+        } else {
+            ss.rollback();
+        }
+        ss.close();
+        return cnt;
+    }
 }

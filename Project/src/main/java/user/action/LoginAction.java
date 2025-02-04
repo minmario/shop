@@ -30,7 +30,7 @@ public class LoginAction  implements Action {
       viewpath="/user/jsp/index.jsp";
     }
     else{
-      viewpath="/user/jsp/login/login.jsp";
+      viewpath="/jsp/login/login.jsp";
     }
     return viewpath;
 }
