@@ -1,10 +1,8 @@
 package user.action;
 
 import user.dao.EventDAO;
-import user.dao.ProductDAO;
 import user.vo.CustomerVO;
 import user.vo.EventVO;
-import user.vo.ProductVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +23,6 @@ public class EventAction implements Action {
 
         // 상품 사이즈 목록
         List<EventVO> events = EventDAO.selectEvent(cvo.getId(), cvo.getGrade_no());
-        System.out.println("events: " + events.size());
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
