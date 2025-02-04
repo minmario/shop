@@ -97,7 +97,7 @@
             <h5>대분류 목록</h5>
             <div>
                 <!-- 대분류 추가 버튼, 모달 연결 -->
-                <button class="btn btn-primary add-user-btn" data-bs-toggle="modal" data-bs-target="#mainCategoryModal">대분류 추가</button>
+                <button class="btn btn-primary add-user-btn" data-bs-toggle="modal" data-bs-target="#mainCategoryModal" >대분류 추가</button>
             </div>
         </div>
 
@@ -110,7 +110,7 @@
                 <select class="form-select" aria-label="Default select example" id="major_category_name">
 
                     <c:forEach var="name" items="${majorcategoryName}" varStatus="st">
-                        <c:if test="${name ne 'id'}">
+                        <c:if test="${name ne 'id' && name ne 'is_del'}">
                             <option class="column-name" value="${name}">${name}</option>
                         </c:if>
                     </c:forEach>
@@ -136,9 +136,9 @@
             <thead class="table-light">
 
             <tr>
-                <th><input type="checkbox"></th>
+
                 <c:forEach var="name" items="${majorcategoryName}">
-                    <c:if test="${name ne 'id'}">
+                    <c:if test="${name ne 'id' && name ne 'is_del'}">
                     <th class="column-name">${name}</th>
                     </c:if>
                 </c:forEach>
@@ -149,14 +149,15 @@
             </thead>
             <tbody>
             <c:forEach var ="mcl"  items="${majorcategoryList}">
-            <tr>
-                <td><input type="checkbox"></td>
+                <tr id="row-${mcl.id}">
+
                 <td>${mcl.name}</td>
                 <td>${mcl.ename}</td>
                 <td>${mcl.type}</td>
-                <td>
-                    <button class="btn btn-secondary add-user-btn" data-bs-toggle="modal" data-bs-target="#rejectModal">대분류 삭제</button>
-            </tr>
+
+                <td><button class="btn btn-secondary add-user-btn" data-bs-toggle="modal" data-bs-target="#deleteMajorCategoryModal"
+                            onclick="setMajorCategoryId('${mcl.id}')"> 삭제</button></td>
+                </tr>
             </c:forEach>
             </tbody>
         </table>
@@ -220,8 +221,9 @@
                     <td>${mdcl.major_no}</td>
                     <td>${mdcl.name}</td>
                     <td>${mdcl.type}</td>
-                    <td><button class="btn btn-outline-secondary btn-sm">수정</button>
-                        <button class="btn btn-outline-secondary btn-sm">삭제</button></td>
+
+                    <td><button class="btn btn-secondary add-user-btn" data-bs-toggle="modal" data-bs-target="#deleteMiddleCategoryModal"
+                                onclick="setMiddleCategoryId('${mdcl.id}')"> 삭제</button></td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -239,22 +241,23 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="mainCategoryModalLabel">대분류 설정</h5>
+                <%--x버튼--%>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="categoryForm" action="Controller" method="POST">
+            <form id="majorCategoryForm">
             <div class="modal-body">
 
                     <input type="hidden" name="type" value="addMajorCategory">  <!-- type 파라미터 전달 -->
                     <div class="row mb-3">
                         <div class="col-md-2 fw-bold">대분류 명</div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" id="categoryName" name="name" placeholder="상의, 하의 등 분류별 명칭">
+                            <input type="text" class="form-control" id="majorCategoryName" name="name" placeholder="상의, 하의 등 분류별 명칭">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-2 fw-bold">대분류 영문명</div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" id="categoryEname" name="ename" placeholder="영어 명칭">
+                            <input type="text" class="form-control" id="majorCategoryEname" name="ename" placeholder="영어 명칭">
                         </div>
                     </div>
 
@@ -262,34 +265,13 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                <button type="button" class="btn btn-primary" id="saveButton">저장</button>
+                <button type="submit" class="btn btn-primary">저장</button>
             </div>
             </form>
         </div>
     </div>
 </div>
 
-<%--대분류 삭제 모달 창--%>
-<div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="rejectModalLabel">거절 사유</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="/Controller?type=delete" method="post" >
-                <div class="modal-body">
-                    <textarea class="form-control" rows="3">입점을 추가한 이유를 적어주세요.</textarea>
-                    <span class="text-danger">*특수문자사용시 스마트스토어 정책에 따라 전송 에러가 발생합니다. 텍스트와 숫자로 안내문구를 작성해주시기 바랍니다.</span>
-                </div>
-            </form>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                <button type="button" class="btn btn-primary">저장</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- 중분류 설정 모달 (중분류 추가용) -->
 <div class="modal fade" id="subcategoryModal" tabindex="-1" aria-labelledby="subcategoryModalLabel" aria-hidden="true">
@@ -327,7 +309,56 @@
         </div>
     </div>
 </div>
+<%--대분류 삭제 모달 창--%>
 
+<div class="modal fade" id="deleteMajorCategoryModal" tabindex="-1" aria-labelledby="deleteMajorCategoryLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteMajorCategoryLabel">주 카테고리 삭제 사유</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="deleteMajorCategoryForm">
+                <div class="modal-body">
+                    <input type="hidden" id="deleteMajorCategoryId" name="id" >
+
+                    <textarea class="form-control" id="deleteMajorReason" name="content" rows="3" placeholder="대분류를 삭제할 이유를 적어주세요."></textarea>
+                    <span class="text-danger">*특수문자사용시 스마트스토어 정책에 따라 전송 에러가 발생합니다. 텍스트와 숫자로 안내문구를 작성해주시기 바랍니다.</span>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button type="submit" class="btn btn-primary">저장</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<%--중분류 삭제 모달 창--%>
+
+<div class="modal fade" id="MiddleMajorCategoryModal" tabindex="-1" aria-labelledby="deleteMiddleCategoryLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteMiddleCategoryLabel">주 카테고리 삭제 사유</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="deleteMiddleCategoryForm">
+                <div class="modal-body">
+                    <input type="hidden" id="deleteMiddleCategoryId" name="id">
+
+                    <textarea class="form-control" id="deleteReason" name="content" rows="3">주 카테고리를 삭제할 이유를 적어주세요.</textarea>
+                    <span class="text-danger">*특수문자사용시 스마트스토어 정책에 따라 전송 에러가 발생합니다. 텍스트와 숫자로 안내문구를 작성해주시기 바랍니다.</span>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button type="submit" class="btn btn-primary">저장</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <!-- 부트스트랩 관련 스크립트 -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
@@ -361,6 +392,7 @@
                 encodeURIComponent(category_name) +
                 "&searchValue=" + encodeURIComponent(word);
             //비동기식 통신
+
             $.ajax({
                 url: "Controller",
                 type: "POST",
@@ -396,25 +428,128 @@
 
 
 
-    $("#saveButton").click(function () {
-        let name = $("#categoryName").val().trim();
-        let ename = $("#categoryEname").val().trim();
+    function setMajorCategoryId(categoryId) {
+        console.log("전달된 게시판 ID:", categoryId);
 
 
-        // 입력값 검증
-        if (!name || !ename ) {
-            alert("모든 항목을 입력해주세요!");
-            return;
-        }
+        $("#deleteMajorCategoryId").val(categoryId);
 
-        // type을 정수로 변환
+    }
+    function setMiddleCategoryId(categoryId) {
+        console.log("전달된 게시판 ID:", categoryId);
 
 
-        // 폼을 제출합니다.
-        $("#categoryForm").submit();
+        $("#deleteMiddleCategoryId").val(categoryId);
 
-        // 모달 닫기
-        $("#mainCategoryModal").modal("hide");
+    }
+    <%--major 용 삭제--%>
+    $(document).ready(function () {<%--폼태그--%>
+        $("#deleteMajorCategoryForm").submit(function (event) {
+            event.preventDefault(); // 기본 form 제출 막기
+
+            let majorCategoryId = $("#deleteMajorCategoryId").val();
+
+            let content = $("#deleteMajorReason").val();
+
+            if (!majorCategoryId) {
+                alert("삭제할 게시판 ID가 없습니다.");
+                return;
+            }
+
+            $.ajax({
+                url: "Controller",
+                type: "POST",
+                data: {
+                    type: "buttonCategory",
+                    id: majorCategoryId,
+
+                    content: content,
+                    action: "major"
+
+                },
+                dataType: "json", <%--보내지는 데이터 타입--%>
+                <%--삭제의 경우 기존 값에서 하나의 행만 지우는 식이로 해야해서 이렇게 했다--%>
+                <%--삭제시 반드시 1로 만들어준다-->
+                <%--추가는 전부 불러오는 방식으로 하길 권장한다--%>
+                <%--spring에서도 자주 사용하니 반드시 알아야한다--%>
+
+                success: function (response) {
+                    if (response.status === "success") {
+                        console.log("삭제 성공:", response);
+
+                        <%--테이블의 열의 id를 레코드를 삭제--%>
+                        $("#row-" + majorCategoryId).remove();
+
+
+                        $("#deleteMajorCategoryModal").modal("hide");
+
+                        alert("게시글이 삭제되었습니다.");
+                    } else {
+                        console.error("삭제 실패:", response.message);
+                        alert("게시글 삭제에 실패했습니다: " + response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("삭제 실패:", error);
+                    alert("게시글 삭제 중 오류가 발생했습니다.");
+                }
+            });
+        });
+    });
+    $(document).ready(function () {
+        $("#majorCategoryForm").submit(function (event) {
+            event.preventDefault();//기본 form 제출막기
+
+            let majorCategoryName = $("#majorCategoryName").val();
+            let majorCategoryEname = $("#majorCategoryEname").val();
+            console.log(majorCategoryName, majorCategoryEname, majorCategoryName);
+            if (!majorCategoryName ) {
+                alert("전부입력.");
+                return;
+            }
+            else if (!majorCategoryEname ) {
+                alert("전부입력.");
+                return;
+            }
+            $.ajax({
+                url: "Controller",
+                type: "POST",
+                data: {
+                    type: "addMajorCategory",
+
+                    name: majorCategoryName,
+                    ename: majorCategoryEname
+
+
+                },
+                dataType: "json", <%--보내지는 데이터 타입--%>
+                <%--삭제의 경우 기존 값에서 하나의 행만 지우는 식이로 해야해서 이렇게 했다--%>
+                <%--삭제시 반드시 1로 만들어준다-->
+                <%--추가는 전부 불러오는 방식으로 하길 권장한다--%>
+                <%--spring에서도 자주 사용하니 반드시 알아야한다--%>
+
+                success: function (response) {
+                    if (response.status === "success") {
+                        console.log("추가 성공:", response);
+
+
+
+
+                        $("#mainCategoryModal").modal("hide");
+
+                        alert("카테고리가 추가 되었습니다.");
+                    } else {
+                        console.error("추가 실패:", response.message);
+                        alert("카테고리 추가에 실패했습니다: " + response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("추가 실패:", error);
+                    alert("카테고리 추가 중 오류가 발생했습니다.");
+                }
+            });
+
+        });
     });
 
 </script>

@@ -1,5 +1,6 @@
 package admin.dao;
 
+import admin.vo.LogVO;
 import admin.vo.MajorCategoryVO;
 import admin.vo.MiddleCategoryVO;
 import org.apache.ibatis.session.SqlSession;
@@ -39,5 +40,26 @@ public class MiddleCategoryDao {
         }
         ss.close();
         return ar;
+    }
+    public static int logininsert(LogVO boardVO) {
+        SqlSession ss = FactoryService.getFactory().openSession();
+        int chk = ss.insert("root.loginsert", boardVO);
+        ss.commit();
+        ss.close();
+        return chk;
+
+
+    }
+    public static boolean deleteMiddleCategory(int id){
+        SqlSession ss = FactoryService.getFactory().openSession();
+        int updatedRows = ss.update("root.deleteMiddleCategory", id);
+        if(updatedRows > 0){
+            ss.commit();
+            ss.close();
+            return true;
+        }
+        ss.rollback();
+        ss.close();
+        return false;
     }
 }

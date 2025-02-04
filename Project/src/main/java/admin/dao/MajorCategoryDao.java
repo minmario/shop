@@ -1,5 +1,6 @@
 package admin.dao;
 
+import admin.vo.LogVO;
 import admin.vo.MajorCategoryVO;
 import org.apache.ibatis.session.SqlSession;
 import service.FactoryService;
@@ -47,6 +48,27 @@ public class MajorCategoryDao {
 
         ss.close();
         return cnt;  // 추가된 레코드 수 반환
+    }
+    public static int logininsert(LogVO MajorCategoryVO) {
+        SqlSession ss = FactoryService.getFactory().openSession();
+        int chk = ss.insert("root.loginsert", MajorCategoryVO);
+        ss.commit();
+        ss.close();
+        return chk;
+
+
+    }
+    public static boolean deleteMajorCategory(int id){
+        SqlSession ss = FactoryService.getFactory().openSession();
+        int updatedRows = ss.update("root.deleteMajorCategory", id);
+        if(updatedRows > 0){
+            ss.commit();
+            ss.close();
+            return true;
+        }
+        ss.rollback();
+        ss.close();
+        return false;
     }
 
 }

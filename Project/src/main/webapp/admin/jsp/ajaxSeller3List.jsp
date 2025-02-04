@@ -16,7 +16,6 @@
 
 
 
-
             <td>${sl3.seller_id}</td>
             <td>${sl3.name}</td>
             <td>${sl3.phone}</td>

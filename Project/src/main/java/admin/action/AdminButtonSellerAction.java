@@ -27,7 +27,7 @@ public class AdminButtonSellerAction implements Action {
                 SellerDao sDao = new SellerDao();
 
                 // 게시판 삭제 (active 1 → 2)
-                boolean chk = SellerDao.rejectSeller(id);
+                boolean chk = sDao.rejectSeller(id);
 
                 HttpSession session = request.getSession();
                 String rootIdStr = (String) session.getAttribute("id"); // 먼저 String으로 가져옴
@@ -66,7 +66,7 @@ public class AdminButtonSellerAction implements Action {
                 SellerDao sDao = new SellerDao();
 
                 // 게시판 삭제 (active 1 → 2)
-                boolean chk = SellerDao.admitSeller(id);
+                boolean chk = sDao.admitSeller(id);
 
                 HttpSession session = request.getSession();
                 String rootIdStr = (String) session.getAttribute("id"); // 먼저 String으로 가져옴
@@ -105,7 +105,7 @@ public class AdminButtonSellerAction implements Action {
                 SellerDao sDao = new SellerDao();
 
                 // 게시판 삭제 (active 1 → 2)
-                boolean chk = SellerDao.stopSeller(id);
+                boolean chk = sDao.stopSeller(id);
 
                 HttpSession session = request.getSession();
                 String rootIdStr = (String) session.getAttribute("id"); // 먼저 String으로 가져옴

@@ -415,12 +415,12 @@
 
 
     </div>
-    <%--판매자대기 삭제 모달 창--%>
+    <%--판매자대기 거절 모달 창--%>
     <div class="modal fade" id="rejectSellerModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="rejectModalLabel">삭제 사유</h5>
+                    <h5 class="modal-title" id="rejectModalLabel">거절 사유</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form id="rejectSellerForm">

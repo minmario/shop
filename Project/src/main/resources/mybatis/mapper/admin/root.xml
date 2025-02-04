@@ -210,8 +210,8 @@
 
   </select>
   <insert id="addMajorCategory" parameterType="admin.vo.MajorCategoryVO">
-    INSERT INTO major_category (name,ename)
-    VALUES (#{name},#{ename});
+    INSERT INTO major_category (name,ename,is_del)
+    VALUES (#{name},#{ename},0)
 
   </insert>
   <select id="getCategory" resultType="admin.vo.CategoryVO">
@@ -223,6 +223,16 @@
 
   <update id="deleteBoard" parameterType="int">
     UPDATE board
+    SET is_del = 1
+    WHERE id = #{id}
+  </update>
+  <update id="deleteMajorCategory" parameterType="int">
+    UPDATE major_category
+    SET is_del = 1
+    WHERE id = #{id}
+  </update>
+  <update id="deleteMiddleCategory" parameterType="int">
+    UPDATE middle_category
     SET is_del = 1
     WHERE id = #{id}
   </update>

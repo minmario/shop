@@ -13,7 +13,6 @@
         <td>${mdcl.major_no}</td>
         <td>${mdcl.name}</td>
         <td>${mdcl.type}</td>
-        <td><button class="btn btn-outline-secondary btn-sm">수정</button>
-            <button class="btn btn-outline-secondary btn-sm">삭제</button></td>
+
     </tr>
 </c:forEach>
