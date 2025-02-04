@@ -40,7 +40,7 @@
                                         <div class="product-info">
                                             <div class="brand-like">
                                                 <h4 onclick="location.href='Controller?type=productDetails&action=select&prod_no=${item.prod_no}'">${item.brand}</h4>
-                                                <i class="bi bi-heart-fill" onclick="deleteProdLike(${item.prod_no})"></i>
+                                                <i class="bi bi-heart-fill" onclick="toggleHeart(this, ${item.prod_no})"></i>
                                             </div>
                                             <div class="product-card" onclick="location.href='Controller?type=productDetails&action=select&prod_no=${item.prod_no}'">
                                                 <p>${item.p_name}</p>

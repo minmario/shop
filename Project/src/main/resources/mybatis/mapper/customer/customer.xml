@@ -11,7 +11,11 @@
 
     <!-- 로그인 검증 -->
     <select id="login" parameterType="user.vo.customer.CustomerVO" resultType="user.vo.customer.CustomerVO">
-        SELECT * FROM customer
+        SELECT c.id, c.grade_no, c.cus_id, c.name, c.nickname, c.gender, c.birth_date, c.phone, c.email, c.profile_image, c.weight, c.height, c.total, c.grade_expire_date,
+            g.name AS grade_name, g.point_condition, g.sale_condition
+        FROM customer c
+        INNER JOIN grade g
+        ON c.grade_no = g.id
         WHERE cus_id = #{cus_id} AND cus_pw = #{cus_pw}
     </select>
 

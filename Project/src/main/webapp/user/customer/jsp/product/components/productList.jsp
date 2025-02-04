@@ -51,10 +51,10 @@
                                 <c:when test="${not empty sessionScope.customer_info}">
                                     <c:choose>
                                         <c:when test="${item.user_like_status == '1'}">
-                                            <i class="bi bi-heart-fill" onclick="unlikeProduct(${item.id})"></i>
+                                            <i class="bi bi-heart-fill" onclick="toggleProdHeart(this, ${item.id})"></i>
                                         </c:when>
                                         <c:otherwise>
-                                            <i class="bi bi-heart" onclick="likeProduct(${item.id})"></i>
+                                            <i class="bi bi-heart" onclick="toggleProdHeart(this, 1102)"></i>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:when>

@@ -11,6 +11,10 @@
     min-width: 465px;
 }
 
+.user-header-menu a i.bi.bi-heart-fill {
+    color: #f31110;
+}
+
 .nickname {
     font-size: 15px;
     margin-left: 10px;

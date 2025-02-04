@@ -1,7 +1,7 @@
-let coupons = [];                    // 모든 쿠폰 정보를 저장하는 멤버 변수
-let appliedCoupons = {};              // 적용된 쿠폰 상태 저장 (key: cartNo, value: 쿠폰 번호)
-let usedCoupons = new Set();          // 사용 중인 쿠폰 번호를 저장하는 Set
-let currentCartNo = null;          // 현재 모달에 표시 중인 상품 번호
+let coupons = []; // 모든 쿠폰 정보를 저장하는 멤버 변수
+let appliedCoupons = {}; // 적용된 쿠폰 상태 저장 (key: cartNo, value: 쿠폰 번호)
+let usedCoupons = new Set(); // 사용 중인 쿠폰 번호를 저장하는 Set
+let currentCartNo = null; // 현재 모달에 표시 중인 상품 번호
 
 document.addEventListener("DOMContentLoaded", () => {
     const deliverySelect = document.getElementById('delivery-request');
@@ -9,15 +9,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const charCount = document.getElementById("char-count");
 
     if (deliverySelect) {
-        // 옵션 변경 시 이벤트 리스너 추가
         deliverySelect.addEventListener('change', function () {
             toggleMessageVisibility();
         });
     }
 
     if (deliverySelect && deliveryMessage && charCount) {
-        // 글자 수 카운트 업데이트 이벤트 리스너 추가
         deliveryMessage.addEventListener('keyup', function () {
+            // 글자 수 카운트 업데이트
             charCount.textContent = deliveryMessage.value.length + "/50";
         });
 
@@ -45,7 +44,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // 구매 적립/선할인 선택
 function toggleRewardDisplay(selectedRadio) {
-    // 모든 reward span 요소 숨김 처리
     document.getElementById('reward-earn').style.display = 'none';
     document.getElementById('reward-discount').style.display = 'none';
 
@@ -102,13 +100,13 @@ function plusSalePoints() {
 
 // 쿠폰 사용 모달 열기
 function onShowCouponModal(cartNo, prodNo) {
-    currentCartNo = cartNo;  // cartNo를 currentCartNo에 저장
+    currentCartNo = cartNo;
 
     $('#couponModal').on('shown.bs.modal', function () {
         const isVisible = $('#couponModal').is(':visible');
 
         if (isVisible) {
-            selectCoupon(prodNo);  // 쿠폰 목록 가져오기 및 렌더링
+            selectCoupon(prodNo); // 쿠폰 목록 가져오기 및 렌더링
         }
     });
 
@@ -135,7 +133,7 @@ function onApplyCoupon() {
 
     // 새로운 쿠폰 저장
     const couponId = selectedCoupon.value;
-    appliedCoupons[currentCartNo] = couponId;  // cartNo 기준으로 쿠폰 저장
+    appliedCoupons[currentCartNo] = couponId; // cartNo 기준으로 쿠폰 저장
     usedCoupons.add(couponId);
 
     // 쿠폰 할인 적용
@@ -188,7 +186,7 @@ function cancelCoupon(cartNo) {
         resetProductPriceToOriginal(cartNo);
 
         alert('쿠폰이 취소되었습니다.');
-        renderCouponList();  // 상태 갱신을 위해 다시 렌더링
+        renderCouponList(); // 상태 갱신을 위해 다시 렌더링
     } else {
         alert('현재 상품에 적용된 쿠폰이 없습니다.');
     }
@@ -356,6 +354,7 @@ function onGetProducts() {
         const inventoryNo = product.getAttribute('data-inventory-no');
         const discountedPriceElement = product.querySelector('.discounted-price');
         const productCountElement = product.querySelector('#product-count');
+        const point = Math.floor(product.querySelector('.prod_point').value);
 
         // 가격 설정 (할인 가격이 없을 경우 원래 가격 사용)
         let price = 0;
@@ -377,7 +376,8 @@ function onGetProducts() {
                 prodNo: prodNo,
                 inventoryNo: inventoryNo,
                 amount: price,
-                count: count
+                count: count,
+                point: point
             };
         }
     });
@@ -396,7 +396,8 @@ function mergeProducts() {
                 prodNo: products[cartNo].prodNo,
                 inventoryNo: products[cartNo].inventoryNo,
                 amount: products[cartNo].amount,
-                count: products[cartNo].count
+                count: products[cartNo].count,
+                point: products[cartNo].point
             }
         };
 
@@ -433,7 +434,6 @@ function onPayment() {
     const deli_no = onGetDeliveryId();
     const point_amount = onGetUsedPoints();
     const products = mergeProducts();
-    const save_point = onGetSavePoint();
 
     console.log('Final Products for Payment:', products);
 
@@ -471,8 +471,6 @@ function onPayment() {
                 order_code: order_code,
                 products: JSON.stringify(products),  // 문자열로 변환
                 deli_no: deli_no,
-                save_point: save_point,
-                point_amount: point_amount,
                 total_amount: totalAmount,
                 tax_free_amount: taxFreeAmount,
             },

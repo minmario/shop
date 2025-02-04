@@ -29,11 +29,8 @@ function toggleIndividualCheckbox() {
 
 // 수량 감소
 function minusCount(obj) {
-    // tr 요소
     const row = obj.closest("tr");
-
     const id = row.dataset.value;
-    const size = row.querySelector(".cart-prod-size").textContent.trim();
 
     // 수량 정보
     const cartCountValue = row.querySelector('.cart-count-value');
@@ -48,7 +45,7 @@ function minusCount(obj) {
     $.ajax({
         url: count === 0 ? "Controller?type=cart&action=delete" : "Controller?type=cart&action=update_count",
         method: 'POST',
-        data: count === 0 ? { id: id } : { id: id, size: size, count: count },
+        data: count === 0 ? { id: id } : { id: id, count: count },
         success: function () {
             selectCart();
         },
@@ -61,11 +58,8 @@ function minusCount(obj) {
 
 // 수량 증가
 function plusCount(obj) {
-    // tr 요소
     const row = obj.closest("tr");
-
     const id = row.dataset.value;
-    const size = row.querySelector(".cart-prod-size").textContent.trim();
 
     // 수량 정보
     const cartCountValue = row.querySelector('.cart-count-value');
@@ -80,7 +74,6 @@ function plusCount(obj) {
         method: 'POST',
         data: {
             id: id,
-            size: size,
             count: count
         },
         success: function () {

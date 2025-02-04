@@ -175,7 +175,30 @@
 
     <!-- 주문 추가 -->
     <insert id="insert_order" parameterType="user.vo.customer.OrderVO">
-        INSERT INTO `order` (tid, cus_no, prod_no, coupon_no, deli_no, order_code, count, amount, order_date, inventory_no, pay_type, status)
-        VALUES (#{tid}, #{cus_no}, #{prod_no}, #{coupon_no}, #{deli_no}, #{order_code}, #{count}, #{amount}, NOW(), #{inventory_no}, 3, 1)
+        INSERT INTO `order` (tid, cus_no, prod_no, coupon_no, deli_no, order_code, count, amount, point_amount, order_date, inventory_no, pay_type, status)
+        VALUES (#{tid}, #{cus_no}, #{prod_no}, #{coupon_no}, #{deli_no}, #{order_code}, #{count}, #{amount}, #{point_amount}, NOW(), #{inventory_no}, 3, 1)
     </insert>
+
+    <!-- 구매확정 주문 내역만 가져오기 -->
+    <select id="select_purchase_confirm" resultType="user.vo.customer.OrderVO">
+        SELECT DISTINCT s.name AS brand, p.prod_code AS prod_code, p.name AS prod_name, p.price AS prod_price, p.sale AS prod_sale,
+        p.prod_image AS prod_image, p.saled_price AS prod_saled_price, i.option_name AS option_name, o.*
+        FROM `order` o
+        INNER JOIN product p ON o.prod_no = p.id
+        INNER JOIN seller s ON p.seller_no = s.id
+        LEFT JOIN inventory i ON i.id = o.inventory_no
+        WHERE o.cus_no = #{cus_no} AND o.status = 5
+        ORDER BY o.order_date DESC
+    </select>
+
+    <!-- 작성 할 리뷰 상품 정보 -->
+    <select id="select_review_product" resultType="user.vo.customer.OrderVO" parameterType="map">
+        SELECT s.name AS brand, p.prod_code AS prod_code, p.name AS prod_name, p.price AS prod_price, p.sale AS prod_sale,
+        p.prod_image AS prod_image, p.saled_price AS prod_saled_price, i.option_name AS option_name, o.*
+        FROM `order` o
+        INNER JOIN product p ON o.prod_no = p.id
+        INNER JOIN seller s ON p.seller_no = s.id
+        LEFT JOIN inventory i ON i.id = o.inventory_no
+        WHERE o.cus_no = #{cus_no} AND o.prod_no = #{prod_no} AND o.order_code = #{order_code} AND o.status = 5
+    </select>
 </mapper>
