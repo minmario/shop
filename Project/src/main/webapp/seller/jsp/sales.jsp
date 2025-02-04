@@ -51,7 +51,7 @@
     }
   </style>
 </head>
-<%@ include file="header.jsp" %>
+<%@ include file="layout/header.jsp" %>
 <body>
 <div class="container header-spacing">
   <h1 class="section-title">매출/정산 관리</h1>

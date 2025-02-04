@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>문의사항 게시판</title>
-  <jsp:include page="./layout/header.jsp"/>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     .question-item {
@@ -31,6 +31,7 @@
       text-align: center;
     }
   </style>
+  <jsp:include page="./layout/header.jsp"/>
 </head>
 <body>
 <div class="container mt-5">

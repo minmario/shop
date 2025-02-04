@@ -158,7 +158,7 @@
   </style>
 </head>
 <body>
-<%@ include file="header.jsp" %>
+<%@ include file="layout/header.jsp" %>
 <!-- 네비게이션 바 -->
 
 <div class="container header-spacing">

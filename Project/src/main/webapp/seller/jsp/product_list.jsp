@@ -13,7 +13,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
-    <jsp:include page="./layout/header.jsp"/>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Title</title>
     <meta charset="utf-8">
@@ -65,6 +65,7 @@
             margin-right: 10px;
         }
     </style>
+    <jsp:include page="./layout/header.jsp"/>
 </head>
 <body>
 
