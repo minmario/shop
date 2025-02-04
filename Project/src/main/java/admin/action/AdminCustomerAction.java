@@ -18,9 +18,13 @@ public class AdminCustomerAction implements Action {
         CustomerDao cdao = new CustomerDao();
 
         List<CustomerVO> list = cdao.allCustomer();
+        System.out.println("list:"+list.size());
+
         request.setAttribute("customerList", list);
         List<String> list1 = cdao.allCustomerName();
+
         request.setAttribute("customerName", list1);
+        System.out.println("CC"+list1.size());
 
 
 

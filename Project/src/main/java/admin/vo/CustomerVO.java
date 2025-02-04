@@ -2,7 +2,16 @@ package admin.vo;
 
 public class CustomerVO {
   String id;
-  String grade_code;
+
+  public String getGrade_no() {
+    return grade_no;
+  }
+
+  public void setGrade_no(String grade_no) {
+    this.grade_no = grade_no;
+  }
+
+  String grade_no;
   String cus_id;
   String cus_pw;
   String name;
@@ -26,13 +35,7 @@ public class CustomerVO {
     this.id = id;
   }
 
-  public String getGrade_code() {
-    return grade_code;
-  }
 
-  public void setGrade_code(String grade_code) {
-    this.grade_code = grade_code;
-  }
 
   public String getCus_id() {
     return cus_id;

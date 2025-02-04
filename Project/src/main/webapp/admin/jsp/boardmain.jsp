@@ -103,7 +103,7 @@
         <div class="d-flex justify-content-between align-items-center">
             <h5>게시판 목록</h5>
             <div>
-                <!-- 대분류 추가 버튼, 모달 연결 -->
+                <!-- 게시판 추가 버튼, 모달 연결 -->
                 <button class="btn btn-primary add-user-btn" data-bs-toggle="modal" data-bs-target="#boardModal">게시판 추가</button>
             </div>
         </div>
@@ -117,7 +117,7 @@
                 <select class="form-select" aria-label="Default select example" id="board_name">
                     <c:forEach var="name" items="${boardName}" varStatus="st">
                         <c:if test="${name ne 'id' && name ne 'cus_no' && name ne 'season' && name ne 'prod_no' && name ne 'snapshot_image' && name ne 'additional_images' && name ne 'tags' && name ne 'gender' && name ne 'style' && name ne 'like_count' && name ne 'order_code' && name ne 'type' && name ne 'order_code' && name ne 'type' && name ne 'status' && name ne 'is_del' && name ne 'is_private' }">
-                            <option value="${name}">${name}</option>
+                            <option value="${name}" class="column-name">${name}</option>
                         </c:if>
                     </c:forEach>
 
@@ -143,30 +143,37 @@
             <thead class="table-light">
 
             <tr>
-                <th><input type="checkbox"></th>
+
                 <c:forEach var="name" items="${boardName}">
                     <c:if test="${name ne 'id' && name ne 'cus_no' &&name ne 'season' &&  name ne 'prod_no' && name ne 'snapshot_image' && name ne 'additional_images' && name ne 'tags' && name ne 'gender' && name ne 'style' && name ne 'like_count' && name ne 'order_code' && name ne 'type' && name ne 'order_code' && name ne 'type' && name ne 'status' && name ne 'is_del' && name ne 'is_private' }">
-                        <th>${name}</th>
+                        <th class="column-name">${name}</th>
                     </c:if>
                 </c:forEach>
 
+                <th> </th>
 
-                <th>&nbsp;</th>
             </tr>
             </thead>
             <tbody>
             <c:forEach var ="bl"  items="${boardList}">
-                <tr id="row-${bl.id}">
-                    <td><input type="checkbox"></td>
+                    <%--tr의 해당 레코드를 id로 지정해줘 삭제하면 된다--%>
+                    <tr id="row-${bl.id}">
+
                     <td>${bl.bname}</td>
                     <td>${bl.title}</td>
                     <td>${bl.content}</td>
                     <td>${bl.score}</td>
                     <td>${bl.write_date}</td>
 
+
                     <td>
+
                         <button class="btn btn-secondary add-user-btn" data-bs-toggle="modal" data-bs-target="#deleteBoardModal"
-                                onclick="setBoardInfo('${bl.id}', '${bl.cus_no}')">게시판 삭제</button>
+                                onclick="setBoardInfo('${bl.id}', '${bl.cus_no}')"> 삭제</button>
+                        <button class="btn btn-outline-secondary add-user-btn" data-bs-toggle="modal" data-bs-target="#boardModal">
+                            자세히
+                        </button>
+
                     </td>
                 </tr>
             </c:forEach>
@@ -179,78 +186,12 @@
 
         <hr/><!---------------------------------------------->
 
-        <div class="d-flex justify-content-between align-items-center">
-            <h5>스냅샷 목록</h5>
-            <div>
-                <!-- 대분류 추가 버튼, 모달 연결 -->
-                <button class="btn btn-primary add-user-btn" data-bs-toggle="modal" data-bs-target="#boardprodModal">스냅샷 추가</button>
-            </div>
-        </div>
-
-        <div class="mt-3">
-            <div class="input-group">
-                <!-- 검색 아이콘 -->
-                <span class="input-group-text">
-                    <i class="bi bi-search"></i>
-                </span>
-                <select class="form-select" aria-label="Default select example" id="boardprod_name">
-                    <c:forEach var="name" items="${boardprodName}" varStatus="st">
-                        <c:if test="${name ne 'id'}">
-                            <option value="${name}"><a class="dropdown-item" href="#">${name}</a></option>
-                        </c:if>
-                    </c:forEach>
-
-                </select>
 
 
-                <!-- 검색 입력 -->
-                <input type="text" class="form-control" placeholder="검색할 열을 선택" aria-label="Search" id="boardprod_word">
-                <!-- 드롭다운 버튼 -->
-                <button class="btn btn-outline-secondary" type="button" aria-expanded="false" id="boardprod_search_btn">
-                    검색
-                </button>
-                <!-- 드롭다운 메뉴 -->
-                <%--<ul class="dropdown-menu dropdown-menu-end">
-                    <c:forEach var="name" items="${majorcategoryName}" begin="1">
-                        <li><a class="dropdown-item" href="#">${name}</a></li>
-                    </c:forEach>
-                </ul>--%>
-            </div>
-        </div>
-
-        <table class="table mt-3" id="boardprod_table">
-            <thead class="table-light">
-
-            <tr>
-                <th><input type="checkbox"></th>
-                <c:forEach var="name" items="${boardprodName}">
-                    <c:if test="${name ne 'id'}">
-                        <th>${name}</th>
-                    </c:if>
-                </c:forEach>
 
 
-                <th>&nbsp;</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach var ="bpl"  items="${boardprodList}">
-                <tr>
-                    <td><input type="checkbox"></td>
-
-                    <td>${bpl.board_no}</td>
-                    <td>${bpl.prod_no}</td>
 
 
-                    <td><button class="btn btn-primary add-user-btn" data-bs-toggle="modal" data-bs-target="#rejectModal">게시판 삭제 사유</button>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-
-        <div class="mt-3 mb-4">
-            <button class="btn btn-outline-secondary">초기화</button>
-        </div>
     </div>
 
 
@@ -303,27 +244,9 @@
           });
         });
       });
-      $(function () {
-        $("#boardprod_search_btn").click(function () {
-          //검색버튼을 클릭할 때마다 수행하는 곳
-          let category_name = $("#boardprod_name").val();
-          let word = $("#boardprod_word").val();
-          alert(category_name + "/" + word);
-          let param = "type=searchBoardProd&searchType=" +
-              encodeURIComponent(category_name) +
-              "&searchValue=" + encodeURIComponent(word);
-          //비동기식 통신
-          $.ajax({
-            url: "Controller",
-            type: "POST",
-            data: param,
-          }).done(function (data) {
-            $("#boardprod_table tbody").html(data);
-          });
-        });
-      });
 
-        $(document).ready(function () {
+
+        $(document).ready(function () {<%--폼태그--%>
         $("#deleteBoardForm").submit(function (event) {
           event.preventDefault(); // 기본 form 제출 막기
 
@@ -345,12 +268,17 @@
               cus_no: cusNo,
               content: content
             },
-            dataType: "json",
+            dataType: "json", <%--보내지는 데이터 타입--%>
+              <%--삭제의 경우 기존 값에서 하나의 행만 지우는 식이로 해야해서 이렇게 했다--%>
+              <%--삭제시 반드시 1로 만들어준다-->
+              <%--추가는 전부 불러오는 방식으로 하길 권장한다--%>
+              <%--spring에서도 자주 사용하니 반드시 알아야한다--%>
+
             success: function (response) {
               if (response.status === "success") {
                 console.log("삭제 성공:", response);
 
-
+                <%--테이블의 열의 id를 레코드를 삭제--%>
                 $("#row-" + response.deletedId).remove();
 
 
@@ -377,6 +305,25 @@
         $("#deleteBoardId").val(boardId);
         $("#deleteBoardCusNo").val(cusNo);
       }
+      const columnTranslations = {
+          'bname': '종류',
+          'title': `제목`,
+          'content': '내용',
+          'score': '점수',
+          'write_date': '작성일자'
+      };
+
+      // 페이지 로딩 후 컬럼 이름을 한국어로 변환
+      document.addEventListener('DOMContentLoaded', function() {
+          const columnElements = document.querySelectorAll('.column-name'); // 'column-name' 클래스를 가진 요소들
+
+          columnElements.forEach(element => {
+              const columnName = element.innerText.trim();
+              if (columnTranslations[columnName]) {
+                  element.innerText = columnTranslations[columnName];  // 한국어로 번역
+              }
+          });
+      });
 
 
 

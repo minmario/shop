@@ -15,6 +15,7 @@ public class AdminDeleteBoardAction implements Action {
   public String execute(HttpServletRequest request, HttpServletResponse response) {
 
     try {
+      //json으로 받은모습
       String content = request.getParameter("content");
       int id = Integer.parseInt(request.getParameter("id"));
       String cus_no = request.getParameter("cus_no");
@@ -39,12 +40,13 @@ public class AdminDeleteBoardAction implements Action {
 
       int data = boardDao.logininsert(log);
 
-
+      //json형태로 response에다가 분기점 값을 체크 해주고
       response.setContentType("application/json");
       response.setCharacterEncoding("UTF-8");
       PrintWriter out = response.getWriter();
 
       JSONObject jsonResponse = new JSONObject();
+      //값을 보내준다(json형태로 )
       jsonResponse.put("status", chk ? "success" : "fail");
       jsonResponse.put("deletedId", id);
       jsonResponse.put("message", chk ? "삭제 성공" : "삭제 실패");

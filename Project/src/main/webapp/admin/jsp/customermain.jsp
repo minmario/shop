@@ -142,26 +142,23 @@
         <table class="table mt-3" id="customer_table">
             <thead class="table-light">
             <tr>
-                <th><input type="checkbox"></th>
+
+
                 <c:forEach var="name" items="${customerName}">
-                    <c:if test="${name ne 'id' && name ne 'profile_image'}">
-                            <th class="column-name" >${name}</th>
-
-
+                    <c:if test="${name ne 'id' &&name ne 'cus_pw'&&name ne 'profile_image'&& name ne 'is_del'}">
+                        <th class="column-name">${name}</th>
                     </c:if>
                 </c:forEach>
-                <th>&nbsp;</th>
+
             </tr>
             </thead>
             <tbody>
             <c:forEach var ="cusl"  items="${customerList}">
-
-
             <tr>
-                <td><input type="checkbox"></td>
-                <td>${cusl.grade_code}</td>
+
+                <td>${cusl.grade_no}</td>
                 <td>${cusl.cus_id}</td>
-                <td>${cusl.cus_pw}</td>
+
                 <th>${cusl.name}</th>
                 <td>${cusl.nickname}</td>
                 <td>${cusl.gender}</td>
@@ -174,11 +171,9 @@
                 <td>${cusl.height}</td>
                 <td>${cusl.total}</td>
                 <td>${cusl.grade_expire_date}</td>
-                <td>${cusl.is_del}</td>
+
             </tr>
             </c:forEach>
-
-
             </tbody>
 
         </table>
@@ -215,7 +210,7 @@
         });
     });
     const columnTranslations = {
-        'grade_code': '등급코드',
+        'grade_no': '등급코드',
         'cus_id': '사용자 id',
         'cus_pw': '사용자 pw',
         'name': '이름',
