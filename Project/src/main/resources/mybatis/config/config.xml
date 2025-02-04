@@ -15,19 +15,19 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="mybatis/mapper/customer.xml"/>
-        <mapper resource="mybatis/mapper/delivery.xml"/>
-        <mapper resource="mybatis/mapper/category.xml"/>
-        <mapper resource="mybatis/mapper/product.xml"/>
-        <mapper resource="mybatis/mapper/point.xml"/>
-        <mapper resource="mybatis/mapper/log.xml"/>
-        <mapper resource="mybatis/mapper/inquiry.xml"/>
-        <mapper resource="mybatis/mapper/question.xml"/>
-        <mapper resource="mybatis/mapper/cart.xml"/>
-        <mapper resource="mybatis/mapper/order.xml"/>
-        <mapper resource="mybatis/mapper/prod_like.xml"/>
-        <mapper resource="mybatis/mapper/grade.xml"/>
-        <mapper resource="mybatis/mapper/coupon.xml"/>
-        <mapper resource="mybatis/mapper/event.xml"/>
+        <mapper resource="mybatis/mapper/customer/customer.xml"/>
+        <mapper resource="mybatis/mapper/customer/delivery.xml"/>
+        <mapper resource="mybatis/mapper/customer/category.xml"/>
+        <mapper resource="mybatis/mapper/customer/product.xml"/>
+        <mapper resource="mybatis/mapper/customer/point.xml"/>
+        <mapper resource="mybatis/mapper/customer/log.xml"/>
+        <mapper resource="mybatis/mapper/customer/inquiry.xml"/>
+        <mapper resource="mybatis/mapper/customer/question.xml"/>
+        <mapper resource="mybatis/mapper/customer/cart.xml"/>
+        <mapper resource="mybatis/mapper/customer/order.xml"/>
+        <mapper resource="mybatis/mapper/customer/prod_like.xml"/>
+        <mapper resource="mybatis/mapper/customer/grade.xml"/>
+        <mapper resource="mybatis/mapper/customer/coupon.xml"/>
+        <mapper resource="mybatis/mapper/customer/event.xml"/>
     </mappers>
 </configuration>
