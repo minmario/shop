@@ -218,7 +218,7 @@
     margin-top: 10px;
 }
 
-.item-price, .payment-price .final-price, .payment-amount {
+.item-price, .payment-price, .final-price, .payment-amount {
     font-weight: bold;
 }
 

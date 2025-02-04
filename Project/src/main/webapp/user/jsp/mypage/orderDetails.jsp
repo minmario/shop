@@ -132,7 +132,7 @@
                                     <li><span>할인 금액</span> <span class="discount">-<fmt:formatNumber value="${discountAmount}"/>원</span></li><br/>
 
                                     <c:if test="${requestScope.coupon_list ne null}">
-                                        <li><span>쿠폰 할인</span></li>
+                                        <h5>쿠폰 할인</h5>
                                         <c:set var="couponDiscount" value="0" />
                                         <c:forEach var="coupon" items="${requestScope.coupon_list}">
                                             <c:set var="individualDiscount" value="${priceAfterDiscount * (coupon.sale_per / 100)}" />
@@ -142,20 +142,20 @@
                                             <span>-<fmt:formatNumber value="${individualDiscount}" type="number" maxFractionDigits="0" />원</span>
                                         </li>
                                         </c:forEach>
-                                        <li><span>총 쿠폰 할인</span> <span class="coupon-discount discount">-<fmt:formatNumber value="${couponDiscount}" />원</span></li><br/>
+                                        <li><span>총 쿠폰 할인</span> <span class="coupon-discount discount">-<fmt:formatNumber value="${couponDiscount}" type="number" maxFractionDigits="0" />원</span></li><br/>
                                         <li><span>적립금 사용</span> <span class="points-amount discount">-<fmt:formatNumber value="${pointAmount}"/>원</span></li>
                                     </c:if>
                                     <li class="total">
                                         <!-- 3. 쿠폰 할인 금액을 차감한 후 적립금 사용 금액을 차감 -->
                                         <c:set var="finalPrice" value="${priceAfterDiscount - couponDiscount - pointAmount}" />
                                         <span class="payment-price">결제 금액</span>
-                                        <span class="final-price"><fmt:formatNumber value="${finalPrice}"/>원</span>
+                                        <span class="final-price"><fmt:formatNumber value="${finalPrice}" type="number" maxFractionDigits="0"/>원</span>
                                     </li>
                                     <li><span>결제 수단</span>
                                         <c:choose>
                                             <c:when test="${requestScope.o_list[0].pay_type == '1'}"><span class="payment-method">계좌이체-[${requestScope.o_list[0].order_bank}]${requestScope.o_list[0].order_account}</span></c:when>
-                                            <c:when test="${requestScope.o_list[0].pay_type == '2'}"><span class="payment-method">카카오페이</span></c:when>
-                                            <c:when test="${requestScope.o_list[0].pay_type == '3'}"><span class="payment-method">토스페이</span></c:when>
+                                            <c:when test="${requestScope.o_list[0].pay_type == '2'}"><span class="payment-method">토스페이</span></c:when>
+                                            <c:when test="${requestScope.o_list[0].pay_type == '3'}"><span class="payment-method">카카오페이</span></c:when>
                                             <c:when test="${requestScope.o_list[0].pay_type == '4'}"><span class="payment-method">카드-${requestScope.o_list[0].card_name}</span></c:when>
                                         </c:choose>
                                     </li>
@@ -178,7 +178,7 @@
                                     <!-- 받은 총 혜택 계산 -->
                                     <c:set var="gradeBenefit" value="${finalPrice * (requestScope.grade.point_condition / 100)}" />
                                     <c:set var="totalBenefits" value="${totalDiscount + gradeBenefit}" />
-                                    <li><span>총 할인 금액</span> <span><fmt:formatNumber value="${totalDiscount}"/>원</span></li>
+                                    <li><span>총 할인 금액</span> <span><fmt:formatNumber value="${totalDiscount}" type="number" maxFractionDigits="0"/>원</span></li>
                                     <li><span>[${requestScope.grade.name}] ${requestScope.grade.point_condition}% 적립</span> <fmt:formatNumber value="${gradeBenefit}" type="number" maxFractionDigits="0"/>원</span></li>
                                     <li><span>배송비</span> <span>무료</span></li>
                                     <li class="total-benefits"><span class="result-benefits">받은 총 혜택</span> <span><fmt:formatNumber value="${totalBenefits}" type="number" maxFractionDigits="0"/>원</span></li>

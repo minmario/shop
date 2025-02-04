@@ -157,7 +157,7 @@
 
     <!-- 주문 시 사용한 쿠폰 내용 가져오기(orderDetails) -->
     <select id="select_order_coupon_list" resultType="user.vo.OrderVO" parameterType="map">
-        SELECT c.name AS coupon_name, c.sale_per AS sale_per
+        SELECT DISTINCT c.name AS coupon_name, c.sale_per AS sale_per
         FROM `order` o
         INNER JOIN coupon c ON o.coupon_no = c.id
         INNER JOIN cus_coupon cc ON cc.coupon_no = c.id
