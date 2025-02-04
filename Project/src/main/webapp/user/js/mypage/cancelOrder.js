@@ -27,6 +27,9 @@ function getSelectedCancelReason() {
 }
 
 function cancelRequest() {
+    // 상품의 order_id 가져오기
+    const order_id = $('input[name="order_id"]').val();
+
     // 상품의 prod_no 가져오기
     const prodNo = $('input[name="prod_no"]').val();
 
@@ -88,6 +91,7 @@ function cancelRequest() {
         url: 'Controller?type=cancelOrder&action=update',
         type: 'POST',
         data: {
+            order_id: order_id,
             prod_no: prodNo,
             reason: reason,
             bank: bank || null,

@@ -38,11 +38,11 @@
                                 <!-- 교환 상품 정보 -->
                                 <section class="wrap-product">
                                     <div class="product-content">
+                                        <input type="hidden" name="id" value="${o_vo.id}"/>
                                         <input type="hidden" name="prod_no" value="${o_vo.prod_no}"/>
                                         <input type="hidden" name="inventory_no" value="${o_vo.inventory_no}"/>
                                         <input type="hidden" name="orderCode" value="${o_vo.order_code}"/>
                                         <input type="hidden" name="order_count" value="${o_vo.count}"/>
-                                        <input type="hidden" name="current_option" value="${o_vo.option_name}"/>
                                         <img src="${fn:split(o_vo.prod_image, ',')[0]}" alt="상품 이미지" class="product-img">
                                         <div class="product-detail">
                                             <span>${o_vo.brand}</span><br/>

@@ -42,6 +42,7 @@
                             <div class="cancel-order-container">
                                 <h5>취소 상품</h5>
                                 <div class="product-item">
+                                    <input type="hidden" name="order_id" value="${o_vo.id}">
                                     <input type="hidden" id="orderCode" value="${o_vo.order_code}">
                                     <input type="hidden" name="prod_no" value="${o_vo.prod_no}"/>
                                     <input type="hidden" id="cancel-point-used" value="${o_vo.point_amount}"/>
@@ -107,6 +108,7 @@
                                             <c:set var="prodPrice" value="${o_vo.amount}" />
                                             <c:set var="pointUsed" value="${not empty o_vo.point_amount ? o_vo.point_amount : '0'}" />
                                             <c:set var="prodCount" value="${o_vo.count}" />
+                                            <c:set var="coupon" value="${requestScope.coupon}"/>
 
                                                 <%-- 숫자만 추출하여 int형으로 변환 --%>
                                             <c:set var="prodPriceInt" value="${fn:replace(prodPrice, ',', '')}" />
@@ -115,18 +117,29 @@
                                             <!-- 상품 가격에 수량을 곱하여 총 결제 금액 계산 -->
                                             <c:set var="totalPrice" value="${prodPriceInt * prodCount}" />
 
-                                            <!-- 환불 예정 금액 계산 (총 결제 금액 - 적립금) -->
-                                            <c:set var="refundAmount" value="${totalPrice - pointUsedInt}" />
                                             <li><span>상품 결제 금액</span><span class="cancel-item-price"><fmt:formatNumber value="${totalPrice}"/>원</span></li>
-                                            <li><span>적립금 사용</span><span class="cancel-point-amount"><fmt:formatNumber value="${pointUsedInt}"/>원</span></li>
-                                            <li><span>기본 배송비</span><span>무료</span></li>
-                                            <li><span>환불 예정 금액</span><span class="cancel-refund-amount"><fmt:formatNumber value="${refundAmount}"/>원</span></li>
+
+                                            <c:if test="${o_vo.point_amount ne null}">
+                                                <li><span>적립금 사용</span><span class="cancel-item-price"><fmt:formatNumber value="${pointUsed}"/>원</span></li>
+                                            </c:if>
+
+                                            <c:if test="${coupon ne null}">
+                                            <li>
+                                                <c:set var="couponDiscount" value="${totalPrice * (coupon.sale_per / 100)}" />
+                                                <span>쿠폰 사용</span><br/>
+                                                <span class="cancel-coupon-info">${coupon.coupon_name} (${coupon.sale_per}%)</span>
+                                                <span class="cancel-coupon">-<fmt:formatNumber value="${couponDiscount}" type="number" maxFractionDigits="0"/>원</span>
+                                            </li>
+                                            </c:if>
+
+                                            <!-- 환불 예정 금액 계산 (총 결제 금액 - 적립금 - 쿠폰) -->
+                                            <c:set var="refundAmount" value="${totalPrice - pointUsedInt - couponDiscount}" />
+                                            <li><span>환불 예정 금액</span><span class="cancel-refund-amount"><fmt:formatNumber value="${refundAmount}" type="number" maxFractionDigits="0"/>원</span></li>
                                         </ul>
                                     </div>
                                 </c:if>
                                 <div class="notice">
                                     <p>결제 시 사용한 적립금 및 할인 쿠폰은 취소 완료 즉시 반환됩니다.</p>
-                                    <p>가상계좌(무통장입금)의 경우 최근 7일 이내 3회 이상 주문취소 시 결제수단 이용에 제한이 될 수 있습니다.</p>
                                 </div>
                                 <div class="cancel-button-container">
                                     <button type="button" class="btn btn-dark cancel-request-btn" onclick="cancelRequest()">취소 요청하기</button>

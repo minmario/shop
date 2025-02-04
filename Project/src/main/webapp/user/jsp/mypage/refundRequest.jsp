@@ -42,6 +42,7 @@
                                 <section class="wrap-product">
                                     <div class="wrap-product-content">
                                         <div class="product-content">
+                                            <input type="hidden" name="order_id" value="${o_vo.id}"/>
                                             <input type="hidden" name="prod_no" value="${o_vo.prod_no}"/>
                                             <input type="hidden" id="point-used" value="${o_vo.point_amount}"/>
                                             <input type="hidden" name="orderCode" value="${o_vo.order_code}"/>
@@ -123,9 +124,10 @@
                                         <span class="bold">환불 정보</span><br/>
                                         <ul>
                                                 <%-- 상품 결제 금액 및 적립금 사용 값 변환 및 계산 --%>
-                                            <c:set var="prodPrice" value="${not empty o_vo.prod_saled_price ? o_vo.prod_saled_price : o_vo.prod_price}" />
+                                            <c:set var="prodPrice" value="${o_vo.amount}" />
                                             <c:set var="pointUsed" value="${not empty o_vo.point_amount ? o_vo.point_amount : '0'}" />
                                             <c:set var="prodCount" value="${o_vo.count}" />
+                                            <c:set var="coupon" value="${requestScope.coupon}"/>
 
                                                 <%-- 숫자만 추출하여 int형으로 변환 --%>
                                             <c:set var="prodPriceInt" value="${fn:replace(prodPrice, ',', '')}" />
@@ -134,12 +136,26 @@
                                             <!-- 상품 가격에 수량을 곱하여 총 결제 금액 계산 -->
                                             <c:set var="totalPrice" value="${prodPriceInt * prodCount}" />
 
-                                            <!-- 환불 예정 금액 계산 (총 결제 금액 - 적립금) -->
-                                            <c:set var="refundAmount" value="${totalPrice - pointUsedInt}" />
                                             <li><span>상품 결제 금액</span><span class="item-price"><fmt:formatNumber value="${totalPrice}"/>원</span></li>
-                                            <li><span>적립금 사용</span><span class="points-used"><fmt:formatNumber value="${pointUsedInt}"/>원</span></li>
+
+                                            <c:if test="${o_vo.point_amount ne null}">
+                                                <li><span>적립금 사용</span><span class="cancel-point-used"><fmt:formatNumber value="${pointUsed}"/>원</span></li>
+                                            </c:if>
+
+                                            <c:if test="${coupon ne null}">
+                                                <li>
+                                                    <c:set var="couponDiscount" value="${totalPrice * (coupon.sale_per / 100)}" />
+                                                    <span>쿠폰 사용</span><br/>
+                                                    <span class="cancel-coupon-info">${coupon.coupon_name} (${coupon.sale_per}%)</span>
+                                                    <span class="cancel-coupon">-<fmt:formatNumber value="${couponDiscount}" type="number" maxFractionDigits="0"/>원</span>
+                                                </li>
+                                            </c:if>
+
                                             <li><span>기본 배송비</span><span>무료</span></li>
-                                            <li><span>환불 예정 금액</span><span class="refund-amount"><fmt:formatNumber value="${refundAmount}"/>원</span></li>
+
+                                            <!-- 환불 예정 금액 계산 (총 결제 금액 - 적립금 - 쿠폰) -->
+                                                    <c:set var="refundAmount" value="${totalPrice - pointUsedInt - couponDiscount}" />
+                                            <li><span>환불 예정 금액</span><span class="refund-amount"><fmt:formatNumber value="${refundAmount}" type="number" maxFractionDigits="0"/>원</span></li>
                                         </ul>
                                     </div>
                                     <!-- 반품요청 버튼-->
