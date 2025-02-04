@@ -322,16 +322,16 @@ public class OrderAction implements Action {
                                         PointDAO.insertUsePoint(u_pvo);
                                     }
 
-                                    // DB point 테이블, 적립할 적립금 저장
-                                    String i_save_point = (String) session.getAttribute("save_point");
-                                    if (i_save_point != null && !i_save_point.equals("0")) {
-                                        PointVO s_pvo = new PointVO();
-                                        s_pvo.setCus_no(cvo.getId());
-                                        s_pvo.setAmount(i_save_point);
-                                        s_pvo.setOrder_code(order_code);
-                                        s_pvo.setP_type("0");
-                                        PointDAO.insertUsePoint(s_pvo);
-                                    }
+//                                    // DB point 테이블, 적립할 적립금 저장
+//                                    String i_save_point = (String) session.getAttribute("save_point");
+//                                    if (i_save_point != null && !i_save_point.equals("0")) {
+//                                        PointVO s_pvo = new PointVO();
+//                                        s_pvo.setCus_no(cvo.getId());
+//                                        s_pvo.setAmount(i_save_point);
+//                                        s_pvo.setOrder_code(order_code);
+//                                        s_pvo.setP_type("0");
+//                                        PointDAO.insertUsePoint(s_pvo);
+//                                    }
 
                                     // DB 장바구니 테이블 삭제
                                     cartItems = (List<CartVO>) session.getAttribute("cartItems");
