@@ -132,14 +132,14 @@
             </div>
         </div>
 
-        <table class="table mt-3" id="major_category_table">
+        <table class="table mt-3" id="major_category_table categoryTable">
             <thead class="table-light">
 
             <tr>
                 <th><input type="checkbox"></th>
                 <c:forEach var="name" items="${majorcategoryName}">
                     <c:if test="${name ne 'id'}">
-                    <th class="column-name">${name}</th>
+                        <th class="column-name">${name}</th>
                     </c:if>
                 </c:forEach>
 
@@ -147,16 +147,16 @@
                 <th>&nbsp;</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="categoryBody">
             <c:forEach var ="mcl"  items="${majorcategoryList}">
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>${mcl.name}</td>
-                <td>${mcl.ename}</td>
-                <td>${mcl.type}</td>
-                <td>
-                    <button class="btn btn-secondary add-user-btn" data-bs-toggle="modal" data-bs-target="#rejectModal">대분류 삭제</button>
-            </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>${mcl.name}</td>
+                    <td>${mcl.ename}</td>
+                    <td>${mcl.type}</td>
+                    <td>
+                        <button class="btn btn-secondary add-user-btn" data-bs-toggle="modal" data-bs-target="#rejectModal">대분류 삭제</button>
+                </tr>
             </c:forEach>
             </tbody>
         </table>
@@ -241,10 +241,10 @@
                 <h5 class="modal-title" id="mainCategoryModalLabel">대분류 설정</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="categoryForm" action="Controller" method="POST">
-            <div class="modal-body">
+            <form id="addCategoryForm" action="Controller" method="POST">
+                <div class="modal-body">
 
-                    <input type="hidden" name="type" value="addMajorCategory">  <!-- type 파라미터 전달 -->
+                    <!-- type 파라미터 전달 -->
                     <div class="row mb-3">
                         <div class="col-md-2 fw-bold">대분류 명</div>
                         <div class="col-md-6">
@@ -259,11 +259,11 @@
                     </div>
 
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                <button type="button" class="btn btn-primary" id="saveButton">저장</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button type="submit" class="btn btn-primary" id="saveButton">저장</button>
+                </div>
             </form>
         </div>
     </div>
@@ -333,89 +333,139 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script>
-    $(function () {
-        $("#major_search_btn").click(function () {
-            //검색버튼을 클릭할 때마다 수행하는 곳
-            let category_name = $("#major_category_name").val();
-            let word = $("#major_word").val();
-            alert(category_name + "/" + word);
-            let param = "type=searchMajorCategory&searchType=" +
-                encodeURIComponent(category_name) +
-                "&searchValue=" + encodeURIComponent(word);
-            //비동기식 통신
-            $.ajax({
-                url: "Controller",
-                type: "POST",
-                data: param,
-            }).done(function (data) {
-                $("#major_category_table tbody").html(data);
-            });
-        });
-
-        $("#middle_search_btn").click(function () {
-            //검색버튼을 클릭할 때마다 수행하는 곳
-            let category_name = $("#middle_category_name").val();
-            let word = $("#middle_word").val();
-            alert(category_name + "/" + word);
-            let param = "type=searchMiddleCategory&searchType=" +
-                encodeURIComponent(category_name) +
-                "&searchValue=" + encodeURIComponent(word);
-            //비동기식 통신
-            $.ajax({
-                url: "Controller",
-                type: "POST",
-                data: param,
-            }).done(function (data) {
-                $("#middle_category_table tbody").html(data);
-            });
-        });
-
-
-
-
+  $(function () {
+    $("#major_search_btn").click(function () {
+      //검색버튼을 클릭할 때마다 수행하는 곳
+      let category_name = $("#major_category_name").val();
+      let word = $("#major_word").val();
+      alert(category_name + "/" + word);
+      let param = "type=searchMajorCategory&searchType=" +
+          encodeURIComponent(category_name) +
+          "&searchValue=" + encodeURIComponent(word);
+      //비동기식 통신
+      $.ajax({
+        url: "Controller",
+        type: "POST",
+        data: param,
+      }).done(function (data) {
+        $("#major_category_table tbody").html(data);
+      });
     });
-    const columnTranslations = {
-        'id': '아이디',
-        'name': '이름',
-        'ename': '영문 이름',
-        'type': '타입',
-        'major_no': '대분류 번호'
-    };
 
-    // 페이지 로딩 후 컬럼 이름을 한국어로 변환
-    document.addEventListener('DOMContentLoaded', function() {
-        const columnElements = document.querySelectorAll('.column-name'); // 'column-name' 클래스를 가진 요소들
-
-        columnElements.forEach(element => {
-            const columnName = element.innerText.trim();
-            if (columnTranslations[columnName]) {
-                element.innerText = columnTranslations[columnName];  // 한국어로 번역
-            }
-        });
+    $("#middle_search_btn").click(function () {
+      //검색버튼을 클릭할 때마다 수행하는 곳
+      let category_name = $("#middle_category_name").val();
+      let word = $("#middle_word").val();
+      alert(category_name + "/" + word);
+      let param = "type=searchMiddleCategory&searchType=" +
+          encodeURIComponent(category_name) +
+          "&searchValue=" + encodeURIComponent(word);
+      //비동기식 통신
+      $.ajax({
+        url: "Controller",
+        type: "POST",
+        data: param,
+      }).done(function (data) {
+        $("#middle_category_table tbody").html(data);
+      });
     });
 
 
 
-    $("#saveButton").click(function () {
-        let name = $("#categoryName").val().trim();
-        let ename = $("#categoryEname").val().trim();
+
+  });
+  const columnTranslations = {
+    'id': '아이디',
+    'name': '이름',
+    'ename': '영문 이름',
+    'type': '타입',
+    'major_no': '대분류 번호'
+  };
+
+  // 페이지 로딩 후 컬럼 이름을 한국어로 변환
+  document.addEventListener('DOMContentLoaded', function() {
+    const columnElements = document.querySelectorAll('.column-name'); // 'column-name' 클래스를 가진 요소들
+
+    columnElements.forEach(element => {
+      const columnName = element.innerText.trim();
+      if (columnTranslations[columnName]) {
+        element.innerText = columnTranslations[columnName];  // 한국어로 번역
+      }
+    });
+  });
 
 
-        // 입력값 검증
-        if (!name || !ename ) {
-            alert("모든 항목을 입력해주세요!");
-            return;
+
+  $("#saveButton").click(function () {
+    let name = $("#categoryName").val().trim();
+    let ename = $("#categoryEname").val().trim();
+
+
+    // 입력값 검증
+    if (!name || !ename ) {
+      alert("모든 항목을 입력해주세요!");
+      return;
+    }
+
+    // type을 정수로 변환
+
+
+    // 폼을 제출합니다.
+    // $("#categoryForm").submit();
+
+    // 모달 닫기
+    $("#mainCategoryModal").modal("hide");
+  });
+
+
+  //제홍씨 추가한부분이에요 추가 비동기
+  $(document).ready(function () {
+    $("#addCategoryForm").submit(function (event) {
+      event.preventDefault();
+      $.ajax({
+        type: "POST",
+        url: "Controller?type=addMajorCategory",
+        data: $(this).serialize(),
+        dataType: "json",
+        success: function (response) {
+          if (response.success) {
+            let name = $("input[name='name']").val();
+            console.log(name)
+            let ename = $("input[name='ename']").val();
+            console.log(ename)
+
+            let newRow = `
+                       <tr>
+                            <td><input type="checkbox"></td>
+                            <td>` + name + `</td>
+                            <td>` + ename + `</td>
+                            <td></td>
+                            <td>
+                                <button class="btn btn-secondary add-user-btn" data-bs-toggle="modal" data-bs-target="#rejectModal">대분류 삭제</button>
+                            </td>
+                        </tr>
+                    `;
+
+
+
+
+
+            $("#categoryBody").append(newRow);
+
+
+            $("input[name='name']").val('');
+            $("input[name='ename']").val('');
+          } else {
+            alert("카테고리 추가 실패!");
+          }
+        },
+        error: function () {
+          alert("서버 오류 발생!");
         }
-
-        // type을 정수로 변환
-
-
-        // 폼을 제출합니다.
-        $("#categoryForm").submit();
-
-        // 모달 닫기
-        $("#mainCategoryModal").modal("hide");
+      });
     });
+  });
+
 
 </script>
 
