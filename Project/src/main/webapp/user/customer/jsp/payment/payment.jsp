@@ -79,6 +79,7 @@
                                                         <c:set var="total_amount" value="${total_amount + (item.price * item.count)}"/>
                                                     </c:otherwise>
                                                 </c:choose>
+                                                <input type="hidden" class="prod_point" data-points="points" value="${(item.price * item.count) * (sessionScope.customer_info.point_condition / 100)}"/>
                                             </p>
                                         </div>
                                         <button type="button" class="btn btn-outline-secondary coupon-btn" onclick="onShowCouponModal(${item.id}, ${item.prod_no})">쿠폰 사용</button>
@@ -120,7 +121,7 @@
                                         <input type="radio" name="reward" value="earn" onclick="toggleRewardDisplay(this)" checked> 구매 적립
                                     </label>
                                     <span id="reward-earn" class="text-blue">
-                                        <fmt:formatNumber value="${total_amount * (requestScope.grade.point_condition / 100)}"/>원 적립
+                                        <fmt:formatNumber value="${total_amount * (sessionScope.customer_info.point_condition / 100)}"/>원 적립
                                     </span>
                                 </div>
                                 <div class="reward-item">
@@ -128,7 +129,7 @@
                                         <input type="radio" name="reward" value="discount" onclick="toggleRewardDisplay(this)"> 적립금 선할인
                                     </label>
                                     <span id="reward-discount" class="text-blue" style="display:none;">
-                                        - <fmt:formatNumber value="${total_amount * (requestScope.grade.point_condition / 100)}"/>원
+                                        - <fmt:formatNumber value="${total_amount * (sessionScope.customer_info.point_condition / 100)}"/>원
                                     </span>
                                 </div>
                             </div>
@@ -182,14 +183,10 @@
                                 </span>
                             </div>
                             <ul>
-                                <c:if test="${not empty requestScope.grade}">
+                                <c:if test="${not empty sessionScope.customer_info}">
                                     <li>
-                                        <span>${requestScope.grade.name} · ${requestScope.grade.point_condition}% 적립</span>
+                                        <span>${sessionScope.customer_info.grade_name} · ${sessionScope.customer_info.point_condition}% 적립</span>
                                         <span id="total-save-point"></span>
-                                    </li>
-                                    <li>
-                                        <span>후기 적립금</span>
-                                        <span>최대 <fmt:formatNumber value="${total_amount * 0.1}"/>원</span>
                                     </li>
                                 </c:if>
                             </ul>
@@ -383,28 +380,6 @@
                                 <ul class="reward-list">
                                     <li>상품 구매 시 지급되는 등급별 적립금의 총합으로, 선할인 미적용 시 적립됩니다.</li>
                                     <li>일부 적립 불가한 상품이 있을 수 있습니다.</li>
-                                </ul>
-                            </div>
-                            <div class="reward-section purchase-additional-reward">
-                                <div class="reward-title">구매 추가 적립</div>
-                                <ul class="reward-list">
-                                    <li>상품 구매 시 등급 적립 외 추가적으로 지급되는 적립금입니다.</li>
-                                    <li>일부 적립 불가한 상품이 있을 수 있습니다.</li>
-                                </ul>
-                            </div>
-                            <div class="reward-section review-reward">
-                                <div class="reward-title">후기 적립</div>
-                                <ul class="reward-list">
-                                    <li>작성 가능한 모든 후기 작성 시 지급되는 적립금의 총합입니다.</li>
-                                    <li>상품에 따라 적립 금액은 상이할 수 있습니다.</li>
-                                </ul>
-                            </div>
-                            <div class="reward-section review-additional-reward">
-                                <div class="reward-title">후기 추가 적립</div>
-                                <ul class="reward-list">
-                                    <li>일부 상품 선착순 구매 시 추가 지급되는 후기 적립금의 총합입니다.</li>
-                                    <li>후기 추가 적립 대상자는 구매 선착순으로 선정됩니다.(가상계좌 결제의 경우, 입금 완료 기준)</li>
-                                    <li>후기 추가 적립 대상 여부는 주문내역에서 최종 확인할 수 있으며 최대 1시간 정도 소요될 수 있습니다.</li>
                                 </ul>
                             </div>
                         </div>

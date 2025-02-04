@@ -36,6 +36,7 @@ public class ProfileEditAction implements Action {
                     viewPath = "/user/customer/jsp/mypage/profileEdit.jsp";
                     break;
                 case "select":
+                    // 회원 정보 갱신
                     CustomerVO rvo = CustomerDAO.selectCustomerById(cvo.getId());
                     session.setAttribute("customer_info", rvo);
                     viewPath = "/user/customer/jsp/mypage/components/profile.jsp";

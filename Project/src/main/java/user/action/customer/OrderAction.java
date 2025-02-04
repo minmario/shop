@@ -279,20 +279,18 @@ public class OrderAction implements Action {
                                     for (String cartNo : products.keySet()) {
                                         JSONObject productData = products.getJSONObject(cartNo).getJSONObject("prod");
 
-                                        // amount와 count 값 가져오기
                                         int amount = productData.optInt("amount", 0);
                                         int count = productData.optInt("count", 0);
                                         String a_prod_no = productData.optString("prodNo");
                                         String inventory_no = productData.optString("inventoryNo");
-
-                                        // coupon 값 가져오기 (없을 경우 null 설정)
+                                        String i_point_amount = productData.optString("point") != null && !productData.optString("point").isEmpty() ? productData.optString("point") : "0";
                                         String coupon = products.getJSONObject(cartNo).optString("coupon", null);
-
-                                        // DB order 테이블, 주문 저장
                                         String i_tid = responseJson.optString("tid");
                                         String i_order_code = responseJson.optString("partner_order_id");
                                         String i_deli_no = (String) session.getAttribute("deli_no");
-                                        OrderDAO.insertOrder(i_tid, cvo.getId(), a_prod_no, coupon, i_deli_no, i_order_code, String.valueOf(count), String.valueOf(amount), inventory_no);
+
+                                        // DB order 테이블, 주문 저장
+                                        OrderDAO.insertOrder(i_tid, cvo.getId(), a_prod_no, coupon, i_deli_no, i_order_code, String.valueOf(count), String.valueOf(amount), i_point_amount, inventory_no);
 
                                         // DB customer 테이블, total 수정
                                         CustomerDAO.updateAddTotal(cvo.getId(), String.valueOf(amount));
@@ -321,17 +319,6 @@ public class OrderAction implements Action {
                                         u_pvo.setP_type("1");
                                         PointDAO.insertUsePoint(u_pvo);
                                     }
-
-//                                    // DB point 테이블, 적립할 적립금 저장
-//                                    String i_save_point = (String) session.getAttribute("save_point");
-//                                    if (i_save_point != null && !i_save_point.equals("0")) {
-//                                        PointVO s_pvo = new PointVO();
-//                                        s_pvo.setCus_no(cvo.getId());
-//                                        s_pvo.setAmount(i_save_point);
-//                                        s_pvo.setOrder_code(order_code);
-//                                        s_pvo.setP_type("0");
-//                                        PointDAO.insertUsePoint(s_pvo);
-//                                    }
 
                                     // DB 장바구니 테이블 삭제
                                     cartItems = (List<CartVO>) session.getAttribute("cartItems");

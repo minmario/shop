@@ -190,14 +190,14 @@
                                 <div class="actions">
                                     <c:choose>
                                         <c:when test="${requestScope.product_like ne null}">
-                                            <button class="btn btn-danger like-btn" data-value="${pvo.id}" onclick="handleLike(this)"><i class="bi bi-heart"></i> 좋아요</button>
+                                            <i class="bi bi-heart-fill like-btn" onclick="toggleProdDetailsHeart(this, ${pvo.id})"></i>
                                         </c:when>
                                         <c:otherwise>
-                                            <button class="btn btn-outline-danger like-btn" data-value="${pvo.id}" onclick="handleLike(this)"><i class="bi bi-heart"></i> 좋아요</button>
+                                            <i class="bi bi-heart like-btn" onclick="toggleProdDetailsHeart(this, ${pvo.id})"></i>
                                         </c:otherwise>
                                     </c:choose>
-                                    <button class="btn btn-dark add-to-cart" onclick="insertCart()">장바구니 담기</button>
-                                    <button class="btn btn-dark buy-now" onclick="location.href='Controller?type=order&action=order'">구매하기</button>
+                                    <button class="btn btn-dark add-to-cart" onclick="insertCart()"><i class="bi bi-cart4"></i> 장바구니 담기</button>
+                                    <button class="btn btn-dark buy-now" onclick="location.href='Controller?type=order&action=order'"><i class="bi bi-credit-card"></i> 구매하기</button>
                                 </div>
                             </c:if>
                         </div>

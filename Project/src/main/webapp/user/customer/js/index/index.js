@@ -118,6 +118,31 @@ function notLoginLike() {
     }
 }
 
+// 좋아요 아이콘 클릭 시
+function toggleProdHeart(obj, value) {
+    // 아이콘이 비어 있는 하트인지 확인
+    if (obj.classList.contains('bi-heart')) {
+        // 좋아요 처리 로직 호출
+        likeProduct(value);
+
+        // 하트 채우기로 변경 및 애니메이션 추가
+        obj.classList.remove('bi-heart');
+        obj.classList.add('bi-heart-fill', 'heart-animation', 'heart-active');
+    } else {
+        // 좋아요 취소 처리 로직 호출
+        unlikeProduct(value);
+
+        // 다시 비어 있는 하트로 변경 및 애니메이션 추가
+        obj.classList.remove('bi-heart-fill', 'heart-active');
+        obj.classList.add('bi-heart', 'heart-animation');
+    }
+
+    // 애니메이션이 끝나면 클래스 제거
+    obj.addEventListener('animationend', function () {
+        obj.classList.remove('heart-animation');
+    }, { once: true });
+}
+
 // 좋아요 설정
 function likeProduct(value) {
     $.ajax({

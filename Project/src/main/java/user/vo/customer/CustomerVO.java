@@ -1,7 +1,7 @@
 package user.vo.customer;
 
 public class CustomerVO {
-    private String id, grade_no, cus_id, cus_pw, name, nickname, gender, birth_date, phone, email, profile_image, weight, height, total, grade_expire_date;
+    private String id, grade_no, cus_id, cus_pw, name, nickname, gender, birth_date, phone, email, profile_image, weight, height, total, grade_expire_date, grade_name, point_condition, sale_condition;
 
     public String getId() {
         return id;
@@ -121,5 +121,29 @@ public class CustomerVO {
 
     public void setGrade_expire_date(String grade_expire_date) {
         this.grade_expire_date = grade_expire_date;
+    }
+
+    public String getGrade_name() {
+        return grade_name;
+    }
+
+    public void setGrade_name(String grade_name) {
+        this.grade_name = grade_name;
+    }
+
+    public String getPoint_condition() {
+        return point_condition;
+    }
+
+    public void setPoint_condition(String point_condition) {
+        this.point_condition = point_condition;
+    }
+
+    public String getSale_condition() {
+        return sale_condition;
+    }
+
+    public void setSale_condition(String sale_condition) {
+        this.sale_condition = sale_condition;
     }
 }

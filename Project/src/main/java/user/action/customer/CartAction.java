@@ -66,9 +66,8 @@ public class CartAction implements Action {
                 case "update_count":
                     String u_id = request.getParameter("id");
                     String u_count = request.getParameter("count");
-                    String u_size = request.getParameter("size");
 
-                    if (u_id != null && u_count != null && u_size != null) {
+                    if (u_id != null && u_count != null) {
                         CartVO uvo = new CartVO();
                         uvo.setCus_no(cvo.getId());
                         uvo.setId(u_id);
@@ -138,10 +137,6 @@ public class CartAction implements Action {
                     // 보유 적립금
                     int points = PointDAO.selectSavePoint(cvo.getId());
                     request.setAttribute("points", points);
-
-                    // 사용자 등급
-                    GradeVO gvo = GradeDAO.selectGradeById(cvo.getGrade_no());
-                    request.setAttribute("grade", gvo);
 
                     // 등급 정보
                     List<GradeVO> grades = GradeDAO.selectGradeAll();

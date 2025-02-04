@@ -364,7 +364,7 @@ public class OrderDAO {
     }
 
     // 주문 추가
-    public static int insertOrder(String tid, String cus_no, String prod_no, String coupon_no, String deli_no, String order_code, String count, String amount, String inventory_no) {
+    public static int insertOrder(String tid, String cus_no, String prod_no, String coupon_no, String deli_no, String order_code, String count, String amount, String point_amount, String inventory_no) {
         int cnt = 0;
         SqlSession ss = FactoryService.getFactory().openSession();
         
@@ -378,6 +378,7 @@ public class OrderDAO {
             map.put("order_code", order_code);
             map.put("count", count);
             map.put("amount", amount);
+            map.put("point_amount", point_amount);
             map.put("inventory_no", inventory_no);
 
             cnt = ss.insert("order.insert_order", map);
@@ -394,5 +395,42 @@ public class OrderDAO {
         }
 
         return cnt;
+    }
+
+    // 구매확정 내역 가져오기
+    public static List<OrderVO> selectPurchaseConfirm(String cus_no){
+        SqlSession ss = FactoryService.getFactory().openSession();
+        List<OrderVO> list = null;
+
+        try{
+            list = ss.selectList("order.select_purchase_confirm", cus_no);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return list;
+    }
+
+    // 작성 할 리뷰 상품 정보 가져오기
+    public static OrderVO selectReviewProduct(String cus_no, String prod_no, String order_code){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("cus_no", cus_no);
+        map.put("prod_no", prod_no);
+        map.put("order_code", order_code);
+
+        SqlSession ss = FactoryService.getFactory().openSession();
+        OrderVO vo = null;
+
+        try{
+            vo = ss.selectOne("order.select_review_product", map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return vo;
     }
 }

@@ -125,28 +125,46 @@ function insertCart() {
     });
 }
 
+// 좋아요 아이콘 클릭 시
+function toggleProdDetailsHeart(obj, value) {
+    // 아이콘이 비어 있는 하트인지 확인
+    if (obj.classList.contains('bi-heart')) {
+        // 좋아요 처리 로직 호출
+        settingLike(obj, value, true);
+
+        // 하트 채우기로 변경 및 애니메이션 추가
+        obj.classList.remove('bi-heart');
+        obj.classList.add('bi-heart-fill', 'heart-animation', 'heart-active');
+    } else {
+        // 좋아요 취소 처리 로직 호출
+        settingLike(obj, value, false);
+
+        // 다시 비어 있는 하트로 변경 및 애니메이션 추가
+        obj.classList.remove('bi-heart-fill', 'heart-active');
+        obj.classList.add('bi-heart', 'heart-animation');
+    }
+
+    // 애니메이션이 끝나면 클래스 제거
+    obj.addEventListener('animationend', function () {
+        obj.classList.remove('heart-animation');
+    }, { once: true });
+}
+
 // 좋아요 설정/해제
-function handleLike(obj) {
-    const prod_no = document.getElementById("prod_id").dataset.item;
-
-    // 좋아요 상태
-    const isLiked = obj.classList.contains("btn-outline-danger");
-
+function settingLike(obj, value, isLiked) {
     $.ajax({
         url: isLiked ? "Controller?type=productDetails&action=like" : "Controller?type=productDetails&action=unlike",
         method: "POST",
         data: {
-            prod_no: prod_no
+            prod_no: value
         },
         success: function (response) {
             if (isLiked) {
-                obj.classList.remove("btn-outline-danger");
-                obj.classList.add("btn-danger");
-                obj.innerHTML = '<i class="bi bi-heart"></i> 좋아요';
+                obj.classList.remove("bi-heart");
+                obj.classList.add("bi-heart-fill");
             } else {
-                obj.classList.remove("btn-danger");
-                obj.classList.add("btn-outline-danger");
-                obj.innerHTML = '<i class="bi bi-heart"></i> 좋아요';
+                obj.classList.remove("bi-heart-fill");
+                obj.classList.add("bi-heart");
             }
 
             window.location.href = 'Controller?type=productDetails&action=select&prod_no=' + prod_no;
