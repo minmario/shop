@@ -11,8 +11,8 @@
 <head>
 
 </head>
- <body>
- <div class="modal fade" id="editSnapModal" tabindex="-1" aria-labelledby="snapModalLabel" aria-hidden="true">
+<body>
+<div class="modal fade" id="editSnapModal" tabindex="-1" aria-labelledby="snapModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -132,7 +132,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" id="prevStep" disabled>이전</button>
                             <button type="button" class="btn btn-primary" id="nextStep">다음</button>
-                            <button type="submit" class="btn btn-success d-none" id="submitSnap">작성 완료</button>
+                            <button type="submit" class="btn btn-success d-none" id="submitEditSnap">작성 완료</button>
                         </div>
                 </form>
 

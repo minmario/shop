@@ -2,8 +2,7 @@ package user.action.Snap;
 
 import user.action.Action;
 
-import user.dao.snap.SnapDao;
-import user.vo.ProductVO;
+import user.vo.snap.ProductVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

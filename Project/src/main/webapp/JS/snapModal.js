@@ -12,11 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
       fetch('/Controller?type=likeToggle', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          boardNo: boardNo,
-
-          status: isLiked ? 1 : 0 // 좋아요 상태 토글
-        })
+        body: JSON.stringify({ boardNo: boardNo, status: isLiked ? 0 : 1 })
       })
           .then(response => response.json())
           .then(data => {

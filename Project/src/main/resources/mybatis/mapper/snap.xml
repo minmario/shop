@@ -24,7 +24,9 @@
 
   <select id="getSnapList"  parameterType="map" resultType="user.vo.BoardVO">
     SELECT id, cus_no, gender, season, style, title, content, snapshot_image, like_count, write_date, is_del
-    FROM board ORDER BY write_date DESC
+    FROM board
+    WHERE is_del = 0
+    ORDER BY write_date DESC
     LIMIT #{offset}, #{limit}
   </select>
 
@@ -39,7 +41,7 @@
     SELECT id, cus_no, gender, season, style, title, content, snapshot_image, like_count, write_date, is_del
     FROM board
     WHERE 1=1
-    AND bname = 'snap'
+    AND bname = 'snap' AND is_del = 0
     <if test="gender != null and gender != ''"> AND gender = #{gender} </if>
     <if test="season != null and season != ''"> AND season LIKE CONCAT('%', #{season}, '%') </if>
     <if test="style != null and style != ''"> AND style LIKE CONCAT('%', #{style}, '%') </if>
@@ -82,27 +84,25 @@
   </select>
 
 
-  <select id="getPurchasedProducts" parameterType="int" resultType="user.vo.ProductVO">
+  <select id="getPurchasedProducts" parameterType="int" resultType="user.vo.snap.ProductVO">
     SELECT p.id, p.name, p.prod_image
     FROM product p
     JOIN `order` o ON p.id = o.prod_no
-    WHERE o.cus_no = #{cusNo} AND o.status = 0
+    WHERE o.cus_no = #{cusNo} AND o.status = 1
   </select>
 
-  <select id="getProductsByKeyword" parameterType="string" resultType="user.vo.ProductVO">
+  <select id="getProductsByKeyword" parameterType="string" resultType="user.vo.snap.ProductVO">
     SELECT id, name, prod_image
     FROM product
     WHERE name LIKE CONCAT('%', #{keyword}, '%') AND active = 1
   </select>
 
   <select id="getProfile" parameterType="int" resultType="user.vo.BoardVO">
-    SELECT b.id, b.cus_no, b.gender, b.season, b.style, b.title, b.content, b.snapshot_image, b.like_count, b.write_date, b.is_del, c.profile_image
-    FROM board b JOIN customer c ON b.cus_no = c.id WHERE b.cus_no = #{cus_no} AND bname = 'snap'
+    SELECT b.id, b.cus_no, b.gender, b.season, b.style, b.title, b.content, b.snapshot_image, b.like_count, b.write_date, b.is_del, c.profile_image , c.Introduce
+    FROM board b JOIN customer c ON b.cus_no = c.id WHERE b.cus_no = #{cus_no} AND bname = 'snap' AND b.is_del = 0
   </select>
 
-
-
-  <select id="getProductsByBoardNo" parameterType="int" resultType="user.vo.ProductVO">
+  <select id="getProductsByBoardNo" parameterType="int" resultType="user.vo.snap.ProductVO">
     SELECT p.id, p.name, p.prod_image, p.price, p.sale, s.name AS sellerName
     FROM product p
     JOIN board_prod bp ON p.id = bp.prod_no
@@ -117,11 +117,38 @@
   </select>
 
 
+
+
+  <update id="deleteSnap" parameterType="int">
+    UPDATE board
+    SET is_del = 1
+    WHERE id = #{id}
+
+  </update>
+
   <update id="updateSnap" parameterType="user.vo.BoardVO">
     UPDATE board
-    SET content = #{content}, gender = #{gender}, season = #{season}, style = #{style}
+    SET content = #{content}, gender = #{gender}, season = #{season}, style = #{style},
+    tags = #{tags}, snapshot_image = #{snapshot_image}, additional_images = #{additional_images}
     WHERE id = #{id}
   </update>
 
+  <delete id="deleteBoardProducts" parameterType="int">
+    DELETE FROM board_prod WHERE board_no = #{board_no}
+  </delete>
+
+  <insert id="insertBoardProduct" parameterType="user.vo.snap.BoardProductVO">
+    INSERT INTO board_prod (board_no, prod_no) VALUES (#{board_no}, #{prod_no})
+  </insert>
+
+  <select id="getSnapDetaill" parameterType="int" resultType="user.vo.BoardVO">
+    SELECT
+    b.*,
+    COALESCE(GROUP_CONCAT(bp.prod_no SEPARATOR ','), '') AS products
+    FROM board b
+    LEFT JOIN board_prod bp ON b.id = bp.board_no
+    WHERE b.id = #{board_no}
+    GROUP BY b.id
+  </select>
 
 </mapper>

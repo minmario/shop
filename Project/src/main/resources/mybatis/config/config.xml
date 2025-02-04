@@ -20,5 +20,6 @@
       <mapper resource="mybatis/mapper/like.xml"/>
       <mapper resource="mybatis/mapper/FollowMapper.xml"/>
       <mapper resource="mybatis/mapper/ChatMapper.xml"/>
+      <mapper resource="mybatis/mapper/reply.xml"/>
     </mappers>
 </configuration>

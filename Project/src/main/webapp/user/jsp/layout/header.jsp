@@ -46,7 +46,7 @@
                         <a class="nav-link" href="#">업데이트</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}Controller?type=snap">코디</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/Controller?type=snap">코디</a>
                     </li>
 
                     <li class="nav-item">

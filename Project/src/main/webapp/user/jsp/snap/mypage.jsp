@@ -9,8 +9,22 @@
     <title>코디 페이지</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="/user/css/Snap/mypage.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/user/css/Snap/mypage.css">
 </head>
+<style>
+    .image-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 10px;
+    }
+
+    .image-gallery img {
+        width: 100%;
+        aspect-ratio: 1 / 1; /* 정사각형 유지 */
+        object-fit: cover;
+    }
+
+</style>
 
 <body>
 <jsp:include page="../layout/header.jsp"></jsp:include>
@@ -71,9 +85,10 @@
                 <c:forEach var="snap" items="${snapList}">
                     <div class="col">
                         <div class="position-relative">
-                            <img src="${snap.snapshot_image}" class="img-fluid" alt="Snap Image" onclick="location.href='Controller?type=sns&id=${snap.id}'">
+                            <img src="${snap.snapshot_image}" class="img-fluid" alt="Snap Image"  onclick="location.href='Controller?type=sns&id=${snap.id}'">
                             <i class="bi bi-heart${snap.liked ? '-fill' : ''} heart-icon position-absolute top-0 end-0 m-2"
                                data-board-no="${snap.id}"></i>
+
                         </div>
                     </div>
                 </c:forEach>

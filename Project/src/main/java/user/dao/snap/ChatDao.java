@@ -2,9 +2,9 @@ package user.dao.snap;
 
 import org.apache.ibatis.session.SqlSession;
 import service.FactoryService;
-import user.vo.ChatRoomVO;
-import user.vo.ChatMessageVO;
-import user.vo.CustomerVO;
+import user.vo.snap.ChatRoomVO;
+import user.vo.snap.ChatMessageVO;
+import user.vo.snap.CustomerVO;
 
 import java.util.List;
 import java.util.HashMap;

@@ -21,19 +21,23 @@ public class SnapProfileAction  implements Action {
     int customerId = (int) request.getSession().getAttribute("cus_id");
 
     vo = snapDao.profile(cus_no);
-    System.out.println("test"+vo.size());
-
-    boolean isFollowing = FollowDao.isFollowing(customerId, cus_no);
-    request.setAttribute("isFollowing", isFollowing);
     request.setAttribute("board", vo);
 
-    FollowDao followDao = new FollowDao();
-    int followerCount = followDao.getFollowerCount(cus_no);
-    int followingCount = followDao.getFollowingCount(cus_no);
+      System.out.println("test"+vo.size());
+    int board_size = vo.size();
+       if(customerId > 0) {
+     boolean isFollowing = FollowDao.isFollowing(customerId, cus_no);
+     request.setAttribute("isFollowing", isFollowing);
 
-    request.setAttribute("followerCount", followerCount);
-    request.setAttribute("followingCount", followingCount);
 
+     FollowDao followDao = new FollowDao();
+     int followerCount = followDao.getFollowerCount(cus_no);
+     int followingCount = followDao.getFollowingCount(cus_no);
+
+     request.setAttribute("boardSize", board_size );
+     request.setAttribute("followerCount", followerCount);
+     request.setAttribute("followingCount", followingCount);
+   }
 
 
     return "/user/jsp/snap/SnapProfile.jsp";

@@ -3,7 +3,7 @@ package user.action.Snap;
 import com.google.gson.Gson;
 import user.action.Action;
 import user.dao.snap.FollowDao;
-import user.vo.CustomerVO;
+import user.vo.snap.CustomerVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,7 +38,7 @@ public class FollowListAction implements Action {
       PrintWriter out = response.getWriter();
       out.print(new Gson().toJson(followList));
       out.flush();
-      out.close();  // 🚨 반드시 close() 추가
+      out.close();  //
       return null;
     } catch (NumberFormatException e) {
       System.err.println("userId 변환 중 오류 발생: " + e.getMessage());

@@ -2,8 +2,8 @@ package user.action.Snap;
 
 import user.action.Action;
 import user.dao.snap.ChatDao;
-import user.vo.ChatRoomVO;
-import user.vo.CustomerVO;
+import user.vo.snap.ChatRoomVO;
+import user.vo.snap.CustomerVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

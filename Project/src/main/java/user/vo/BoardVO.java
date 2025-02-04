@@ -1,5 +1,7 @@
 package user.vo;
 
+import java.util.List;
+
 public class BoardVO {
   private int id;
   private String nickname;
@@ -16,6 +18,36 @@ public class BoardVO {
   public String bname;
   private boolean liked;
   private String tags;
+  private String Introduce;
+
+  public String getIntroduce() {
+    return Introduce;
+  }
+
+  public void setIntroduce(String introduce) {
+    Introduce = introduce;
+  }
+
+  private String products; // MyBatis에서 GROUP_CONCAT 결과를 받을 필드
+  private List<Integer> productList; // 변환된 리스트
+
+  public String getProducts() {
+    return products;
+  }
+
+  public void setProducts(String products) {
+    this.products = products;
+  }
+
+  public List<Integer> getProductList() {
+    return productList;
+  }
+
+  public void setProductList(List<Integer> productList) {
+    this.productList = productList;
+  }
+
+
   public String getProd_no() {
     return prod_no;
   }

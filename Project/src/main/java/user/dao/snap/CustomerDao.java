@@ -2,7 +2,7 @@ package user.dao.snap;
 
 import org.apache.ibatis.session.SqlSession;
 import service.FactoryService;
-import user.vo.CustomerVO;
+import user.vo.snap.CustomerVO;
 
 import java.util.List;
 

@@ -2,19 +2,16 @@ package user.dao.snap;
 
 import org.apache.ibatis.session.SqlSession;
 import service.FactoryService;
-import user.vo.LikesVO;
-
-import java.util.HashMap;
-import java.util.Map;
+import user.vo.snap.LikesVO;
 
 public class LikeDao {
 
   public boolean toggleLike(LikesVO vo) {
     SqlSession session = FactoryService.getFactory().openSession();
-    Integer existingLike = session.selectOne("likes.checkLikeExists", vo);
+    Integer existingLike = session.selectOne("likes.checkLikeExists1", vo);
 
     if (existingLike == null) {
-      vo.setStatus(0);
+//      vo.setStatus(0);
       session.insert("likes.insertLike", vo);
       session.update("board.incrementLikeCount", vo.getBoardNo());
     } else {
@@ -33,5 +30,14 @@ public class LikeDao {
     session.commit();
     session.close();
     return true;
+  }
+
+
+  public boolean checkLike(LikesVO vo) {
+    SqlSession session = FactoryService.getFactory().openSession();
+    Integer existingLike = session.selectOne("likes.checkLikeExists", vo);
+    session.close();
+    return existingLike != null && existingLike == 1;
+
   }
 }

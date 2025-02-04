@@ -1,15 +1,15 @@
-package user.vo;
+package user.vo.snap;
 
 import java.util.Date;
 
 public class ChatMessageVO {
   private int id;
   private int roomId;
-  private int sender_id;  // ✅ 정확한 명칭으로 변경
+  private int sender_id;  //
   private String senderNickname;
   private String senderProfileImage;
   private String message;
-  private Date created_at; // ✅ 정확한 명칭으로 변경
+  private Date created_at; //
   private boolean isRead;
 
   public ChatMessageVO() {}

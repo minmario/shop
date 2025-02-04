@@ -10,11 +10,89 @@
     <title>코디 페이지</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="/user/css/Snap/mypage.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/user/css/Snap/mypage.css">
 </head>
+</head>
+<style>
+    /* 프로필 이미지 스타일 */
+    .comment-profile {
+        width: 30px; /* 기존보다 작게 */
+        height: 30px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
 
+    /* 닉네임 스타일 */
+    .comment-nickname {
+        font-weight: 400; /* 기본보다 가볍게 */
+        color: gray;
+        font-size: 14px;
+    }
+
+    /* 댓글 리스트 스타일 */
+    .comment-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+    }
+
+    /* 댓글 내용 스타일 */
+    .comment-text {
+        font-weight: bold; /* 강조 */
+        font-size: 14px;
+    }
+
+    /* 옵션 버튼 (...) 스타일 */
+    .comment-options {
+        background: none;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    /* 수정 / 삭제 메뉴 */
+    .dropdown-menu {
+        min-width: 100px;
+        font-size: 14px;
+    }
+
+    /* 댓글 입력창 스타일 */
+    .modal-footer {
+        padding: 10px;
+        border-top: 1px solid #ddd;
+    }
+
+    #commentModal .modal-dialog {
+        max-width: 600px; /* 💡 모달의 최대 너비 지정 */
+        width: 90%; /* 💡 화면 크기에 맞춰 유동적 조정 */
+    }
+
+    /* 댓글 모달 스타일 */
+    #commentModal .modal-body {
+
+        max-height: 500px; /* 💡 댓글 영역 최대 높이 지정 */
+        overflow-y: auto; /* 💡 스크롤 적용 */
+    }
+
+    /* 입력창과 버튼 고정 */
+    #commentModal .modal-footer {
+        position: sticky;
+        bottom: 0;
+        background: white;
+        padding: 10px;
+        border-top: 1px solid #ddd;
+    }
+
+
+</style>
 <body>
+
 <jsp:include page="../layout/header.jsp"></jsp:include>
+<script>
+  var boardNo = "${snap.id}";
+  console.log("boardNo:", boardNo); // 값 확인
+</script>
 
 <div class="container-fluid mt-4">
     <div class="row">
@@ -52,7 +130,24 @@
                                     <div class="d-flex align-items-center">
                                         <c:if test="${sessionScope.cus_id == snap.cus_no}">
                                             <!-- 내 프로필 -->
-                                            <button class="btn btn-outline-secondary btn-sm">프로필 편집</button>
+                                            <button class="btn btn-outline-secondary btn-sm">
+                                                <i class="bi bi-gear"></i>
+                                            </button>
+                                            <div class="dropdown ms-2">
+                                                <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    ...
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <li>
+                                                        <a href="#" class="dropdown-item edit-snap-btn text-primary" data-snap-id="${snap.id}">
+                                                            수정하기
+                                                        </a>
+                                                    </li>
+
+                                                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/Controller?type=boardDelte&id=${snap.id}">삭제하기</a></li>
+
+                                                </ul>
+                                            </div>
                                         </c:if>
                                         <c:if test="${sessionScope.cus_id != snap.cus_no}">
                                             <!-- 다른 사람의 프로필인 경우 -->
@@ -83,10 +178,10 @@
                                         </c:forEach>
 
                                     </div>
-                                    <!-- 사진 번호 표시 -->
-                                    <div id="photoCounter" style="position: absolute; transform: translateY(-80px); bottom: 10px; right: 10px; color: white; font-size: 16px; background: rgba(0, 0, 0, 0.5); padding: 5px 10px; border-radius: 5px;">
-                                        <span id="currentIndex">1</span>/<span id="totalPhotos">${fn:length(fn:split(snap.additional_images, ','))}</span>
-                                    </div>
+                                    <!-- 사진 번호 표시  : 현재 모달이후로 슬라이드효과에따라 인덱스값이 추가안됨 // 나중에  수정 -->
+<%--                                    <div id="photoCounter" style="position: absolute; transform: translateY(-80px); bottom: 10px; right: 10px; color: white; font-size: 16px; background: rgba(0, 0, 0, 0.5); padding: 5px 10px; border-radius: 5px;">--%>
+<%--                                        <span id="currentIndex">1</span>/<span id="totalPhotos">${fn:length(fn:split(snap.additional_images, ','))}</span>--%>
+<%--                                    </div>--%>
                                     <!-- 좌우 이동 버튼 -->
                                     <button class="carousel-control-prev" type="button" data-bs-target="#photoCarousel" data-bs-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -99,8 +194,9 @@
                                 </div>
 
                                 <!-- 제품 정보 -->
-
+                                 <c:if test="${not empty productList}">
                                 <div id="productCarousel" class="carousel slide bg-white rounded shadow-sm p-3" data-bs-ride="carousel">
+
                                     <div class="carousel-inner">
                                         <c:forEach var="product" items="${productList}" varStatus="status">
                                             <div class="carousel-item ${status.index == 0 ? 'active' : ''}">
@@ -122,6 +218,7 @@
                                             </div>
                                         </c:forEach>
                                     </div>
+
                                     <!-- 좌우 이동 버튼 -->
                                     <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -132,21 +229,62 @@
                                         <span class="visually-hidden">다음</span>
                                     </button>
                                 </div>
-
+                                 </c:if>
                                 <!-- 아이콘 추가 -->
                                 <div class="d-flex align-items-center me-3 my-2">
-                                    <i class="bi bi-heart me-3${snap.liked ? '-fill' : ''} heart-icon "
-                                       data-board-no="${snap.id}" style="font-size: 24px; cursor: pointer;"></i>
+                                    <i class="bi bi-heart${liked ? '-fill' : ''} heart-icon " style="margin-top: 4px;margin-right: 16px;"
+                                       data-board-no="${snap.id}"></i>
                                     <i class="bi bi-chat me-3" style="font-size: 24px; cursor: pointer;"></i>
                                     <i class="bi bi-share" style="font-size: 24px; cursor: pointer;"></i>
                                 </div>
 
+                                <!-- 댓글 모두 보기 -->
+                                 <c:if test="${not empty latestReply.nickname}">
+                                <button class="btn btn-light btn-sm mt-2" id="viewAllCommentsBtn">댓글 모두 보기</button>
+                                 </c:if>
+                                     <!-- 최신 댓글 표시 -->
+                                <div id="latestComment" class="list-group">
+                                    <p class="mb-0">
+                                            <strong>${latestReply.nickname}</strong>&nbsp;&nbsp;${latestReply.content}
+                                        </p>
+                                </div>
+
+
+<%--                                  //댓글모달--%>
+                                <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <!-- 모달 헤더 -->
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">댓글</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <!-- 모달 본문 (댓글 리스트) -->
+                                            <div class="modal-body">
+                                                <ul id="commentList" class="list-group list-group-flush">
+                                                    <!-- 동적으로 댓글이 추가될 자리 -->
+                                                </ul>
+                                            </div>
+
+                                            <!-- 모달 하단 (댓글 입력창) -->
+                                            <div class="modal-footer">
+                                                <div class="input-group">
+                                                    <input type="text" id="commentInput1" style="width: 440px;" class="form-control" placeholder="댓글을 입력하세요...">
+                                                    <button class="btn btn-primary" style="margin-left: 3px;" id="postCommentBtn1">게시</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
                                 <!-- 댓글 작성 -->
                                 <div class="d-flex align-items-center mb-4">
-                                    <img src="${snap.profile_image}" alt="프로필" class="rounded-circle me-2" style="width: 40px; height: 40px;">
-                                    <input type="text" style="width: 420px" class="form-control" placeholder="댓글을 입력하세요...">
-                                    <button class="btn btn-primary btn-sm ms-2">게시</button>
-                                </div>
+                                  <img src="${snap.profile_image}" alt="프로필" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                                 <input id="commentInput" type="text" style="width: 420px" class="form-control" placeholder="댓글을 입력하세요...">
+                                 <button id="postCommentBtn" class="btn btn-primary btn-sm ms-2">게시</button>
+                              </div>
 
                                 <!-- 댓글 리스트 -->
                                 <div class="list-group" style="overflow-y: auto; max-height: 200px;">
@@ -205,10 +343,13 @@
         </div>
     </div>
     <jsp:include page="/user/jsp/snap/snapModal.jsp"></jsp:include>
-    <script src="/JS/snapModal.js"></script>
+    <script src="${pageContext.request.contextPath}/JS/snapModal.js"></script>
+    <script src="${pageContext.request.contextPath}/JS/snap/MySnap.js"></script>
+
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 
 </body>
 </html>

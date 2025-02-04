@@ -3,8 +3,7 @@ package user.action.Snap;
 import org.json.JSONObject;
 import user.action.Action;
 
-import user.dao.snap.LikeDao;
-import user.vo.LikesVO;
+import user.vo.snap.LikesVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

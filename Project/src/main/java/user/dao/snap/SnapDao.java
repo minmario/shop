@@ -2,13 +2,12 @@ package user.dao.snap;
 
 import org.apache.ibatis.session.SqlSession;
 import service.FactoryService;
+import user.vo.snap.BoardProductVO;
 import user.vo.BoardVO;
-import user.vo.ProductVO;
+import user.vo.snap.ProductVO;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class SnapDao {
 
@@ -107,14 +106,44 @@ public class SnapDao {
     return productList;
   }
 
+//  public BoardVO getSnapDetail(int boardNo) {
+//    SqlSession session = FactoryService.getFactory().openSession();
+//    BoardVO snap = session.selectOne("board.getSnapDetaill", boardNo);
+//    session.close();
+//    return snap;
+//  }
+
   public BoardVO getSnapDetail(int boardNo) {
     SqlSession session = FactoryService.getFactory().openSession();
     BoardVO snap = session.selectOne("board.getSnapDetail", boardNo);
+
+
+    if (snap.getProducts() != null && !snap.getProducts().isEmpty()) {
+      List<Integer> productList = Arrays.stream(snap.getProducts().split(","))
+          .filter(prod -> !prod.trim().isEmpty()) // 빈 값 필터링
+          .map(Integer::parseInt) // 숫자로 변환
+          .collect(Collectors.toList());
+      snap.setProductList(productList);
+    } else {
+      snap.setProductList(new ArrayList<>()); // 빈 리스트 설정
+    }
+
     session.close();
     return snap;
   }
 
-  public boolean updateBoard(BoardVO board) {
+
+
+
+  public void deleteBoard(int id) {
+    SqlSession ss = FactoryService.getFactory().openSession();
+    ss.update("board.deleteSnap", id);
+    ss.commit();
+    ss.close();
+
+  }
+
+  public boolean  updateBoard(BoardVO board) {
     SqlSession session = FactoryService.getFactory().openSession();
     int rows = session.update("board.updateSnap", board);
     if (rows > 0) {
@@ -125,4 +154,23 @@ public class SnapDao {
     session.close();
     return false;
   }
+
+
+
+  public void deleteBoardProducts(int boardNo) {
+    SqlSession session = FactoryService.getFactory().openSession();
+    session.delete("board.deleteBoardProducts", boardNo);
+    session.commit();
+    session.close();
+  }
+
+
+  public void insertBoardProduct(BoardProductVO boardProduct) {
+    SqlSession session = FactoryService.getFactory().openSession();
+    session.insert("board.insertBoardProduct", boardProduct);
+    session.commit();
+    session.close();
+  }
+
+
 }

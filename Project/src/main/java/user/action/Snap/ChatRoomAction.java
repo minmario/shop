@@ -3,7 +3,7 @@ package user.action.Snap;
 import com.google.gson.Gson;
 import user.action.Action;
 import user.dao.snap.ChatDao;
-import user.vo.ChatMessageVO;
+import user.vo.snap.ChatMessageVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +17,7 @@ public class ChatRoomAction implements Action {
     response.setCharacterEncoding("UTF-8");
 
     try (PrintWriter out = response.getWriter()) {
-      // ✅ 요청된 채팅방 ID 가져오기
+      //  요청된 채팅방 ID 가져오기
       String roomIdParam = request.getParameter("roomId");
       if (roomIdParam == null || roomIdParam.isEmpty()) {
         response.setStatus(400); // Bad Request

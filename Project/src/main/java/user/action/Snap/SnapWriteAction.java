@@ -72,7 +72,7 @@ public class SnapWriteAction implements Action {
             case "style":
               style = value;
               break;
-            case "prod_no": // prod_no 값 받기
+            case "prod_no":
               prodNo = value;
               break;
           }
@@ -126,8 +126,8 @@ public class SnapWriteAction implements Action {
 
         if (prodNo != null && !prodNo.trim().isEmpty()) {
           List<Integer> prodNoList = Arrays.stream(prodNo.split(","))
-              .map(String::trim) // 공백 제거
-              .map(Integer::parseInt) // 정수로 변환
+              .map(String::trim)
+              .map(Integer::parseInt)
               .collect(Collectors.toList());
 
           // board_prod 테이블에 삽입

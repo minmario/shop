@@ -22,7 +22,7 @@
   </select>
 
 
-  <select id="getFollowers" parameterType="map" resultType="user.vo.CustomerVO">
+  <select id="getFollowers" parameterType="map" resultType="user.vo.snap.CustomerVO">
     SELECT c.id AS user_id,
            c.profile_image,
            c.nickname,
@@ -35,7 +35,7 @@
 
   </select>
 
-  <select id="getFollowings" parameterType="map" resultType="user.vo.CustomerVO">
+  <select id="getFollowings" parameterType="map" resultType="user.vo.snap.CustomerVO">
     SELECT c.id AS user_id, c.profile_image, c.nickname,
            (SELECT COUNT(*) FROM follow WHERE customer_id = #{sessionUserId} AND following_id = c.id) AS is_following
     FROM follow f

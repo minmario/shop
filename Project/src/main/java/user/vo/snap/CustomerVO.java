@@ -1,4 +1,4 @@
-package user.vo;
+package user.vo.snap;
 
 public class CustomerVO {
   private String id, grade_code, cus_id, cus_pw, name, nickname, gender, birth_date, phone, email, weight, height, total, expire_date, is_del;

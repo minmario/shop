@@ -13,12 +13,14 @@ public class LoadSnapDataAction implements Action {
   @Override
   public String execute(HttpServletRequest request, HttpServletResponse response) {
     int id = Integer.parseInt(request.getParameter("id")); // 게시물 ID 가져오기
-    System.out.println("테스트"+id);
+
     SnapDao dao = new SnapDao();
 
     BoardVO snap = dao.getSnapDetail(id); // 게시물 데이터 가져오기
     response.setContentType("application/json");
     response.setCharacterEncoding("UTF-8");
+
+
 
     try (PrintWriter out = response.getWriter()) {
       if (snap != null) {

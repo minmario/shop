@@ -1,4 +1,4 @@
-package user.vo;
+package user.vo.snap;
 
 public class LikesVO {
   private int id;

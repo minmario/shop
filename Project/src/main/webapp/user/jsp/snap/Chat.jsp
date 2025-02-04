@@ -58,11 +58,11 @@
 
                     </div>
 
-                    <!-- ✅ 오른쪽 대화창 -->
+                    <!--  오른쪽 대화창 -->
                     <div class="col-md-9 p-3">
                         <!-- 대화 상대 정보 -->
 
-                        <!-- ✅ 상대방 정보 표시할 곳 -->
+                        <!--  상대방 정보 표시할 곳 -->
                         <div class="d-flex align-items-center p-3 border-bottom">
                             <img id="receiverProfileImg" src="" alt="상대방 프로필" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
                             <span class="ms-2"><strong id="receiverNickname"></strong></span>
@@ -227,8 +227,8 @@
       const message = messageInput.value.trim();
       if (!message) return;
 
-      console.log("📢 전송하는 채팅방 ID (currentRoomId):", currentRoomId);
-      console.log("📢 현재 사용자 ID (currentUserId):", currentUserId);
+      console.log(" 전송하는 채팅방 ID (currentRoomId):", currentRoomId);
+      console.log(" 현재 사용자 ID (currentUserId):", currentUserId);
       console.log(message)
 
       const messageData = {
@@ -238,7 +238,7 @@
         timestamp: new Date().toISOString()
       };
 
-      console.log("📢 전송할 데이터:", messageData);
+      console.log(" 전송할 데이터:", messageData);
 
       fetch('/Controller?type=chatSend', {
         method: 'POST',
@@ -252,7 +252,7 @@
             return response.json();
           })
           .then(data => {
-            console.log("📢 서버 응답 데이터:", data);
+            console.log(" 서버 응답 데이터:", data);
             if (data.success) {
               messageInput.value = '';
               loadChatMessages(currentRoomId);

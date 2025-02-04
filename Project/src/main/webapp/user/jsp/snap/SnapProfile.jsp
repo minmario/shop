@@ -34,14 +34,14 @@
                 <div class="row align-items-center border-bottom pb-4 mb-4" style="width: 800px;"> <!-- 고정된 너비로 중앙 정렬 -->
                     <!-- 프로필 이미지 -->
                     <div class="col-auto me-4"> <!-- 오른쪽 여백 추가 -->
-                        <img src="${board[0].profile_image}" alt="Profile Picture" class="rounded-circle" style="width: 160px; height: 160px; object-fit: cover;"> <!-- 이미지 크기 키움 -->
+                        <img src="${board[0].profile_image}"  alt="Profile Picture" class="rounded-circle" style="width: 160px; height: 160px; object-fit: cover;"> <!-- 이미지 크기 키움 -->
                     </div>
 
                     <!-- 프로필 정보 -->
                     <div class="col">
                         <!-- 프로필 이름과 버튼 -->
                         <div class="d-flex align-items-center mb-2">
-                             <h2 class="mb-0 me-3" style="font-size: 1.5rem; font-weight: 500;">amor08290722</h2> <!-- 폰트 스타일 조정 -->
+                             <h2 class="mb-0 me-3" style="font-size: 1.5rem; font-weight: 500;">${sessionScope.nickname}</h2> <!-- 폰트 스타일 조정 -->
                             <c:if test="${sessionScope.cus_id == board[0].cus_no}">
                                 <!-- 내 프로필인 경우 -->
                                 <button class="btn btn-outline-secondary btn-sm" style="font-size: 0.875rem;">프로필 편집</button>
@@ -69,16 +69,17 @@
                         </div>
                         <!-- 게시물 정보 -->
                         <p class="mb-2" style="font-size: 0.875rem;">
-                            게시물 <strong>120</strong> ·
-                            팔로워 ·   <strong id="followerCount" class="clickable" data-type="follower">${followerCount}</strong>
-                            팔로우   <strong id="followingCount" class="clickable" data-type="following">${followingCount}</strong>
+                            게시물  <strong>${boardSize}</strong>
+                            팔로워  <strong id="followerCount" class="clickable" data-type="follower">${followerCount}</strong>
+                            팔로우  <strong id="followingCount" class="clickable" data-type="following">${followingCount}</strong>
 
                         </p>
 
                         <!-- 추가 정보 -->
-                        <p class="mb-1" style="font-size: 0.875rem;">22기 옥순</p>
-                        <a href="https://link.inpock.co.kr/amor08290722" target="_blank" style="font-size: 0.875rem; text-decoration: none; color: #007bff;">link.inpock.co.kr/amor08290722</a>
-                        <p class="mt-2" style="font-size: 0.75rem; color: gray;">queeen424님이 팔로우합니다</p>
+                        <p class="mb-1" style="font-size: 0.875rem;">${board[0].introduce}</p>
+                        <a href="https://link.inpock.co.kr/amor08290722" target="_blank" style="font-size: 0.875rem; text-decoration: none; color: #007bff;"></a>
+                        <p class="mt-2" style="font-size: 0.75rem; color: gray;"></p>
+
                     </div>
                 </div>
             </div>
@@ -89,7 +90,7 @@
                     <c:forEach var="image" items="${board}">
                         <div style="width: 307px; height: 307px;"> <!-- 고정 크기 -->
                             <div class="d-flex justify-content-center align-items-center" style="width: 100%; height: 100%; overflow: hidden;">
-                                <img src="${image.snapshot_image}" alt="Post Image" class="img-fluid" style="object-fit: cover; width: 100%; height: 100%;">
+                                <img src="${image.snapshot_image}" onclick= "location.href='${pageContext.request.contextPath}/Controller?type=sns&id=${image.id}'" alt="Post Image" class="img-fluid" style="object-fit: cover; width: 100%; height: 100%;">
                             </div>
                         </div>
                     </c:forEach>
