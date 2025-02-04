@@ -38,16 +38,19 @@ public class MajorCategoryDao {
         ss.close();
         return ar;
     }
-    public static int addMajorCategory(MajorCategoryVO vo) {
+    public static boolean addMajorCategory(MajorCategoryVO vo) {
         SqlSession ss = FactoryService.getFactory().openSession();
 
         int cnt = ss.insert("root.addMajorCategory", vo);  // 'root.addMajorCategory'는 MyBatis 매퍼 파일에서 설정한 ID
         if (cnt > 0) {
             ss.commit();  // 성공적으로 추가되었을 경우 커밋
+
+          // 추가된 레코드 수 반환
         }
 
         ss.close();
-        return cnt;  // 추가된 레코드 수 반환
+        boolean chk = true;
+        return  chk;  // 추가된 레코드 수 반환
     }
     public static int logininsert(LogVO MajorCategoryVO) {
         SqlSession ss = FactoryService.getFactory().openSession();
