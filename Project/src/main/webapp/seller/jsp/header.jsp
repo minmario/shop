@@ -64,9 +64,12 @@
         <a href="#" class="text-decoration-none nav-link" id="productManagement">상품/재고관리</a>
         <a href="#" class="text-decoration-none nav-link" id="orderManagement">주문/배송</a>
         <a href="#" class="text-decoration-none nav-link" id="inquiry">문의</a>
-        <a href="#" class="text-decoration-none nav-link" id="salesManagement">매출/정산</a>
-        <a href="#" class="text-decoration-none nav-link" id="couponManagement">쿠폰관리</a>
-        <a href="#" class="text-decoration-none nav-link" id="brandManagement">브랜드관리</a>
+        <a href="<%= request.getContextPath() %>/Controller?type=sales" class="text-decoration-none nav-link" id="salesManagement">매출/정산</a>
+        <a href="${pageContext.request.contextPath}/Controller?type=couponList" class="text-decoration-none nav-link" id="couponManagement">쿠폰관리</a>
+<%--        <a href="../jsp/brandinfo.jsp" class="text-decoration-none nav-link" id="brandManagement">브랜드관리</a>--%>
+        <a href="<%= request.getContextPath() %>/Controller?type=brandInfo" class="text-decoration-none nav-link" id="brandManagement">브랜드관리</a>
+
+
     </div>
 </div>
 

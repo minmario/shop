@@ -1,3 +1,9 @@
+
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<%@ page import="comm.vo.SellerVO" %>
+<%
+    SellerVO vo = (SellerVO) request.getAttribute("vo");
+%>
 <%--
   Created by IntelliJ IDEA.
   User: user
@@ -5,15 +11,10 @@
   Time: 오후 2:24
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%
-    request.setCharacterEncoding("UTF-8");
-    String nickname = (String) session.getAttribute("nickname");
-    boolean isLoggedIn = (nickname != null);
-%>
+
 
 <html>
+<meta charset="utf-8">
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
@@ -69,49 +70,14 @@
         }
     </style>
 </head>
+<%@ include file="header.jsp" %>
 <body>
-<!-- 네비게이션 바 -->
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container-fluid">
-        <!-- 로고 -->
-        <a class="navbar-brand fw-bold text-white" href="../shop/user/jsp/index.jsp" style="font-size: 1.8rem;">MUSINSA</a>
-    </div>
-</nav>
-
-<div class="index header d-flex align-items-center p-3 bg-light border-bottom">
-    <!-- 왼쪽: 로그인 버튼 -->
-    <div class="d-flex align-items-center">
-        <c:choose>
-            <c:when test="${isLoggedIn}">
-                <span class="me-2">환영합니다, <strong>${nickname}님</strong></span>
-                <button type="button" class="btn btn-outline-secondary"
-                        onclick="location.href='Controller?type=logout';">로그아웃</button>
-            </c:when>
-            <c:otherwise>
-                <button type="button" class="btn btn-outline-primary"
-                        onclick="location.href='user/jsp/login/login.jsp';">로그인</button>
-            </c:otherwise>
-        </c:choose>
-    </div>
-
-    <!-- 중앙: 바로접속 ~ 고객센터 -->
-    <div class="d-flex gap-5 align-items-center justify-content-center flex-grow-1">
-        <a href="#" class="text-decoration-none text-dark">상품/재고관리</a>
-
-        <a href="#" class="text-decoration-none text-dark">주문/배송</a>
-        <a href="#" class="text-decoration-none text-dark">문의</a>
-        <a href="#" class="text-decoration-none text-dark">매출/정산</a>
-
-        <a href="#" class="text-decoration-none text-dark">쿠폰관리</a>
-        <a href="#" class="text-decoration-none text-dark">브랜드 관리</a>
-    </div>
-</div>
 
 <div class="container mt-4">
 
 
     <!-- 브랜드 정보 폼 -->
-    <form method="POST" action="updateBrand.jsp" class="brand-form">
+    <form method="POST" action="Controller?type=updateSeller" class="brand-form">
         <!-- 왼쪽: 브랜드 로고 이미지 -->
         <div class="logo-container">
             <img id="logoImage" src="${pageContext.request.contextPath}/seller/images/img.png" alt="브랜드 로고" class="img-fluid"/>
@@ -122,37 +88,46 @@
             </button>
         </div>
 
+        <%
+            Object obj = request.getAttribute("vo");
+            if (obj == null) {
+                System.out.println("❌ JSP: request.getAttribute('vo') is NULL!");
+            } else {
+                System.out.println("✅ JSP: request.getAttribute('vo') found!");
+            }
+        %>
+
         <!-- 오른쪽: 브랜드 정보 폼 -->
         <div style="flex-grow: 1;">
             <div class="mb-3">
                 <label for="sellerId" class="form-label">판매자 아이디</label>
-                <input type="text" class="form-control" id="sellerId" name="sellerId" value="${brand.sellerId}" disabled style="width: 100%;">
+                <input type="text" class="form-control" id="sellerId" name="sellerId" value="${vo.seller_id}" disabled style="width: 100%;">
             </div>
             <div class="mb-3">
                 <label for="brandName" class="form-label">브랜드 이름</label>
-                <input type="text" class="form-control" id="brandName" name="brandName" value="${brand.name}" disabled style="width: 100%;">
+                <input type="text" class="form-control" id="brandName" name="brandName" value="${vo.name}" disabled style="width: 100%;">
             </div>
             <div class="mb-3">
                 <label for="brandPhone" class="form-label">브랜드 전화번호</label>
-                <input type="text" class="form-control" id="brandPhone" name="brandPhone" value="${brand.phoneNumber}" disabled style="width: 100%;">
+                <input type="text" class="form-control" id="brandPhone" name="brandPhone" value="${vo.phone}" disabled style="width: 100%;">
             </div>
             <div class="mb-3">
                 <label for="brandEmail" class="form-label">브랜드 이메일 주소</label>
-                <input type="email" class="form-control" id="brandEmail" name="brandEmail" value="${brand.email}" disabled style="width: 100%;">
+                <input type="email" class="form-control" id="brandEmail" name="brandEmail" value="${vo.email}" disabled style="width: 100%;">
             </div>
             <div class="mb-3">
                 <label for="brandAddress" class="form-label">회사 주소</label>
-                <input type="email" class="form-control" id="brandAddress" name="brandAddress" value="${brand.address}" disabled style="width: 100%;">
+                <input type="text" class="form-control" id="brandAddress" name="brandAddress" value="${vo.address}" disabled style="width: 100%;">
             </div>
             <div class="mb-3">
                 <label for="brandDesc" class="form-label">브랜드 설명</label>
-                <textarea class="form-control" id="brandDesc" name="brandDesc" disabled style="width: 100%; height: 150px;">${brand.desc}</textarea>
+                <textarea class="form-control" id="brandDesc" name="brandDesc" disabled style="width: 100%; height: 150px;">${vo.desc}</textarea>
             </div>
 
             <!-- 수정/저장 버튼 -->
             <div class="d-flex gap-3">
                 <button type="button" class="btn btn-primary" id="editButton" onclick="enableEditing()">수정</button>
-                <button type="submit" class="btn btn-success" id="saveButton" disabled>저장</button>
+                <button type="submit" class="btn btn-success" id="saveButton" onclick="this.form" disabled>저장</button>
             </div>
         </div>
     </form>
