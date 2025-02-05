@@ -52,6 +52,17 @@ public class MajorCategoryDao {
         boolean chk = true;
         return  chk;  // 추가된 레코드 수 반환
     }
+
+    public static int getMajorCategoryId(MajorCategoryVO VO){
+        SqlSession ss = FactoryService.getFactory().openSession();
+        int cnt = ss.selectOne("root.getMajorId",VO);
+        ss.close();
+        return cnt;
+
+
+    }
+
+
     public static int logininsert(LogVO MajorCategoryVO) {
         SqlSession ss = FactoryService.getFactory().openSession();
         int chk = ss.insert("root.loginsert", MajorCategoryVO);

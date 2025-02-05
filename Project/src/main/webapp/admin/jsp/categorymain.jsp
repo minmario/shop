@@ -110,7 +110,7 @@
                 <select class="form-select" aria-label="Default select example" id="major_category_name">
 
                     <c:forEach var="name" items="${majorcategoryName}" varStatus="st">
-                        <c:if test="${name ne 'id'}">
+                        <c:if test="${name ne 'id' && name ne 'is_del'}">
                             <option class="column-name" value="${name}">${name}</option>
                         </c:if>
                     </c:forEach>
@@ -136,9 +136,9 @@
             <thead class="table-light">
 
             <tr>
-                <th><input type="checkbox"></th>
+
                 <c:forEach var="name" items="${majorcategoryName}">
-                    <c:if test="${name ne 'id'}">
+                    <c:if test="${name ne 'id' && name ne 'is_del'}">
                         <th class="column-name">${name}</th>
                     </c:if>
                 </c:forEach>
@@ -149,14 +149,18 @@
             </thead>
             <tbody id="categoryBody">
             <c:forEach var ="mcl"  items="${majorcategoryList}">
-                <tr>
-                    <td><input type="checkbox"></td>
+                <c:if test="${mcl.is_del eq 0}">
+                <tr id = "row-${mcl.id}">
+
                     <td>${mcl.name}</td>
                     <td>${mcl.ename}</td>
                     <td>${mcl.type}</td>
                     <td>
-                        <button class="btn btn-secondary add-user-btn" data-bs-toggle="modal" data-bs-target="#rejectModal">대분류 삭제</button>
+                        <button class="btn btn-secondary add-user-btn" data-bs-toggle="modal" data-bs-target="#deleteMajorModal"
+                        onclick = "setMajorId('${mcl.id}')">삭제</button>
+                    </td>
                 </tr>
+                </c:if>
             </c:forEach>
             </tbody>
         </table>
@@ -270,40 +274,43 @@
 </div>
 
 <%--대분류 삭제 모달 창--%>
-<div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteMajorModal" tabindex="-1" aria-labelledby="deleteMajorModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="rejectModalLabel">거절 사유</h5>
+                <h5 class="modal-title" id="deleteMajorModalLabel">삭제 사유</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="/Controller?type=delete" method="post" >
+            <form id="deleteMajorForm">
                 <div class="modal-body">
-                    <textarea class="form-control" rows="3">입점을 추가한 이유를 적어주세요.</textarea>
+                    <input type="hidden" id="deleteMajorId" name="id">
+                    <textarea class="form-control" id="deleteMajorReason" name="content" rows="3" placeholder="해당 판매자대기를 삭제할 이유를 적어주세요."></textarea>
                     <span class="text-danger">*특수문자사용시 스마트스토어 정책에 따라 전송 에러가 발생합니다. 텍스트와 숫자로 안내문구를 작성해주시기 바랍니다.</span>
                 </div>
-            </form>
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                <button type="button" class="btn btn-primary">저장</button>
+                <button type="submit" class="btn btn-primary">저장</button>
             </div>
+            </form>
         </div>
     </div>
 </div>
 
 <!-- 중분류 설정 모달 (중분류 추가용) -->
-<div class="modal fade" id="subcategoryModal" tabindex="-1" aria-labelledby="subcategoryModalLabel" aria-hidden="true">
+<div class="modal fade" id="middleCategoryModal" tabindex="-1" aria-labelledby="middleCategoryModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="subcategoryModalLabel">중분류 설정</h5>
+                <h5 class="modal-title" id="middleCategoryModalLabel">중분류 설정</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="row mb-3">
                     <div class="col-md-2 fw-bold">상위 대분류</div>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" value="상위로 두는 대분류 선택">
+
+                        <input type="text" class="form-control" id="categoryId" name="cId" placeholder="상위 대분류">
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -319,7 +326,7 @@
                         <input type="text" class="form-control" value="1">
                     </div>
                 </div>
-            </div>ㄴ
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                 <button type="button" class="btn btn-primary">저장</button>
@@ -348,7 +355,9 @@
         type: "POST",
         data: param,
       }).done(function (data) {
-        $("#major_category_table tbody").html(data);
+          console.log(data);
+
+        $("#categoryBody").html(data);
       });
     });
 
@@ -422,6 +431,8 @@
   $(document).ready(function () {
     $("#addCategoryForm").submit(function (event) {
       event.preventDefault();
+        let majorId = $("#deleteMajorId").val();
+        console.log("mm"+majorId);
       $.ajax({
         type: "POST",
         url: "Controller?type=addMajorCategory",
@@ -433,24 +444,29 @@
             console.log(name)
             let ename = $("input[name='ename']").val();
             console.log(ename)
+              let majorId = response.result;
 
-            let newRow = `
-                       <tr>
-                            <td><input type="checkbox"></td>
-                            <td>` + name + `</td>
-                            <td>` + ename + `</td>
-                            <td></td>
-                            <td>
-                                <button class="btn btn-secondary add-user-btn" data-bs-toggle="modal" data-bs-target="#rejectModal">대분류 삭제</button>
-                            </td>
-                        </tr>
-                    `;
+              let newRow = `
+                      <tr>
+                <td>` + name + `</td>
+                <td>` + ename + `</td>
+                <td></td>
+                <td>
+                    <button class="btn btn-secondary add-user-btn"
+                            data-bs-toggle="modal"
+                            data-bs-target="#deleteMajorModal"
+                            onclick="setMajorId(` + majorId + `)">대분류 삭제</button>
+                </td>
+            </tr>
+        `;
 
 
 
 
 
-            $("#categoryBody").append(newRow);
+
+
+              $("#categoryBody").append(newRow);
 
 
             $("input[name='name']").val('');
@@ -464,6 +480,66 @@
         }
       });
     });
+  });
+  function setMajorId(majorId) {
+      console.log("전달된 판매자 ID:", majorId);
+      $("#deleteMajorId").val(majorId);
+
+
+
+  }
+  $(document).ready(function () {<%--폼태그--%>
+      $("#deleteMajorForm").submit(function (event) {
+          event.preventDefault(); // 기본 form 제출 막기
+
+          let majorId = $("#deleteMajorId").val();
+
+          let content = $("#deleteMajorReason").val();
+
+          if (!majorId) {
+              alert("삭제할 게시판 ID가 없습니다.");
+              return;
+          }
+
+          $.ajax({
+              url: "Controller",
+              type: "POST",
+              data: {
+                  type: "buttonCategory",
+                  id: majorId,
+
+                  content: content,
+                  action: "major"
+              },
+              dataType: "json", <%--보내지는 데이터 타입--%>
+              <%--삭제의 경우 기존 값에서 하나의 행만 지우는 식이로 해야해서 이렇게 했다--%>
+              <%--삭제시 반드시 1로 만들어준다-->
+              <%--추가는 전부 불러오는 방식으로 하길 권장한다--%>
+              <%--spring에서도 자주 사용하니 반드시 알아야한다--%>
+
+              success: function (response) {
+                  if (response.status === "success") {
+                      console.log("거절 성공:", response);
+
+                      <%--테이블의 열의 id를 레코드를 삭제--%>
+                      $("#row-" + majorId).remove();
+
+
+
+                      $("#deleteMajorModal").modal("hide");
+
+                      alert("대분류가 삭제되었습니다.");
+                  } else {
+                      console.error("삭제 실패:", response.message);
+                      alert("대분류 삭제에 실패했습니다: " + response.message);
+                  }
+              },
+              error: function (xhr, status, error) {
+                  console.error("삭제 실패:", error);
+                  alert("대분류 삭제 중 오류가 발생했습니다.");
+              }
+          });
+      });
   });
 
 

@@ -6,6 +6,16 @@ public class MajorCategoryVO {
     String type;
     String id;
 
+    public String getIs_del() {
+        return is_del;
+    }
+
+    public void setIs_del(String is_del) {
+        this.is_del = is_del;
+    }
+
+    String is_del;
+
     public String getId() {
         return id;
     }

@@ -214,10 +214,21 @@
     VALUES (#{name},#{ename},0)
 
   </insert>
+  <insert id="addMiddleCategory" parameterType="admin.vo.MiddleCategoryVO">
+    INSERT INTO major_category (major_no,name,type,is_del)
+    VALUES (#{major_no},#{name},#{type},0)
+
+  </insert>
   <select id="getCategory" resultType="admin.vo.CategoryVO">
     SELECT middle_category.*,major_category.name as major_name
     FROM middle_category as mi
     JOIN major_category as ma on mi.major_no = ma.id
+  </select>
+
+  <select id="getMajorId" parameterType="int" resultType="admin.vo.MajorCategoryVO">
+    SELECT id FROM major_category
+    WHERE name = #{name} AND ename = #{ename}
+
   </select>
 
 
