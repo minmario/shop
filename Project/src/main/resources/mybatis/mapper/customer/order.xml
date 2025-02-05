@@ -175,8 +175,8 @@
 
     <!-- 주문 추가 -->
     <insert id="insert_order" parameterType="user.vo.customer.OrderVO">
-        INSERT INTO `order` (tid, cus_no, prod_no, coupon_no, deli_no, order_code, count, amount, point_amount, order_date, inventory_no, pay_type, status)
-        VALUES (#{tid}, #{cus_no}, #{prod_no}, #{coupon_no}, #{deli_no}, #{order_code}, #{count}, #{amount}, #{point_amount}, NOW(), #{inventory_no}, 3, 1)
+        INSERT INTO `order` (tid, cus_no, prod_no, coupon_no, deli_no, order_code, count, amount, expected_point, order_date, inventory_no, pay_type, status)
+        VALUES (#{tid}, #{cus_no}, #{prod_no}, #{coupon_no}, #{deli_no}, #{order_code}, #{count}, #{amount}, #{expected_point}, CURRENT_TIMESTAMP(), #{inventory_no}, 3, 1)
     </insert>
 
     <!-- 구매확정 주문 내역만 가져오기 -->

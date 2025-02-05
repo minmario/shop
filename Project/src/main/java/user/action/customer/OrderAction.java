@@ -281,14 +281,14 @@ public class OrderAction implements Action {
                                         int count = productData.optInt("count", 0);
                                         prod_no = productData.optString("prodNo");
                                         String inventory_no = productData.optString("inventoryNo");
-                                        String save_point = productData.optString("point") != null && !productData.optString("point").isEmpty() ? productData.optString("point") : "0"; // 적립 예정 적립금
+                                        String expected_point = productData.optString("point") != null && !productData.optString("point").isEmpty() ? productData.optString("point") : "0"; // 적립 예정 적립금
                                         String coupon = products.getJSONObject(cartNo).optString("coupon", null);
                                         tid = responseJson.optString("tid");
                                         order_code = responseJson.optString("partner_order_id");
                                         deli_no = (String) session.getAttribute("deli_no");
 
                                         // DB order 테이블, 주문 저장
-                                        OrderDAO.insertOrder(tid, cvo.getId(), prod_no, coupon, deli_no, order_code, String.valueOf(count), String.valueOf(amount), save_point, inventory_no);
+                                        OrderDAO.insertOrder(tid, cvo.getId(), prod_no, coupon, deli_no, order_code, String.valueOf(count), String.valueOf(amount), expected_point, inventory_no);
 
                                         // DB customer 테이블, total 수정
                                         CustomerDAO.updateAddTotal(cvo.getId(), String.valueOf(amount));
@@ -355,7 +355,6 @@ public class OrderAction implements Action {
                     break;
                 case "completed":
                     order_code = request.getParameter("order_code");
-                    System.out.println("order_code : " + order_code);
 
                     List<OrderVO> o_list = OrderDAO.selectOrderCode(cvo.getId(), order_code); // 주문상세 정보 list
                     List<DeliveryVO> deli_list = DeliveryDAO.selectDelivery(cvo.getId()); // 해당 주문의 배송지 정보

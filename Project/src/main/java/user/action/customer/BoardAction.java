@@ -162,6 +162,9 @@ public class BoardAction implements Action {
 
                     viewPage = "/user/customer/jsp/mypage/writeInquiry.jsp";
                     break;
+                case "faq":
+                    viewPage = "/user/customer/jsp/board/faq.jsp";
+                    break;
             }
         }
 

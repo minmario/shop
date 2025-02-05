@@ -81,7 +81,7 @@
     <!-- 사용한 적립금 복구(환불) -->
     <insert id="insert_point_refund" parameterType="map">
         INSERT point(cus_no, amount, save_date, order_code, p_type)
-        VALUES(#{cus_no}, #{amount}, NOW(), #{order_code}, 0)
+        VALUES(#{cus_no}, #{amount}, CURRENT_TIMESTAMP(), #{order_code}, 0)
     </insert>
 
     <!-- 환불 시 적립금 내역 삭제 -->
@@ -93,6 +93,6 @@
     <!-- 적립금 추가 -->
     <insert id="insert_use_point" parameterType="user.vo.customer.PointVO">
         INSERT INTO point (cus_no, amount, use_date, order_code, p_type)
-        VALUES (#{cus_no}, #{amount}, NOW(), #{order_code}, #{p_type})
+        VALUES (#{cus_no}, #{amount}, CURRENT_TIMESTAMP(), #{order_code}, #{p_type})
     </insert>
 </mapper>

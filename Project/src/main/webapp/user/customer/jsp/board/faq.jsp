@@ -284,7 +284,7 @@
                                     <h2 class="accordion-header" id="exchange-headingThree">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#exchange-collapseThree" aria-expanded="false" aria-controls="exchange-collapseThree">
                                             <span class="accordion-type">후기</span>
-                                            <span class="accordion-title">한달 후기에 대해 알려주세요.</span>
+                                            <span class="accordion-title">후기 작성에 대해 알려주세요.</span>
                                         </button>
                                     </h2>
                                     <div id="exchange-collapseThree" class="accordion-collapse collapse" aria-labelledby="exchange-headingThree" data-bs-parent="#exchange-accordion">
