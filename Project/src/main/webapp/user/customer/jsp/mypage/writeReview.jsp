@@ -102,7 +102,7 @@
                                     </div>
                                     <div class="checkbox-group">
                                         <label>
-                                            <input type="checkbox"> 나의 신체정보에 업데이트
+                                            <input type="checkbox" id="update-body-info"> 나의 신체정보에 업데이트
                                         </label>
                                     </div>
                                 </div>

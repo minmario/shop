@@ -3,6 +3,7 @@ package user.action.customer;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import service.S3Uploader;
 import user.action.Action;
 import user.dao.customer.BoardDAO;
 import user.dao.customer.CustomerDAO;
@@ -97,9 +98,9 @@ public class WriteReviewAction implements Action {
                                 File file = new File(uploadPath + File.separator + uniqueFileName);
                                 item.write(file);
 
-//                                // S3 업로드 처리
-//                                S3Uploader s3Uploader = new S3Uploader();
-//                                photoUrl = s3Uploader.uploadFile(file, "additional/" + uniqueFileName);
+                                // S3 업로드 처리
+                                S3Uploader s3Uploader = new S3Uploader();
+                                photoUrl = s3Uploader.uploadFile(file, "additional/" + uniqueFileName);
                             }
                         }
 

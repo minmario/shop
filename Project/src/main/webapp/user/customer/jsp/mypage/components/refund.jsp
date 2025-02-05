@@ -24,11 +24,12 @@
     <%-- 전체 조회 --%>
     <div id="list-all" class="list">
         <div class="wrap-refund-list">
-            <c:if test="${requestScope.all eq null or requestScope.cancelRefund eq null or requestScope.exchange eq null}">
+            <c:choose>
+            <c:when test="${requestScope.all eq null}">
                 <div class="refund-summary">
                     <span>조회 내역이 없습니다.</span>
                 </div>
-            </c:if>
+            </c:when>
             <c:if test="${requestScope.all ne null}">
                 <c:forEach var="all" items="${requestScope.all}" varStatus="status">
                     <div class="refund-summary">
