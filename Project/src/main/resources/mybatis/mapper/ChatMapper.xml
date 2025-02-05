@@ -4,19 +4,16 @@
 
 <mapper namespace="ChatMapper">
 
-  <!--  1. 특정 두 사용자의 채팅방 존재 여부 확인 -->
+  <!--   특정 두 사용자의 채팅방 존재 여부 확인 -->
   <select id="getChatRoom" parameterType="map" resultType="user.vo.snap.ChatRoomVO">
-    SELECT id,
-           CASE
-             WHEN user1_id = #{user1Id} THEN user2_id
-             ELSE user1_id
-             END AS otherUserId
+    SELECT id,CASE WHEN user1_id = #{user1Id} THEN user2_id
+    ELSE user1_id END AS otherUserId
     FROM chat_room
     WHERE (user1_id = #{user1Id} AND user2_id = #{user2Id})
        OR (user1_id = #{user2Id} AND user2_id = #{user1Id});
   </select>
 
-   <!--  2. 채팅방 생성 -->
+   <!--  채팅방 생성 -->
   <insert id="createChatRoom" parameterType="map" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO chat_room (user1_id, user2_id, created_at)
     VALUES (#{user1Id}, #{user2Id}, NOW());
@@ -30,28 +27,21 @@
    </select>
 
 
-  <!--  3. 사용자의 모든 채팅방 목록 가져오기 -->
+  <!--   사용자의 모든 채팅방 목록 가져오기 -->
   <select id="getChatRooms" parameterType="int" resultType="user.vo.snap.ChatRoomVO">
-    SELECT cr.id, CASE  WHEN cr.user1_id = #{userId} THEN cr.user2_id
-             ELSE cr.user1_id  END AS otherUserId,
+    SELECT cr.id,
+           CASE WHEN cr.user1_id = #{userId} THEN cr.user2_id ELSE cr.user1_id END AS otherUserId,
            c.profile_image AS otherUserProfileImage,
            c.nickname AS otherUserNickname,
-           (SELECT message FROM chat_message
-            WHERE room_id = cr.id
-            ORDER BY created_at DESC
-             LIMIT 1) AS lastMessage,
-               (SELECT COUNT(*) FROM chat_message
-                WHERE room_id = cr.id AND is_read = FALSE AND sender_id != #{userId}) AS unreadCount
-     FROM chat_room cr
-      JOIN customer c ON c.id = (CASE
-      WHEN cr.user1_id = #{userId} THEN cr.user2_id
-      ELSE cr.user1_id
-      END)
+           (SELECT message FROM chat_message WHERE room_id = cr.id ORDER BY created_at DESC LIMIT 1) AS lastMessage,
+           (SELECT COUNT(*) FROM chat_message WHERE room_id = cr.id AND is_read = FALSE AND sender_id != #{userId}) AS unreadCount
+    FROM chat_room cr
+      JOIN customer c ON c.id = (CASE WHEN cr.user1_id = #{userId} THEN cr.user2_id ELSE cr.user1_id END)
     WHERE cr.user1_id = #{userId} OR cr.user2_id = #{userId}
     ORDER BY lastMessage DESC;
   </select>
 
-  <!--  4. 특정 채팅방의 메시지 조회 -->
+  <!--   특정 채팅방의 메시지 조회 -->
   <select id="getChatMessages" parameterType="int" resultType="user.vo.snap.ChatMessageVO">
     SELECT id, room_id, sender_id, message, created_at, is_read
     FROM chat_message
@@ -59,16 +49,26 @@
     ORDER BY created_at ASC;
   </select>
 
-  <!--  5. 메시지 전송 -->
+  <!--   메시지 전송 -->
   <insert id="sendMessage" parameterType="map">
     INSERT INTO chat_message (room_id, sender_id, message, created_at, is_read)
     VALUES (#{roomId}, #{senderId}, #{message}, NOW(), FALSE);
   </insert>
 
-  <!--  6. 메시지를 읽음 처리 -->
+
+
+<!--  채팅방 읽지않은갯수 카운트 -->
+  <select id="getUnreadMessageCount" parameterType="map" resultType="int">
+    SELECT COUNT(*) FROM chat_message
+    WHERE room_id = #{roomId} AND sender_id = #{userId} AND is_read = 0
+  </select>
+
+
   <update id="markMessagesAsRead" parameterType="map">
-    UPDATE chat_message SET is_read = TRUE
-    WHERE room_id = #{roomId} AND sender_id != #{userId};
+    UPDATE chat_message
+    SET is_read = 1
+    WHERE room_id = #{roomId} AND sender_id != #{sender_id} AND is_read = 0
   </update>
+
 
 </mapper>

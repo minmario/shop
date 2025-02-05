@@ -282,8 +282,8 @@
                                 <!-- 댓글 작성 -->
                                 <div class="d-flex align-items-center mb-4">
                                   <img src="${snap.profile_image}" alt="프로필" class="rounded-circle me-2" style="width: 40px; height: 40px;">
-                                 <input id="commentInput" type="text" style="width: 420px" class="form-control" placeholder="댓글을 입력하세요...">
-                                 <button id="postCommentBtn" class="btn btn-primary btn-sm ms-2">게시</button>
+                                 <input id="commentInput" type="text" style="width: 475.25px" class="form-control" placeholder="댓글을 입력하세요...">
+                                 <button id="postCommentBtn" class="btn btn-primary btn-sm ms-2" style="width:67.25px ">게시</button>
                               </div>
 
                                 <!-- 댓글 리스트 -->

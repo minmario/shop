@@ -12,6 +12,9 @@ import java.util.Map;
 
 public class ChatDao {
 
+
+
+
   public ChatRoomVO getChatRoom(int user1Id, int user2Id) {
     SqlSession ss = FactoryService.getFactory().openSession();
     Map<String, Integer> params = new HashMap<>();
@@ -66,4 +69,39 @@ public class ChatDao {
     ss.close();
     return userProfile;
   }
+
+  public  int getUnreadMessageCount(int roomId, int userId) {
+    SqlSession ss = FactoryService.getFactory().openSession();
+    Map<String, Object> params = new HashMap<>();
+    params.put("roomId", roomId);
+    params.put("userId", userId);
+    int cnt = ss.selectOne("ChatMapper.getUnreadMessageCount", params);
+     return cnt;
+  }
+
+  public List<ChatRoomVO> getChatRoomsWithUnreadCount(int userId) {
+    SqlSession ss = FactoryService.getFactory().openSession();
+    List<ChatRoomVO> chatRooms = ss.selectList("ChatMapper.getChatRooms", userId);
+
+    for (ChatRoomVO room : chatRooms) {
+      int unreadCount = getUnreadMessageCount(room.getId(), userId);
+      room.setUnreadCount(unreadCount);
+    }
+
+    ss.close();
+    return chatRooms;
+  }
+
+  public void markMessagesAsRead(int roomId, int userId) {
+    SqlSession ss = FactoryService.getFactory().openSession();
+    Map<String, Object> params = new HashMap<>();
+    params.put("roomId", roomId);
+    params.put("sender_id", userId);
+    ss.update("ChatMapper.markMessagesAsRead", params);
+    ss.commit();
+    ss.close();
+  }
+
+
+
 }

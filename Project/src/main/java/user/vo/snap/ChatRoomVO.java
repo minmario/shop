@@ -11,6 +11,15 @@ public class ChatRoomVO {
   private Date lastMessageTime;
   private String otherUserNickname;
   private String otherUserProfileImage;
+  private int unreadCount;
+
+  public int getUnreadCount() {
+    return unreadCount;
+  }
+
+  public void setUnreadCount(int unreadCount) {
+    this.unreadCount = unreadCount;
+  }
 
   public ChatRoomVO() {}
 

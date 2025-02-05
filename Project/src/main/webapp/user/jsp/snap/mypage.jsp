@@ -110,7 +110,7 @@
 
 <!-- 스냅작성모달페이지 -->
 <jsp:include page="/user/jsp/snap/snapModal.jsp"></jsp:include>
-<jsp:include page="../layout/footer.jsp"></jsp:include>
+<%--<jsp:include page="../layout/footer.jsp"></jsp:include>--%>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>

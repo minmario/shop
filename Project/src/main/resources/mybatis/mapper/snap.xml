@@ -25,7 +25,7 @@
   <select id="getSnapList"  parameterType="map" resultType="user.vo.BoardVO">
     SELECT id, cus_no, gender, season, style, title, content, snapshot_image, like_count, write_date, is_del
     FROM board
-    WHERE is_del = 0
+    WHERE is_del = 0 AND bname = snap
     ORDER BY write_date DESC
     LIMIT #{offset}, #{limit}
   </select>
@@ -33,7 +33,7 @@
   <select id="getTotalSnapCount" resultType="int">
     SELECT COUNT(*)
     FROM board
-    WHERE bname = 'snap'
+    WHERE bname = 'snap' AND is_del = 0
   </select>
 
 
@@ -54,7 +54,7 @@
     SELECT COUNT(*)
     FROM board
     WHERE 1=1
-    AND bname = 'snap'
+    AND bname = 'snap' AND is_del = 0
     <if test="gender != null and gender != ''"> AND gender = #{gender} </if>
     <if test="season != null and season != ''"> AND season LIKE CONCAT('%', #{season}, '%') </if>
     <if test="style != null and style != ''"> AND style LIKE CONCAT('%', #{style}, '%') </if>
