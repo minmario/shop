@@ -127,11 +127,17 @@ svg {
 }
 
 .accordion, .accordion-item {
-    border: none;
+    border: none !important;
 }
 
 .accordion-button {
-    padding: 0;
+    padding: 0 !important;
+    background-color: #fff !important;
+    box-shadow: initial !important;
+}
+
+.accordion-button::after {
+    color: #555 !important;
 }
 
 .accordion-button:focus {
@@ -140,7 +146,7 @@ svg {
 }
 
 .accordion-body {
-    padding: 0;
+    padding: 0 !important;
 }
 
 .product-item {
@@ -201,13 +207,18 @@ svg {
 
 .benefits-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     padding-bottom: 8px;
 }
 
+.benefits-header h5 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
 .svg-icon {
-    margin-left: 5px;
+    margin-left: 8px;
     display: inline-flex;
     align-items: center;
     cursor: pointer;

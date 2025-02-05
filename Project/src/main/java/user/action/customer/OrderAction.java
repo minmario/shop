@@ -354,8 +354,6 @@ public class OrderAction implements Action {
                     viewPage = "/user/customer/jsp/payment/orderCompleted.jsp";
                     break;
                 case "completed":
-                    System.out.println("-------------- completed ---------------");
-
                     order_code = request.getParameter("order_code");
 
                     List<OrderVO> o_list = OrderDAO.selectOrderCode(cvo.getId(), order_code); // 주문상세 정보 list
