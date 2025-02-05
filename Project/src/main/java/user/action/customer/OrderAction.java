@@ -354,6 +354,8 @@ public class OrderAction implements Action {
                     viewPage = "/user/customer/jsp/payment/orderCompleted.jsp";
                     break;
                 case "completed":
+                    System.out.println("-------------- completed ---------------");
+
                     order_code = request.getParameter("order_code");
 
                     List<OrderVO> o_list = OrderDAO.selectOrderCode(cvo.getId(), order_code); // 주문상세 정보 list
@@ -363,6 +365,11 @@ public class OrderAction implements Action {
                     int totalAmount = OrderDAO.selectTotalAmount(cvo.getId(), order_code); // 원가 총 금액
                     int totalPrice = OrderDAO.selectTotalPrice(cvo.getId(), order_code); // 원가 총 금액
                     int point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code); // 사용한 적립금
+
+                    System.out.println("deli_list : " + deli_list.size());
+                    for (DeliveryVO o : deli_list) {
+                        System.out.println("o deli_list : " + o.getId());
+                    }
 
                     request.setAttribute("o_list", o_list);
                     request.setAttribute("deli_list", deli_list);

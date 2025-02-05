@@ -35,8 +35,8 @@
                             <div class="number" id="timer">3</div>
                         </div>
 
-                        <div class="order-completed" id="order-completed" style="display: none;">
-                            <div class="completed-text">주문 완료</div>
+                        <div class="order-completed" id="order-completed">
+                            <div class="completed-text" id="completed-text">주문 완료</div>
                         </div>
 
                         <div class="order-details-container" id="order-details" data-order="202502046515">

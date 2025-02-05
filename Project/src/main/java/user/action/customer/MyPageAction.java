@@ -20,10 +20,6 @@ public class MyPageAction implements Action {
             request.setAttribute("session_expired", true);
             return "/user/customer/jsp/error/error.jsp";
         } else {
-            // 적립금 내역 가져오기
-            List<PointVO> all = PointDAO.selectAll(loginResult.getId());
-
-            session.setAttribute("all", all);
             return "/user/customer/jsp/mypage/mypage.jsp";
         }
     }
