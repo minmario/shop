@@ -117,7 +117,7 @@
                                             <!-- 상품 가격에 수량을 곱하여 총 결제 금액 계산 -->
                                             <c:set var="totalPrice" value="${prodPriceInt * prodCount}" />
 
-                                            <li><span>상품 결제 금액</span><span class="cancel-item-price"><fmt:formatNumber value="${totalPrice}"/>원</span></li>
+                                            <li><span>상품 결제 금액</span><span class="cancel-item-price"><fmt:formatNumber value="${o_vo.amount}"/>원</span></li>
 
                                             <c:if test="${o_vo.point_amount ne null}">
                                                 <li><span>적립금 사용</span><span class="cancel-item-price"><fmt:formatNumber value="${pointUsed}"/>원</span></li>

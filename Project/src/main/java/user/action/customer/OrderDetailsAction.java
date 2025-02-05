@@ -35,7 +35,7 @@ public class OrderDetailsAction implements Action {
                     List<DeliveryVO> deli_list = DeliveryDAO.selectDelivery(cvo.getId()); // 해당 주문의 배송지 정보
                     List<OrderVO> coupon_list = OrderDAO.selectOrderCouponList(cvo.getId(), order_code);
                     GradeVO grade = GradeDAO.selectGradeCustomer(cvo.getId());
-                    int totalAmount = OrderDAO.selectTotalAmount(cvo.getId(), order_code); // 원가 총 금액
+                    int totalAmount = OrderDAO.selectTotalAmount(cvo.getId(), order_code); // 총 결제 금액
                     int totalPrice = OrderDAO.selectTotalPrice(cvo.getId(), order_code); // 원가 총 금액
                     int point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code); // 사용한 적립금
 

@@ -63,7 +63,7 @@
         INNER JOIN seller s ON p.seller_no = s.id
         LEFT JOIN inventory i ON i.id = o.inventory_no
         WHERE o.cus_no = #{cus_no} AND o.status IN (6, 7, 8)
-        ORDER BY o.order_date DESC;
+        ORDER BY o.order_date DESC
     </select>
 
     <!-- 취소/반품 상품 전체 조회 -->
@@ -75,7 +75,7 @@
         INNER JOIN seller s ON p.seller_no = s.id
         LEFT JOIN inventory i ON i.id = o.inventory_no
         WHERE o.cus_no = #{cus_no} AND o.status IN (6, 7)
-        ORDER BY o.order_date DESC;
+        ORDER BY o.order_date DESC
     </select>
 
     <!-- 교환 상품 전체 조회 -->
@@ -87,7 +87,7 @@
         INNER JOIN seller s ON p.seller_no = s.id
         LEFT JOIN inventory i ON i.id = o.inventory_no
         WHERE o.cus_no = #{cus_no} AND o.status = 8
-        ORDER BY o.order_date DESC;
+        ORDER BY o.order_date DESC
     </select>
 
     <!-- 주문코드 별 금액 총 합 -->
@@ -125,8 +125,8 @@
     <!-- 취소 요청 -->
     <update id="update_order_cancel" parameterType="map">
         UPDATE `order`
-        SET status = 6, refund_bank = #{refund_bank}, refund_account = #{refund_account}, reason = #{reason}
-        WHERE id = #{id} AND cus_no = #{cus_no} AND order_code = #{order_code}
+        SET status = 6, refund_bank = #{refund_bank}, refund_account = #{refund_account}, reason_customer = #{reason_customer}
+        WHERE id = #{id} AND cus_no = #{cus_no} AND order_code = #{order_code} AND cancel_request_date = CURRENT_TIMESTAMP()
         AND prod_no = #{prod_no}
     </update>
 
@@ -142,7 +142,7 @@
     <update id="update_order_refund" parameterType="map">
         UPDATE `order`
         SET status = 7, refund_bank = #{refund_bank}, refund_account = #{refund_account},
-        reason = #{reason}, retrieve_deli_no = #{retrieve_deli_no}
+        reason_customer = #{reason_customer}, retrieve_deli_no = #{retrieve_deli_no} AND refund_request_date = CURRENT_TIMESTAMP()
         WHERE id = #{id} AND cus_no = #{cus_no} AND order_code = #{order_code}
         AND prod_no = #{prod_no}
     </update>
@@ -150,7 +150,7 @@
     <!-- 교환 요청 -->
     <update id="update_order_exchange" parameterType="map">
         UPDATE `order`
-        SET status = 8, reason = #{reason}, retrieve_deli_no = #{retrieve_deli_no}, inventory_no = #{inventory_no}
+        SET status = 8, reason_customer = #{reason_customer}, retrieve_deli_no = #{retrieve_deli_no}, exchange_inventory_no = #{exchange_inventory_no} AND exchange_request_date = CURRENT_TIMESTAMP()
         WHERE id = #{id} AND cus_no = #{cus_no} AND order_code = #{order_code}
         AND prod_no = #{prod_no}
     </update>

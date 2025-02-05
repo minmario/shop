@@ -50,66 +50,68 @@
                                         <p class="product-option">${item.option_name} / ${item.count}개</p>
                                     </div>
                                 </div>
-                                <div class="review-rating">
-                                    <p class="section-title">이 상품 어떠셨나요?</p>
-                                    <input type="hidden" id="rating-value" />
-                                    <div class="rating-stars">
-                                        <span class="star" data-value="1">&#9734;</span>
-                                        <span class="star" data-value="2">&#9734;</span>
-                                        <span class="star" data-value="3">&#9734;</span>
-                                        <span class="star" data-value="4">&#9734;</span>
-                                        <span class="star" data-value="5">&#9734;</span>
+                                <form action="Controller?type=writeReview&action=insert" method="POST" enctype="multipart/form-data">
+                                    <div class="review-rating">
+                                        <p class="section-title">이 상품 어떠셨나요?</p>
+                                        <input type="hidden" id="rating-value" />
+                                        <div class="rating-stars">
+                                            <span class="star" data-value="1">&#9734;</span>
+                                            <span class="star" data-value="2">&#9734;</span>
+                                            <span class="star" data-value="3">&#9734;</span>
+                                            <span class="star" data-value="4">&#9734;</span>
+                                            <span class="star" data-value="5">&#9734;</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="review-comment">
-                                    <label for="review-comment" class="section-title">어떤 점이 좋았나요?</label>
-                                    <textarea id="review-comment" maxlength="500" placeholder="사용하시면서 느꼈던 장점에 대해 의견을 자세히 입력해주세요."></textarea>
-                                    <div class="comment-footer">
-                                        <span class="text-count">0/500</span>
+                                    <div class="review-comment">
+                                        <label for="review-comment" class="section-title">어떤 점이 좋았나요?</label>
+                                        <textarea id="review-comment" maxlength="500" placeholder="사용하시면서 느꼈던 장점에 대해 의견을 자세히 입력해주세요."></textarea>
+                                        <div class="comment-footer">
+                                            <span class="text-count">0/500</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <!-- 사진 정보 -->
-                                <div class="photo-info">
-                                    <div class="wrap-photo-title">
-                                        <p class="section-title">사진 첨부</p>
+                                    <!-- 사진 정보 -->
+                                    <div class="photo-info">
+                                        <div class="wrap-photo-title">
+                                            <p class="section-title">사진 첨부</p>
+                                        </div>
+                                        <input type="file" id="photo-input" accept="image/*" style="display: none;">
+                                        <div class="photo-box" onclick="triggerFileInput()">
+                                            <span class="plus">+</span><br/>
+                                            <span class="add-photo">사진 추가</span>
+                                        </div>
                                     </div>
-                                    <input type="file" id="photo-input" accept="image/*" style="display: none;">
-                                    <div class="photo-box" onclick="triggerFileInput()">
-                                        <span class="plus">+</span><br/>
-                                        <span class="add-photo">사진 추가</span>
-                                    </div>
-                                </div>
-                                <!-- 체형 정보 -->
-                                <div class="body-info">
-                                    <p class="section-title">내 체형정보를 입력해주세요 (필수)</p>
-                                    <div class="gender-selection">
-                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                            <label class="btn btn-outline-secondary active">
-                                                <input type="radio" name="options" id="option1" value="남성" autocomplete="off" checked>남성
-                                            </label>
-                                            <label class="btn btn-outline-secondary">
-                                                <input type="radio" name="options" id="option2" value="여성" autocomplete="off">여성
+                                    <!-- 체형 정보 -->
+                                    <div class="body-info">
+                                        <p class="section-title">내 체형정보를 입력해주세요 (필수)</p>
+                                        <div class="gender-selection">
+                                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="options" id="option1" value="남성" autocomplete="off" checked>남성
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="options" id="option2" value="여성" autocomplete="off">여성
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="input-group">
+                                            <input type="text" id="height" placeholder="키를 입력해주세요" />
+                                            <span class="unit">cm</span>
+                                        </div>
+                                        <div class="input-group">
+                                            <input type="text" id="weight" placeholder="몸무게를 입력해주세요" />
+                                            <span class="unit">kg</span>
+                                        </div>
+                                        <div class="checkbox-group">
+                                            <label>
+                                                <input type="checkbox" id="update-body-info"> 나의 신체정보에 업데이트
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="input-group">
-                                        <input type="text" id="height" placeholder="키를 입력해주세요" />
-                                        <span class="unit">cm</span>
+                                    <!-- 등록 버튼 -->
+                                    <div class="action-buttons">
+                                        <button type="button" class="btn btn-dark" onclick="insertReview()">등록하기</button>
                                     </div>
-                                    <div class="input-group">
-                                        <input type="text" id="weight" placeholder="몸무게를 입력해주세요" />
-                                        <span class="unit">kg</span>
-                                    </div>
-                                    <div class="checkbox-group">
-                                        <label>
-                                            <input type="checkbox" id="update-body-info"> 나의 신체정보에 업데이트
-                                        </label>
-                                    </div>
-                                </div>
-                                <!-- 등록 버튼 -->
-                                <div class="action-buttons">
-                                    <button type="button" class="btn btn-dark" onclick="insertReview()">등록하기</button>
-                                </div>
+                                </form>
                             </div>
                         </c:if>
                     </div>

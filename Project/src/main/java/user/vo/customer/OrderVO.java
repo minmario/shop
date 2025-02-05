@@ -3,9 +3,66 @@ package user.vo.customer;
 import java.util.List;
 
 public class OrderVO {
-    private String id, tid, cus_no, prod_no, coupon_no, deli_no, order_code, count, order_date, amount,
-            pay_type, order_bank, order_account, card_name, is_install, install_month, status, refund_bank, refund_account, reason, retrieve_deli_no, prod_code, prod_name, prod_price,
-            prod_sale, prod_image, prod_saled_price, brand, option_name, deli_name, pos_code, addr1, addr2, phone, deli_request, is_default, point_amount, inventory_no, coupon_name, sale_per, delivery_date, purchase_confirm_date;
+    private String id, tid, cus_no, prod_no, coupon_no, deli_no, order_code, count, order_date, amount, pay_type, status, refund_bank, refund_account, reason_customer,
+            retrieve_deli_no, prod_code, prod_name, prod_price, prod_sale, prod_image, prod_saled_price, brand, option_name, deli_name, pos_code, addr1,
+            addr2, phone, deli_request, is_default, point_amount, inventory_no, coupon_name, sale_per, delivery_date, purchase_confirm_date, exchange_inventory_no,
+            expected_point, refund_request_date, cancel_request_date, exchange_request_date, invoice_number;
+
+    public String getCancel_request_date() {
+        return cancel_request_date;
+    }
+
+    public void setCancel_request_date(String cancel_request_date) {
+        this.cancel_request_date = cancel_request_date;
+    }
+
+    public String getExchange_inventory_no() {
+        return exchange_inventory_no;
+    }
+
+    public void setExchange_inventory_no(String exchange_inventory_no) {
+        this.exchange_inventory_no = exchange_inventory_no;
+    }
+
+    public String getExchange_request_date() {
+        return exchange_request_date;
+    }
+
+    public void setExchange_request_date(String exchange_request_date) {
+        this.exchange_request_date = exchange_request_date;
+    }
+
+    public String getExpected_point() {
+        return expected_point;
+    }
+
+    public void setExpected_point(String expected_point) {
+        this.expected_point = expected_point;
+    }
+
+    public String getInvoice_number() {
+        return invoice_number;
+    }
+
+    public void setInvoice_number(String invoice_number) {
+        this.invoice_number = invoice_number;
+    }
+
+    public String getReason_customer() {
+        return reason_customer;
+    }
+
+    public void setReason_customer(String reason_customer) {
+        this.reason_customer = reason_customer;
+    }
+
+    public String getRefund_request_date() {
+        return refund_request_date;
+    }
+
+    public void setRefund_request_date(String refund_request_date) {
+        this.refund_request_date = refund_request_date;
+    }
 
     public String getDelivery_date() {
         return delivery_date;
@@ -63,14 +120,6 @@ public class OrderVO {
 
     public void setRetrieve_deli_no(String retrieve_deli_no) {
         this.retrieve_deli_no = retrieve_deli_no;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
     }
 
     public String getPoint_amount() {
@@ -303,46 +352,6 @@ public class OrderVO {
 
     public void setPay_type(String pay_type) {
         this.pay_type = pay_type;
-    }
-
-    public String getOrder_bank() {
-        return order_bank;
-    }
-
-    public void setOrder_bank(String order_bank) {
-        this.order_bank = order_bank;
-    }
-
-    public String getOrder_account() {
-        return order_account;
-    }
-
-    public void setOrder_account(String order_account) {
-        this.order_account = order_account;
-    }
-
-    public String getCard_name() {
-        return card_name;
-    }
-
-    public void setCard_name(String card_name) {
-        this.card_name = card_name;
-    }
-
-    public String getIs_install() {
-        return is_install;
-    }
-
-    public void setIs_install(String is_install) {
-        this.is_install = is_install;
-    }
-
-    public String getInstall_month() {
-        return install_month;
-    }
-
-    public void setInstall_month(String install_month) {
-        this.install_month = install_month;
     }
 
     public String getStatus() {

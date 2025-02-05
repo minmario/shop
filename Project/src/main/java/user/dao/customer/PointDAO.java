@@ -167,7 +167,7 @@ public class PointDAO {
     }
 
     // 환불 시 적립금 내역 삭제
-    public int deletePoint(String cus_no, String order_code) {
+    public static int deletePoint(String cus_no, String order_code) {
         HashMap<String, String> map = new HashMap<>();
         map.put("cus_no", cus_no);
         map.put("order_code", order_code);

@@ -83,6 +83,12 @@ public class RefundRequestAction implements Action {
                         // 주문 정보 업데이트 (반품 상태로 변경)
                         int u_o_cnt = OrderDAO.updateOrderRefund(id, cvo.getId(), prodNo, orderCode, refund_bank, refund_account, reason, retrieve_deli_no);
 
+                        // 이전 적립금 내역 삭제
+                        int d_p_cnt = 0;
+                        if (point_used != null && !point_used.isEmpty()) {
+                            d_p_cnt = PointDAO.deletePoint(cvo.getId(), orderCode);
+                        }
+
                         // 사용한 적립금 복구 (point_used null이 아닌 경우에만 실행)
                         int u_p_cnt = 0;
                         if (point_used != null && !point_used.isEmpty()) {
@@ -96,6 +102,7 @@ public class RefundRequestAction implements Action {
                         int u_c_cnt = CustomerDAO.updateTotal(cvo.getId(), total);
 
                         System.out.println("주문 내역 변경" + u_o_cnt);
+                        System.out.println("포인트 내역 삭제" + d_p_cnt);
                         System.out.println("포인트 복구" + u_p_cnt);
                         System.out.println("쿠폰 복구" + u_co_cnt);
                         System.out.println("환불 내역" + u_c_cnt);

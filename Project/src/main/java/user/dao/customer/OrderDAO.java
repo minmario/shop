@@ -161,7 +161,7 @@ public class OrderDAO {
         map.put("order_code", order_code);
         map.put("refund_bank", refund_bank);
         map.put("refund_account", refund_account);
-        map.put("reason", reason);
+        map.put("reason_customer", reason);
 
         SqlSession ss = FactoryService.getFactory().openSession();
         int cnt = 0;
@@ -220,7 +220,7 @@ public class OrderDAO {
         map.put("order_code", order_code);
         map.put("refund_bank", refund_bank);
         map.put("refund_account", refund_account);
-        map.put("reason", reason);
+        map.put("reason_customer", reason);
         map.put("retrieve_deli_no", retrieve_deli_no);
 
         SqlSession ss = FactoryService.getFactory().openSession();
@@ -243,15 +243,15 @@ public class OrderDAO {
     }
 
     // 교환 요청
-    public static int updateOrderExchange(String id, String cus_no, String prod_no, String order_code, String reason, String retrieve_deli_no, String inventory_no){
+    public static int updateOrderExchange(String id, String cus_no, String prod_no, String order_code, String reason, String retrieve_deli_no, String exchange_inventory_no){
         HashMap<String, String> map = new HashMap<>();
         map.put("id", id);
         map.put("cus_no", cus_no);
         map.put("prod_no", prod_no);
         map.put("order_code", order_code);
-        map.put("reason", reason);
+        map.put("reason_customer", reason);
         map.put("retrieve_deli_no", retrieve_deli_no);
-        map.put("inventory_no", inventory_no);
+        map.put("exchange_inventory_no", exchange_inventory_no);
 
         SqlSession ss = FactoryService.getFactory().openSession();
         int cnt = 0;

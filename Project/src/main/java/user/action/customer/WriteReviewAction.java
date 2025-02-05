@@ -62,13 +62,15 @@ public class WriteReviewAction implements Action {
                         String gender = null;
                         String height = null;
                         String weight = null;
-                        String photoUrl = null;
+                        String photo = null;
                         String isUpdateChecked = null;
 
                         for (FileItem item : items) {
                             if (item.isFormField()) {
                                 String fieldName = item.getFieldName();
                                 String value = item.getString("UTF-8");
+
+                                System.out.println("value : " + value);
 
                                 switch (fieldName) {
                                     case "rating":
@@ -100,7 +102,7 @@ public class WriteReviewAction implements Action {
 
                                 // S3 업로드 처리
                                 S3Uploader s3Uploader = new S3Uploader();
-                                photoUrl = s3Uploader.uploadFile(file, "additional/" + uniqueFileName);
+                                photo = s3Uploader.uploadFile(file, "additional/" + uniqueFileName);
                             }
                         }
 
@@ -112,7 +114,7 @@ public class WriteReviewAction implements Action {
                         b_vo.setScore(String.valueOf(Integer.parseInt(rating)));
                         b_vo.setContent(comment);
                         b_vo.setGender(gender);
-                        b_vo.setAdditional_images(photoUrl);
+                        b_vo.setAdditional_images(photo);
 
                         // 체크박스가 체크된 경우에만 키와 몸무게 업데이트
                         if ("true".equals(isUpdateChecked)) {

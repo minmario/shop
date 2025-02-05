@@ -61,9 +61,9 @@
                                         <c:when test="${item.status == '3'}"><p class="payment-status">배송중</p></c:when>
                                         <c:when test="${item.status == '4'}"><p class="payment-status">배송완료</p></c:when>
                                         <c:when test="${item.status == '5'}"><p class="payment-status">구매확정</p></c:when>
-                                        <c:when test="${item.status == '6'}"><p class="payment-status">취소</p></c:when>
-                                        <c:when test="${item.status == '7'}"><p class="payment-status">반품</p></c:when>
-                                        <c:when test="${item.status == '8'}"><p class="payment-status">교환</p></c:when>
+                                        <c:when test="${item.status == '6'}"><p class="payment-status">구매취소</p></c:when>
+                                        <c:when test="${item.status == '7'}"><p class="payment-status">반품신청</p></c:when>
+                                        <c:when test="${item.status == '8'}"><p class="payment-status">교환신청</p></c:when>
                                     </c:choose>
                                     <div class="product-item">
                                         <img src="${fn:split(item.prod_image, ',')[0]}" alt="상품 이미지" class="product-img">
@@ -94,23 +94,15 @@
                                             <c:when test="${item.status == '2' or item.status == '3' or item.status == '4'}">
                                                 <button class="btn btn-outline-secondary refund-button" onclick="location.href='Controller?type=refundRequest&action=select&order_id=${item.id}&order_code=${item.order_code}&prod_no=${item.prod_no}'">반품 요청</button>
                                                 <button class="btn btn-outline-secondary exchange-button" onclick="location.href='Controller?type=exchangeRequest&action=select&order_id=${item.id}&order_code=${item.order_code}&prod_no=${item.prod_no}'">교환 요청</button>
-                                                <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">배송 조회</button>
-                                            </c:when>
-                                            <c:when test="${item.status == '5'}">
-                                                <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">배송 조회</button>
                                             </c:when>
                                             <c:when test="${item.status == '6'}">
                                                 <button class="btn btn-outline-secondary cancel-details-button" onclick="location.href='Controller?type=cancelDetails&action=select&order_id=${item.id}&order_code=${item.order_code}&prod_no=${item.prod_no}'">취소 상세</button>
                                             </c:when>
                                             <c:when test="${item.status == '7'}">
                                                 <button class="btn btn-outline-secondary refund-details-button" onclick="location.href='Controller?type=refundDetails&action=select&order_id=${item.id}&order_code=${item.order_code}&prod_no=${item.prod_no}'">반품 상세</button>
-                                                <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">반품 배송 조회</button>
-                                                <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">배송 조회</button>
                                             </c:when>
                                             <c:when test="${item.status == '8'}">
                                                 <button class="btn btn-outline-secondary exchange-details-button" onclick="location.href='Controller?type=exchangeDetails&action=select&order_id=${item.id}&order_code=${item.order_code}&prod_no=${item.prod_no}'">교환 상세</button>
-                                                <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">교환 배송 조회</button>
-                                                <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">배송 조회</button>
                                             </c:when>
                                         </c:choose>
                                     </div>
@@ -149,15 +141,11 @@
                                         <!-- 3. 쿠폰 할인 금액을 차감한 후 적립금 사용 금액을 차감 -->
                                         <c:set var="finalPrice" value="${priceAfterDiscount - couponDiscount - pointAmount}" />
                                         <span class="payment-price">결제 금액</span>
-                                        <span class="final-price"><fmt:formatNumber value="${finalPrice}" type="number" maxFractionDigits="0"/>원</span>
+                                        <span class="final-price"><fmt:formatNumber value="${requestScope.totalAmount}" type="number" maxFractionDigits="0"/>원</span>
                                     </li>
-                                    <li><span>결제 수단</span>
-                                        <c:choose>
-                                            <c:when test="${requestScope.o_list[0].pay_type == '1'}"><span class="payment-method">계좌이체-[${requestScope.o_list[0].order_bank}]${requestScope.o_list[0].order_account}</span></c:when>
-                                            <c:when test="${requestScope.o_list[0].pay_type == '2'}"><span class="payment-method">토스페이</span></c:when>
-                                            <c:when test="${requestScope.o_list[0].pay_type == '3'}"><span class="payment-method">카카오페이</span></c:when>
-                                            <c:when test="${requestScope.o_list[0].pay_type == '4'}"><span class="payment-method">카드-${requestScope.o_list[0].card_name}</span></c:when>
-                                        </c:choose>
+                                    <li>
+                                        <span>결제 수단</span>
+                                        <span class="payment-method">${requestScope.o_list[0].pay_type}</span>
                                     </li>
                                 </ul>
                             </div>
