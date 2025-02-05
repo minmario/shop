@@ -29,5 +29,6 @@
         <mapper resource="mybatis/mapper/customer/grade.xml"/>
         <mapper resource="mybatis/mapper/customer/coupon.xml"/>
         <mapper resource="mybatis/mapper/customer/event.xml"/>
+      <mapper resource="mybatis/mapper/customer/review.xml"/>
     </mappers>
 </configuration>

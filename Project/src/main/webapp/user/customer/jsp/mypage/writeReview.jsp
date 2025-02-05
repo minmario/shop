@@ -50,10 +50,10 @@
                                         <p class="product-option">${item.option_name} / ${item.count}개</p>
                                     </div>
                                 </div>
-                                <form action="Controller?type=writeReview&action=insert" method="POST" enctype="multipart/form-data">
+                                <form id="review-form" action="Controller?type=writeReview&action=insert" method="POST" enctype="multipart/form-data" onsubmit="event.preventDefault(); insertReview();">
                                     <div class="review-rating">
                                         <p class="section-title">이 상품 어떠셨나요?</p>
-                                        <input type="hidden" id="rating-value" />
+                                        <input type="hidden" id="rating-value" name="rating" />
                                         <div class="rating-stars">
                                             <span class="star" data-value="1">&#9734;</span>
                                             <span class="star" data-value="2">&#9734;</span>
@@ -109,7 +109,7 @@
                                     </div>
                                     <!-- 등록 버튼 -->
                                     <div class="action-buttons">
-                                        <button type="button" class="btn btn-dark" onclick="insertReview()">등록하기</button>
+                                        <button type="submit" class="btn btn-dark" onclick="insertReview()">등록하기</button>
                                     </div>
                                 </form>
                             </div>

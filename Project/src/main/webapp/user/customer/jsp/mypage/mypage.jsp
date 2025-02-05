@@ -299,8 +299,9 @@
                         <div class="modal-body">
                             <ul class="review-list">
                                 <li>
-                                    <div class="review-item" onclick="location.href='Controller?type=writeReview'">
-                                        <span class="review-title">후기</span>
+                                    <div class="review-item" onclick="location.href='<%= request.getContextPath() %>/Controller?type=writeReview'">
+
+                                    <span class="review-title">후기</span>
                                         <span class="arrow-icon">&gt;</span>
                                     </div>
                                 </li>

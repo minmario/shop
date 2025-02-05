@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div class="action-buttons">
-                    <button class="btn btn-outline-secondary custom-btn" onclick="location.href='Controller?type=writeReview&action=select&prod_no=${item.prod_no}&order_code=${item.order_code}'">후기 작성</button>
+                    <button class="btn btn-outline-secondary custom-btn" onclick="location.href='${pageContext.request.contextPath}Controller?type=writeReview&action=select&prod_no=${item.prod_no}&order_code=${item.order_code}'">후기 작성</button>
                     <button class="btn btn-outline-secondary custom-btn">스타일 후기 작성</button>
                 </div>
             </c:forEach>

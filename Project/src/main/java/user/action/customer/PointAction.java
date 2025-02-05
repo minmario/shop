@@ -30,7 +30,7 @@ public class PointAction implements Action {
         String expireTotal = PointDAO.selectExpireTotal(cvo.getId());
         request.setAttribute("expireTotal", expireTotal);
 
-        if (action != null) {
+       if (action != null) {
             switch (action) {
                 case "all":
                     // 전체

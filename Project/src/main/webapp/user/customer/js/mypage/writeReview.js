@@ -31,75 +31,84 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function insertReview() {
-    const form = document.getElementById('review-form');
-    const formData = new FormData(form);
 
-    // 각 입력 데이터들을 formData에 추가
-    formData.append('rating', document.getElementById('rating-value').value);
-    formData.append('comment', document.getElementById('review-comment').value);
+  // event.preventDefault(); // 폼 기본 제출 방지
+  const form = document.getElementById('review-form');
+  const formData = new FormData(form);
 
-    const photoInput = document.getElementById('photo-input');
-    if (photoInput.files.length > 0) {
-        formData.append('photo', photoInput.files[0]);
+  // 각 입력 데이터들을 formData에 추가
+  formData.append('rating', document.getElementById('rating-value').value);
+  formData.append('comment', document.getElementById('review-comment').value);
+
+  const photoInput = document.getElementById('photo-input');
+  if (photoInput.files.length > 0) {
+    formData.append('photo', photoInput.files[0]);
+  }
+
+  const genderElement = document.querySelector('input[name="options"]:checked');
+  if (genderElement) {
+    formData.append('gender', genderElement.value);
+  }
+
+  formData.append('height', document.getElementById('height').value);
+  formData.append('weight', document.getElementById('weight').value);
+  formData.append('isUpdateChecked', document.getElementById('update-body-info').checked);
+
+
+
+  for (let pair of formData.entries()) {
+    console.log(pair[0] + ": " + pair[1]);
+  }
+  // 입력 데이터 유효성 검사
+  if (!formData.get('rating')) {
+    alert("별점을 선택해 주세요.");
+    return;
+  }
+
+  if (!formData.get('comment') || formData.get('comment').length < 10) {
+    alert("리뷰 내용을 최소 10자 이상 작성해 주세요.");
+    return;
+  }
+
+  if (!formData.get('gender')) {
+    alert("성별을 선택해 주세요.");
+    return;
+  }
+
+  if (!formData.get('height') || !formData.get('weight')) {
+    alert("키와 몸무게 정보를 입력해 주세요.");
+    return;
+  }
+
+  if (!confirm("리뷰를 등록하시겠습니까?")) {
+    return;
+  }
+
+  // AJAX 요청
+  console.log("리뷰 등록 요청 전송...");
+  $.ajax({
+    url: 'Controller?type=writeReview&action=insert',
+    type: 'POST',
+    data: formData,
+    processData: false,  // 데이터 직렬화 금지
+    contentType: false,  // 기본적으로 multipart로 설정됨
+    success: function (response) {
+      console.log("서버 응답:", response);
+      if (response.success) {
+        alert(response.message);
+        window.location.href = "Controller?type=myPage";
+      } else {
+        alert(response.message || "리뷰 등록 중 오류가 발생했습니다.");
+      }
+    },
+    error: function (xhr) {
+      console.error("리뷰 등록 중 서버 오류 발생:", xhr.responseText);
+      alert("서버 오류 발생: " + xhr.responseText);
     }
 
-    const genderElement = document.querySelector('input[name="options"]:checked');
-    if (genderElement) {
-        formData.append('gender', genderElement.value);
-    }
-
-    formData.append('height', document.getElementById('height').value);
-    formData.append('weight', document.getElementById('weight').value);
-    formData.append('isUpdateChecked', document.getElementById('update-body-info').checked);
-
-    // 입력 데이터 유효성 검사
-    if (!formData.get('rating')) {
-        alert("별점을 선택해 주세요.");
-        return;
-    }
-
-    if (!formData.get('comment') || formData.get('comment').length < 10) {
-        alert("리뷰 내용을 최소 10자 이상 작성해 주세요.");
-        return;
-    }
-
-    if (!formData.get('gender')) {
-        alert("성별을 선택해 주세요.");
-        return;
-    }
-
-    if (!formData.get('height') || !formData.get('weight')) {
-        alert("키와 몸무게 정보를 입력해 주세요.");
-        return;
-    }
-
-    if (!confirm("리뷰를 등록하시겠습니까?")) {
-        return;
-    }
-
-    // AJAX 요청
-    console.log("리뷰 등록 요청 전송...");
-    $.ajax({
-        url: 'Controller?type=writeReview&action=insert',
-        type: 'POST',
-        data: formData,
-        processData: false,  // 데이터 직렬화 금지
-        contentType: false,  // 기본적으로 multipart로 설정됨
-        success: function (response) {
-            console.log("리뷰 등록 성공 응답:", response);
-            if (response && response.success) {
-                alert("상품리뷰가 등록되었습니다.");
-                window.location.href = "Controller?type=myPage";
-            } else {
-                alert(response.message || "리뷰 등록 중 오류가 발생했습니다.");
-            }
-        },
-        error: function () {
-            console.error("리뷰 등록 중 서버와의 통신 오류 발생.");
-            alert("서버와의 통신 중 오류가 발생했습니다.");
-        }
-    });
+  });
 }
+
 
 
 // 사진 추가 기능
