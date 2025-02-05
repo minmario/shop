@@ -433,4 +433,26 @@ public class OrderDAO {
 
         return vo;
     }
+
+    // 취소/반품/교환상품 상세 내역
+    public static OrderVO selectDetailsByStatus(String cus_no, String prod_no, String order_code, String status){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("cus_no", cus_no);
+        map.put("prod_no", prod_no);
+        map.put("order_code", order_code);
+        map.put("status", status);
+
+        SqlSession ss = FactoryService.getFactory().openSession();
+        OrderVO vo = null;
+
+        try{
+            vo = ss.selectOne("order.select_details_by_status", map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return vo;
+    }
 }

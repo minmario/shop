@@ -259,3 +259,10 @@
 .modal .modal-body ul li {
     padding: 3px;
 }
+
+.preview-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+}

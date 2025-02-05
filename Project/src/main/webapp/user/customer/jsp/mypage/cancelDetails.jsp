@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -28,6 +29,9 @@
             <div class="wrap">
                 <div class="row">
                     <div class="container">
+
+                        <c:if test="${requestScope.cancel ne null}">
+                        <c:set var="cancel" value="${requestScope.cancel}"/>
                         <div class="wrap-title">
                             <span class="title">취소 상세내역</span>
                         </div>
@@ -35,25 +39,25 @@
                         <div class="cancel-details">
                             <%-- 주문 정보 --%>
                             <div class="order-info">
-                                <div class="order-date">2024.12.18 19:54</div>
+                                <div class="order-date">${cancel.order_date}</div>
                                 <div class="wrap-order-details">
-                                    <div class="order-number">주문번호 202012161492200002</div>
-                                    <div class="order-details-link"><a href="Controller?type=orderDetails">주문 상세</a></div>
+                                    <div class="order-number">주문번호 ${cancel.order_code}</div>
+<%--                                    <div class="order-details-link"><a href="Controller?type=orderDetails">주문 상세</a></div>--%>
                                 </div>
                             </div>
                             <hr/>
 
                             <%-- 취소 상품 정보 --%>
                             <div class="cancel-product">
-                                <h2>취소 상품 1개</h2>
+                                <h2>취소 상품</h2>
                                 <span class="cancel-status">취소완료</span>
                                 <div class="product-details">
                                     <div class="product-image"></div>
                                     <div class="product-info">
-                                        <p class="product-brand">thisisnever</p>
-                                        <p class="product-name">Mesh Football Jersey Navy</p>
-                                        <p class="product-options">M / 1개</p>
-                                        <p class="product-price">26,080원</p>
+                                        <p class="product-brand">${cancel.brand}</p>
+                                        <p class="product-name">${cancel.prod_name}</p>
+                                        <p class="product-options">${cancel.option_name} / ${cancel.count}개</p>
+                                        <p class="product-price"><fmt:formatNumber value="${cancel.amount}"/>원</p>
                                     </div>
                                 </div>
                             </div>
@@ -77,7 +81,7 @@
                                     </li>
                                     <li>
                                         <span class="info-label">취소 사유</span>
-                                        <span class="info-value">고객 오류</span>
+                                        <span class="info-value">${cancel.reason}</span>
                                     </li>
                                 </ul>
                             </div><hr/>
@@ -88,27 +92,15 @@
                                 <ul class="detail-list">
                                     <li>
                                         <span class="detail-label">상품 결제금액</span>
-                                        <span class="detail-value">35,910원</span>
+                                        <span class="detail-value"><fmt:formatNumber value="${cancel.amount}"/>원</span>
                                     </li>
                                     <li>
-                                        <span class="detail-label">통합 적립금 사용</span>
-                                        <span class="detail-value">2,793원</span>
+                                        <span class="detail-label">적립금 사용</span>
+                                        <span class="detail-value"><fmt:formatNumber value="${requestScope.point_amount}"/>원</span>
                                     </li>
                                     <li>
                                         <span class="detail-label">기본 배송비</span>
-                                        <span class="detail-value">0원</span>
-                                    </li>
-                                    <li>
-                                        <span class="detail-label">제주/도서산간 배송비</span>
-                                        <span class="detail-value">0원</span>
-                                    </li>
-                                    <li>
-                                        <span class="detail-label">반품 배송비 (제주/도서산간 배송비 포함)</span>
-                                        <span class="detail-value">0원</span>
-                                    </li>
-                                    <li>
-                                        <span class="detail-label">추가 배송비</span>
-                                        <span class="detail-value">0원</span>
+                                        <span class="detail-value">무료</span>
                                     </li>
                                 </ul>
                             </div><hr/>
@@ -116,7 +108,7 @@
                             <!-- 환불 예정 금액 -->
                             <div class="refund-amount">
                                 <div class="wrap-p">
-                                    <h3 class="subtitle">환불 예정 금액</h3>
+                                    <h3 class="subtitle">환불 금액</h3>
                                     <p class="refund-expected">33,117원</p>
                                 </div>
                             </div>
@@ -124,6 +116,7 @@
                             <%-- 안내사항 --%>
                             <div class="notice">* 주문 시 사용한 적립금 및 할인쿠폰은 취소완료 즉시 반환됩니다.</div>
                         </div>
+                        </c:if>
                     </div>
                 </div>
 

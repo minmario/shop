@@ -73,7 +73,8 @@
                                     <div class="wrap-photo-title">
                                         <p class="section-title">사진 첨부</p>
                                     </div>
-                                    <div class="photo-box">
+                                    <input type="file" id="photo-input" accept="image/*" style="display: none;">
+                                    <div class="photo-box" onclick="triggerFileInput()">
                                         <span class="plus">+</span><br/>
                                         <span class="add-photo">사진 추가</span>
                                     </div>
@@ -133,10 +134,6 @@
                                 <ul>
                                     <li>구매 확정일로부터 30일 이내에 리뷰를 작성해야 합니다.</li>
                                     <li>리뷰는 텍스트나 사진으로 작성할 수 있습니다.</li>
-                                    <li>텍스트만 작성할 경우 500원, 텍스트와 사진을 함께 작성할 경우 1,000원의 적립금을 받을 수 있습니다.</li>
-                                    <li>후기 작성일 이후 영업일 기준 1~2일 내에 적립금이 지급됩니다.</li>
-                                    <li>후기 개수가 많을 경우 적립금 지급이 다소 지연될 수 있습니다.</li>
-                                    <li>마이 페이지에서 작성한 후기의 적립금 지급 여부를 확인할 수 있습니다.</li>
                                 </ul>
                             </div>
                         </div>

@@ -51,4 +51,11 @@
         SET total = total + #{total}
         WHERE id = #{id} AND is_del = 0
     </update>
+
+    <!-- 신체 정보 업데이트(리뷰작성) -->
+    <update id="update_body_information" parameterType="map">
+        UPDATE customer
+        SET weight = #{weight}, height = #{height}
+        WHERE id = #{id} AND is_del = 0
+    </update>
 </mapper>
