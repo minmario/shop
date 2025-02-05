@@ -101,7 +101,7 @@
                                                     <li>출고 지연 발생 시에는 알림톡 또는 문자로 통해 안내해 드립니다.</li>
                                                     <li>주문 시 배송 메모에 배송 희망 일자를 작성하셔도 해당일에 지정 배송은 어렵습니다.</li>
                                                 </ul>
-                                                <button type="button" class="btn btn-outline-dark button" onclick="location.href='Controller?type=board'">배송조회 FAQ 바로가기</button>
+                                                <button type="button" class="btn btn-outline-dark button" onclick="location.href='Controller?type=board&action=faq&action=faq'">배송조회 FAQ 바로가기</button>
                                             </div>
                                         </div>
                                     </div>
@@ -132,7 +132,7 @@
                                                     <li>택배사 확인은 영업일 기준 1~2일 소요될 수 있습니다</li>
                                                     <li>확인 과정에서 상품 수령할 경우 고객센터 또는 1:1 문의로 전달 바랍니다.</li>
                                                 </ul>
-                                                <button type="button" class="btn btn-outline-dark button" onclick="location.href='Controller?type=board'">고객센터 FAQ 바로가기</button>
+                                                <button type="button" class="btn btn-outline-dark button" onclick="location.href='Controller?type=board&action=faq'">고객센터 FAQ 바로가기</button>
                                             </div>
                                         </div>
                                     </div>
@@ -153,7 +153,7 @@
                                                     <li>출고 후 송장 조회까지는 평일 기준 1일 소요됩니다.</li>
                                                     <li>출고 처리 중 (상품 포장 및 확인하는) 단계부터는 주소(옵션) 변경 및 취소가 가능하지 않습니다.</li>
                                                 </ul>
-                                                <button type="button" class="btn btn-outline-dark button" onclick="location.href='Controller?type=board'">송장 흐름 멈춤 FAQ 바로가기</button>
+                                                <button type="button" class="btn btn-outline-dark button" onclick="location.href='Controller?type=board&action=faq'">송장 흐름 멈춤 FAQ 바로가기</button>
                                             </div>
                                         </div>
                                     </div>
@@ -186,7 +186,7 @@
                                                     <li>출고 후에도 실제 도착까지는 기간이 더 소요될 수 있습니다.</li>
                                                     <li>제작 중 주문 정보(옵션) 변경 및 취소가 어렵습니다.</li>
                                                 </ul>
-                                                <button type="button" class="btn btn-outline-dark button" onclick="location.href='Controller?type=board'">배송조회 FAQ 바로가기</button>
+                                                <button type="button" class="btn btn-outline-dark button" onclick="location.href='Controller?type=board&action=faq'">배송조회 FAQ 바로가기</button>
                                             </div>
                                         </div>
                                     </div>

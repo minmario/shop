@@ -364,7 +364,7 @@ public class OrderDAO {
     }
 
     // 주문 추가
-    public static int insertOrder(String tid, String cus_no, String prod_no, String coupon_no, String deli_no, String order_code, String count, String amount, String point_amount, String inventory_no) {
+    public static int insertOrder(String tid, String cus_no, String prod_no, String coupon_no, String deli_no, String order_code, String count, String amount, String expected_point, String inventory_no) {
         int cnt = 0;
         SqlSession ss = FactoryService.getFactory().openSession();
         
@@ -378,7 +378,7 @@ public class OrderDAO {
             map.put("order_code", order_code);
             map.put("count", count);
             map.put("amount", amount);
-            map.put("point_amount", point_amount);
+            map.put("expected_point", expected_point);
             map.put("inventory_no", inventory_no);
 
             cnt = ss.insert("order.insert_order", map);

@@ -6,18 +6,18 @@
     <!-- 삭제 로그 -->
     <insert id="delete_log" parameterType="user.vo.customer.LogVO">
         INSERT INTO log (cus_no, writer_type, target, log_type, prev, log_date)
-        VALUES (#{cus_no}, '2', #{target}, '0', #{prev}, NOW())
+        VALUES (#{cus_no}, '2', #{target}, '0', #{prev}, CURRENT_TIMESTAMP())
     </insert>
 
     <!-- 추가 로그 -->
     <insert id="insert_log" parameterType="user.vo.customer.LogVO">
         INSERT INTO log (cus_no, writer_type, target, log_type, current, log_date)
-        VALUES (#{cus_no}, '2', #{target}, '1', #{current}, NOW())
+        VALUES (#{cus_no}, '2', #{target}, '1', #{current}, CURRENT_TIMESTAMP())
     </insert>
 
     <!-- 수정 로그 -->
     <insert id="update_log" parameterType="user.vo.customer.LogVO">
         INSERT INTO log (cus_no, writer_type, target, log_type, prev, current, log_date)
-        VALUES (#{cus_no}, '2', #{target}, '2', #{prev}, #{current}, NOW())
+        VALUES (#{cus_no}, '2', #{target}, '2', #{prev}, #{current}, CURRENT_TIMESTAMP())
     </insert>
 </mapper>

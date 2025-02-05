@@ -57,10 +57,10 @@ svg {
 }
 
 .completed-text {
-    font-size: 60px;
+    font-size: 22px;
     font-weight: bold;
     transition: font-size 1s ease;
-    margin-left: 60px;
+    margin-left: 92px;
 }
 
 /* 주문 상세 내역 */
