@@ -5,8 +5,8 @@
 <mapper namespace="review">
     <!-- 구매확정 상품 리뷰 작성 -->
     <insert id="insert_review" parameterType="user.vo.customer.BoardVO">
-        INSERT INTO board(cus_no, prod_no, bname, content, additional_images, gender, score, write_date, order_code, type, is_del)
-        VALUES(#{cus_no}, #{prod_no}, #{bname}, #{content}, #{additional_images}, #{gender}, #{score}, NOW(), #{order_code}, #{type}, 0)
+        INSERT INTO board(cus_no, prod_no, bname, content, additional_images, gender, score, write_date, order_code, status, is_del)
+        VALUES(#{cus_no}, #{prod_no}, 'review', #{content}, #{additional_images}, #{gender}, #{score}, NOW(), #{order_code}, 1, 0)
     </insert>
 
 </mapper>

@@ -2,9 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<div class="point-section">
-    <div class="point-header">
-        <span class="point-title">취소/반품/교환</span>
+<div class="refund-section">
+    <div class="refund-header">
+        <span class="refund-title">취소/반품/교환</span>
     </div>
 </div>
 <div class="refund-tabs">
@@ -24,7 +24,7 @@
     <%-- 전체 조회 --%>
     <div id="list-all" class="list">
         <div class="wrap-refund-list">
-            <c:if test="${requestScope.all eq null}">
+            <c:if test="${requestScope.all eq null or requestScope.cancelRefund eq null or requestScope.exchange eq null}">
                 <div class="refund-summary">
                     <span>조회 내역이 없습니다.</span>
                 </div>
@@ -40,17 +40,17 @@
                         </div>
                         <c:choose>
                             <c:when test="${all.status == '6'}">
-                                <div class="refund-status">상품 취소</div>
+                                <div class="refund-status">취소</div>
                             </c:when>
                             <c:when test="${all.status == '7'}">
-                                <div class="refund-status">상품 반품</div>
+                                <div class="refund-status">반품</div>
                             </c:when>
                             <c:when test="${all.status == '8'}">
-                                <div class="refund-status">상품 교환</div>
+                                <div class="refund-status">교환</div>
                             </c:when>
                         </c:choose>
                         <div class="order-product">
-                            <img src="${fn:split(o_vo.prod_image, ',')[0]}" alt="상품 이미지" class="product-img">
+                            <img src="${fn:split(all.prod_image, ',')[0]}" alt="상품 이미지" class="product-img">
                             <div class="product-info">
                                 <p class="product-brand">${all.brand}</p>
                                 <p class="product-name">${all.prod_name}</p>
@@ -60,17 +60,15 @@
                         </div>
                         <div class="wrap-buttons">
                             <c:if test="${all.status == '6'}">
-                                <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=cancelDetails'">취소 상세</button>
-
+                                <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=cancelDetails&action=select&order_code=${all.order_code}&prod_no=${all.prod_no}'">취소 상세</button>
                             </c:if>
                             <c:if test="${all.status == '7'}">
-                                <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=cancelDetails'">반품 상세</button>
+                                <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=refundDetails&action=select&order_code=${all.order_code}&prod_no=${all.prod_no}'">반품 상세</button>
                                 <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">반품 배송 조회</button>
                                 <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">회수 배송 조회</button>
-
                             </c:if>
                             <c:if test="${all.status == '8'}">
-                                <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=cancelDetails'">교환 상세</button>
+                                <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=cancelDetails&action=select&order_code=${all.order_code}&prod_no=${all.prod_no}'">교환 상세</button>
                                 <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">교환 배송 조회</button>
                                 <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">회수 배송 조회</button>
                             </c:if>
@@ -78,7 +76,6 @@
                     </div>
                 </c:forEach>
             </c:if>
-            <hr/>
         </div>
     </div>
 
@@ -107,7 +104,7 @@
                         </div>
                     </div>
                     <div class="wrap-buttons">
-                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=refundDetails'">반품 상세</button>
+                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=refundDetails&action=select&order_code=${cancelRefund.order_code}&prod_no=${cancelRefund.prod_no}'">반품 상세</button>
                         <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#repurchaseModal">재구매</button>
                         <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
                     </div>
@@ -139,7 +136,7 @@
                         </div>
                     </div>
                     <div class="wrap-buttons">
-                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=exchangeDetails'">교환 상세</button>
+                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=exchangeDetails&action=select&order_code=${exchange.order_code}&prod_no=${exchange.prod_no}'">교환 상세</button>
                         <button type="button" class="btn btn-outline-secondary">교환 배송 조회</button>
                         <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
                     </div>

@@ -2,8 +2,12 @@
     width: 900px !important;
 }
 
+.refund-summary{
+    margin: 15px 0;
+}
+
 .refund-title{
-    margin: 10px auto 20px auto;
+    margin: 10px 0 20px 0;
     font-weight: bold;
     font-size: 18px;
 }

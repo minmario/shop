@@ -149,4 +149,31 @@ public class CustomerDAO {
 
         return cnt;
     }
+
+    // 신체정보 업데이트
+    public static int updateBodyInfo(String id, String weight, String height){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("id", id);
+        map.put("weight", weight);
+        map.put("height", height);
+
+        int cnt = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            cnt = ss.update("customer.update_customer", map);
+
+            if (cnt > 0) {
+                ss.commit();
+            } else {
+                ss.rollback();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
+    }
 }

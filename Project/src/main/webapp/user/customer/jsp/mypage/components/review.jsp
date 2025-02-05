@@ -19,7 +19,8 @@
                     <div class="product-info-details">
                         <p class="item-name">${item.brand}</p>
                         <p class="item-description">${item.prod_name}</p>
-                        <p class="item-size">${item.option_name} / ${item.purchase_confirm_date} 구매 확정</p>
+                        <p class="item-size">${item.option_name} / ${item.count}개</p>
+                        <p class="item-purchase-confirm-date">${item.purchase_confirm_date} 구매확정</p>
                     </div>
                 </div>
                 <div class="action-buttons">

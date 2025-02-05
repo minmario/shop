@@ -3,7 +3,39 @@ package user.vo.customer;
 import java.util.List;
 
 public class BoardVO {
-    private String id, cus_no, prod_no, bname, title, content, write_date, order_code, additional_images, is_private, brand, r_content, r_write_date, c_cus_id, type, status;
+    private String id, cus_no, prod_no, bname, title, content, write_date, order_code, additional_images, is_private, brand, r_content, r_write_date, c_cus_id, type, status, gender, weight, height, score;
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
+    }
 
     public String getStatus() {
         return status;

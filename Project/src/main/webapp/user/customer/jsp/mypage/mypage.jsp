@@ -389,6 +389,7 @@
     <script src="./user/customer/js/mypage/components/inquiry.js"></script>
     <script src="./user/customer/js/mypage/components/question.js"></script>
     <script src="./user/customer/js/mypage/components/order.js"></script>
+    <script src="./user/customer/js/mypage/components/refund.js"></script>
     <script src="./user/customer/js/mypage/components/review.js"></script>
 
     <script>
@@ -459,17 +460,17 @@
                 }
             });
 
-            // 반품/취소/교환 탭 클릭 이벤트
-            $("#refund-nav-tabs .nav-item .nav-link").on("click", function (event) {
-                event.preventDefault();
-
-                $("#refund-nav-tabs .nav-item .nav-link").removeClass("active");
-                $(this).addClass("active");
-
-                $("#refund-list .list").hide();
-                const targetTable = $(this).data("target");
-                $(targetTable).show();
-            });
+            // // 반품/취소/교환 탭 클릭 이벤트
+            // $("#refund-nav-tabs .nav-item .nav-link").on("click", function (event) {
+            //     event.preventDefault();
+            //
+            //     $("#refund-nav-tabs .nav-item .nav-link").removeClass("active");
+            //     $(this).addClass("active");
+            //
+            //     $("#refund-list .list").hide();
+            //     const targetTable = $(this).data("target");
+            //     $(targetTable).show();
+            // });
         });
     </script>
 </body>
