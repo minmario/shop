@@ -27,10 +27,12 @@ public class AdminAddMajorCategoryAction implements Action {
     mcvo.setName(name);
     mcvo.setEname(ename);
 
-   int cnt = mcdao.getMajorCategoryId(mcvo);
-    System.out.println("id값"+cnt);
+
+
     boolean result = mcdao.addMajorCategory(mcvo);
 
+    MajorCategoryVO vo = mcdao.getMajorCategoryId(mcvo);
+    int cnt =Integer.parseInt(vo.getId());
 
     JSONObject json = new JSONObject();
     json.put("success", result);

@@ -447,7 +447,7 @@
               let majorId = response.result;
 
               let newRow = `
-                      <tr>
+                      <tr id="row-`+majorId+`">
                 <td>` + name + `</td>
                 <td>` + ename + `</td>
                 <td></td>
@@ -455,7 +455,7 @@
                     <button class="btn btn-secondary add-user-btn"
                             data-bs-toggle="modal"
                             data-bs-target="#deleteMajorModal"
-                            onclick="setMajorId(` + majorId + `)">대분류 삭제</button>
+                            onclick="setMajorId(` + majorId + `)">삭제</button>
                 </td>
             </tr>
         `;
@@ -464,7 +464,7 @@
 
 
 
-
+              $("#row-" + majorId).remove();
 
               $("#categoryBody").append(newRow);
 

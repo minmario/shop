@@ -225,7 +225,7 @@
     JOIN major_category as ma on mi.major_no = ma.id
   </select>
 
-  <select id="getMajorId" parameterType="int" resultType="admin.vo.MajorCategoryVO">
+  <select id="getMajorId" parameterType="admin.vo.MajorCategoryVO" resultType="admin.vo.MajorCategoryVO">
     SELECT id FROM major_category
     WHERE name = #{name} AND ename = #{ename}
 

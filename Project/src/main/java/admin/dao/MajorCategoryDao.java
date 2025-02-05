@@ -53,11 +53,11 @@ public class MajorCategoryDao {
         return  chk;  // 추가된 레코드 수 반환
     }
 
-    public static int getMajorCategoryId(MajorCategoryVO VO){
+    public static MajorCategoryVO getMajorCategoryId(MajorCategoryVO VO){
         SqlSession ss = FactoryService.getFactory().openSession();
-        int cnt = ss.selectOne("root.getMajorId",VO);
+        MajorCategoryVO vo = ss.selectOne("root.getMajorId",VO);
         ss.close();
-        return cnt;
+        return vo;
 
 
     }
