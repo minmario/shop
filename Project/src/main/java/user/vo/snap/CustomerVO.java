@@ -3,6 +3,32 @@ package user.vo.snap;
 public class CustomerVO {
   private String id, grade_code, cus_id, cus_pw, name, nickname, gender, birth_date, phone, email, weight, height, total, expire_date, is_del;
   private String profile_image;
+  String customer_id,following_id,follower_count;
+
+  public String getFollower_count() {
+    return follower_count;
+  }
+
+  public void setFollower_count(String follower_count) {
+    this.follower_count = follower_count;
+  }
+
+  public String getFollowing_id() {
+    return following_id;
+  }
+
+  public void setFollowing_id(String following_id) {
+    this.following_id = following_id;
+  }
+
+  public String getCustomer_id() {
+    return customer_id;
+  }
+
+  public void setCustomer_id(String customer_id) {
+    this.customer_id = customer_id;
+  }
+
   public String getId() {
     return id;
   }

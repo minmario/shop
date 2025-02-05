@@ -20,9 +20,13 @@ public class BoardVO {
   private String tags;
   private String Introduce;
 
+
+
+
   public String getIntroduce() {
     return Introduce;
   }
+
 
   public void setIntroduce(String introduce) {
     Introduce = introduce;

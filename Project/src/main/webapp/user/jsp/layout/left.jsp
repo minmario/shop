@@ -6,7 +6,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="d-flex flex-column flex-shrink-0 p-3">
+<script>
+  var contextPath = "${pageContext.request.contextPath}";
+</script>
+
+
+<div class="d-flex flex-column flex-shrink-0 p-3" id="left-bar">
     <h5 class="text-center mb-4">로고</h5>
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
@@ -74,17 +79,22 @@
 
 <!-- 스타일 -->
 <style>
+    .left-bar {
+        position: relative; /* 기본값 확인 */
+        z-index: 10000; /* 충분히 높게 설정 */
+    }
     .search-panel {
         position: fixed;
-        top: 0;
-        left: 60px; /* LEFT 메뉴 옆 */
-        width: 350px;
+        top: 160px;
+        left: 0px; /* LEFT 메뉴 옆 */
+        width: 231px;
         height: 100%;
         background: white;
         box-shadow: 2px 0 5px rgba(0,0,0,0.1);
         display: none;
         flex-direction: column;
         padding: 15px;
+        z-index: 99999 !important;
     }
     .search-header {
         display: flex;
@@ -132,8 +142,22 @@
 <!-- JavaScript -->
 <script>
   document.getElementById("searchBtn").addEventListener("click", function() {
-    document.getElementById("searchPanel").style.display = "flex";
+    let searchPanel = document.getElementById("searchPanel");
+    searchPanel.style.display = "flex";
+
+    // left 바의 정확한 위치를 가져와서 패널 배치 조정
+    let leftBar = document.getElementById("leftBar");
+    let rect = leftBar.getBoundingClientRect();
+    searchPanel.style.left = rect.right + "px";
+    searchPanel.style.top = rect.top + "px";
+    searchPanel.style.zIndex = "9999";
+
     document.getElementById("searchInput").focus();
+  });
+
+  // ESC 키로 검색 창 닫기
+  document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") closeSearchPanel();
   });
 
   function closeSearchPanel() {
@@ -147,29 +171,33 @@
       return;
     }
 
-    fetch(`/Controller?type=searchUsers&query=`+query+``)
+    fetch("/Controller?type=searchUsers&query=" + encodeURIComponent(query))
         .then(response => response.json())
         .then(data => {
           let results = document.getElementById("searchResults");
-          results.innerHTML = "";
-          data.forEach(user => {
+          results.innerHTML = ""; // 기존 검색 결과 초기화
+
+          if (!data.users || data.users.length === 0) {
+            results.innerHTML = "<li>검색 결과가 없습니다.</li>";
+            return;
+          }
+
+          data.users.forEach(user => {
             let li = document.createElement("li");
             li.innerHTML = `
-                        <img src="${user.profileImage}" alt="Profile">
-                        <div>
-                            <strong>${user.username}</strong><br>
-                            <span>${user.followerCount}명 팔로워</span>
-                        </div>
-                    `;
-            li.addEventListener("click", () => window.location.href = "/profile?user=" + user.username);
+               <img src="` + user.profile_image + `" alt="Profile"  ">
+                    <div>
+                        <strong>` + user.nickname + `</strong><br>
+                        <span>` + user.follower_count + `명 팔로워</span>
+                    </div>
+                `;
+            li.addEventListener("click", function() {
+              window.location.href = contextPath + "/Controller?type=profile&cus_no=" + encodeURIComponent(user.id);
+            });
             results.appendChild(li);
           });
         })
         .catch(error => console.error("검색 오류:", error));
   }
 
-  // ESC 키로 닫기
-  document.addEventListener("keydown", function(event) {
-    if (event.key === "Escape") closeSearchPanel();
-  });
 </script>

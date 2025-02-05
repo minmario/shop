@@ -37,11 +37,12 @@
                         <img src="${board[0].profile_image}"  alt="Profile Picture" class="rounded-circle" style="width: 160px; height: 160px; object-fit: cover;"> <!-- 이미지 크기 키움 -->
                     </div>
 
+
                     <!-- 프로필 정보 -->
                     <div class="col">
                         <!-- 프로필 이름과 버튼 -->
                         <div class="d-flex align-items-center mb-2">
-                             <h2 class="mb-0 me-3" style="font-size: 1.5rem; font-weight: 500;">${sessionScope.nickname}</h2> <!-- 폰트 스타일 조정 -->
+                             <h2 class="mb-0 me-3" style="font-size: 1.5rem; font-weight: 500;">${board[0].nickname}</h2> <!-- 폰트 스타일 조정 -->
                             <c:if test="${sessionScope.cus_id == board[0].cus_no}">
                                 <!-- 내 프로필인 경우 -->
                                 <button class="btn btn-outline-secondary btn-sm" style="font-size: 0.875rem;">프로필 편집</button>

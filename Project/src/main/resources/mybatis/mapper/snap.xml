@@ -98,7 +98,8 @@
   </select>
 
   <select id="getProfile" parameterType="int" resultType="user.vo.BoardVO">
-    SELECT b.id, b.cus_no, b.gender, b.season, b.style, b.title, b.content, b.snapshot_image, b.like_count, b.write_date, b.is_del, c.profile_image , c.Introduce
+    SELECT b.id, b.cus_no, b.gender, b.season, b.style, b.title, b.content, b.snapshot_image, b.like_count, b.write_date, b.is_del , c.Introduce,
+    c.profile_image,c.nickname
     FROM board b JOIN customer c ON b.cus_no = c.id WHERE b.cus_no = #{cus_no} AND bname = 'snap' AND b.is_del = 0
   </select>
 

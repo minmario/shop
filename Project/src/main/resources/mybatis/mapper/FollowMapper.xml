@@ -53,4 +53,16 @@
     SELECT COUNT(*) FROM follow WHERE customer_id = #{userId}
   </select>
 
+  <select id="searchUsers" parameterType="String" resultType="user.vo.snap.CustomerVO">
+    SELECT c.id, c.nickname, c.profile_image,
+           (SELECT COUNT(*) FROM follow f WHERE f.customer_id = c.id) AS follower_count
+    FROM customer c   WHERE c.nickname LIKE CONCAT('%', #{keyword}, '%')
+    ORDER BY CASE WHEN c.nickname = #{keyword} THEN 1
+        WHEN c.nickname LIKE CONCAT(#{keyword}, '%') THEN 2
+        WHEN c.nickname LIKE CONCAT('%', #{keyword}) THEN 3
+        ELSE 4  END LIMIT 4
+  </select>
+
+
+
 </mapper>

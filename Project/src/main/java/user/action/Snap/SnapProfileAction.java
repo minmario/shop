@@ -18,6 +18,7 @@ public class SnapProfileAction  implements Action {
     List<BoardVO> vo = new ArrayList<BoardVO>();
     user.dao.snap.SnapDao snapDao = new user.dao.snap.SnapDao();
     int cus_no =Integer.parseInt( request.getParameter("cus_no"));
+    System.out.println("잘찍혀야한다"+cus_no);
     int customerId = (int) request.getSession().getAttribute("cus_id");
 
     vo = snapDao.profile(cus_no);

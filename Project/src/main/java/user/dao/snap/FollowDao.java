@@ -74,4 +74,15 @@ public class FollowDao {
     ss.close();
     return count;
   }
+  public List<CustomerVO> getFollowerSearch(String keyword) {
+    SqlSession ss = FactoryService.getFactory().openSession();
+    List<CustomerVO> list = ss.selectList("FollowMapper.searchUsers",keyword);
+    ss.close();
+    return list;
+
+
+  }
+
+
+
 }
