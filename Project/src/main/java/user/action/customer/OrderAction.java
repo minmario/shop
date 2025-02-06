@@ -349,6 +349,9 @@ public class OrderAction implements Action {
                                             CouponDAO.insertCusCoupon(cvo.getId(), coupon, order_code);
                                         }
 
+                                        // DB inventory 테이블, 수량 감소
+                                        ProductDAO.updateInventory(inventory_no);
+
                                         // DB log 테이블, 로그 저장
                                         LogVO lvo = new LogVO();
                                         StringBuffer sb = new StringBuffer();
@@ -381,7 +384,7 @@ public class OrderAction implements Action {
                                     int cart_count = CartDAO.selectCartCount(cvo.getId());
                                     session.setAttribute("cart_count", cart_count);
 
-                                    // order_code만 request에 담기
+                                    // 주문 코드
                                     request.setAttribute("order_code", order_code);
 
                                     // 세션 삭제

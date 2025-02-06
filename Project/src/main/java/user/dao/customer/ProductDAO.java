@@ -165,4 +165,26 @@ public class ProductDAO {
 
         return r_list;
     }
+
+    // 재고 수량 감소
+    public static int updateInventory(String id) {
+        int cnt = 0;
+        SqlSession ss= FactoryService.getFactory().openSession();
+
+        try {
+            cnt = ss.update("product.update_inventory", id);
+
+            if (cnt > 0) {
+                ss.commit();
+            } else {
+                ss.rollback();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
+    }
 }
