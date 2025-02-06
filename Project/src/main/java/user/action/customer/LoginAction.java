@@ -1,5 +1,6 @@
 package user.action.customer;
 
+import org.mindrot.jbcrypt.BCrypt;
 import user.action.Action;
 import user.dao.customer.CartDAO;
 import user.dao.customer.CategoryDAO;
@@ -16,18 +17,23 @@ public class LoginAction  implements Action {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        CustomerVO vo = new CustomerVO();
-        vo.setCus_id(username);
-        vo.setCus_pw(password);
+        // 구매자 조회
+        CustomerVO loginResult = CustomerDAO.selectCustomerByCusId(username);
 
-        // 로그인 정보 가져오기
-        CustomerVO loginResult = CustomerDAO.login(vo);
+        if (loginResult == null) {
+            // 로그인 실패
+            session.setAttribute("isLoggedIn", false);
+            request.setAttribute("isNotFound", true);
+            return "/user/customer/jsp/login/login.jsp";
+        }
 
-        HttpSession session = request.getSession();
-        if (loginResult != null) {
+        // 비밀번호 검증
+        if (BCrypt.checkpw(password, loginResult.getCus_pw())) {
             // 로그인 정보 저장
             session.setAttribute("isLoggedIn", true);
             session.setAttribute("customer_info", loginResult);

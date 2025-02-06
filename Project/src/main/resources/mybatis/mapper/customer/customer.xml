@@ -5,7 +5,7 @@
 <mapper namespace="customer">
     <!-- 회원 가입 -->
     <insert id="insert_customer" parameterType="user.vo.customer.CustomerVO">
-        INSERT INTO customer (grade_code, cus_id, cus_pw, name, nickname, gender, birth_date, phone, email, weight, height, is_del)
+        INSERT INTO customer (grade_no, cus_id, cus_pw, name, nickname, gender, birth_date, phone, email, weight, height, is_del)
         VALUES ('1', #{cus_id}, #{cus_pw}, #{name}, #{nickname}, #{gender}, #{birth_date}, #{phone}, #{email}, #{weight}, #{height}, '0')
     </insert>
 

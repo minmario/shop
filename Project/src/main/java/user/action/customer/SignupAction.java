@@ -1,5 +1,6 @@
 package user.action.customer;
 
+import org.mindrot.jbcrypt.BCrypt;
 import user.action.Action;
 import user.dao.customer.CustomerDAO;
 import user.dao.customer.LogDAO;
@@ -19,9 +20,6 @@ public class SignupAction implements Action {
             switch (action) {
                 case "insert":
                     try {
-                        // 한글 처리
-                        request.setCharacterEncoding("UTF-8");
-
                         // 모든 입력 데이터를 가져오기
                         String cusId = request.getParameter("cus_id");
                         String cusPw = request.getParameter("cus_pw");
@@ -34,13 +32,20 @@ public class SignupAction implements Action {
 
                         CustomerVO vo = new CustomerVO();
                         vo.setCus_id(cusId);
-                        vo.setCus_pw(cusPw);
+
+                        // 비밀번호 암호화
+                        String hashedPassword = BCrypt.hashpw(cusPw, BCrypt.gensalt());
+
+                        vo.setCus_pw(hashedPassword);
                         vo.setName(cusName);
                         vo.setNickname(cusNickname);
                         vo.setGender(cusGender);
                         vo.setBirth_date(cusBirth);
                         vo.setPhone(cusPhone);
                         vo.setEmail(cusEmail);
+
+                        System.out.println("name : " + vo.getName());
+                        System.out.println("cusNickname : " + vo.getNickname());
 
                         int cnt = CustomerDAO.insertCustomer(vo);
 

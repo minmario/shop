@@ -29,6 +29,11 @@
             alert("아이디 또는 비밀번호를 확인하세요.");
         </script>
     </c:if>
+    <c:if test="${not empty requestScope.isNotFound and requestScope.isNotFound eq true}">
+        <script>
+            alert("아이디 또는 비밀번호를 확인하세요.");
+        </script>
+    </c:if>
 
     <div class="card shadow p-4" style="width: 22rem;">
         <h1 class="text-center mb-4">MUSINSA</h1>
