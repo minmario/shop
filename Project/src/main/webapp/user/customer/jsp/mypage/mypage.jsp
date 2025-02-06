@@ -200,7 +200,7 @@
                                             </th>
                                             <td>
                                                 <input type="text" class="addr1" id="pos_code" name="pos_code" placeholder="우편번호"/>
-                                                <button class="btn btn-primary" onclick="getPostcode()">우편 번호 찾기</button><br/>
+                                                <button class="btn btn-primary" onclick="getPostcode()">우편번호 찾기</button><br/>
                                                 <input type="text" class="addr2" id="addr1" name="addr1" placeholder="주소"/><br/>
                                                 <input type="text" class="addr2" id="addr2" name="addr2" placeholder="상세주소"/><br/>
                                             </td>

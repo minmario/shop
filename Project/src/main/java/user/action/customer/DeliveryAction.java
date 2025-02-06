@@ -43,7 +43,7 @@ public class DeliveryAction implements Action {
                     String i_deli_request = request.getParameter("deli_request");
                     String i_chkDefault = request.getParameter("chkDefault");
 
-                    // 모든 배송지의 is_default를 false로 설정
+                    // 기본 배송지로 설정 시 모든 배송지의 is_default를 false로 설정
                     if (i_chkDefault.equals("1")) {
                         DeliveryDAO.updateIsDefault(cvo.getId());
                     }

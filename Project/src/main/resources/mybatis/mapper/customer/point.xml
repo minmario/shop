@@ -66,8 +66,11 @@
     <!-- 보유 적립금 -->
     <select id="select_save_point" resultType="int" parameterType="String">
         SELECT
-        SUM(CASE WHEN p_type = 0 THEN amount ELSE 0 END) -
-        SUM(CASE WHEN p_type = 1 THEN amount ELSE 0 END) AS total_points
+        COALESCE(
+                SUM(CASE WHEN p_type = 0 THEN amount ELSE 0 END) -
+                SUM(CASE WHEN p_type = 1 THEN amount ELSE 0 END),
+                0
+            ) AS total_points
         FROM point
         WHERE cus_no = #{cus_no}
     </select>

@@ -93,7 +93,6 @@ function insertCart() {
     const prod_no = document.getElementById("prod_id").dataset.item;
     const sizeSelect = document.getElementById("cart-select-size");
     const selectedOption = sizeSelect.options[sizeSelect.selectedIndex];  // 선택된 옵션 가져오기
-    const size = selectedOption.value;
     const inventory_no = selectedOption.getAttribute("data-value");  // data-value 값 가져오기
     const cartCountValue = document.getElementById("count-value");
     const count = parseInt(cartCountValue.textContent, 10);
@@ -114,7 +113,6 @@ function insertCart() {
         data: {
             prod_no: prod_no,
             inventory_no: inventory_no,
-            size: size,
             count: count
         },
         success: function () {
@@ -123,6 +121,28 @@ function insertCart() {
             }
         }
     });
+}
+
+// 구매하기 버튼 클릭 시
+function onMovePayment() {
+    const prod_no = document.getElementById("prod_id").dataset.item;
+    const sizeSelect = document.getElementById("cart-select-size");
+    const selectedOption = sizeSelect.options[sizeSelect.selectedIndex];  // 선택된 옵션 가져오기
+    const inventory_no = selectedOption.getAttribute("data-value");  // data-value 값 가져오기
+    const cartCountValue = document.getElementById("count-value");
+    const count = parseInt(cartCountValue.textContent, 10);
+
+    if (size == "0") {
+        alert("사이즈를 선택하세요.");
+        return;
+    }
+
+    if (count == 0) {
+        alert("수량을 선택하세요.");
+        return;
+    }
+
+    window.location.href = "Controller?type=order&action=payment&prod_no=" + prod_no + "&inventory_no=" + inventory_no + "&count=" + count;
 }
 
 // 좋아요 아이콘 클릭 시
@@ -162,12 +182,14 @@ function settingLike(obj, value, isLiked) {
             if (isLiked) {
                 obj.classList.remove("bi-heart");
                 obj.classList.add("bi-heart-fill");
+
+                document.getElementById("prod_like_count").textContent++;
             } else {
                 obj.classList.remove("bi-heart-fill");
                 obj.classList.add("bi-heart");
-            }
 
-            window.location.href = 'Controller?type=productDetails&action=select&prod_no=' + prod_no;
+                document.getElementById("prod_like_count").textContent--;
+            }
         },
         error: function (error) {
             alert("요청 처리 중 오류가 발생했습니다.");

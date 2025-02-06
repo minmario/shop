@@ -40,9 +40,7 @@
                                 </div>
                                 <p class="address">${dvo.addr1} ${dvo.addr2}</p>
                                 <p class="phone">${dvo.phone}</p>
-                                <div class="delivery-option-container">
-                                    <input type="text" class="form-control" id="request-delivery" aria-describedby="request-deli" value="${dvo.request}" disabled/>
-                                </div>
+                                <p class="" id="request-delivery">${dvo.request}</p>
                             </c:if>
                         </div>
                         <div class="order-product-container">

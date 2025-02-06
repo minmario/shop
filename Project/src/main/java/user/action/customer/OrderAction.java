@@ -49,6 +49,62 @@ public class OrderAction implements Action {
                     request.setAttribute("o_list", d_list);
                     viewPage = "/user/customer/jsp/mypage/components/order.jsp";
                     break;
+                case "payment":
+                    try {
+                        String p_prod_no = request.getParameter("prod_no");
+                        String p_inventory_no = request.getParameter("o_inventory_no");
+                        String p_count = request.getParameter("o_count");
+
+                        CartVO c_item = new CartVO();
+                        ProductVO p_item = ProductDAO.selectProductDetails(p_prod_no, p_inventory_no);
+
+                        System.out.println("get prod_no : " + p_prod_no);
+                        System.out.println("get o_inventory_no : " + p_inventory_no);
+                        System.out.println("get o_count : " + p_count);
+                        System.out.println("get getId : " + cvo.getId());
+                        System.out.println("get getI_option_name : " + p_item.getI_option_name());
+                        System.out.println("get getName : " + p_item.getName());
+                        System.out.println("get getBrand : " + p_item.getBrand());
+                        System.out.println("get getPrice : " + p_item.getPrice());
+                        System.out.println("get getProd_image : " + p_item.getProd_image());
+                        System.out.println("get getSale : " + p_item.getSale());
+                        System.out.println("get getSaled_price : " + p_item.getSaled_price());
+
+                        c_item.setCus_no(cvo.getId());
+                        c_item.setProd_no(p_prod_no);
+                        c_item.setCount(p_count);
+                        c_item.setInventory_no(p_inventory_no);
+                        c_item.setOption_name(p_item.getI_option_name());
+                        c_item.setP_name(p_item.getName());
+                        c_item.setBrand(p_item.getBrand());
+                        c_item.setPrice(p_item.getPrice());
+                        c_item.setProd_image(p_item.getProd_image());
+                        c_item.setSale(p_item.getSale());
+                        c_item.setSaled_price(p_item.getSaled_price());
+
+                        session.setAttribute("cartItems", c_item);
+
+                        // 기본 배송지
+                        DeliveryVO delivery = DeliveryDAO.selectDeliveryDefault(cvo.getId());
+                        request.setAttribute("delivery", delivery);
+
+                        // 배송지 목록
+                        List<DeliveryVO> o_deli_list = DeliveryDAO.selectDelivery(cvo.getId());
+                        request.setAttribute("deli_list", o_deli_list);
+
+                        // 보유 적립금
+                        int points = PointDAO.selectSavePoint(cvo.getId());
+                        request.setAttribute("points", points);
+
+                        // 등급 정보
+                        List<GradeVO> grades = GradeDAO.selectGradeAll();
+                        request.setAttribute("grades", grades);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    viewPage = "/user/customer/jsp/payment/payment.jsp";
+                    break;
                 case "coupon":
                     String prod_no = request.getParameter("prod_no");
 

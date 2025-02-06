@@ -23,6 +23,22 @@ public class CustomerDAO {
         return vs;
     }
 
+    // 아이디 중복 확인
+    public static int selectCusId(String cus_id) {
+        int cnt = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            cnt = ss.selectOne("customer.select_cus_id", cus_id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
+    }
+
     // 회원 가입
     public static int insertCustomer(CustomerVO vo) {
         int cnt = 0;
@@ -61,6 +77,22 @@ public class CustomerDAO {
         return vo;
     }
 
+    // 비밀번호 찾기
+    public static String searchCusPWByCusId(String cus_id) {
+        String pw = null;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            pw = ss.selectOne("customer.search_cus_pw_by_cus_id", cus_id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return pw;
+    }
+
     // 회원 정보 보기(cus_id)
     public static CustomerVO selectCustomerByCusId(String cus_id) {
         CustomerVO vo = null;
@@ -75,6 +107,32 @@ public class CustomerDAO {
         }
 
         return vo;
+    }
+
+    // 비밀번호 재설정
+    public static int updateCustomerPw(String cus_id, String cus_pw) {
+        int cnt = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("cus_id", cus_id);
+            map.put("cus_pw", cus_pw);
+
+            cnt = ss.update("customer.update_cus_pw", map);
+
+            if (cnt > 0) {
+                ss.commit();
+            } else {
+                ss.rollback();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
     }
 
     // 회원 정보 수정

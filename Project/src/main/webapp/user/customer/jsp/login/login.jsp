@@ -52,7 +52,7 @@
         </form>
         <div class="d-flex justify-content-between mt-3">
             <a href="Controller?type=signup" class="text-decoration-none text-muted">회원가입</a>
-            <a href="Controller" class="text-decoration-none text-muted">이전 페이지</a>
+            <a href="Controller?type=login&action=find" class="text-decoration-none text-muted">비밀번호 찾기</a>
         </div>
     </div>
 

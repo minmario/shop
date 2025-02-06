@@ -241,6 +241,13 @@
 
 .detail-images-section {
     margin-top: 10px;
+    text-align: center;
+}
+
+.detail-images-section img {
+    height: 2500px;
+    max-height: 2500px;
+    min-height: 2500px;
 }
 
 .size-table {

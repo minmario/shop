@@ -86,13 +86,40 @@ public class ProductDAO {
         return products;
     }
 
-    // 상품 상세 조회
+    // 상품 상세 조회(상품 상세 페이지)
     public static ProductVO selectProdDetails(String id) {
         ProductVO productDetails = null;
         SqlSession ss= FactoryService.getFactory().openSession();
 
         try {
-            productDetails = ss.selectOne("product.select_product_details", id);
+            productDetails = ss.selectOne("product.select_prod_details", id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return productDetails;
+    }
+
+    // 상품 상세 정보(주문서)
+    public static ProductVO selectProductDetails(String prod_no, String inventory_no) {
+        ProductVO productDetails = null;
+        SqlSession ss= FactoryService.getFactory().openSession();
+
+        try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("prod_no", prod_no);
+            map.put("inventory_no", inventory_no);
+
+            System.out.println("prod_no = " + prod_no);
+            System.out.println("inventory_no = " + inventory_no);
+
+            productDetails = ss.selectOne("product.select_product_details", map);
+
+            System.out.println("-------");
+            System.out.println("i_option_name : " + productDetails.getI_option_name());
+            System.out.println("-------");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
