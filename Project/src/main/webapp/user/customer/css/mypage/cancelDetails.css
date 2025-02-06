@@ -77,8 +77,6 @@
 }
 
 .product-image {
-    background: url("../../../images/thisisnever_img.png") no-repeat;
-    background-size: 180px 180px;
     width: 180px;
     height: 180px;
     border-radius: 4px;

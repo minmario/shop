@@ -36,10 +36,10 @@ public class ExchangeRequestAction implements Action {
             switch (action) {
                 case "select":
                     try {
-                        OrderVO o_vo = OrderDAO.selectOrderProduct(id, cvo.getId(), order_code);
+                        List<OrderVO> o_list = OrderDAO.selectOrderProduct(id, cvo.getId(), order_code);
                         List<DeliveryVO> d_list = DeliveryDAO.selectDelivery(cvo.getId());
 
-                        request.setAttribute("o_vo", o_vo);
+                        request.setAttribute("o_vo", o_list);
                         request.setAttribute("d_list", d_list);
 
                         return "/user/customer/jsp/mypage/exchangeRequest.jsp";

@@ -21,6 +21,7 @@ public class ExchangeDetailsAction implements Action {
         }
 
         String action = request.getParameter("action");
+        String order_id = request.getParameter("order_id");
         String order_code = request.getParameter("order_code");
         String prod_no = request.getParameter("prod_no");
 
@@ -28,7 +29,7 @@ public class ExchangeDetailsAction implements Action {
         if (action != null) {
             switch (action) {
                 case "select":
-                    OrderVO exchange = OrderDAO.selectDetailsByStatus(cvo.getId(), prod_no, order_code, "8");
+                    OrderVO exchange = OrderDAO.selectDetailsByStatus(order_id, cvo.getId(), prod_no, order_code, "8");
                     request.setAttribute("exchange", exchange);
                     viewPath = "/user/customer/jsp/mypage/exchangeDetails.jsp";
                     break;

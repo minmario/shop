@@ -109,7 +109,7 @@
                                     </div>
                                     <!-- 등록 버튼 -->
                                     <div class="action-buttons">
-                                        <button type="submit" class="btn btn-dark" onclick="insertReview()">등록하기</button>
+                                        <button type="submit" class="btn btn-dark">등록하기</button>
                                     </div>
                                 </form>
                             </div>

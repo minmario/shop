@@ -23,6 +23,7 @@ public class CancelDetailsAction implements Action {
         }
 
         String action = request.getParameter("action");
+        String order_id = request.getParameter("order_id");
         String order_code = request.getParameter("order_code");
         String prod_no = request.getParameter("prod_no");
 
@@ -30,7 +31,7 @@ public class CancelDetailsAction implements Action {
         if (action != null) {
             switch (action) {
                 case "select":
-                    OrderVO cancel = OrderDAO.selectDetailsByStatus(cvo.getId(), prod_no, order_code, "6");
+                    OrderVO cancel = OrderDAO.selectDetailsByStatus(order_id, cvo.getId(), prod_no, order_code, "6");
                     int point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code);
                     request.setAttribute("cancel", cancel);
                     request.setAttribute("point_amount", point_amount);

@@ -33,12 +33,12 @@ public class RefundRequestAction implements Action {
             switch (action) {
                 case "select":
                     try {
-                        OrderVO o_vo = OrderDAO.selectOrderProduct(id, cvo.getId(), order_code);
+                        List<OrderVO> o_list = OrderDAO.selectOrderProduct(id, cvo.getId(), order_code);
                         List<DeliveryVO> d_list = DeliveryDAO.selectDelivery(cvo.getId());
                         OrderVO coupon = OrderDAO.selectOrderCoupon(cvo.getId(), prod_no, order_code); // 쿠폰 정보 가져오기
                         int point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code);
 
-                        request.setAttribute("o_vo", o_vo);
+                        request.setAttribute("o_vo", o_list);
                         request.setAttribute("d_list", d_list);
                         request.setAttribute("coupon", coupon);
                         request.setAttribute("point_amount", point_amount);

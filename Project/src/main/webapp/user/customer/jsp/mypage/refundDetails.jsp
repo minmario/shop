@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -28,120 +30,117 @@
             <div class="wrap">
                 <div class="row">
                     <div class="container">
-                        <div class="wrap-title">
-                            <span class="title">반품 상세내역</span>
-                        </div>
 
-                        <div class="refund-details">
-                            <%-- 주문 정보 --%>
-                            <div class="order-info">
-                                <div class="order-date">2024.12.18 19:54</div>
-                                <div class="wrap-order-details">
-                                    <div class="order-number">주문번호 202012161492200002</div>
-                                    <div class="order-details-link"><a href="Controller?type=orderDetails">주문 상세</a></div>
-                                </div>
+                        <c:if test="${requestScope.refund ne null}">
+                        <c:set var="refund" value="${requestScope.refund}"/>
+                            <div class="wrap-title">
+                                <span class="title">반품 상세내역</span>
                             </div>
-                            <hr/>
 
-                            <%-- 반품 상품 정보 --%>
-                            <div class="refund-product">
-                                <h2>반품 상품 1개</h2>
-                                <span class="refund-status">반품완료</span>
-                                <div class="product-details">
-                                    <div class="product-image"></div>
-                                    <div class="product-info">
-                                        <p class="product-brand">thisisnever</p>
-                                        <p class="product-name">Mesh Football Jersey Navy</p>
-                                        <p class="product-options">M / 1개</p>
-                                        <p class="product-price">26,080원</p>
+                            <div class="refund-details">
+                                <%-- 주문 정보 --%>
+                                <div class="order-info">
+                                    <div class="order-date">${refund.order_date}</div>
+                                    <div class="wrap-order-details">
+                                        <div class="order-number">주문번호 ${refund.order_code}</div>
+<%--                                        <div class="order-details-link"><a href="Controller?type=orderDetails">주문 상세</a></div>--%>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="wrap-buttons">
-                                <button class="btn btn-outline-secondary button" data-toggle="modal" data-target="#repurchaseModal">재구매</button>
-                                <button class="btn btn-outline-secondary button">회수 배송 조회</button>
-                            </div><hr/>
+                                <hr/>
 
-                            <%-- 반품 신청 정보 --%>
-                            <div class="request-info">
-                                <h2 class="subtitle">반품 신청 정보</h2>
-                                <ul class="info-list">
-                                    <li>
-                                        <span class="info-label">신청 일시</span>
-                                        <span class="info-value">2024-12-18 19:54:17</span>
-                                    </li>
-                                    <li>
-                                        <span class="info-label">완료 일시</span>
-                                        <span class="info-value">2024-12-23 14:25:24</span>
-                                    </li>
-                                    <li>
-                                        <span class="info-label">반품 사유</span>
-                                        <span class="info-value">상품 불량</span>
-                                    </li>
-                                    <li>
-                                        <span class="info-label">수거 방법</span>
-                                        <span class="info-value">회수해 주세요</span>
-                                    </li>
-                                    <li>
-                                        <span class="info-label">반품 회수지</span>
-                                        <span class="info-value">
-                                    홍**동 / 010-****-1234<br>
-                                    (12345) 서울특별시 동작구 보라매로5길 1 ****
-                                </span>
-                                    </li>
-                                    <li>
-                                        <span class="info-label">반송지 주소</span>
-                                        <span class="info-value">
-                                    (04782) 서울 성동구 연무장5가길 7<br>
-                                    (성수역 현대테라스타워) w609호
-                                </span>
-                                    </li>
-                                </ul>
-                            </div><hr/>
-
-                            <!-- 환불 요청 내역 -->
-                            <div class="refund-request">
-                                <h3 class="subtitle">환불 정보</h3>
-                                <ul class="detail-list">
-                                    <li>
-                                        <span class="detail-label">상품 결제금액</span>
-                                        <span class="detail-value">35,910원</span>
-                                    </li>
-                                    <li>
-                                        <span class="detail-label">통합 적립금 사용</span>
-                                        <span class="detail-value">2,793원</span>
-                                    </li>
-                                    <li>
-                                        <span class="detail-label">기본 배송비</span>
-                                        <span class="detail-value">0원</span>
-                                    </li>
-                                    <li>
-                                        <span class="detail-label">제주/도서산간 배송비</span>
-                                        <span class="detail-value">0원</span>
-                                    </li>
-                                    <li>
-                                        <span class="detail-label">반품 배송비 (제주/도서산간 배송비 포함)</span>
-                                        <span class="detail-value">0원</span>
-                                    </li>
-                                    <li>
-                                        <span class="detail-label">추가 배송비</span>
-                                        <span class="detail-value">0원</span>
-                                    </li>
-                                </ul>
-                            </div><hr/>
-
-                            <!-- 환불 예정 금액 -->
-                            <div class="refund-amount">
-                                <h3 class="subtitle">환불 예정 금액</h3>
-                                <div class="wrap-p">
-                                    <p class="refund-method">카드 - 농협카드(일시불)</p>
-                                    <p class="refund-expected">33,117원</p>
+                                <%-- 반품 상품 정보 --%>
+                                <div class="refund-product">
+                                    <h2>반품 상품</h2>
+                                    <c:if test="${refund.status eq '7'}">
+                                        <span class="refund-status">반품신청</span>
+                                    </c:if>
+                                    <c:if test="${refund.status eq '11'}">
+                                        <span class="refund-status">반품완료</span>
+                                    </c:if>
+                                    <div class="product-details">
+                                        <img src="${fn:split(refund.prod_image, ',')[0]}" alt="상품 이미지" class="product-image">
+                                        <div class="product-info">
+                                            <p class="product-brand">${refund.brand}</p>
+                                            <p class="product-name">${refund.prod_name}</p>
+                                            <p class="product-options">${refund.option_name} / ${refund.count}개</p>
+                                            <p class="product-price"><fmt:formatNumber value="${refund.amount}"/>원</p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="wrap-buttons">
+                                    <button class="btn btn-outline-secondary button" data-toggle="modal" data-target="#repurchaseModal">재구매</button>
+                                    <button class="btn btn-outline-secondary button">회수 배송 조회</button>
+                                </div><hr/>
 
-                            <%-- 안내사항 --%>
-                            <div class="notice">* 주문 시 사용한 적립금 및 할인쿠폰은 취소완료 즉시 반환됩니다.</div>
-                        </div>
+                                <%-- 반품 신청 정보 --%>
+                                <div class="request-info">
+                                    <h2 class="subtitle">반품 신청 정보</h2>
+                                    <ul class="info-list">
+                                        <li>
+                                            <span class="info-label">신청 일시</span>
+                                            <span class="info-value">${refund.refund_request_date}</span>
+                                        </li>
+                                        <li>
+                                            <span class="info-label">완료 일시</span>
+                                            <span class="info-value"></span>
+                                        </li>
+                                        <li>
+                                            <span class="info-label">반품 사유</span>
+                                            <span class="info-value">${refund.reason_customer}</span>
+                                        </li>
+                                        <li>
+                                            <span class="info-label">수거 방법</span>
+                                            <span class="info-value">회수해 주세요</span>
+                                        </li>
+                                        <li>
+                                            <span class="info-label">반품 회수지</span>
+                                            <span class="info-value">
+                                        홍**동 / 010-****-1234<br>
+                                        (12345) 서울특별시 동작구 보라매로5길 1 ****
+                                    </span>
+                                        </li>
+                                        <li>
+                                            <span class="info-label">반송지 주소</span>
+                                            <span class="info-value">
+                                        (04782) 서울 성동구 연무장5가길 7<br>
+                                        (성수역 현대테라스타워) w609호
+                                    </span>
+                                        </li>
+                                    </ul>
+                                </div><hr/>
+
+                                <!-- 환불 요청 내역 -->
+                                <div class="refund-request">
+                                    <h3 class="subtitle">환불 정보</h3>
+                                    <ul class="detail-list">
+                                        <li>
+                                            <span class="detail-label">상품 결제금액</span>
+                                            <span class="detail-value"><fmt:formatNumber value="${refund.amount}"/>원</span>
+                                        </li>
+                                        <li>
+                                            <span class="detail-label">적립금 사용</span>
+                                            <span class="detail-value"><fmt:formatNumber value="${requestScope.point_amount}"/>원</span>
+                                        </li>
+                                        <li>
+                                            <span class="detail-label">기본 배송비</span>
+                                            <span class="detail-value">무료</span>
+                                        </li>
+                                    </ul>
+                                </div><hr/>
+
+                                <!-- 환불 예정 금액 -->
+                                <div class="refund-amount">
+                                    <h3 class="subtitle">환불 예정 금액</h3>
+                                    <div class="wrap-p">
+                                        <p class="refund-method">${refund.pay_type}</p>
+                                        <p class="refund-expected">33,117원</p>
+                                    </div>
+                                </div>
+
+                                <%-- 안내사항 --%>
+                                <div class="notice">* 주문 시 사용한 적립금 및 할인쿠폰은 취소완료 즉시 반환됩니다.</div>
+                            </div>
+                        </c:if>
                     </div>
                 </div>
 

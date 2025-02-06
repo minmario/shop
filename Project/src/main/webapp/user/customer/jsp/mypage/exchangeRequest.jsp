@@ -29,27 +29,29 @@
             <div class="wrap">
                 <div class="row">
                     <div class="container">
-                        <c:if test="${requestScope.o_vo ne null and requestScope.d_list ne null}">
-                        <c:set var="o_vo" value="${requestScope.o_vo}"/>
+                        <c:if test="${requestScope.o_list ne null and requestScope.d_list ne null}">
+                        <c:set var="o_list" value="${requestScope.o_list}"/>
                             <div class="wrap-title">
                                 <span class="left bold">교환요청</span>
                             </div>
                             <div class="box">
                                 <!-- 교환 상품 정보 -->
                                 <section class="wrap-product">
-                                    <div class="product-content">
-                                        <input type="hidden" name="id" value="${o_vo.id}"/>
-                                        <input type="hidden" name="prod_no" value="${o_vo.prod_no}"/>
-                                        <input type="hidden" name="inventory_no" value="${o_vo.inventory_no}"/>
-                                        <input type="hidden" name="orderCode" value="${o_vo.order_code}"/>
-                                        <input type="hidden" name="order_count" value="${o_vo.count}"/>
-                                        <img src="${fn:split(o_vo.prod_image, ',')[0]}" alt="상품 이미지" class="product-img">
-                                        <div class="product-detail">
-                                            <span>${o_vo.brand}</span><br/>
-                                            ${o_vo.prod_name}
-                                            <div class="option-text">${o_vo.option_name} / ${o_vo.count}개</div>
+                                    <c:forEach var="item" items="${o_list}">
+                                        <div class="product-content">
+                                            <input type="hidden" name="id" value="${item.id}"/>
+                                            <input type="hidden" name="prod_no" value="${item.prod_no}"/>
+                                            <input type="hidden" name="inventory_no" value="${item.inventory_no}"/>
+                                            <input type="hidden" name="orderCode" value="${item.order_code}"/>
+                                            <input type="hidden" name="order_count" value="${item.count}"/>
+                                            <img src="${fn:split(item.prod_image, ',')[0]}" alt="상품 이미지" class="product-img">
+                                            <div class="product-detail">
+                                                <span>${item.brand}</span><br/>
+                                                ${item.prod_name}
+                                                <div class="option-text">${item.option_name} / ${item.count}개</div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </c:forEach>
                                 </section>
                                 <hr/>
 

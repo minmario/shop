@@ -32,12 +32,12 @@ public class CancelOrderAction implements Action {
         if (action != null) {
             switch (action) {
                 case "select":
-                    OrderVO o_vo = OrderDAO.selectOrderProduct(id, cvo.getId(), order_code);
+                    List<OrderVO> o_list = OrderDAO.selectOrderProduct(id, cvo.getId(), order_code);
                     List<DeliveryVO> d_list = DeliveryDAO.selectDelivery(cvo.getId());
                     OrderVO coupon = OrderDAO.selectOrderCoupon(cvo.getId(), prod_no, order_code); // 쿠폰 정보 가져오기
                     int point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code);
 
-                    request.setAttribute("o_vo", o_vo);
+                    request.setAttribute("o_list", o_list);
                     request.setAttribute("d_list", d_list);
                     request.setAttribute("coupon", coupon);
                     request.setAttribute("point_amount", point_amount);
@@ -55,6 +55,7 @@ public class CancelOrderAction implements Action {
 
                         // 주문 정보 업데이트 (취소 상태로 변경)
                         int u_o_cnt = OrderDAO.updateOrderCancel(id, cvo.getId(), prod_no, orderCode, refund_bank, refund_account, reason);
+                        System.out.println("주문 내역 변경" + u_o_cnt);
 
                         if (u_o_cnt == 0) {
                             response.setContentType("application/json");
@@ -102,18 +103,22 @@ public class CancelOrderAction implements Action {
                         if (point_used != null && !point_used.isEmpty() && !point_used.equals("0")) {
                             d_p_cnt = PointDAO.deletePoint(cvo.getId(), orderCode);
                         }
+                        System.out.println("포인트 내역 삭제" + d_p_cnt);
 
                         // 사용한 적립금 복구 (point_used가 null이 아닌 경우에만 실행)
                         int u_p_cnt = 0;
                         if (point_used != null && !point_used.isEmpty() && !point_used.equals("0")) {
                             u_p_cnt = PointDAO.insertPoint(cvo.getId(), point_used, orderCode);
                         }
+                        System.out.println("포인트 복구" + u_p_cnt);
 
                         // 사용한 쿠폰 복구
                         int u_co_cnt = CouponDAO.updateCusCoupon(cvo.getId(), orderCode);
+                        System.out.println("쿠폰 복구" + u_co_cnt);
 
                         // 해당 고객의 누적 금액에서 환불금액 차감
                         int u_c_cnt = CustomerDAO.updateTotal(cvo.getId(), total);
+                        System.out.println("환불 내역" + u_c_cnt);
 
                         System.out.println("주문 내역 변경" + u_o_cnt);
                         System.out.println("포인트 내역 삭제" + d_p_cnt);

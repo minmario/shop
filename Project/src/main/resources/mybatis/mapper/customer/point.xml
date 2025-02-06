@@ -46,7 +46,7 @@
 
     <!-- 적립 예정 적립금 총 합 -->
     <select id="select_point_upcoming_total" resultType="String" parameterType="String">
-        SELECT SUM(amount) AS upcoming_points FROM point p
+        SELECT SUM(p.amount) AS upcoming_points FROM point p
         INNER JOIN shop.order o
         ON p.cus_no = o.cus_no
         WHERE p.cus_no = #{cus_no} AND p.p_type = 0 AND o.status = 0
@@ -66,8 +66,8 @@
     <!-- 보유 적립금 -->
     <select id="select_save_point" resultType="int" parameterType="String">
         SELECT
-            SUM(CASE WHEN p_type = 0 THEN amount ELSE 0 END) -
-            SUM(CASE WHEN p_type = 1 THEN amount ELSE 0 END) AS total_points
+        SUM(CASE WHEN p_type = 0 THEN amount ELSE 0 END) -
+        SUM(CASE WHEN p_type = 1 THEN amount ELSE 0 END) AS total_points
         FROM point
         WHERE cus_no = #{cus_no}
     </select>

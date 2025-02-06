@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -50,9 +51,9 @@
                             <%-- 취소 상품 정보 --%>
                             <div class="cancel-product">
                                 <h2>취소 상품</h2>
-                                <span class="cancel-status">취소완료</span>
+                                <span class="cancel-status">구매취소</span>
                                 <div class="product-details">
-                                    <div class="product-image"></div>
+                                    <img src="${fn:split(cancel.prod_image, ',')[0]}" alt="상품 이미지" class="product-image">
                                     <div class="product-info">
                                         <p class="product-brand">${cancel.brand}</p>
                                         <p class="product-name">${cancel.prod_name}</p>
@@ -73,15 +74,15 @@
                                 <ul class="info-list">
                                     <li>
                                         <span class="info-label">신청 일시</span>
-                                        <span class="info-value">2024-12-18 19:54:17</span>
+                                        <span class="info-value">${cancel.cancel_request_date}</span>
                                     </li>
                                     <li>
                                         <span class="info-label">완료 일시</span>
-                                        <span class="info-value">2024-12-23 14:25:24</span>
+                                        <span class="info-value"></span>
                                     </li>
                                     <li>
                                         <span class="info-label">취소 사유</span>
-                                        <span class="info-value">${cancel.reason}</span>
+                                        <span class="info-value">${cancel.reason_customer}</span>
                                     </li>
                                 </ul>
                             </div><hr/>

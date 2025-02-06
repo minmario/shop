@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function insertReview() {
-
   // event.preventDefault(); // 폼 기본 제출 방지
   const form = document.getElementById('review-form');
   const formData = new FormData(form);

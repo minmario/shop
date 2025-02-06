@@ -24,157 +24,160 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 
 public class WriteReviewAction implements Action {
-    @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        String action = request.getParameter("action");
-        String prod_no = request.getParameter("prod_no");
-        String order_code = request.getParameter("order_code");
-        HttpSession session = request.getSession();
-        CustomerVO cvo = (CustomerVO) session.getAttribute("customer_info");
+  @Override
+  public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException{
+    String action = request.getParameter("action");
+    String prod_no = request.getParameter("prod_no");
+    String order_code = request.getParameter("order_code");
+    HttpSession session = request.getSession();
+    CustomerVO cvo = (CustomerVO) session.getAttribute("customer_info");
 
-        if (cvo == null) {
-            request.setAttribute("session_expired", true);
-            return "/user/customer/jsp/error/error.jsp";
-        }
-      System.out.println("action = " + action);
-        String viewPath = null;
-        if(action != null){
-            switch(action){
-                case "select":
-                    OrderVO o_vo = OrderDAO.selectReviewProduct(cvo.getId(), prod_no, order_code);
-                    request.setAttribute("o_vo", o_vo);
-                    viewPath = "/user/customer/jsp/mypage/writeReview.jsp";
+
+    if (cvo == null) {
+      request.setAttribute("session_expired", true);
+      return "/user/customer/jsp/error/error.jsp";
+    }
+    System.out.println("action = " + action);
+    String viewPath = null;
+    if(action != null){
+      switch(action){
+        case "select":
+          OrderVO o_vo = OrderDAO.selectReviewProduct(cvo.getId(), prod_no, order_code);
+          request.setAttribute("o_vo", o_vo);
+          viewPath = "/user/customer/jsp/mypage/writeReview.jsp";
+          break;
+
+        case "insert":
+          try {
+            JSONObject responseJson = new JSONObject(); // JSON 응답을 위한 객체
+
+            // 파일 업로드 처리
+            DiskFileItemFactory factory = new DiskFileItemFactory();
+            ServletFileUpload upload = new ServletFileUpload(factory);
+            List<FileItem> items = upload.parseRequest(request);
+
+
+            prod_no = null;
+            order_code = null;
+            String rating = null;
+            String comment = null;
+            String gender = null;
+            String height = null;
+            String weight = null;
+            String photo = null;
+            String isUpdateChecked = null;
+
+            for (FileItem item : items) {
+              if (item.isFormField()) {
+                String fieldName = item.getFieldName();
+                String value = item.getString("UTF-8");
+
+                System.out.println("필드: " + fieldName + " = " + value);
+
+                switch (fieldName) {
+                  case "prod_no":
+                    prod_no = value;
                     break;
+                  case "order_code":
+                    order_code = value;
+                    break;
+                  case "rating":
+                    rating = value;
+                    break;
+                  case "comment":
+                    comment = value;
+                    break;
+                  case "gender":
+                    gender = value;
+                    break;
+                  case "height":
+                    height = value;
+                    break;
+                  case "weight":
+                    weight = value;
+                    break;
+                  case "isUpdateChecked":
+                    isUpdateChecked = value;
+                    break;
+                }
+              } else {
+                // 파일 업로드 처리
 
-              case "insert":
-                try {
-                  JSONObject responseJson = new JSONObject(); // JSON 응답을 위한 객체
+                if (!item.getName().isEmpty()) {
+                  String originalFileName = new File(item.getName()).getName();
 
-                  // 파일 업로드 처리
-                  DiskFileItemFactory factory = new DiskFileItemFactory();
-                  ServletFileUpload upload = new ServletFileUpload(factory);
-                  List<FileItem> items = upload.parseRequest(request);
+                  String safeFileName = normalizeFileName(originalFileName);
+                  String uniqueFileName = UUID.randomUUID().toString() + "_" + safeFileName;
 
-                  prod_no = null;
-                  order_code = null;
-                  String rating = null;
-                  String comment = null;
-                  String gender = null;
-                  String height = null;
-                  String weight = null;
-                  String photo = null;
-                  String isUpdateChecked = null;
+                  File tempFile = new File(System.getProperty("java.io.tmpdir"), uniqueFileName);
+                  item.write(tempFile);
+                  // S3 업로드 처리
+                  S3Uploader s3Uploader = new S3Uploader();
+                  photo = s3Uploader.uploadFile(tempFile, "review_images/" + uniqueFileName);
 
-                  for (FileItem item : items) {
-                    if (item.isFormField()) {
-                      String fieldName = item.getFieldName();
-                      String value = item.getString("UTF-8");
+                  // 임시 파일 삭제
+                  tempFile.delete();
+                }
+              }
+            }
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            // 필수 값 검증
+            if (rating == null || comment == null || rating.isEmpty() || comment.length() < 10) {
 
-                      System.out.println("📌 필드: " + fieldName + " = " + value);
+              responseJson.put("success", false);
+              responseJson.put("message", "별점과 리뷰 내용을 올바르게 입력하세요.");
+              response.getWriter().write(responseJson.toString());
+              return null;
+            }
 
-                      switch (fieldName) {
-                        case "prod_no":
-                          prod_no = value;
-                          break;
-                        case "order_code":
-                          order_code = value;
-                          break;
-                        case "rating":
-                          rating = value;
-                          break;
-                        case "comment":
-                          comment = value;
-                          break;
-                        case "gender":
-                          gender = value;
-                          break;
-                        case "height":
-                          height = value;
-                          break;
-                        case "weight":
-                          weight = value;
-                          break;
-                        case "isUpdateChecked":
-                          isUpdateChecked = value;
-                          break;
-                      }
-                    } else {
-                      // 파일 업로드 처리
+            // DB 저장
 
-                      if (!item.getName().isEmpty()) {
-                        String originalFileName = new File(item.getName()).getName();
+            BoardVO b_vo = new BoardVO();
+            b_vo.setProd_no(prod_no);
+            b_vo.setOrder_code(order_code);
+            b_vo.setCus_no(cvo.getId());
+            b_vo.setScore(String.valueOf(Integer.parseInt(rating)));
+            b_vo.setContent(comment);
+            b_vo.setGender(gender);
+            b_vo.setAdditional_images(photo);
 
-                        String safeFileName = normalizeFileName(originalFileName);
-                        String uniqueFileName = UUID.randomUUID().toString() + "_" + safeFileName;
+            if ("true".equals(isUpdateChecked)) {
+              CustomerDAO.updateBodyInfo(cvo.getId(), weight, height);
+            }
 
-                        File tempFile = new File(System.getProperty("java.io.tmpdir"), uniqueFileName);
-                        item.write(tempFile);
-                        // S3 업로드 처리
-                        S3Uploader s3Uploader = new S3Uploader();
-                        photo = s3Uploader.uploadFile(tempFile, "review_images/" + uniqueFileName);
-
-                        // 임시 파일 삭제
-                        tempFile.delete();
-                      }
-                    }
-                  }
-                  response.setContentType("application/json");
-                  response.setCharacterEncoding("UTF-8");
-                  // 필수 값 검증
-                  if (rating == null || comment == null || rating.isEmpty() || comment.length() < 10) {
-
-                    responseJson.put("success", false);
-                    responseJson.put("message", "별점과 리뷰 내용을 올바르게 입력하세요.");
-                    response.getWriter().write(responseJson.toString());
-                    return null;
-                  }
-
-                  // DB 저장
-
-                  BoardVO b_vo = new BoardVO();
-                  b_vo.setProd_no(prod_no);
-                  b_vo.setOrder_code(order_code);
-                  b_vo.setCus_no(cvo.getId());
-                  b_vo.setScore(String.valueOf(Integer.parseInt(rating)));
-                  b_vo.setContent(comment);
-                  b_vo.setGender(gender);
-                  b_vo.setAdditional_images(photo);
-
-                  if ("true".equals(isUpdateChecked)) {
-                    CustomerDAO.updateBodyInfo(cvo.getId(), weight, height);
-                  }
-
-                  int result = BoardDAO.insertReview(b_vo);
+            int result = BoardDAO.insertReview(b_vo);
 
 
-                  if (result > 0) {
-                    responseJson.put("success", true);
-                    responseJson.put("message", "리뷰가 성공적으로 등록되었습니다.");
-                  } else {
-                    responseJson.put("success", false);
-                    responseJson.put("message", "리뷰 저장 중 오류가 발생했습니다.");
-                  }
+            if (result > 0) {
+              responseJson.put("success", true);
+              responseJson.put("message", "후기가 등록되었습니다.");
+            } else {
+              responseJson.put("success", false);
+              responseJson.put("message", "후기가 등록에 실패했습니다. 다시 시도해 주세요.");
+            }
+
+            response.getWriter().write(responseJson.toString());
+            response.getWriter().flush();
+            response.getWriter().close();
 
 
-                  response.getWriter().write(responseJson.toString());
+            return null;
 
-
-                  return null;
-
-                } catch (Exception e) {
-                  e.printStackTrace();
-                  JSONObject errorJson = new JSONObject();
-                  errorJson.put("success", false);
-                  errorJson.put("message", "서버 내부 오류 발생: " + e.getMessage());
-                  response.setContentType("application/json");
-                  response.getWriter().write(errorJson.toString());
-                  return null;
-                    }
-        }
+          } catch (Exception e) {
+            e.printStackTrace();
+            JSONObject errorJson = new JSONObject();
+            errorJson.put("success", false);
+            errorJson.put("message", "서버 내부 오류 발생: " + e.getMessage());
+            response.setContentType("application/json");
+            response.getWriter().write(errorJson.toString());
+            return null;
+          }
+      }
     }
 
-        return viewPath;
-}
+    return viewPath;
+  }
   public static String normalizeFileName(String fileName) {
     String normalized = Normalizer.normalize(fileName, Normalizer.Form.NFD);
     Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");

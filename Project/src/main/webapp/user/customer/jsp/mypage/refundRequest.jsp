@@ -30,8 +30,8 @@
             <div class="wrap">
                 <div class="row">
                     <div class="container">
-                        <c:if test="${requestScope.o_vo ne null and requestScope.d_list ne null}">
-                        <c:set var="o_vo" value="${requestScope.o_vo}"/>
+                        <c:if test="${requestScope.o_list ne null and requestScope.d_list ne null}">
+                        <c:set var="o_list" value="${requestScope.o_list}"/>
                             <div class="wrap-title">
                                 <span class="left bold">반품요청</span>
 
@@ -41,18 +41,20 @@
                                 <!-- 반품 상품 정보 -->
                                 <section class="wrap-product">
                                     <div class="wrap-product-content">
-                                        <div class="product-content">
-                                            <input type="hidden" name="order_id" value="${o_vo.id}"/>
-                                            <input type="hidden" name="prod_no" value="${o_vo.prod_no}"/>
-                                            <input type="hidden" id="point-used" value="${o_vo.point_amount}"/>
-                                            <input type="hidden" name="orderCode" value="${o_vo.order_code}"/>
-                                            <img src="${fn:split(o_vo.prod_image, ',')[0]}" alt="상품 이미지" class="product-img">
-                                            <div class="product-detail">
-                                                <span>${o_vo.brand}</span><br/>
-                                                ${o_vo.prod_name}
-                                                <div class="option-text">${o_vo.option_name} / ${o_vo.count}개</div>
+                                        <c:forEach var="item" items="${o_list}">
+                                            <div class="product-content">
+                                                <input type="hidden" name="order_id" value="${item.id}"/>
+                                                <input type="hidden" name="prod_no" value="${item.prod_no}"/>
+                                                <input type="hidden" id="point-used" value="${item.point_amount}"/>
+                                                <input type="hidden" name="orderCode" value="${item.order_code}"/>
+                                                <img src="${fn:split(item.prod_image, ',')[0]}" alt="상품 이미지" class="product-img">
+                                                <div class="product-detail">
+                                                    <span>${item.brand}</span><br/>
+                                                    ${item.prod_name}
+                                                    <div class="option-text">${item.option_name} / ${item.count}개</div>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </c:forEach>
                                     </div>
                                 </section>
                                 <hr/>
@@ -124,27 +126,35 @@
                                         <span class="bold">환불 정보</span><br/>
                                         <ul>
                                                 <%-- 상품 결제 금액 및 적립금 사용 값 변환 및 계산 --%>
-                                            <c:set var="prodPrice" value="${o_vo.amount}" />
-                                            <c:set var="pointUsed" value="${not empty o_vo.point_amount ? o_vo.point_amount : '0'}" />
-                                            <c:set var="prodCount" value="${o_vo.count}" />
+                                            <c:set var="totalAmount" value="0" />
+                                            <c:forEach var="item" items="${requestScope.o_list}">
+                                                <!-- 쉼표 제거 후 숫자로 변환 -->
+                                                <c:set var="amountInt" value="${fn:replace(item.amount, ',', '')}" />
+
+                                                <!-- 누적 합계 계산 -->
+                                                <c:set var="totalAmount" value="${totalAmount + amountInt}" />
+                                            </c:forEach>
+
+                                            <c:set var="pointUsed" value="${not empty requestScope.point_amount ? requestScope.point_amount : '0'}" />
+<%--                                            <c:set var="prodCount" value="${o_list.count}" />--%>
                                             <c:set var="coupon" value="${requestScope.coupon}"/>
 
                                                 <%-- 숫자만 추출하여 int형으로 변환 --%>
-                                            <c:set var="prodPriceInt" value="${fn:replace(prodPrice, ',', '')}" />
+                                            <c:set var="totalAmountInt" value="${fn:replace(totalAmount, ',', '')}" />
                                             <c:set var="pointUsedInt" value="${fn:replace(pointUsed, ',', '')}" />
 
                                             <!-- 상품 가격에 수량을 곱하여 총 결제 금액 계산 -->
-                                            <c:set var="totalPrice" value="${prodPriceInt * prodCount}" />
+<%--                                            <c:set var="totalPrice" value="${totalAmountInt * prodCount}" />--%>
 
-                                            <li><span>상품 결제 금액</span><span class="item-price"><fmt:formatNumber value="${totalPrice}"/>원</span></li>
+                                            <li><span>상품 결제 금액</span><span class="item-price"><fmt:formatNumber value="${totalAmountInt}"/>원</span></li>
 
-                                            <c:if test="${o_vo.point_amount ne null}">
+                                            <c:if test="${requestScope.point_amount ne null}">
                                                 <li><span>적립금 사용</span><span class="cancel-point-used"><fmt:formatNumber value="${pointUsed}"/>원</span></li>
                                             </c:if>
 
                                             <c:if test="${coupon ne null}">
                                                 <li>
-                                                    <c:set var="couponDiscount" value="${totalPrice * (coupon.sale_per / 100)}" />
+                                                    <c:set var="couponDiscount" value="${totalAmountInt * (coupon.sale_per / 100)}" />
                                                     <span>쿠폰 사용</span><br/>
                                                     <span class="cancel-coupon-info">${coupon.coupon_name} (${coupon.sale_per}%)</span>
                                                     <span class="cancel-coupon">-<fmt:formatNumber value="${couponDiscount}" type="number" maxFractionDigits="0"/>원</span>
@@ -154,7 +164,7 @@
                                             <li><span>기본 배송비</span><span>무료</span></li>
 
                                             <!-- 환불 예정 금액 계산 (총 결제 금액 - 적립금 - 쿠폰) -->
-                                                    <c:set var="refundAmount" value="${totalPrice - pointUsedInt - couponDiscount}" />
+                                                    <c:set var="refundAmount" value="${totalAmountInt - pointUsedInt - couponDiscount}" />
                                             <li><span>환불 예정 금액</span><span class="refund-amount"><fmt:formatNumber value="${refundAmount}" type="number" maxFractionDigits="0"/>원</span></li>
                                         </ul>
                                     </div>

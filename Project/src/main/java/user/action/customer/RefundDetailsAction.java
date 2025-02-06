@@ -22,6 +22,7 @@ public class RefundDetailsAction implements Action {
         }
 
         String action = request.getParameter("action");
+        String order_id = request.getParameter("order_id");
         String order_code = request.getParameter("order_code");
         String prod_no = request.getParameter("prod_no");
 
@@ -29,7 +30,7 @@ public class RefundDetailsAction implements Action {
         if (action != null) {
             switch (action) {
                 case "select":
-                    OrderVO refund = OrderDAO.selectDetailsByStatus(cvo.getId(), prod_no, order_code, "7");
+                    OrderVO refund = OrderDAO.selectDetailsByStatus(order_id, cvo.getId(), prod_no, order_code, "7");
                     int point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code);
                     request.setAttribute("refund", refund);
                     request.setAttribute("point_amount", point_amount);

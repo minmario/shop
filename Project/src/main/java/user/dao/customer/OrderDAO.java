@@ -66,24 +66,24 @@ public class OrderDAO {
     }
 
     //취소, 반품, 교환할 상품 조회
-    public static OrderVO selectOrderProduct(String id, String cus_no, String order_code){
+    public static List<OrderVO> selectOrderProduct(String id, String cus_no, String order_code){
         HashMap<String, String> map = new HashMap<>();
         map.put("id", id);
         map.put("cus_no", cus_no);
         map.put("order_code", order_code);
 
         SqlSession ss = FactoryService.getFactory().openSession();
-        OrderVO vo = null;
+        List<OrderVO> list = null;
 
         try{
-            vo = ss.selectOne("order.select_order_product", map);
+            list = ss.selectList("order.select_order_product", map);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             ss.close();
         }
 
-        return vo;
+        return list;
     }
 
     //주문 총 금액
@@ -435,8 +435,9 @@ public class OrderDAO {
     }
 
     // 취소/반품/교환상품 상세 내역
-    public static OrderVO selectDetailsByStatus(String cus_no, String prod_no, String order_code, String status){
+    public static OrderVO selectDetailsByStatus(String id, String cus_no, String prod_no, String order_code, String status){
         HashMap<String, String> map = new HashMap<>();
+        map.put("id", id);
         map.put("cus_no", cus_no);
         map.put("prod_no", prod_no);
         map.put("order_code", order_code);
