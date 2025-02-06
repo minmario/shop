@@ -11,6 +11,19 @@ public class CustomerVO {
     this.grade_no = grade_no;
   }
 
+  public CustomerVO(String id) {
+    this.id = id;
+  }
+
+  public String getGrade_name() {
+    return grade_name;
+  }
+
+  public void setGrade_name(String grade_name) {
+    this.grade_name = grade_name;
+  }
+
+  String grade_name;
   String grade_no;
   String cus_id;
   String cus_pw;

@@ -20,13 +20,13 @@
   </select>
   <!--테이블 전체-->
   <select id="allCustomer" resultType="admin.vo.CustomerVO" >
-    select * from `customer`
+    select g.name as grade_name,c.id,c.cus_id,c.name,c.nickname,c.gender,c.birth_date,c.phone,c.email,c.weight,c.height,c.total,c.grade_expire_date,c.is_del from `customer` as c join `grade` as g on g.id = c.grade_no
   </select>
   <select id="allMajor" resultType="admin.vo.MajorCategoryVO">
     select * from `major_category`
   </select>
   <select id ="allMiddle" resultType="admin.vo.MiddleCategoryVO">
-    select * from `middle_category`
+    select mdc.id,mc.name as major_name,mdc.name,mdc.type from major_category as mc join middle_category as mdc on mc.id = mdc.major_no
   </select>
   <select id ="allBoard" resultType="admin.vo.BoardVO">
     select * from `board` where is_del = 0
@@ -107,9 +107,10 @@
     </trim>
   </select>
   <select id="searchMiddleCategory" parameterType="Map" resultType="admin.vo.MiddleCategoryVO">
-    SELECT * FROM middle_category
+    select mdc.id,mc.name as major_name,mdc.name,mdc.type from major_category as mc join middle_category as mdc on mc.id = mdc.major_no
     <trim prefix="where">
       <choose>
+        <when test=" searchType == 'major_name'">major_name LIKE CONCAT('%',#{searchValue},'%')</when>
         <when test=" searchType == 'major_no'">major_no LIKE CONCAT('%',#{searchValue},'%')</when>
         <when test=" searchType == 'name'">name LIKE CONCAT('%',#{searchValue},'%')</when>
         <when test=" searchType == 'type'">type LIKE CONCAT('%',#{searchValue},'%')</when>
@@ -169,13 +170,26 @@
     </trim>
   </select>
   <select id="searchCustomer" parameterType="Map" resultType="admin.vo.CustomerVO">
-    SELECT * FROM customer
+    select g.name as grade_name ,
+    c.cus_id,
+    c.name,
+    c.nickname,
+    c.gender,
+    c.birth_date,
+    c.phone,
+    c.email,
+    c.weight,
+    c.height,
+    c.total,
+    c.grade_expire_date,
+    c.is_del
+    from `customer` as c
+    join `grade` as g on g.id = c.grade_no
     <trim prefix="where">
       <choose>
-        <when test="searchType == 'grade_no'">grade_no LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test="searchType == 'grade_name'">g.name LIKE CONCAT('%',#{searchValue},'%')</when>
         <when test="searchType == 'cus_id'">cus_id LIKE CONCAT('%',#{searchValue},'%')</when>
-
-        <when test="searchType == 'name'">name LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test="searchType == 'name'">c.name LIKE CONCAT('%',#{searchValue},'%')</when>
         <when test="searchType == 'nickname'">nickname LIKE CONCAT('%',#{searchValue},'%')</when>
         <when test="searchType == 'gender'">gender LIKE CONCAT('%',#{searchValue},'%')</when>
         <when test="searchType == 'birth_date'">birth_date LIKE CONCAT('%',#{searchValue},'%')</when>
@@ -185,7 +199,7 @@
         <when test="searchType == 'height'">height LIKE CONCAT('%',#{searchValue},'%')</when>
         <when test="searchType == 'total'">total LIKE CONCAT('%',#{searchValue},'%')</when>
         <when test="searchType == 'grade_expire_date'">grade_expire_date LIKE CONCAT('%',#{searchValue},'%')</when>
-
+        <when test="searchType == 'is_del'">is_del LIKE CONCAT('%',#{searchValue},'%')</when>
       </choose>
     </trim>
   </select>
@@ -219,18 +233,18 @@
     VALUES (#{major_no},#{name},#{type},0)
 
   </insert>
-  <select id="getCategory" resultType="admin.vo.CategoryVO">
-    SELECT middle_category.*,major_category.name as major_name
-    FROM middle_category as mi
-    JOIN major_category as ma on mi.major_no = ma.id
-  </select>
+
 
   <select id="getMajorId" parameterType="admin.vo.MajorCategoryVO" resultType="admin.vo.MajorCategoryVO">
     SELECT id FROM major_category
     WHERE name = #{name} AND ename = #{ename}
 
   </select>
+  <select id="getMiddleCategory" resultType="admin.vo.CategoryVO">
+    select mc.name as major_name,mdc.name,mdc.type from major_category as mc join middle_category as mdc on mc.id = mdc.major_no;
 
+
+  </select>
 
   <update id="deleteBoard" parameterType="int">
     UPDATE board
@@ -257,9 +271,20 @@
     set active = 0
     where id = #{id}
   </update>
+  <update id="admitCustomer" parameterType="int">
+    update customer
+    set is_del=0
+    where id = #{id}
+  </update>
+
   <update id="stopSeller" parameterType="int">
     update seller
     set active = 3
+    where id = #{id}
+  </update>
+  <update id="stopCustomer" parameterType="int">
+    update customer
+    set is_del=2
     where id = #{id}
   </update>
 

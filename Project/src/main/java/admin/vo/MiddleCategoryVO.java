@@ -1,7 +1,20 @@
 package admin.vo;
 
 public class MiddleCategoryVO {
-    String id, major_no, name, type;
+    String id;
+
+    public String getMajor_name() {
+        return major_name;
+    }
+
+    public void setMajor_name(String major_name) {
+        this.major_name = major_name;
+    }
+
+    String major_name;
+    String major_no;
+    String name;
+    String type;
     public String getType() {
         return type;
     }

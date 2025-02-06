@@ -9,8 +9,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:forEach var ="mdcl"  items="${dar}">
     <tr>
-        <td><input type="checkbox"></td>
-        <td>${mdcl.major_no}</td>
+        <td>${mdcl.major_name}</td>
         <td>${mdcl.name}</td>
         <td>${mdcl.type}</td>
 
