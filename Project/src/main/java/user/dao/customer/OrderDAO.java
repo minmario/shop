@@ -456,4 +456,54 @@ public class OrderDAO {
 
         return vo;
     }
+
+    // 판매자 주소지 가져오기
+    public static OrderVO selectSellerAddress(String id){
+        SqlSession ss = FactoryService.getFactory().openSession();
+        OrderVO vo = null;
+
+        try{
+            vo = ss.selectOne("order.select_seller_address", id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return vo;
+    }
+
+    // 진행 중 주문현황 list
+    public static List<OrderVO> selectOrderStatus(String cus_no){
+        SqlSession ss = FactoryService.getFactory().openSession();
+        List<OrderVO> list = null;
+
+        try{
+            list = ss.selectList("order.select_order_status", cus_no);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+        return list;
+    }
+
+    // 배송현황 조회
+    public static List<OrderVO> selectDeliveryStatus(String cus_no,String order_code){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("cus_no", cus_no);
+        map.put("order_code", order_code);
+
+        SqlSession ss = FactoryService.getFactory().openSession();
+        List<OrderVO> list = null;
+
+        try{
+            list = ss.selectList("order.select_order_status", map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+        return list;
+    }
 }

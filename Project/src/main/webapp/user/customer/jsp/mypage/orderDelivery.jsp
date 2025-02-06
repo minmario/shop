@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -32,36 +33,39 @@
                             <div class="order-status">
                                 <h2 class="order-title">진행 중 주문 현황</h2>
                                 <div class="wrap-order-item">
-                                    <div class="order-item" onclick="location.href='Controller?type=deliveryStatus'">
-                                        <img src="./user/images/product5.jpg" alt="Product Image" class="product-image">
-                                        <div class="order-details">
-                                            <div class="payment-status">결제완료</div>
-                                            <div class="product-name">커버낫</div>
-                                            <div class="product-description">
-                                                [2PACK] 쿨 코튼 티셔츠 블랙+화이트<br>M
+                                    <c:if test="${requestScope.list eq null}">
+                                        <div class="order-item">
+                                            <span>현재 진행 중인 주문 현황이 없습니다.</span>
+                                        </div>
+                                    </c:if>
+
+                                    <c:if test="${requestScope.list ne null}">
+                                    <c:forEach var="item" items="${requestScope.list}">
+                                        <div class="order-item" onclick="location.href='Controller?type=deliveryStatus&action=select&order_id=${item.id}&order_code=${item.order_code}'">
+                                            <img src="${fn:split(item.prod_image, ',')[0]}" alt="Product Image" class="product-image">
+                                            <div class="order-details">
+                                                <c:choose>
+                                                    <c:when test="${item.status == '1'}">
+                                                        <div class="payment-status">결제완료</div>
+                                                    </c:when>
+                                                    <c:when test="${item.status == '2'}">
+                                                        <div class="payment-status">배송전</div>
+                                                    </c:when>
+                                                    <c:when test="${item.status == '3'}">
+                                                        <div class="payment-status">배송중</div>
+                                                    </c:when>
+                                                    <c:when test="${item.status == '4'}">
+                                                        <div class="payment-status">배송완료</div>
+                                                    </c:when>
+                                                </c:choose>
+                                                <div class="product-name">${item.brand}</div>
+                                                <div class="product-description">
+                                                        ${item.prod_name}<br>${item.option_name} / ${item.count}개
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="order-item" onclick="location.href='Controller?type=deliveryStatus'">
-                                        <img src="./user/images/product5.jpg" alt="Product Image" class="product-image">
-                                        <div class="order-details">
-                                            <div class="payment-status">결제완료</div>
-                                            <div class="product-name">커버낫</div>
-                                            <div class="product-description">
-                                                [2PACK] 쿨 코튼 티셔츠 블랙+화이트<br>M
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="order-item" onclick="location.href='Controller?type=deliveryStatus'">
-                                        <img src="./user/images/product5.jpg" alt="Product Image" class="product-image">
-                                        <div class="order-details">
-                                            <div class="payment-status">결제완료</div>
-                                            <div class="product-name">커버낫</div>
-                                            <div class="product-description">
-                                                [2PACK] 쿨 코튼 티셔츠 블랙+화이트<br>M
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </c:forEach>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>

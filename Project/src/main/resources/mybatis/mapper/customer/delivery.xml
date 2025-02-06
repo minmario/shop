@@ -47,4 +47,11 @@
         SET is_default = false
         WHERE is_default = true AND cus_no = #{cus_no}
     </update>
+
+    <!-- 회수지 배송 정보 가져오기 -->
+    <select id="select_retrieve_info" resultType="user.vo.customer.DeliveryVO" parameterType="String">
+        SELECT d.name AS name, d.pos_code, d.addr1, d.addr2, d.phone, d.request AS request, d.is_default AS is_default FROM delivery d
+        INNER JOIN `order` o ON o.deli_no = d.id
+        WHERE o.id = #{id}
+    </select>
 </mapper>

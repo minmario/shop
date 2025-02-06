@@ -30,7 +30,7 @@
         ORDER BY o.order_date DESC
     </select>
 
-    <!-- 주문코드를 기반으로 주문, 배송, 결제 정보를 조회(list) -->
+    <!-- 주문코드를 기반으로 주문, 배송, 결제 정보를 조회(전체) -->
     <select id="select_order_code" resultType="user.vo.customer.OrderVO" parameterType="map">
         SELECT o.*, s.name AS brand, d.name AS deli_name, d.pos_code, d.addr1, d.addr2, d.phone, d.request AS deli_request, d.is_default AS is_default, p.prod_code AS prod_code,
         p.name AS prod_name, p.price AS prod_price, p.sale AS prod_sale, p.prod_image AS prod_image, p.saled_price AS prod_saled_price, i.option_name AS option_name
@@ -40,11 +40,6 @@
         INNER JOIN seller s ON p.seller_no = s.id
         LEFT JOIN inventory i ON i.id = o.inventory_no
         WHERE o.order_code = #{order_code} AND o.cus_no = #{cus_no}
-    </select>
-
-    <!-- 회수지 배송 정보 가져오기 -->
-    <select id="select_retrieve_info" resultType="user.vo.customer.OrderVO" parameterType="map">
-        SELECT
     </select>
 
     <!-- 취소/반품/교환 할 상품 가져오기 -->
@@ -215,5 +210,31 @@
         INNER JOIN seller s ON p.seller_no = s.id
         LEFT JOIN inventory i ON i.id = o.inventory_no
         WHERE o.id = #{id} AND o.cus_no = #{cus_no} AND o.prod_no = #{prod_no} AND o.order_code = #{order_code} AND o.status = #{status}
+    </select>
+
+    <!-- seller 주소 가져오기 -->
+    <select id="select_seller_address" resultType="user.vo.customer.OrderVO" parameterType="String">
+        SELECT s.address AS seller_address FROM `order` o
+        INNER JOIN product p ON o.prod_no = p.id
+        INNER JOIN seller s ON p.seller_no = s.id
+        WHERE o.id = #{id}
+    </select>
+
+    <!-- 진행 중 주문현황 조회 -->
+    <select id="select_order_status" resultType="user.vo.customer.OrderVO" parameterType="String">
+        SELECT s.name AS brand, p.name AS prod_name, p.prod_image AS prod_image, i.option_name AS option_name, o.* FROM `order` o
+        INNER JOIN product p ON o.prod_no = p.id
+        INNER JOIN seller s ON p.seller_no = s.id
+        LEFT JOIN inventory i ON i.id = o.inventory_no
+        WHERE o.cus_no = #{cus_no} AND o.status IN (1, 2, 3, 4)
+    </select>
+
+    <!-- 배송현황 조회 -->
+    <select id="select_delivery_status" resultType="user.vo.customer.OrderVO" parameterType="map">
+        SELECT s.courier AS courier, s.address AS seller_address, p.name AS prod_name, p.prod_image AS prod_image, i.option_name AS option_name, o.* FROM `order` o
+        INNER JOIN product p ON o.prod_no = p.id
+        INNER JOIN seller s ON p.seller_no = s.id
+        LEFT JOIN inventory i ON i.id = o.inventory_no
+        WHERE o.cus_no = #{cus_no} AND o.order_code = #{order_code} AND o.status IN (1, 2, 3, 4)
     </select>
 </mapper>

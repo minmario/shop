@@ -1,9 +1,11 @@
 package user.action.customer;
 
 import user.action.Action;
+import user.dao.customer.DeliveryDAO;
 import user.dao.customer.OrderDAO;
 import user.dao.customer.PointDAO;
 import user.vo.customer.CustomerVO;
+import user.vo.customer.DeliveryVO;
 import user.vo.customer.OrderVO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,9 +33,16 @@ public class RefundDetailsAction implements Action {
             switch (action) {
                 case "select":
                     OrderVO refund = OrderDAO.selectDetailsByStatus(order_id, cvo.getId(), prod_no, order_code, "7");
+                    DeliveryVO delivery = DeliveryDAO.selectRetrieveInfo(order_id);
+                    OrderVO coupon = OrderDAO.selectOrderCoupon(cvo.getId(), prod_no, order_code);
                     int point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code);
+                    OrderVO vo = OrderDAO.selectSellerAddress(order_id);
+
                     request.setAttribute("refund", refund);
+                    request.setAttribute("delivery", delivery);
+                    request.setAttribute("coupon", coupon);
                     request.setAttribute("point_amount", point_amount);
+                    request.setAttribute("vo", vo);
                     viewPath = "/user/customer/jsp/mypage/refundDetails.jsp";
                     break;
             }

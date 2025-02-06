@@ -50,7 +50,7 @@
                                 <%-- 교환 상품 정보 --%>
                                 <div class="exchange-product">
                                     <h2>교환 상품</h2>
-                                    <span class="exchange-status">교환</span>
+                                    <span class="exchange-status">교환신청</span>
                                     <div class="product-details">
                                         <img src="${fn:split(exchange.prod_image, ',')[0]}" alt="상품 이미지" class="product-image">
                                         <div class="product-info">
@@ -61,55 +61,52 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="wrap-buttons">
-                                    <button class="btn btn-outline-secondary button">교환 배송 조회</button>
-                                    <button class="btn btn-outline-secondary button">회수 배송 조회</button>
-                                </div>
                                 <hr/>
 
                                 <%-- 교환 신청 정보 --%>
-                                <div class="request-info">
-                                    <h2 class="subtitle">교환 신청 정보</h2>
-                                    <ul class="info-list">
-                                        <li>
-                                            <span class="info-label">신청 일시</span>
-                                            <span class="info-value">${exchange.exchange_request_date}</span>
-                                        </li>
-                                        <li>
-                                            <span class="info-label">완료 일시</span>
-                                            <span class="info-value"></span>
-                                        </li>
-                                        <li>
-                                            <span class="info-label">교환 사유</span>
-                                            <span class="info-value">${exchange.reason_customer}</span>
-                                        </li>
-                                        <li>
-                                            <span class="info-label">수거 방법</span>
-                                            <span class="info-value">회수해 주세요</span>
-                                        </li>
-                                        <li>
-                                            <span class="info-label">교환 회수지</span>
-                                            <span class="info-value">
-                                        홍**동 / 010-****-1234<br>
-                                        (12345) 서울특별시 동작구 보라매로5길 1 ****
-                                    </span>
-                                        </li>
-                                        <li>
-                                            <span class="info-label">교환상품 배송</span>
-                                            <span class="info-value">
-                                        홍**동 / 010-****-1234<br>
-                                        (12345) 서울특별시 동작구 보라매로5길 1 ****
-                                    </span>
-                                        </li>
-                                        <li>
-                                            <span class="info-label">반송지 주소</span>
-                                            <span class="info-value">
-                                        (04782) 서울 성동구 연무장5가길 7<br>
-                                        (성수역 현대테라스타워) w609호
-                                    </span>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <c:if test="${requestScope.delivery ne null}">
+                                <c:set var="delivery" value="${requestScope.delivery}"/>
+                                    <div class="request-info">
+                                        <h2 class="subtitle">교환 신청 정보</h2>
+                                        <ul class="info-list">
+                                            <li>
+                                                <span class="info-label">신청 일시</span>
+                                                <span class="info-value">${exchange.exchange_request_date}</span>
+                                            </li>
+                                            <li>
+                                                <span class="info-label">교환 사유</span>
+                                                <span class="info-value">${exchange.reason_customer}</span>
+                                            </li>
+                                            <li>
+                                                <span class="info-label">수거 방법</span>
+                                                <span class="info-value">${delivery.request}</span>
+                                            </li>
+                                            <li>
+                                                <span class="info-label">교환 회수지</span>
+                                                <span class="info-value">
+                                                    ${delivery.name} / ${delivery.phone}<br>
+                                                    (${delivery.pos_code}) ${delivery.addr1} ${delivery.addr2}
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="info-label">교환상품 배송</span>
+                                                <span class="info-value">
+                                                    ${delivery.name} / ${delivery.phone}<br>
+                                                    (${delivery.pos_code}) ${delivery.addr1} ${delivery.addr2}
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <c:if test="${requestScope.vo ne null}">
+                                                    <c:set var="vo" value="${requestScope.vo}"/>
+                                                    <span class="info-label">반송지 주소</span>
+                                                    <span class="info-value">
+                                                            ${vo.seller_address}
+                                                    </span>
+                                                </c:if>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </c:if>
                                 <p class="notice">* 주문 시 사용한 적립금 및 할인쿠폰은 취소완료 즉시 반환됩니다.</p>
 
                             </div>

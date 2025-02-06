@@ -38,7 +38,7 @@
                         <div class="custom-order-code-group">
                             <a href="Controller?type=orderDetails&action=select&order_code=${item.order_code}" class="custom-order-code custom-details-link">주문 코드: ${item.order_code}</a>
                             <div class="wrap-all-button">
-                                <button type="button" class="btn btn-outline-secondary" id="all-cancel">전체 구매취소</button>
+                                <button type="button" class="btn btn-outline-secondary" id="all-cancel" onclick="location.href='Controller?type=cancelOrder&action=select_all'">전체 구매취소</button>
                                 <button type="button" class="btn btn-outline-secondary" id="all-refund">전체 반품신청</button>
                                 <button type="button" class="btn btn-outline-secondary" id="all-exchange">전체 교환신청</button>
                             </div>

@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import service.FactoryService;
 import user.vo.customer.DeliveryVO;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class DeliveryDAO {
@@ -153,5 +154,21 @@ public class DeliveryDAO {
         } finally {
             ss.close();
         }
+    }
+
+    // 회수 배송지 조회
+    public static DeliveryVO selectRetrieveInfo(String id) {
+        DeliveryVO dvo = null;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            dvo = ss.selectOne("delivery.select_retrieve_info", id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return dvo;
     }
 }

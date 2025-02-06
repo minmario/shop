@@ -1,8 +1,10 @@
 package user.action.customer;
 
 import user.action.Action;
+import user.dao.customer.DeliveryDAO;
 import user.dao.customer.OrderDAO;
 import user.vo.customer.CustomerVO;
+import user.vo.customer.DeliveryVO;
 import user.vo.customer.OrderVO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +32,12 @@ public class ExchangeDetailsAction implements Action {
             switch (action) {
                 case "select":
                     OrderVO exchange = OrderDAO.selectDetailsByStatus(order_id, cvo.getId(), prod_no, order_code, "8");
+                    DeliveryVO delivery = DeliveryDAO.selectRetrieveInfo(order_id);
+                    OrderVO vo = OrderDAO.selectSellerAddress(order_id);
+
                     request.setAttribute("exchange", exchange);
+                    request.setAttribute("delivery", delivery);
+                    request.setAttribute("vo", vo);
                     viewPath = "/user/customer/jsp/mypage/exchangeDetails.jsp";
                     break;
             }

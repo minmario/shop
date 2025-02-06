@@ -32,8 +32,10 @@ public class CancelDetailsAction implements Action {
             switch (action) {
                 case "select":
                     OrderVO cancel = OrderDAO.selectDetailsByStatus(order_id, cvo.getId(), prod_no, order_code, "6");
+                    OrderVO coupon = OrderDAO.selectOrderCoupon(cvo.getId(), prod_no, order_code);
                     int point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code);
                     request.setAttribute("cancel", cancel);
+                    request.setAttribute("coupon", coupon);
                     request.setAttribute("point_amount", point_amount);
                     viewPath = "/user/customer/jsp/mypage/cancelDetails.jsp";
                     break;

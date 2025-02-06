@@ -67,47 +67,51 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="wrap-buttons">
-                                    <button class="btn btn-outline-secondary button" data-toggle="modal" data-target="#repurchaseModal">재구매</button>
-                                    <button class="btn btn-outline-secondary button">회수 배송 조회</button>
-                                </div><hr/>
+                                <hr/>
 
                                 <%-- 반품 신청 정보 --%>
-                                <div class="request-info">
-                                    <h2 class="subtitle">반품 신청 정보</h2>
-                                    <ul class="info-list">
-                                        <li>
-                                            <span class="info-label">신청 일시</span>
-                                            <span class="info-value">${refund.refund_request_date}</span>
-                                        </li>
-                                        <li>
-                                            <span class="info-label">완료 일시</span>
-                                            <span class="info-value"></span>
-                                        </li>
-                                        <li>
-                                            <span class="info-label">반품 사유</span>
-                                            <span class="info-value">${refund.reason_customer}</span>
-                                        </li>
-                                        <li>
-                                            <span class="info-label">수거 방법</span>
-                                            <span class="info-value">회수해 주세요</span>
-                                        </li>
-                                        <li>
-                                            <span class="info-label">반품 회수지</span>
-                                            <span class="info-value">
-                                        홍**동 / 010-****-1234<br>
-                                        (12345) 서울특별시 동작구 보라매로5길 1 ****
-                                    </span>
-                                        </li>
-                                        <li>
-                                            <span class="info-label">반송지 주소</span>
-                                            <span class="info-value">
-                                        (04782) 서울 성동구 연무장5가길 7<br>
-                                        (성수역 현대테라스타워) w609호
-                                    </span>
-                                        </li>
-                                    </ul>
-                                </div><hr/>
+                                <c:if test="${requestScope.delivery ne null}">
+                                <c:set var="delivery" value="${requestScope.delivery}"/>
+                                    <div class="request-info">
+                                        <h2 class="subtitle">반품 신청 정보</h2>
+                                        <ul class="info-list">
+                                            <li>
+                                                <span class="info-label">신청 일시</span>
+                                                <span class="info-value">${refund.refund_request_date}</span>
+                                            </li>
+                                            <c:if test="${refund.status eq '11'}">
+                                                <li>
+                                                    <span class="info-label">완료 일시</span>
+                                                    <span class="info-value">${refund.refund_completed_date}</span>
+                                                </li>
+                                            </c:if>
+                                            <li>
+                                                <span class="info-label">반품 사유</span>
+                                                <span class="info-value">${refund.reason_customer}</span>
+                                            </li>
+                                            <li>
+                                                <span class="info-label">수거 방법</span>
+                                                <span class="info-value">${delivery.request}</span>
+                                            </li>
+                                            <li>
+                                                <span class="info-label">반품 회수지</span>
+                                                <span class="info-value">
+                                                    ${delivery.name} / ${delivery.phone}<br>
+                                                    (${delivery.pos_code}) ${delivery.addr1} ${delivery.addr2}
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <c:if test="${requestScope.vo ne null}">
+                                                    <c:set var="vo" value="${requestScope.vo}"/>
+                                                    <span class="info-label">반송지 주소</span>
+                                                    <span class="info-value">
+                                                            ${vo.seller_address}
+                                                    </span>
+                                                </c:if>
+                                            </li>
+                                        </ul>
+                                    </div><hr/>
+                                </c:if>
 
                                 <!-- 환불 요청 내역 -->
                                 <div class="refund-request">
@@ -117,9 +121,19 @@
                                             <span class="detail-label">상품 결제금액</span>
                                             <span class="detail-value"><fmt:formatNumber value="${refund.amount}"/>원</span>
                                         </li>
+                                        <c:if test="${requestScope.coupon ne null}">
+
+                                            <c:set var="prodSaledPriceString" value="${fn:replace(refund.prod_saled_price, ',', '')}" />
+                                            <c:set var="couponSalePer" value="${not empty coupon.sale_per ? coupon.sale_per : 0}" />
+                                            <c:set var="prodSaledPriceInt" value="${prodSaledPriceString * 1}" />
+                                            <c:set var="couponDiscount" value="${prodSaledPriceInt * (couponSalePer / 100)}" />
+
+                                            <span class="detail-label">쿠폰 사용</span>
+                                            <span class="detail-value">-<fmt:formatNumber value="${couponDiscount}" type="number" maxFractionDigits="0"/> 원</span>
+                                        </c:if>
                                         <li>
                                             <span class="detail-label">적립금 사용</span>
-                                            <span class="detail-value"><fmt:formatNumber value="${requestScope.point_amount}"/>원</span>
+                                            <span class="detail-value"><fmt:formatNumber value="${not empty requestScope.point_amount ? requestScope.point_amount : 0}"/>원</span>
                                         </li>
                                         <li>
                                             <span class="detail-label">기본 배송비</span>
@@ -133,7 +147,7 @@
                                     <h3 class="subtitle">환불 예정 금액</h3>
                                     <div class="wrap-p">
                                         <p class="refund-method">${refund.pay_type}</p>
-                                        <p class="refund-expected">33,117원</p>
+                                        <p class="refund-expected"><fmt:formatNumber value="${refund.amount - couponDiscount - requestScope.point_amount}" type="number" maxFractionDigits="0" />원</p>
                                     </div>
                                 </div>
 

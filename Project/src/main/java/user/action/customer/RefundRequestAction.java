@@ -48,6 +48,26 @@ public class RefundRequestAction implements Action {
                         e.printStackTrace();
                         return "/user/customer/jsp/error/error.jsp";
                     }
+
+                case "select_all":
+                    try {
+                        List<OrderVO> o_list_all = OrderDAO.selectOrderProduct(id, cvo.getId(), order_code);
+                        List<DeliveryVO> d_list_all = DeliveryDAO.selectDelivery(cvo.getId());
+                        OrderVO coupon_all = OrderDAO.selectOrderCoupon(cvo.getId(), prod_no, order_code); // 쿠폰 정보 가져오기
+                        int point_amount_all = PointDAO.selectPointAmount(cvo.getId(), order_code);
+
+                        request.setAttribute("o_list", o_list_all);
+                        request.setAttribute("d_list", d_list_all);
+                        request.setAttribute("coupon", coupon_all);
+                        request.setAttribute("point_amount", point_amount_all);
+
+                        return "/user/customer/jsp/mypage/refundRequest.jsp";
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return "/user/customer/jsp/error/error.jsp";
+                    }
+
+
                 case "update":
                     try {
                         // 요청 데이터 가져오기
