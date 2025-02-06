@@ -1,5 +1,6 @@
 package user.action.customer;
 
+import org.mindrot.jbcrypt.BCrypt;
 import user.action.Action;
 import user.dao.customer.CustomerDAO;
 import user.vo.customer.CustomerVO;
@@ -25,15 +26,15 @@ public class PwConfirmAction implements Action {
                         return "/user/customer/jsp/error/error.jsp";
                     }
 
-                    String cus_pw = request.getParameter("cus_pw");
+                    // 구매자 조회
+                    CustomerVO result = CustomerDAO.selectCustomerByCusId(cvo.getCus_id());
 
-                    CustomerVO vo = new CustomerVO();
-                    vo.setCus_id(cvo.getCus_id());
-                    vo.setCus_pw(cus_pw);
+                    if (result != null) {
+                        String cus_pw = request.getParameter("cus_pw");
 
-                    CustomerVO res = CustomerDAO.login(vo);
-                    if (res != null) {
-                        request.setAttribute("valid", "true");
+                        if (BCrypt.checkpw(cus_pw, result.getCus_pw())) {
+                            request.setAttribute("valid", "true");
+                        }
                     } else {
                         request.setAttribute("valid", "false");
                     }
