@@ -1,7 +1,7 @@
 package user.vo.customer;
 
 public class ProductVO {
-    private String brand, courier, id, category_no, seller_no, inventory_no, prod_code, name, length, shoulder, chest, sleeve, waist, hip, thigh, rise, hem, foot_length, foot_width, ankle_height, heel_height, price, view_count, inventory, active, sale, prod_image, additional_images, saled_price, like_count, i_option_name, count, avg_score, review_count, sales_count, user_like_status;
+    private String brand, courier, id, category_no, seller_no, inventory_no, prod_code, name, total_length, shoulder, chest, sleeve, waist, hip, thigh, rise, hem, foot_length, foot_width, ankle_height, heel_height, price, view_count, inventory, active, sale, prod_image, additional_images, content, saled_price, like_count, i_option_name, count, avg_score, review_count, sales_count, user_like_status;
 
     public String getInventory_no() {
         return inventory_no;
@@ -75,12 +75,12 @@ public class ProductVO {
         this.name = name;
     }
 
-    public String getLength() {
-        return length;
+    public String getTotal_length() {
+        return total_length;
     }
 
-    public void setLength(String length) {
-        this.length = length;
+    public void setTotal_length(String total_length) {
+        this.total_length = total_length;
     }
 
     public String getShoulder() {
@@ -233,6 +233,14 @@ public class ProductVO {
 
     public void setAdditional_images(String additional_images) {
         this.additional_images = additional_images;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getSaled_price() {

@@ -197,27 +197,14 @@
         </if>
     </select>
 
-    <!-- 상품 상세정보 가져오기 -->
-    <select id="select_product_details" resultType="user.vo.customer.ProductVO" parameterType="String">
+    <!-- 상품 상세정보 가져오기(상세 페이지) -->
+    <select id="select_prod_details" resultType="user.vo.customer.ProductVO" parameterType="String">
         SELECT
             p.id,
             p.category_no,
             p.seller_no,
             p.prod_code,
             p.name,
-            p.length,
-            p.shoulder,
-            p.chest,
-            p.sleeve,
-            p.waist,
-            p.hip,
-            p.thigh,
-            p.rise,
-            p.hem,
-            p.foot_length,
-            p.foot_width,
-            p.ankle_height,
-            p.heel_height,
             p.price,
             p.add_date,
             p.view_count,
@@ -243,19 +230,6 @@
             p.seller_no,
             p.prod_code,
             p.name,
-            p.length,
-            p.shoulder,
-            p.chest,
-            p.sleeve,
-            p.waist,
-            p.hip,
-            p.thigh,
-            p.rise,
-            p.hem,
-            p.foot_length,
-            p.foot_width,
-            p.ankle_height,
-            p.heel_height,
             p.price,
             p.add_date,
             p.view_count,
@@ -270,7 +244,7 @@
 
     <!-- 상품 사이즈 정보 가져오기 -->
     <select id="select_size" resultType="user.vo.customer.ProductVO" parameterType="String">
-        SELECT i.id AS inventory_no, i.option_name AS i_option_name, i.count, p.*
+        SELECT i.id AS inventory_no, i.option_name AS i_option_name, i.count, i.total_length, i.shoulder, i.chest, i.sleeve, i.waist, i.hip, i.thigh, i.rise, i.hem, i.foot_length, i.foot_width, i.ankle_height, i.heel_height, p.*
         FROM product p
         JOIN inventory i ON i.prod_no = p.id
         WHERE p.id = #{id} AND p.is_del = 0
@@ -284,6 +258,16 @@
                 WHEN i.option_name = 'XXL' THEN 6
             ELSE 7
         END
+    </select>
+    
+    <!-- 상품 상세 정보 가져오기(주문서) -->
+    <select id="select_product_details" resultType="user.vo.customer.ProductVO" parameterType="Map">
+        SELECT p.prod_code, p.name AS p_name, p.price, p.sale, p.prod_image, p.saled_price,
+        s.name AS brand, i.id AS inventory_no, i.option_name AS i_option_name
+        FROM product p
+        INNER JOIN seller s ON p.seller_no = s.id
+        INNER JOIN inventory i ON i.prod_no = p.id
+        WHERE p.id = #{prod_no} AND i.id = #{inventory_no}
     </select>
 
     <!-- 상품 리뷰 목록 가져오기 -->

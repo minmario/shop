@@ -25,5 +25,7 @@ $(function () {
         }
 
         $("#passwordForm").submit();
+
+        $("#cus_pw").val("");
     });
 });

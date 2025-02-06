@@ -37,16 +37,16 @@
                             <div id="carouselControls" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
                                     <c:choose>
-                                        <c:when test="${fn:length(fn:split(pvo.prod_image, ',')) > 1}">
-                                            <c:forEach var="img" items="${fn:split(pvo.prod_image, ',')}" varStatus="st">
+                                        <c:when test="${fn:length(fn:split(pvo.additional_images, ',')) > 1}">
+                                            <c:forEach var="img" items="${fn:split(pvo.additional_images, ',')}" varStatus="st">
                                                 <div class="carousel-item ${st.first ? 'active' : ''}">
-                                                    <img class="d-block w-100 product-image" src="${img}" alt="slide_${st.index}">
+                                                    <img class="d-block w-100 product-image" src="${img}" alt="slide_image_${st.index}">
                                                 </div>
                                             </c:forEach>
                                         </c:when>
                                         <c:otherwise>
                                             <div class="carousel-item active">
-                                                <img class="d-block w-100 product-image" src="${pvo.prod_image}" alt="single_image">
+                                                <img class="d-block w-100 product-image" src="${pvo.additional_images}" alt="single_image">
                                             </div>
                                         </c:otherwise>
                                     </c:choose>
@@ -197,13 +197,13 @@
                                         </c:otherwise>
                                     </c:choose>
                                     <button class="btn btn-dark add-to-cart" onclick="insertCart()"><i class="bi bi-cart4"></i> 장바구니 담기</button>
-                                    <button class="btn btn-dark buy-now" onclick="location.href='Controller?type=order&action=order'"><i class="bi bi-credit-card"></i> 구매하기</button>
+                                    <button class="btn btn-dark buy-now" onclick="onMovePayment()"><i class="bi bi-credit-card"></i> 구매하기</button>
                                 </div>
                             </c:if>
                         </div>
                     </div>
                     <div class="tabs">
-                        <button class="tab-btn active" data-target="detail">상세 정보</button>
+                        <button class="tab-btn active" data-target="detail">상세 이미지</button>
                         <button class="tab-btn" data-target="size">사이즈</button>
                         <button class="tab-btn" data-target="review">리뷰</button>
                         <button class="tab-btn" data-target="question" data-value="${pvo.id}">문의</button>
@@ -211,23 +211,7 @@
                     <div class="tab-content">
                         <div id="detail" class="tab-panel active">
                             <div class="detail-images-section">
-                                <h3>DETAIL IMAGES</h3>
-                                <div>
-                                    <p>■ 100% Cotton , Heavy French Terry / Soft to the touch / 850g per yard</p>
-                                    <p>■ fabrics developed by our company / dumble tenta processing</p>
-                                    <p>■ rebbed crewneck</p>
-                                    <p>■ Embroidery applique</p>
-                                    <p>■ semi over fit</p>
-                                    <p>■ model is M: H184 W63 (L size)</p>
-                                    <p>■ laundry type : Cold water hand wash</p>
-                                    <p>■ made in korea, made in china</p>
-                                    <p>
-                                        <strong>건조시 기계의 사용은 원단의 수축을 유발하여 옷의 변형을 가져오니 서늘하고 습기가 없는 곳에서 자연건조 하시기 바랍니다.</strong>
-                                    </p>
-                                </div>
-                                <div>
-                                    <img src="./user/images/product_details1.jpg" alt="Detail Image 1" class="detail-image">
-                                </div>
+                                <img src="${pvo.content}" alt="Detail Image 1" class="detail-image">
                             </div>
                         </div>
                         <div id="size" class="tab-panel">
@@ -247,8 +231,8 @@
                                             <c:forEach var="size" items="${requestScope.productSize}">
                                                 <tr>
                                                     <td>${size.i_option_name}</td>
-                                                    <c:if test="${size.length ne null}">
-                                                        <td><fmt:formatNumber value="${size.length}"/></td>
+                                                    <c:if test="${size.total_length ne null}">
+                                                        <td><fmt:formatNumber value="${size.total_length}"/></td>
                                                     </c:if>
                                                     <c:if test="${size.shoulder ne null}">
                                                         <td><fmt:formatNumber value="${size.shoulder}"/></td>
@@ -303,19 +287,6 @@
                                 <jsp:include page="./components/questionList.jsp"></jsp:include>
                             </div>
                         </div>
-                        <nav class="pagination-container">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1">Previous</a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
                     </div>
                 </c:if>
             </div>
