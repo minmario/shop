@@ -15,7 +15,7 @@ public class UploadLogoAction implements Action {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        String sellerId = "2"; // 🚨 나중에 세션에서 가져오기
+        String sellerId = "2"; //  나중에 세션에서 가져오기
          response.setCharacterEncoding("utf-8");
          response.setContentType("application/json");
         System.out.println("액션반환성공 ");
