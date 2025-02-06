@@ -37,24 +37,27 @@
 
 
                         <!-- 채팅방 목록 -->
-                        <c:if test="${not empty chatRooms}">
-                            <ul class="list-group">
-                                <c:forEach var="room" items="${chatRooms}">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center chat-room"
-                                        data-room-id="${room.id}" data-user-id="${room.user2Id}" data-profile="${room.otherUserProfileImage}"
-                                        data-nickname="${room.otherUserNickname}">
-                                        <div class="d-flex align-items-center">
-                                            <img src="${room.otherUserProfileImage}" alt="Profile" class="rounded-circle" style="width: 40px; height: 40px;">
-                                            <span class="ms-2">${room.otherUserNickname}</span>
+                        <ul class="list-group">
+                            <c:forEach var="room" items="${chatRooms}">
+                                <li class="list-group-item d-flex justify-content-between align-items-center chat-room"
+                                    data-room-id="${room.id}">
+                                    <div class="d-flex align-items-center">
+                                        <img src="${room.otherUserProfileImage}" alt="Profile" class="rounded-circle" style="width: 40px; height: 40px;">
+                                        <div class="ms-2">
+                                            <span class="fw-bold">${room.otherUserNickname}</span><br>
+                                            <span class="text-muted">${room.lastMessage}</span>
                                         </div>
-                                    </li>
+                                    </div>
+                                    <div class="text-end">
+                                        <span class="text-muted">${room.lastMessageTime}</span>
+                                        <c:if test="${room.unreadCount > 0}">
+                                            <span class="badge bg-danger">${room.unreadCount}</span>
+                                        </c:if>
+                                    </div>
+                                </li>
+                            </c:forEach>
+                        </ul>
 
-                                </c:forEach>
-                            </ul>
-                        </c:if>
-                        <c:if test="${empty chatRooms}">
-                            <p class="text-center text-muted">현재 진행 중인 채팅방이 없습니다.</p>
-                        </c:if>
 
                     </div>
 

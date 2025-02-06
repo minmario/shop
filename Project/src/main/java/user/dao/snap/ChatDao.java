@@ -4,8 +4,12 @@ import org.apache.ibatis.session.SqlSession;
 import service.FactoryService;
 import user.vo.snap.ChatRoomVO;
 import user.vo.snap.ChatMessageVO;
+
 import user.vo.snap.CustomerVO;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
@@ -63,6 +67,23 @@ public class ChatDao {
     return true;
   }
 
+  public static int getUnreadMessageCount(int roomId, int userId) {
+     SqlSession ss = FactoryService.getFactory().openSession();
+     Map<String, Object> params = new HashMap<>();
+     params.put("roomId", roomId);
+     params.put("userId", userId);
+     int cnt = ss.selectOne("ChatMapper.getUnreadMessageCount", params);
+     ss.close();
+     return cnt;
+  }
+
+  public String getLastMessage(int roomId) {
+       SqlSession session = FactoryService.getFactory().openSession();
+      return session.selectOne("ChatMapper.getLastMessage", roomId);
+
+  }
+
+
   public CustomerVO getUserProfile(int userId) {
     SqlSession ss = FactoryService.getFactory().openSession();
     CustomerVO userProfile = ss.selectOne("ChatMapper.getUserInfo", userId);
@@ -70,27 +91,7 @@ public class ChatDao {
     return userProfile;
   }
 
-  public  int getUnreadMessageCount(int roomId, int userId) {
-    SqlSession ss = FactoryService.getFactory().openSession();
-    Map<String, Object> params = new HashMap<>();
-    params.put("roomId", roomId);
-    params.put("userId", userId);
-    int cnt = ss.selectOne("ChatMapper.getUnreadMessageCount", params);
-     return cnt;
-  }
 
-  public List<ChatRoomVO> getChatRoomsWithUnreadCount(int userId) {
-    SqlSession ss = FactoryService.getFactory().openSession();
-    List<ChatRoomVO> chatRooms = ss.selectList("ChatMapper.getChatRooms", userId);
-
-    for (ChatRoomVO room : chatRooms) {
-      int unreadCount = getUnreadMessageCount(room.getId(), userId);
-      room.setUnreadCount(unreadCount);
-    }
-
-    ss.close();
-    return chatRooms;
-  }
 
   public void markMessagesAsRead(int roomId, int userId) {
     SqlSession ss = FactoryService.getFactory().openSession();
@@ -100,6 +101,19 @@ public class ChatDao {
     ss.update("ChatMapper.markMessagesAsRead", params);
     ss.commit();
     ss.close();
+  }
+
+  public LocalDateTime getLastMessageTime(int roomId) {
+    SqlSession ss = FactoryService.getFactory().openSession();
+
+    // DB에서 Timestamp 값 가져오기
+    Timestamp lastMessageTimeTs = ss.selectOne("ChatMapper.getLastMessageTime", roomId);
+
+    // 세션 종료
+    ss.close();
+
+    // Timestamp가 null이 아니라면 LocalDateTime으로 변환
+    return (lastMessageTimeTs != null) ? lastMessageTimeTs.toLocalDateTime() : null;
   }
 
 

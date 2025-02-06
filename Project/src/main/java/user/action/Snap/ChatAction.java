@@ -7,6 +7,7 @@ import user.vo.snap.CustomerVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ChatAction implements Action {
@@ -30,6 +31,15 @@ public class ChatAction implements Action {
 
     // 채팅방 목록 조회
     List<ChatRoomVO> chatRooms = chatDao.getChatRooms(userId);
+    for (ChatRoomVO room : chatRooms) {
+      String lastMessage = chatDao.getLastMessage(room.getId());
+      int unreadCount = chatDao.getUnreadMessageCount(room.getId(), userId);
+      LocalDateTime lastMessageTime = chatDao.getLastMessageTime(room.getId());
+
+      room.setLastMessage(lastMessage);
+      room.setUnreadCount(unreadCount);
+      room.setLastMessageTime(lastMessageTime);
+    }
     request.setAttribute("chatRooms", chatRooms);
 
     // 내 정보 조회 (프로필, 닉네임)
@@ -37,7 +47,7 @@ public class ChatAction implements Action {
     request.setAttribute("myInfo", myInfo);
 
     // 채팅방이 새로 생성되었거나 기존 채팅방이 있을 경우 해당 방을 자동으로 열기
-    if (chatRoom != null) {
+    if (chatRoom != null){
       request.setAttribute("selectedRoomId", chatRoom.getId());
       request.setAttribute("selectedReceiverId", receiverId);
     }

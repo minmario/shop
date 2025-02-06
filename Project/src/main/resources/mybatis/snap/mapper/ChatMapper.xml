@@ -60,15 +60,25 @@
 <!--  채팅방 읽지않은갯수 카운트 -->
   <select id="getUnreadMessageCount" parameterType="map" resultType="int">
     SELECT COUNT(*) FROM chat_message
-    WHERE room_id = #{roomId} AND sender_id = #{userId} AND is_read = 0
+    WHERE room_id = #{roomId} AND  sender_id != #{userId} AND is_read = 0
   </select>
-
 
   <update id="markMessagesAsRead" parameterType="map">
     UPDATE chat_message
     SET is_read = 1
     WHERE room_id = #{roomId} AND sender_id != #{sender_id} AND is_read = 0
   </update>
+
+  <select id="getLastMessage" parameterType="int" resultType="String">
+    SELECT created_at FROM chat_message
+    WHERE room_id = #{roomId}
+    ORDER BY created_at DESC
+      LIMIT 1
+  </select>
+
+  <select id="getLastMessageTime" resultType="java.sql.Timestamp">
+    SELECT MAX(created_at) FROM chat_message WHERE room_id = #{roomId}
+  </select>
 
 
 </mapper>

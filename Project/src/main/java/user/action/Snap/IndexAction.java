@@ -20,7 +20,7 @@ public class IndexAction implements Action {
      request.setAttribute("isLoggedIn", false);
    }
 
-    return "/user/jsp/index.jsp";
+    return "/user/snap/jsp/index.jsp";
   }
 
 }
