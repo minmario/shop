@@ -9,7 +9,7 @@
     <title>코디 페이지</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="/user/css/Snap/mypage.css">
+    <link rel="stylesheet" href="/user/snap/css/Snap/mypage.css">
 </head>
 
 <body>
@@ -19,7 +19,7 @@
     <div class="row">
         <!-- 왼쪽 메뉴바 -->
         <div class="col-md-2 border-end position-fixed" style="height: 100vh;">
-            <jsp:include page="/user/jsp/layout/left.jsp"></jsp:include>
+            <jsp:include page="/user/snap/jsp/layout/left.jsp"></jsp:include>
         </div>
 
         <!-- 콘텐츠 영역 -->
@@ -87,7 +87,7 @@
         </div>
     </div>
 </div>
-<jsp:include page="/user/jsp/snap/snapModal.jsp"></jsp:include>
+<jsp:include page="/user/snap/jsp/snap/snapModal.jsp"></jsp:include>
 <script src="/JS/snapModal.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -213,7 +213,7 @@
           })
           .catch(error => {
             console.error('메시지 로딩 오류:', error);
-            chatBox.innerHTML = '<p class="text-danger text-center">메시지를 불러오는데 실패했습니다.</p>';
+            chatBox.innerHTML = '<p class="text- text-center">채팅방을 선택해주세요.</p>';
           });
     }
 

@@ -40,7 +40,7 @@ public class KakaoLoginAction implements Action {
       e.printStackTrace();
     }
 
-    return "/user/jsp/index.jsp"; // 로그인 성공 후 메인 페이지로 이동
+    return "/user/snap/jsp/index.jsp"; // 로그인 성공 후 메인 페이지로 이동
   }
 
   // 액세스 토큰 요청 메서드

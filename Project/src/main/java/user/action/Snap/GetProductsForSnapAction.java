@@ -30,6 +30,6 @@ public class GetProductsForSnapAction implements Action {
     request.setAttribute("searchedProducts", searchedProducts);
 
     // JSP 반환
-    return "user/jsp/snap/mypage.jsp";
+    return "user/snap/jsp/snap/mypage.jsp";
   }
 }

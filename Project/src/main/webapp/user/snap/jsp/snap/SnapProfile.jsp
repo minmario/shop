@@ -17,13 +17,14 @@
 
 
 <body>
-<jsp:include page="../layout/header.jsp"></jsp:include>
+<jsp:include page="/user/snap/jsp/layout/header.jsp"></jsp:include>
 
+<c:set var="isLoggedIn" value="${not empty sessionScope.nickname}" />
 <div class="container-fluid mt-4">
     <div class="row">
         <!-- 왼쪽 메뉴바 -->
         <div class="col-md-2 border-end position-fixed" style="height: 100vh;">
-            <jsp:include page="/user/jsp/layout/left.jsp"></jsp:include>
+            <jsp:include page="/user/snap/jsp/layout/left.jsp"></jsp:include>
         </div>
 
         <!-- 콘텐츠 영역 -->
@@ -43,26 +44,27 @@
                         <!-- 프로필 이름과 버튼 -->
                         <div class="d-flex align-items-center mb-2">
                              <h2 class="mb-0 me-3" style="font-size: 1.5rem; font-weight: 500;">${board[0].nickname}</h2> <!-- 폰트 스타일 조정 -->
-                            <c:if test="${sessionScope.cus_id == board[0].cus_no}">
+                            <c:if test="${sessionScope.cus_id == board[0].id}">
                                 <!-- 내 프로필인 경우 -->
                                 <button class="btn btn-outline-secondary btn-sm" style="font-size: 0.875rem;">프로필 편집</button>
                             </c:if>
-                            <c:if test="${sessionScope.cus_id != board[0].cus_no}">
+                            <c:if test="${sessionScope.cus_id != board[0].id}">
                                 <!-- 다른 사람의 프로필인 경우 -->
                                 <c:choose>
                                     <c:when test="${isFollowing}">
                                         <!-- 팔로우 중인 경우 -->
-                                        <button id="followButton" class="btn btn-danger btn-sm" data-following-id="${board[0].cus_no}" style="font-size: 0.875rem;">팔로잉 취소</button>
+                                        <button id="followButton" class="btn btn-danger btn-sm" data-following-id="${board[0].id}" style="font-size: 0.875rem;">팔로잉 취소</button>
+
                                     </c:when>
                                     <c:otherwise>
                                         <!-- 팔로우하지 않은 경우 -->
-                                        <button id="followButton" class="btn btn-primary btn-sm" data-following-id="${board[0].cus_no}" style="font-size: 0.875rem;">팔로우</button>
+                                        <button id="followButton" class="btn btn-primary btn-sm" data-following-id="${board[0].id}" style="font-size: 0.875rem;">팔로우</button>
                                     </c:otherwise>
                                 </c:choose>
-                                <form action="Controller" method="get">
+                                <form id="messageForm" action="Controller" method="get">
                                     <input type="hidden" name="type" value="dm">
                                     <input type="hidden" name="receiverId" value="${board[0].cus_no}">
-                                    <button type="submit" class="btn btn-outline-secondary btn-sm" style="font-size: 0.875rem;">메시지 보내기</button>
+                                    <button id="messageButton" type="submit" class="btn btn-outline-secondary btn-sm" style="font-size: 0.875rem;">메시지 보내기</button>
                                 </form>
                             </c:if>
 
@@ -70,7 +72,8 @@
                         </div>
                         <!-- 게시물 정보 -->
                         <p class="mb-2" style="font-size: 0.875rem;">
-                            게시물  <strong>${boardSize}</strong>
+
+                            게시물  <strong>${boardCount}</strong>
                             팔로워  <strong id="followerCount" class="clickable" data-type="follower">${followerCount}</strong>
                             팔로우  <strong id="followingCount" class="clickable" data-type="following">${followingCount}</strong>
 
@@ -91,7 +94,10 @@
                     <c:forEach var="image" items="${board}">
                         <div style="width: 307px; height: 307px;"> <!-- 고정 크기 -->
                             <div class="d-flex justify-content-center align-items-center" style="width: 100%; height: 100%; overflow: hidden;">
+                                <c:if test="${boardCount>0}">
                                 <img src="${image.snapshot_image}" onclick= "location.href='${pageContext.request.contextPath}/Controller?type=sns&id=${image.id}'" alt="Post Image" class="img-fluid" style="object-fit: cover; width: 100%; height: 100%;">
+                                </c:if>
+
                             </div>
                         </div>
                     </c:forEach>
@@ -104,17 +110,50 @@
         </div>
     </div>
 
-<jsp:include page="/user/jsp/snap/FollowList.jsp"></jsp:include>
-<jsp:include page="/user/jsp/snap/snapModal.jsp"></jsp:include>
+<%--로그인모달--%>
+
+<!-- 로그인 필요 모달 -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">로그인이 필요합니다.</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                로그인 화면으로 이동하시겠습니까?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                <button type="button" id="confirmLoginBtn" class="btn btn-dark">확인</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<jsp:include page="/user/snap/jsp/snap/FollowList.jsp"></jsp:include>
+<jsp:include page="/user/snap/jsp/snap/snapModal.jsp"></jsp:include>
 <script src="/JS/snapModal.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha384-o1w6FrH+XWZfPchvjBsnYpBIwM9tDn58q+SttIbcSDthcu78WnW62XTNVS/qs6wE" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        const followButton = document.getElementById('followButton');
+      const followButton = document.getElementById('followButton');
+      const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+      const confirmLoginBtn = document.getElementById('confirmLoginBtn');
+      const messageForm = document.getElementById('messageForm');
+      const messageButton = document.getElementById("messageButton");
 
-        if (followButton) {
-          followButton.addEventListener('click', function () {
+
+      const isLoggedIn = followButton.getAttribute('data-logged-in') === "true";
+
+
+
+
+      followButton.addEventListener('click', function () {
+        if (!isLoggedIn) {
+          loginModal.show(); //
+          return;
+        }
             const followingId = this.getAttribute('data-following-id');
             const isCurrentlyFollowing = this.classList.contains('btn-danger');
             const action = isCurrentlyFollowing ? 'unfollow' : 'follow';
@@ -128,7 +167,19 @@
             // Ajax 요청 (재시도 로직 포함)
             sendRequest(action, followingId, this);
           });
+      confirmLoginBtn.addEventListener('click', function () {
+        window.location.href = "/Controller?type=showlogin&action=profile"; // 로그인 페이지로 이동
+      });
+
+      messageForm?.addEventListener('submit', function (event) {
+        if (!isLoggedIn) {
+          event.preventDefault();
+          loginModal.show();
         }
+      });
+
+      confirmLoginBtn.addEventListener('click', function () {
+        window.location.href = "/Controller?type=showlogin&action=profile"; // 로그인 페이지로 이동
       });
 
       function updateButtonUI(button, isFollowing) {
@@ -151,6 +202,7 @@
             .then(response => {
               if (!response.ok) {
                 throw new Error('서버 응답 오류');
+
               }
               return response.json();
             })

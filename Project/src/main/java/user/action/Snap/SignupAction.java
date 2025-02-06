@@ -53,10 +53,10 @@ public class SignupAction implements Action {
         System.out.println("cnt:"+cnt);
         // 성공 시 로그인 페이지로 이동
         if (cnt > 0) {
-          return "/user/jsp/login/login.jsp";
+          return "/user/snap/jsp/login/login.jsp";
         }
         else  {
-          return "/user/jsp/login/login.jsp";
+          return "/user/snap/jsp/login/login.jsp";
         }
 
 

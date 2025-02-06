@@ -112,6 +112,6 @@ public class SnapAction implements Action {
     request.setAttribute("selectedSeason", season == null ? "전체" : season);
     request.setAttribute("selectedStyle", style == null ? "전체" : style);
 
-    return "/user/jsp/snap/mypage.jsp";
+    return "/user/snap/jsp/snap/mypage.jsp";
   }
 }

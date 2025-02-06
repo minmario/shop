@@ -27,7 +27,7 @@
         </button>
     </form>
     <div class="d-flex justify-content-between mt-3">
-        <a href="../signup/signup.jsp" class="text-decoration-none text-muted">회원가입</a>
+        <a href="../snap/signup/signup.jsp" class="text-decoration-none text-muted">회원가입</a>
         <a href="../index.jsp" class="text-decoration-none text-muted">이전 페이지</a>
     </div>
 </div>

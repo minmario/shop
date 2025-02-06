@@ -20,7 +20,7 @@
 </head>
 <body>
 <%-- header --%>
-<jsp:include page="layout/header.jsp"></jsp:include>
+<jsp:include page="/user/snap/jsp/layout/header.jsp"></jsp:include>
 
 <div class="wrap">
     <div class="row">
@@ -132,7 +132,7 @@
     </div>
 
     <%-- footer --%>
-    <jsp:include page="./layout/footer.jsp"></jsp:include>
+    <jsp:include page="/user/snap/jsp/layout/footer.jsp"></jsp:include>
 </div>
 
 <%-- JQuery --%>

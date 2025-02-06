@@ -172,5 +172,12 @@ public class SnapDao {
     session.close();
   }
 
+  public static int boardCount(int customerId){
+    SqlSession session = FactoryService.getFactory().openSession();
+    int chk = session.selectOne("board.boardCount",customerId);
+    session.close();
+    return chk;
+  }
+
 
 }

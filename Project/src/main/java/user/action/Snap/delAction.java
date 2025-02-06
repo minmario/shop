@@ -11,7 +11,7 @@ public class delAction  implements Action {
   public String execute(HttpServletRequest request, HttpServletResponse response) {
 
 
-    return "/user/jsp/sellerManagement.jsp";
+    return "/user/snap/jsp/sellerManagement.jsp";
   }
 
 }

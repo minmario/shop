@@ -9,7 +9,12 @@ public class ShowLoginAction implements Action {
 
   @Override
   public String execute(HttpServletRequest request, HttpServletResponse response) {
+     String action = request.getParameter("action");
 
-    return "user/jsp/login/login.jsp";
+
+
+
+
+    return "user/snap/jsp/login/login.jsp";
   }
 }

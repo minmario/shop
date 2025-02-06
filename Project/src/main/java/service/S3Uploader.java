@@ -1,4 +1,4 @@
-package user.action.Snap;
+package service;
 
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;

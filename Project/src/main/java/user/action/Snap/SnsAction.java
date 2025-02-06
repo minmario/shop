@@ -71,7 +71,7 @@ public class SnsAction implements Action {
     request.setAttribute("snap", snap);
     request.setAttribute("productList", productList);
 
-    return "user/jsp/snap/MySnap.jsp";
+    return "user/snap/jsp/snap/MySnap.jsp";
   }
 
 }

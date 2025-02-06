@@ -2,9 +2,9 @@ package user.action.Snap;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import service.S3Uploader;
 import user.action.Action;
 
-import user.dao.snap.SnapDao;
 import user.vo.BoardVO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -141,7 +141,7 @@ public class SnapWriteAction implements Action {
     } catch (Exception e) {
       e.printStackTrace();
       request.setAttribute("error", "파일 업로드 중 문제가 발생했습니다.");
-      return "/user/jsp/snap/snapWrite.jsp";
+      return "/user/snap/jsp/snap/snapWrite.jsp";
     }
   }
 }

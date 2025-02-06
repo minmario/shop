@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -7,25 +8,29 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
     <%-- CSS --%>
-<%--    <link href="./user/css/common/common.css" rel="stylesheet" type="text/css">--%>
-<%--    <link href="./user/css/layout/header.css" rel="stylesheet" type="text/css">--%>
-<%--    <link href="./user/css/alarm/alarm.css" rel="stylesheet" type="text/css">--%>
+    <link href="./user/customer/css/common/common.css" rel="stylesheet" type="text/css">
+    <link href="./user/customer/css/layout/header.css" rel="stylesheet" type="text/css">
+    <link href="./user/customer/css/event/event.css" rel="stylesheet" type="text/css">
 
-<%--    &lt;%&ndash; JS &ndash;%&gt;--%>
-<%--    <script src="./JS/alarm/alarm.js"></script>--%>
+    <%-- JS --%>
+    <script src="./user/customer/js/event/event.js"></script>
 
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
         <div class="container-fluid">
-            <!-- 로고 -->
-            <a class="navbar-brand fw-bold text-white" href="${pageContext.request.contextPath}/Controller" style="font-size: 1.8rem;">MUSINSA</a>
+            <div class="d-flex align-items-center justify-content-between">
+                <!-- 로고 -->
+                <a class="navbar-brand fw-bold text-white me-3" href="${pageContext.request.contextPath}/Controller" style="font-size: 1.8rem;">
+                    MUSINSA
+                </a>
 
-            <!-- 검색창 -->
-            <form class="d-flex align-items-center" role="search">
-                <input class="form-control me-2" type="search" placeholder="무신사 틱톡버스터 체험 🔥" aria-label="Search"
-                       style="width: 300px; border-radius: 20px; padding: 0.5rem;">
-                <i class="bi bi-camera text-white me-2" style="font-size: 1.5rem;"></i>
-                <i class="bi bi-search text-white" style="font-size: 1.5rem;"></i>
-            </form>
+                <!-- 검색창 -->
+                <div class="prod-search-container flex-grow-1">
+                    <div class="form-group position-relative">
+                        <i class="bi bi-search form-control-icon"></i>
+                        <input type="text" class="form-control me-2" id="total-search-input" placeholder="검색어를 입력하세요">
+                    </div>
+                </div>
+            </div>
 
             <!-- 네비게이션 메뉴 -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -46,9 +51,8 @@
                         <a class="nav-link" href="#">업데이트</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/Controller?type=snap">코디</a>
+                        <a class="nav-link" href="#">코디</a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link" href="#">세일</a>
                     </li>
@@ -79,12 +83,12 @@
                     <span class="nickname">${sessionScope.customer_info.nickname}님 &nbsp;&nbsp; <button type="button" class="btn btn-outline-danger" onclick="location.href='${pageContext.request.contextPath}/Controller?type=logout';">로그아웃</button></span>
                     <div class="d-flex gap-3 align-items-center user-header-menu">
                             <%-- 좋아요 --%>
-                        <a href="#" class="text-decoration-none text-danger">
+                        <a href="Controller?type=like&action=select" class="text-decoration-none text-danger">
                             <i class="bi bi-heart-fill"></i>
                             <span class="like_title">좋아요</span>
                         </a>
                             <%-- 알림 --%>
-                        <a href="#" class="text-decoration-none text-dark position-relative" id="alarm-toggle">
+                        <a href="#" class="text-decoration-none text-dark position-relative" id="event-toggle">
                             <i class="bi bi-bell-fill"></i>
                             <span>알림</span>
                             <span class="new_alert"></span>
@@ -93,7 +97,11 @@
                         <a href="Controller?type=cart" class="text-decoration-none text-dark position-relative">
                             <i class="bi bi-basket-fill"></i>
                             <span>장바구니</span>
-                            <span class="badge bg-primary rounded-pill cart_count">0</span>
+                            <c:if test="${not empty sessionScope.cart_count and sessionScope.cart_count ne '0'}">
+                                    <span class="badge bg-primary rounded-pill cart_count">
+                                            ${sessionScope.cart_count}
+                                    </span>
+                            </c:if>
                         </a>
                             <%-- 주문배송조회 --%>
                         <a href="Controller?type=orderDelivery" class="text-decoration-none text-dark">
@@ -116,8 +124,8 @@
     </div>
 </header>
 
-<%-- alarm --%>
-<div class="alarm-container d-none">
-    <jsp:include page="/user/jsp/alarm/alarm.jsp"></jsp:include>
+<%-- event --%>
+<div class="event-container d-none">
+    <jsp:include page="../event/event.jsp"></jsp:include>
 </div>
 </html>

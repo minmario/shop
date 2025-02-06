@@ -10,7 +10,7 @@ public  class testAction implements Action {
   @Override
   public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-    return "user/jsp/snap/MySnap.jsp";
+    return "user/snap/jsp/snap/MySnap.jsp";
   }
 
 }

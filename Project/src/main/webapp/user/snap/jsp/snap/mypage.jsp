@@ -9,7 +9,7 @@
     <title>코디 페이지</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/user/css/Snap/mypage.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/user/snap/css/Snap/mypage.css">
 </head>
 <style>
     .image-gallery {
@@ -27,13 +27,13 @@
 </style>
 
 <body>
-<jsp:include page="../layout/header.jsp"></jsp:include>
+<jsp:include page="/user/snap/jsp/layout/header.jsp"></jsp:include>
 
 <div class="container-fluid mt-4">
     <div class="row">
         <!-- 왼쪽 메뉴바 -->
         <div class="col-md-2 border-end position-fixed" style="height: 100vh;">
-           <jsp:include page="/user/jsp/layout/left.jsp"></jsp:include>
+           <jsp:include page="/user/snap/jsp/layout/left.jsp"></jsp:include>
         </div>
 
         <!-- 콘텐츠 영역 -->
@@ -109,7 +109,7 @@
 </div>
 
 <!-- 스냅작성모달페이지 -->
-<jsp:include page="/user/jsp/snap/snapModal.jsp"></jsp:include>
+<jsp:include page="/user/snap/jsp/snap/snapModal.jsp"></jsp:include>
 <%--<jsp:include page="../layout/footer.jsp"></jsp:include>--%>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

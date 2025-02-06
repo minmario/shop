@@ -98,7 +98,7 @@
   </select>
 
   <select id="getProfile" parameterType="int" resultType="user.vo.BoardVO">
-    SELECT b.id, b.cus_no, b.gender, b.season, b.style, b.title, b.content, b.snapshot_image, b.like_count, b.write_date, b.is_del , c.Introduce,
+    SELECT c.id, b.cus_no, b.gender, b.season, b.style, b.title, b.content, b.snapshot_image, b.like_count, b.write_date, b.is_del , c.Introduce,
     c.profile_image,c.nickname
     FROM customer c LEFT JOIN board b ON b.cus_no = c.id  AND bname = 'snap' AND b.is_del = 0 WHERE c.id =#{cus_no}
   </select>
@@ -150,6 +150,12 @@
     LEFT JOIN board_prod bp ON b.id = bp.board_no
     WHERE b.id = #{board_no}
     GROUP BY b.id
+  </select>
+
+  <select id="boardCount" parameterType="int" resultType="int">
+    SELECT COUNT(*) AS count
+    FROM board
+    WHERE cus_no = #{customerId} AND iS_del = 0
   </select>
 
 </mapper>

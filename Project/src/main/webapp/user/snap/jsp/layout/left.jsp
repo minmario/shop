@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script>
   var contextPath = "${pageContext.request.contextPath}";
 </script>
@@ -39,11 +40,22 @@
         <%--                        </a>--%>
         <%--                    </li>--%>
         <li>
+<c:choose>
+    <c:when test="${not empty sessionScope.nickname}">
             <a href="/Controller?type=dm" class="nav-link text-dark d-flex align-items-center">
                 <i class="bi bi-chat-dots fs-4 me-2"></i>
                 <span>메시지</span>
             </a>
-        </li>
+    </c:when>
+    <c:otherwise>
+                <a href="#" class="nav-link text-dark d-flex align-items-center">
+                    <i class="bi bi-chat-dots fs-4 me-2"></i>
+                    <span>메시지</span>
+                    <a/>
+    </c:otherwise>
+                </c:choose>
+            </a>
+         </li>
         <li>
             <a href="#" class="nav-link text-dark d-flex align-items-center">
                 <i class="bi bi-bell fs-4 me-2"></i>
@@ -51,9 +63,21 @@
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link text-dark d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#snapModal">
-                <i class="bi bi-plus-circle fs-4 me-2"></i>
-                <span>만들기</span>
+            <c:choose>
+                <c:when test="${not empty sessionScope.nickname}">
+                    <a href="#" class="nav-link text-dark d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#snapModal">
+                        <i class="bi bi-plus-circle fs-4 me-2"></i>
+                        <span>만들기</span>
+                    </a>
+
+                </c:when>
+                <c:otherwise>
+                <a href="#" class="nav-link text-dark d-flex align-items-center" >
+                    <i class="bi bi-plus-circle fs-4 me-2"></i>
+                    <span>만들기</span>
+                </c:otherwise>
+            </c:choose>
+
             </a>
         </li>
         <li>

@@ -10,7 +10,7 @@ public class ShowSnapAction implements Action {
   @Override
   public String execute(HttpServletRequest request, HttpServletResponse response) {
 
-    return "user/jsp/snap/SnapWrite.jsp";
+    return "user/snap/jsp/snap/SnapWrite.jsp";
   }
 }
 

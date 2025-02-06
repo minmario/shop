@@ -15,11 +15,11 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="mybatis/mapper/customer.xml"/>
-      <mapper resource="mybatis/mapper/snap.xml"/>
-      <mapper resource="mybatis/mapper/like.xml"/>
-      <mapper resource="mybatis/mapper/FollowMapper.xml"/>
-      <mapper resource="mybatis/mapper/ChatMapper.xml"/>
-      <mapper resource="mybatis/mapper/reply.xml"/>
+      <mapper resource="mybatis/snap/mapper/customer.xml"/>
+      <mapper resource="mybatis/snap/mapper/snap.xml"/>
+      <mapper resource="mybatis/snap/mapper/like.xml"/>
+      <mapper resource="mybatis/snap/mapper/FollowMapper.xml"/>
+      <mapper resource="mybatis/snap/mapper/ChatMapper.xml"/>
+      <mapper resource="mybatis/snap/mapper/reply.xml"/>
     </mappers>
 </configuration>

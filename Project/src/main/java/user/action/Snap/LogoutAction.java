@@ -10,6 +10,6 @@ public class LogoutAction implements Action {
   @Override
   public String execute(HttpServletRequest request, HttpServletResponse response) {
     request.getSession().invalidate(); // 세션 종료
-    return "user/jsp/index.jsp";
+    return "user/snap/jsp/index.jsp";
   }
 }

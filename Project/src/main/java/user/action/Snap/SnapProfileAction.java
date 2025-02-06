@@ -19,13 +19,28 @@ public class SnapProfileAction  implements Action {
     user.dao.snap.SnapDao snapDao = new user.dao.snap.SnapDao();
     int cus_no =Integer.parseInt( request.getParameter("cus_no"));
     System.out.println("잘찍혀야한다"+cus_no);
-    int customerId = (int) request.getSession().getAttribute("cus_id");
+
+    Integer customerId = (Integer) request.getSession().getAttribute("cus_id");
+    if (customerId == null) {
+      customerId = 0;  // 비로그인 사용자의 기본값
+    }
 
     vo = snapDao.profile(cus_no);
     request.setAttribute("board", vo);
 
-      System.out.println("test"+vo.size());
+
+    System.out.println("test"+vo.size());
+
+
+
     int board_size = vo.size();
+    int boardCount = SnapDao.boardCount(cus_no);
+
+
+
+    request.setAttribute("boardCount", boardCount);
+
+
        if(customerId > 0) {
      boolean isFollowing = FollowDao.isFollowing(customerId, cus_no);
      request.setAttribute("isFollowing", isFollowing);
@@ -35,13 +50,16 @@ public class SnapProfileAction  implements Action {
      int followerCount = followDao.getFollowerCount(cus_no);
      int followingCount = followDao.getFollowingCount(cus_no);
 
+
+     request.setAttribute("boardCount", boardCount);
      request.setAttribute("boardSize", board_size );
      request.setAttribute("followerCount", followerCount);
      request.setAttribute("followingCount", followingCount);
+         return "/user/snap/jsp/snap/SnapProfile.jsp";
    }
 
 
-    return "/user/jsp/snap/SnapProfile.jsp";
+    return "/user/snap/jsp/snap/SnapProfile.jsp";
   }
 
 }

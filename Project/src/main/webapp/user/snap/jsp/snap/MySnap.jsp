@@ -10,7 +10,7 @@
     <title>코디 페이지</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/user/css/Snap/mypage.css">
+    <link rel="stylesheet" href="/user/snap/css/Snap/mypage.css">
 </head>
 </head>
 <style>
@@ -88,7 +88,7 @@
 </style>
 <body>
 
-<jsp:include page="../layout/header.jsp"></jsp:include>
+<jsp:include page="/user/snap/jsp/layout/header.jsp"></jsp:include>
 <script>
   var boardNo = "${snap.id}";
   console.log("boardNo:", boardNo); // 값 확인
@@ -98,7 +98,7 @@
     <div class="row">
         <!-- ✅ 왼쪽 메뉴바 -->
         <div class="col-md-2 border-end position-fixed" style="height: 100vh;">
-            <jsp:include page="/user/jsp/layout/left.jsp"></jsp:include>
+            <jsp:include page="/user/snap/jsp/layout/left.jsp"></jsp:include>
         </div>
 
         <!-- ✅ 콘텐츠 + 추천 사용자 목록을 같은 줄(row)로 배치 -->
@@ -249,8 +249,7 @@
                                         </p>
                                 </div>
 
-
-<%--                                  //댓글모달--%>
+                                <%--//댓글모달--%>
                                 <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
@@ -342,7 +341,7 @@
             </div>
         </div>
     </div>
-    <jsp:include page="/user/jsp/snap/snapModal.jsp"></jsp:include>
+    <jsp:include page="/user/snap/jsp/snap/snapModal.jsp"></jsp:include>
     <script src="${pageContext.request.contextPath}/JS/snapModal.js"></script>
     <script src="${pageContext.request.contextPath}/JS/snap/MySnap.js"></script>
 

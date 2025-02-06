@@ -42,6 +42,6 @@ public class ChatAction implements Action {
       request.setAttribute("selectedReceiverId", receiverId);
     }
 
-    return "/user/jsp/snap/Chat.jsp";
+    return "/user/snap/jsp/snap/Chat.jsp";
   }
 }
