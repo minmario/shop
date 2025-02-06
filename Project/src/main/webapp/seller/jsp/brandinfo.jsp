@@ -77,12 +77,12 @@
 
 
     <!-- 브랜드 정보 폼 -->
-    <form method="POST" action="Controller?type=updateSeller" class="brand-form">
+    <form method="POST" action="Controller?type=updateSeller" class="brand-form" >
         <!-- 왼쪽: 브랜드 로고 이미지 -->
         <div class="logo-container">
-            <img id="logoImage" src="${pageContext.request.contextPath}/seller/images/img.png" alt="브랜드 로고" class="img-fluid"/>
+            <img id="logoImage" src="${vo.seller_icon}" alt="브랜드 로고" class="img-fluid"/>
             <!-- 파일 선택 버튼 추가 -->
-            <input type="file" id="logoFileInput" style="display: none;" onchange="previewImage(event)">
+            <input type="file" id="logoFileInput" style="display: none;" onchange="uploadLogo(event)">
             <button type="button" id="customButton" class="btn btn-outline-primary" onclick="document.getElementById('logoFileInput').click();">
                 로고 변경
             </button>
@@ -146,13 +146,44 @@
         }
 
         // 이미지 미리보기 함수
-        function previewImage(event) {
-            var reader = new FileReader();
-            reader.onload = function() {
-                var output = document.getElementById('logoImage');
-                output.src = reader.result;
-            };
-            reader.readAsDataURL(event.target.files[0]);
+        function uploadLogo(event) {
+            var file = event.target.files[0];
+            if (!file) return;
+
+            var formData = new FormData();
+            formData.append("logoFile", file);
+
+            fetch("/shop/UploadLogoServlet", {
+                method: "POST",
+                body: formData
+            })
+                .then(response => response.text()) // 🔥 서버에서 응답 확인
+                .then(imageUrl => {
+                    console.log("🚀 업로드된 이미지 URL:", imageUrl);
+
+                    if (!imageUrl) {
+                        alert("❌ 이미지 업로드 실패: 서버에서 URL을 받지 못함");
+                        return;
+                    }
+
+                    document.getElementById("logoImage").src = imageUrl;
+
+                    // 🚀 업로드된 URL을 서버에 저장 요청 (DB 업데이트)
+                    fetch("/shop/Controller?type=uploadlogo", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ logoUrl: imageUrl })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log("✅ DB 업데이트 응답: ", data);
+                            alert("✅ 로고가 변경되었습니다.");
+                        })
+                        .catch(error => console.error("❌ 로고 업데이트 실패:", error));
+                })
+                .catch(error => console.error("❌ 로고 업로드 실패:", error));
         }
     </script>
 </div>
