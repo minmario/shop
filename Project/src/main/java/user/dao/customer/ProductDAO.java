@@ -112,14 +112,7 @@ public class ProductDAO {
             map.put("prod_no", prod_no);
             map.put("inventory_no", inventory_no);
 
-            System.out.println("prod_no = " + prod_no);
-            System.out.println("inventory_no = " + inventory_no);
-
             productDetails = ss.selectOne("product.select_product_details", map);
-
-            System.out.println("-------");
-            System.out.println("i_option_name : " + productDetails.getI_option_name());
-            System.out.println("-------");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

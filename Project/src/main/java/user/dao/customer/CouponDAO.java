@@ -9,12 +9,13 @@ import java.util.List;
 
 public class CouponDAO {
     // 상품에 적용할 수 있는 쿠폰 목록
-    public static List<CouponVO> selectProdCoupon(String prod_no, String grade_no) {
+    public static List<CouponVO> selectProdCoupon(String cus_no, String prod_no, String grade_no) {
         List<CouponVO> list = null;
         SqlSession ss = FactoryService.getFactory().openSession();
 
         try {
             HashMap<String, String> map = new HashMap<>();
+            map.put("cus_no", cus_no);
             map.put("prod_no", prod_no);
             map.put("grade_no", grade_no);
 

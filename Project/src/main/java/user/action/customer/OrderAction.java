@@ -14,6 +14,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -52,24 +53,14 @@ public class OrderAction implements Action {
                 case "payment":
                     try {
                         String p_prod_no = request.getParameter("prod_no");
-                        String p_inventory_no = request.getParameter("o_inventory_no");
-                        String p_count = request.getParameter("o_count");
+                        String p_inventory_no = request.getParameter("inventory_no");
+                        String p_count = request.getParameter("count");
 
-                        CartVO c_item = new CartVO();
+                        // 선택한 상품
+                        List<CartVO> c_list = new ArrayList<>();
                         ProductVO p_item = ProductDAO.selectProductDetails(p_prod_no, p_inventory_no);
-
-                        System.out.println("get prod_no : " + p_prod_no);
-                        System.out.println("get o_inventory_no : " + p_inventory_no);
-                        System.out.println("get o_count : " + p_count);
-                        System.out.println("get getId : " + cvo.getId());
-                        System.out.println("get getI_option_name : " + p_item.getI_option_name());
-                        System.out.println("get getName : " + p_item.getName());
-                        System.out.println("get getBrand : " + p_item.getBrand());
-                        System.out.println("get getPrice : " + p_item.getPrice());
-                        System.out.println("get getProd_image : " + p_item.getProd_image());
-                        System.out.println("get getSale : " + p_item.getSale());
-                        System.out.println("get getSaled_price : " + p_item.getSaled_price());
-
+                        CartVO c_item = new CartVO();
+                        c_item.setId("1");
                         c_item.setCus_no(cvo.getId());
                         c_item.setProd_no(p_prod_no);
                         c_item.setCount(p_count);
@@ -81,8 +72,8 @@ public class OrderAction implements Action {
                         c_item.setProd_image(p_item.getProd_image());
                         c_item.setSale(p_item.getSale());
                         c_item.setSaled_price(p_item.getSaled_price());
-
-                        session.setAttribute("cartItems", c_item);
+                        c_list.add(c_item);
+                        session.setAttribute("cartItems", c_list);
 
                         // 기본 배송지
                         DeliveryVO delivery = DeliveryDAO.selectDeliveryDefault(cvo.getId());
@@ -108,7 +99,7 @@ public class OrderAction implements Action {
                 case "coupon":
                     String prod_no = request.getParameter("prod_no");
 
-                    List<CouponVO> coupons = CouponDAO.selectProdCoupon(prod_no, cvo.getGrade_no());
+                    List<CouponVO> coupons = CouponDAO.selectProdCoupon(cvo.getId(), prod_no, cvo.getGrade_no());
 
                     // 세션에 저장
                     session.setAttribute("coupons", coupons);
@@ -157,6 +148,7 @@ public class OrderAction implements Action {
                     String total_amount = request.getParameter("total_amount");
                     String tax_free_amount = request.getParameter("tax_free_amount");
                     String productsJson = request.getParameter("products");  // 구매 상품
+                    String benefit_type = request.getParameter("benefit_type"); // 구매 적립/선할인
 
                     List<CartVO> cartItems = (List<CartVO>) session.getAttribute("cartItems");
 
@@ -239,6 +231,7 @@ public class OrderAction implements Action {
                             session.setAttribute("deli_no", deli_no);
                             session.setAttribute("used_point", used_point); // 사용한 적립금
                             session.setAttribute("order_code", order_code);
+                            session.setAttribute("benefit_type", benefit_type);
 
                             if (productsJson != null) {
                                 session.setAttribute("products", productsJson);
@@ -337,20 +330,24 @@ public class OrderAction implements Action {
                                         int count = productData.optInt("count", 0);
                                         prod_no = productData.optString("prodNo");
                                         String inventory_no = productData.optString("inventoryNo");
-                                        String expected_point = productData.optString("point") != null && !productData.optString("point").isEmpty() ? productData.optString("point") : "0"; // 적립 예정 적립금
+                                        String expected_point = productData.optString("point") != null && !productData.optString("point").isEmpty() ? productData.optString("point") : null; // 적립 예정 적립금
                                         String coupon = products.getJSONObject(cartNo).optString("coupon", null);
+                                        int result_amount = productData.optInt("result_amount", 0);
                                         tid = responseJson.optString("tid");
                                         order_code = responseJson.optString("partner_order_id");
                                         deli_no = (String) session.getAttribute("deli_no");
+                                        benefit_type = (String) session.getAttribute("benefit_type");
 
                                         // DB order 테이블, 주문 저장
-                                        OrderDAO.insertOrder(tid, cvo.getId(), prod_no, coupon, deli_no, order_code, String.valueOf(count), String.valueOf(amount), expected_point, inventory_no);
+                                        OrderDAO.insertOrder(tid, cvo.getId(), prod_no, coupon, deli_no, order_code, String.valueOf(count), String.valueOf(amount), benefit_type, String.valueOf(result_amount), expected_point, inventory_no);
 
                                         // DB customer 테이블, total 수정
                                         CustomerDAO.updateAddTotal(cvo.getId(), String.valueOf(amount));
 
-                                        // DB cus_coupon 테이블, 사용 쿠폰 저장
-                                        CouponDAO.insertCusCoupon(cvo.getId(), coupon, order_code);
+                                        if (coupon != null) {
+                                            // DB cus_coupon 테이블, 사용 쿠폰 저장
+                                            CouponDAO.insertCusCoupon(cvo.getId(), coupon, order_code);
+                                        }
 
                                         // DB log 테이블, 로그 저장
                                         LogVO lvo = new LogVO();
@@ -416,18 +413,30 @@ public class OrderAction implements Action {
                     List<DeliveryVO> deli_list = DeliveryDAO.selectDelivery(cvo.getId()); // 해당 주문의 배송지 정보
                     List<OrderVO> coupon_list = OrderDAO.selectOrderCouponList(cvo.getId(), order_code);
                     GradeVO grade = GradeDAO.selectGradeCustomer(cvo.getId());
-                    int totalAmount = OrderDAO.selectTotalAmount(cvo.getId(), order_code); // 원가 총 금액
+                    int totalAmount = OrderDAO.selectTotalAmount(cvo.getId(), order_code); // 결제 총 금액
                     int totalPrice = OrderDAO.selectTotalPrice(cvo.getId(), order_code); // 원가 총 금액
                     int point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code); // 사용한 적립금
 
-                    System.out.println("deli_list : " + deli_list.size());
-                    for (DeliveryVO o : deli_list) {
-                        System.out.println("o deli_list : " + o.getId());
+                    List<HashMap<String, Object>> discountList = new ArrayList<>();
+                    for (OrderVO item : o_list) {
+                        for (OrderVO coupon : coupon_list) {
+                            if (item.getCoupon_no() != null && item.getCoupon_no().equals(coupon.getCoupon_no())) {
+                                int individualDiscount = (int) (Double.parseDouble(item.getProd_saled_price()) * (Double.parseDouble(coupon.getSale_per()) / 100.0));
+
+                                HashMap<String, Object> discountInfo = new HashMap<>();
+                                discountInfo.put("coupon_name", coupon.getCoupon_name());
+                                discountInfo.put("sale_per", coupon.getSale_per());
+                                discountInfo.put("individualDiscount", individualDiscount);
+
+                                discountList.add(discountInfo);
+                            }
+                        }
                     }
 
+                    request.setAttribute("order_code", order_code);
                     request.setAttribute("o_list", o_list);
                     request.setAttribute("deli_list", deli_list);
-                    request.setAttribute("coupon_list", coupon_list);
+                    request.setAttribute("discountList", discountList);
                     request.setAttribute("grade", grade);
                     request.setAttribute("totalAmount", totalAmount);
                     request.setAttribute("totalPrice", totalPrice);

@@ -77,7 +77,7 @@
                                                         <c:set var="total_amount" value="${total_amount + (item.price * item.count)}"/>
                                                     </c:otherwise>
                                                 </c:choose>
-                                                <input type="hidden" class="prod_point" data-points="points" value="${(item.price * item.count) * (sessionScope.customer_info.point_condition / 100)}"/>
+                                                <input type="hidden" class="prod_point" data-points="points" value="${total_amount * (sessionScope.customer_info.point_condition / 100)}"/>
                                             </p>
                                         </div>
                                         <button type="button" class="btn btn-outline-secondary coupon-btn" onclick="onShowCouponModal(${item.id}, ${item.prod_no})">쿠폰 사용</button>
@@ -124,7 +124,7 @@
                                 </div>
                                 <div class="reward-item">
                                     <label>
-                                        <input type="radio" name="reward" value="discount" onclick="toggleRewardDisplay(this)"> 적립금 선할인
+                                        <input type="radio" name="reward" value="discount" onclick="toggleRewardDisplay(this)" data-value="${sessionScope.customer_info.point_condition}"> 적립금 선할인
                                     </label>
                                     <span id="reward-discount" class="text-blue" style="display:none;">
                                         - <fmt:formatNumber value="${total_amount * (sessionScope.customer_info.point_condition / 100)}"/>원
@@ -132,19 +132,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="payment-methods-container">
-                            <h3>결제 수단</h3>
-                            <div class="radio-group">
-                                <label>
-                                    <input type="radio" name="payment-method" id="tosspay-radio">
-                                    <img class="logo-finance" src="./user/images/logo-finance-toss.png"/>토스페이
-                                </label>
-                                <label>
-                                    <input type="radio" name="payment-method" id="kakaopay-radio">
-                                    <img class="logo-finance" src="./user/images/logo-finance-kakaopay.png"/>카카오페이
-                                </label>
-                            </div>
-                        </div>
+<%--                        <div class="payment-methods-container">--%>
+<%--                            <h3>결제 수단</h3>--%>
+<%--                            <div class="radio-group">--%>
+<%--                                <label>--%>
+<%--                                    <input type="radio" name="payment-method" id="tosspay-radio">--%>
+<%--                                    <img class="logo-finance" src="./user/images/logo-finance-toss.png"/>토스페이--%>
+<%--                                </label>--%>
+<%--                                <label>--%>
+<%--                                    <input type="radio" name="payment-method" id="kakaopay-radio">--%>
+<%--                                    <img class="logo-finance" src="./user/images/logo-finance-kakaopay.png"/>카카오페이--%>
+<%--                                </label>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
                         <div class="payment-details-container">
                             <h3>결제 금액</h3>
                             <ul>

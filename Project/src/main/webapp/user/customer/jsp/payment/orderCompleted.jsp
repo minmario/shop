@@ -39,7 +39,8 @@
                             <div class="completed-text" id="completed-text">주문 완료</div>
                         </div>
 
-                        <div class="order-details-container" id="order-details" data-order="202502046515">
+                        <%--<div class="order-details-container" id="order-details" data-order="${requestScope.order_code}">--%>
+                        <div class="order-details-container" id="order-details" data-order="202502072180">
                             <jsp:include page="./components/completedDetails.jsp"></jsp:include>
                         </div>
                     </div>

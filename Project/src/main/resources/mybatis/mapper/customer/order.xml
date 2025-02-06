@@ -39,7 +39,7 @@
         INNER JOIN delivery d ON o.deli_no = d.id
         INNER JOIN seller s ON p.seller_no = s.id
         LEFT JOIN inventory i ON i.id = o.inventory_no
-        WHERE o.order_code = #{order_code} AND o.cus_no = #{cus_no}
+        WHERE o.cus_no = #{cus_no} AND o.order_code = #{order_code}
     </select>
 
     <!-- 취소/반품/교환 할 상품 가져오기 -->
@@ -92,19 +92,18 @@
 
     <!-- 주문코드 별 금액 총 합 -->
     <select id="select_total_amount" resultType="int" parameterType="map">
-        SELECT SUM(amount) FROM `order`
-        WHERE order_code = #{order_code} AND cus_no = #{cus_no}
+        SELECT IFNULL(SUM(result_amount), 0) AS total_amount FROM `order`
+        WHERE cus_no = #{cus_no} AND order_code = #{order_code}
     </select>
 
     <!-- 주문코드 별 원가 금액 총 합 -->
     <select id="select_total_price" resultType="int" parameterType="map">
-        SELECT SUM(re) AS total_re
+        SELECT IFNULL(SUM(re), 0) AS total_re
         FROM (
-        SELECT (p.price * o.count) AS re
-        FROM `order` o
-        INNER JOIN product p ON o.prod_no = p.id
-        WHERE order_code = #{order_code} AND cus_no = #{cus_no}
-        GROUP BY p.price, o.count
+            SELECT (p.price * o.count) AS re FROM `order` o
+            INNER JOIN product p ON o.prod_no = p.id
+            WHERE cus_no = #{cus_no} AND order_code = #{order_code}
+            GROUP BY p.price, o.count
         ) subquery
     </select>
 
@@ -156,7 +155,7 @@
 
     <!-- 주문 시 사용한 쿠폰 내용 가져오기(orderDetails) -->
     <select id="select_order_coupon_list" resultType="user.vo.customer.OrderVO" parameterType="map">
-        SELECT DISTINCT c.name AS coupon_name, c.sale_per AS sale_per
+        SELECT DISTINCT c.name AS coupon_name, c.sale_per AS sale_per, o.coupon_no
         FROM `order` o
         INNER JOIN coupon c ON o.coupon_no = c.id
         INNER JOIN cus_coupon cc ON cc.coupon_no = c.id
@@ -174,8 +173,8 @@
 
     <!-- 주문 추가 -->
     <insert id="insert_order" parameterType="user.vo.customer.OrderVO">
-        INSERT INTO `order` (tid, cus_no, prod_no, coupon_no, deli_no, order_code, count, amount, expected_point, order_date, inventory_no, pay_type, status)
-        VALUES (#{tid}, #{cus_no}, #{prod_no}, #{coupon_no}, #{deli_no}, #{order_code}, #{count}, #{amount}, #{expected_point}, CURRENT_TIMESTAMP(), #{inventory_no}, 3, 1)
+        INSERT INTO `order` (tid, cus_no, prod_no, coupon_no, deli_no, order_code, count, amount, benefit_type, result_amount, expected_point, order_date, inventory_no, pay_type, status)
+        VALUES (#{tid}, #{cus_no}, #{prod_no}, #{coupon_no}, #{deli_no}, #{order_code}, #{count}, #{amount}, #{benefit_type}, #{result_amount}, #{expected_point}, CURRENT_TIMESTAMP(), #{inventory_no}, 3, 1)
     </insert>
 
     <!-- 구매확정 주문 내역만 가져오기 -->

@@ -16,7 +16,7 @@
         FROM customer c
         INNER JOIN grade g
         ON c.grade_no = g.id
-        WHERE cus_id = #{cus_id} AND cus_pw = #{cus_pw}
+        WHERE cus_id = #{cus_id} AND cus_pw = #{cus_pw} AND is_del = 0
     </select>
 
     <!-- 아이디 중복 확인 -->
@@ -47,8 +47,12 @@
 
     <!-- 회원 정보 보기(cus_id) -->
     <select id="select_customer_by_cus_id" resultType="user.vo.customer.CustomerVO" parameterType="String">
-        SELECT * FROM customer
-        WHERE cus_id = #{cus_id} AND is_del = 0
+        SELECT c.id, c.grade_no, c.cus_id, c.cus_pw, c.name, c.nickname, c.gender, c.birth_date, c.phone, c.email, c.profile_image, c.weight, c.height, c.total, c.grade_expire_date,
+            g.name AS grade_name, g.point_condition, g.sale_condition
+        FROM customer c
+        INNER JOIN grade g
+        ON c.grade_no = g.id
+        WHERE c.cus_id = #{cus_id} AND c.is_del = 0
     </select>
 
     <!-- 누적 금액 수정(취소/반품) -->

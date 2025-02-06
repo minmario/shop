@@ -86,16 +86,16 @@ public class OrderDAO {
         return list;
     }
 
-    //주문 총 금액
+    // 주문 총 금액
     public static int selectTotalAmount(String cus_no, String order_code){
-        HashMap<String, String> map = new HashMap<>();
-        map.put("cus_no", cus_no);
-        map.put("order_code", order_code);
-
-        SqlSession ss = FactoryService.getFactory().openSession();
         int totalAmount = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
 
         try{
+            HashMap<String, String> map = new HashMap<>();
+            map.put("cus_no", cus_no);
+            map.put("order_code", order_code);
+
             totalAmount = ss.selectOne("order.select_total_amount", map);
         } catch (Exception e) {
             e.printStackTrace();
@@ -364,11 +364,16 @@ public class OrderDAO {
     }
 
     // 주문 추가
-    public static int insertOrder(String tid, String cus_no, String prod_no, String coupon_no, String deli_no, String order_code, String count, String amount, String expected_point, String inventory_no) {
+    public static int insertOrder(String tid, String cus_no, String prod_no, String coupon_no, String deli_no, String order_code, String count, String amount, String benefit_type, String result_amount, String expected_point, String inventory_no) {
         int cnt = 0;
         SqlSession ss = FactoryService.getFactory().openSession();
         
         try {
+            // 적립만 선택된 경우 result_amount를 amount로 설정
+            if ("0".equals(benefit_type)) {
+                result_amount = amount;
+            }
+
             HashMap<String, String> map = new HashMap<>();
             map.put("tid", tid);
             map.put("cus_no", cus_no);
@@ -378,6 +383,8 @@ public class OrderDAO {
             map.put("order_code", order_code);
             map.put("count", count);
             map.put("amount", amount);
+            map.put("benefit_type", benefit_type);
+            map.put("result_amount", result_amount);
             map.put("expected_point", expected_point);
             map.put("inventory_no", inventory_no);
 

@@ -347,6 +347,12 @@ function onGetProducts() {
     const products = document.querySelectorAll('.product-info');
     const productData = {};
 
+    // 선택된 리워드 상태 가져오기
+    const benefitType = getSelectedReward();  // "0" 또는 "1"
+
+    // 선택된 라디오 버튼 가져오기 (선할인일 경우 할인율 가져오기 위해 필요)
+    const selectedRadio = document.querySelector('input[name="reward"]:checked');
+
     // 각 상품 정보를 순회하며 JSON 객체에 추가
     products.forEach(product => {
         const cartNo = product.getAttribute('data-cart-no');
@@ -370,15 +376,25 @@ function onGetProducts() {
         // 상품 수량 가져오기
         const count = productCountElement ? parseInt(productCountElement.innerText.replace(/[^0-9]/g, '')) || 0 : 0;
 
-        // JSON 객체에 추가
+        // JSON 객체 생성 및 조건별 속성 설정
         if (cartNo) {
             productData[cartNo] = {
                 prodNo: prodNo,
                 inventoryNo: inventoryNo,
                 amount: price,
-                count: count,
-                point: point
+                count: count
             };
+
+            if (benefitType === "1") {
+                // 선택된 라디오 버튼의 할인율 가져오기
+                const discountRate = selectedRadio ? parseFloat(selectedRadio.getAttribute('data-value')) / 100 : 0;
+
+                // 선할인 적용 시 result_amount 설정, point는 없음
+                productData[cartNo].result_amount = price - (price * discountRate);
+            } else if (benefitType === "0") {
+                // 적립 선택 시 point 설정, result_amount는 없음
+                productData[cartNo].point = point;
+            }
         }
     });
 
@@ -397,7 +413,8 @@ function mergeProducts() {
                 inventoryNo: products[cartNo].inventoryNo,
                 amount: products[cartNo].amount,
                 count: products[cartNo].count,
-                point: products[cartNo].point
+                point: products[cartNo].point,
+                result_amount: products[cartNo].result_amount
             }
         };
 
@@ -410,60 +427,58 @@ function mergeProducts() {
     return mergedProducts;
 }
 
-// 적립금 가져오기
-function onGetSavePoint() {
-    const totalSavePointElement = document.getElementById('total-save-point');
+// 구매 적립/선할인
+function getSelectedReward() {
+    const selectedRadio = document.querySelector('input[name="reward"]:checked');
 
-    // 요소가 보이는 경우 숫자 값 반환
-    if (totalSavePointElement && totalSavePointElement.parentElement.style.display !== 'none') {
-        const pointText = totalSavePointElement.innerText;
-        return parseInt(pointText.replace(/[^0-9]/g, ''), 10) || 0;  // 숫자 추출 후 변환 실패 시 0 반환
+    if (selectedRadio.value === 'earn') {
+        return "0";
+    } else {
+        return "1";
     }
-
-    // 요소가 숨겨져 있거나 값이 없을 경우 0 반환
-    return 0;
 }
 
 // 결제 API
 function onPayment() {
-    // 선택된 결제 방식을 확인
-    const tossPayRadio = document.getElementById("tosspay-radio");
-    const kakaoPayRadio = document.getElementById("kakaopay-radio");
+    // 결제 방식
+    // const tossPayRadio = document.getElementById("tosspay-radio");
+    // const kakaoPayRadio = document.getElementById("kakaopay-radio");
 
     const order_code = onGetOrderCode();
     const deli_no = onGetDeliveryId();
     const used_point = onGetUsedPoints();
     const products = mergeProducts();
+    const benefit_type = getSelectedReward();
 
     console.log('Final Products for Payment:', products);
 
     const totalAmount = parseInt(document.getElementById("total_amount").innerText.replaceAll(',', '').replace('원', ''), 10);
     const taxFreeAmount = Math.floor(totalAmount * 0.1);
 
-    if (tossPayRadio.checked) {
-        // TossPayments 로직 실행
-        const clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq';
-        const tossPayments = TossPayments(clientKey);
-
-        tossPayments
-            .requestPayment('카드', {
-                amount: totalAmount, // 결제 금액
-                orderId: order_code, // 주문 ID
-                orderName: prodName, // 주문명
-                customerName: '김토스', // 구매자 이름
-                successUrl: 'https://docs.tosspayments.com/guides/payment/test-success',
-                failUrl: 'https://docs.tosspayments.com/guides/payment/test-fail',
-            })
-            .catch(function (error) {
-                if (error.code === 'USER_CANCEL') {
-                    alert('결제가 취소되었습니다.');
-                } else if (error.code === 'INVALID_CARD_COMPANY') {
-                    alert('유효하지 않은 카드입니다.');
-                } else {
-                    alert('결제 중 오류가 발생했습니다.');
-                }
-            });
-    } else if (kakaoPayRadio.checked) {
+    // if (tossPayRadio.checked) {
+    //     // TossPayments 로직 실행
+    //     const clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq';
+    //     const tossPayments = TossPayments(clientKey);
+    //
+    //     tossPayments
+    //         .requestPayment('카드', {
+    //             amount: totalAmount, // 결제 금액
+    //             orderId: order_code, // 주문 ID
+    //             orderName: prodName, // 주문명
+    //             customerName: '김토스', // 구매자 이름
+    //             successUrl: 'https://docs.tosspayments.com/guides/payment/test-success',
+    //             failUrl: 'https://docs.tosspayments.com/guides/payment/test-fail',
+    //         })
+    //         .catch(function (error) {
+    //             if (error.code === 'USER_CANCEL') {
+    //                 alert('결제가 취소되었습니다.');
+    //             } else if (error.code === 'INVALID_CARD_COMPANY') {
+    //                 alert('유효하지 않은 카드입니다.');
+    //             } else {
+    //                 alert('결제 중 오류가 발생했습니다.');
+    //             }
+    //         });
+    // } else if (kakaoPayRadio.checked) {
         $.ajax({
             url: 'Controller?type=order&action=kakaopay',
             method: 'POST',
@@ -472,6 +487,7 @@ function onPayment() {
                 products: JSON.stringify(products),
                 deli_no: deli_no,
                 used_point: used_point, // 사용한 적립금
+                benefit_type: benefit_type,
                 total_amount: totalAmount,
                 tax_free_amount: taxFreeAmount,
             },
@@ -490,9 +506,9 @@ function onPayment() {
                 console.error(err);
             }
         });
-    } else {
-        alert('결제 방식을 선택해 주세요.');
-    }
+    // } else {
+    //     alert('결제 방식을 선택해 주세요.');
+    // }
 }
 
 // 주문 배송지 변경

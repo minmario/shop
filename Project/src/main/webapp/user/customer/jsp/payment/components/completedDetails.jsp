@@ -40,64 +40,58 @@
                 </c:choose>
             </li>
 
-            <c:if test="${requestScope.coupon_list ne null}">
-                <div class="accordion" id="accordionExample">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                <h5>총 결제 금액</h5>
-                            </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            <h5>총 결제 금액</h5>
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
                             <div class="accordion-body">
-                                <div class="accordion-body">
-                                    <c:set var="totalPrice" value="${requestScope.totalPrice}"/>
-                                    <c:set var="discountAmount" value="${requestScope.totalPrice - requestScope.totalAmount}"/>
-                                    <c:set var="pointAmount" value="${requestScope.point_amount}"/>
-                                    <c:set var="couponSalePer" value="${requestScope.coupon.sale_per}"/>
+                                <c:set var="totalPrice" value="${requestScope.totalPrice}"/>
+                                <c:set var="discountAmount" value="0"/>
+                                <c:set var="pointAmount" value="${requestScope.point_amount}"/>
+                                <c:set var="couponSalePer" value="${requestScope.coupon.sale_per}"/>
+                                <c:set var="priceAfterDiscount" value="${totalPrice - totalAmount}"/>
 
-                                    <c:set var="priceAfterDiscount" value="${totalPrice - discountAmount}"/>
-                                    <li>
-                                        <span>상품 금액</span> <span class="item-price"><fmt:formatNumber value="${totalPrice}"/>원</span>
-                                    </li>
-                                    <li>
-                                        <span>할인 금액</span> <span class="discount">- <fmt:formatNumber value="${discountAmount}"/>원</span>
-                                    </li>
+                                <c:forEach var="item" items="${requestScope.o_list}" varStatus="status">
+                                    <c:set var="discountAmount" value="${discountAmount + (item.prod_price - item.prod_saled_price)}"/>
+                                </c:forEach>
 
-                                    <c:set var="couponDiscount" value="0"/>
-                                    <c:forEach var="coupon" items="${requestScope.coupon_list}">
-                                        <c:set var="individualDiscount" value="${priceAfterDiscount * (coupon.sale_per / 100)}"/>
-                                        <c:set var="couponDiscount" value="${couponDiscount + individualDiscount}"/>
+                                <li>
+                                    <span>상품 금액</span> <span class="item-price"><fmt:formatNumber value="${totalPrice}"/>원</span>
+                                </li>
+                                <li>
+                                    <span>할인 금액</span> <span class="discount">- <fmt:formatNumber value="${discountAmount}"/>원</span>
+                                </li>
+                                <c:if test="${requestScope.discountList ne null}">
+                                    <c:forEach var="discount" items="${requestScope.discountList}">
                                         <li>
-                                            <span class="coupon_info">${coupon.coupon_name} (${coupon.sale_per}%)</span>
-                                            <span>- <fmt:formatNumber value="${individualDiscount}" type="number" maxFractionDigits="0"/>원</span>
+                                            <span class="coupon_info">
+                                                ${discount.coupon_name} (${discount.sale_per}%)
+                                            </span>
+                                            <span>
+                                                - <fmt:formatNumber value="${discount.individualDiscount}" type="number" maxFractionDigits="0"/> 원
+                                            </span>
                                         </li>
                                     </c:forEach>
-
-                                    <li>
-                                        <span>상품 할인</span> <span class="coupon-discount discount">- <fmt:formatNumber value="${couponDiscount}" type="number" maxFractionDigits="0"/>원</span>
-                                    </li>
-                                    <li>
-                                        <span>상품 쿠폰 할인</span> <span class="coupon-discount discount">- <fmt:formatNumber value="${couponDiscount}" type="number" maxFractionDigits="0"/>원</span>
-                                    </li>
-                                    <li>
-                                        <span>적립금 사용</span> <span class="points-amount discount">- <fmt:formatNumber value="${pointAmount}"/>원</span>
-                                    </li>
-                                    <li>
-                                        <span>보유 적립금 사용</span> <span class="points-amount discount">- <fmt:formatNumber value="${pointAmount}"/>원</span>
-                                    </li>
-                                    <li>
-                                        <span>배송비 </span> <span class="text-blue">배송비 무료</span>
-                                    </li>
-                                </div>
+                                </c:if>
+                                <li>
+                                    <span>보유 적립금 사용</span> <span class="points-amount discount">- <fmt:formatNumber value="${pointAmount}"/>원</span>
+                                </li>
+                                <li>
+                                    <span>배송비 </span> <span class="text-blue">배송비 무료</span>
+                                </li>
                             </div>
                         </div>
                     </div>
                 </div>
-            </c:if>
+            </div>
+
             <li class="total">
-                <c:set var="finalPrice" value="${priceAfterDiscount - couponDiscount - pointAmount}"/>
-                <span class="payment-price">결제 금액</span> <span class="final-price"><fmt:formatNumber value="${finalPrice}" type="number" maxFractionDigits="0"/>원</span>
+                <span class="payment-price">결제 금액</span> <span class="final-price"><fmt:formatNumber value="${requestScope.totalAmount}" type="number" maxFractionDigits="0"/>원</span>
             </li>
         </ul>
     </div>
@@ -114,10 +108,10 @@
         </div>
         <ul class="benefits-list">
             <!-- 총 할인 금액 계산 -->
-            <c:set var="totalDiscount" value="${totalPrice - finalPrice}"/>
+            <c:set var="totalDiscount" value="${priceAfterDiscount}"/>
 
             <!-- 받은 총 혜택 계산 -->
-            <c:set var="gradeBenefit" value="${finalPrice * (requestScope.grade.point_condition / 100)}"/>
+            <c:set var="gradeBenefit" value="${totalPrice * (requestScope.grade.point_condition / 100)}"/>
             <c:set var="totalBenefits" value="${totalDiscount + gradeBenefit}"/>
             <li><span>총 할인 금액</span> <span><fmt:formatNumber value="${totalDiscount}" type="number" maxFractionDigits="0"/>원</span></li>
             <li><span>${requestScope.grade.name} ${requestScope.grade.point_condition}% 적립</span> <fmt:formatNumber value="${gradeBenefit}" type="number" maxFractionDigits="0"/>원</span></li>
@@ -142,15 +136,15 @@
                     </div>
                 </div>
             </div>
-            <div class="product-actions">
-                <button class="btn btn-outline-secondary cancel-button" onclick="location.href='Controller?type=orderDetails&action=select&order_code=${item.order_code}'">
-                    주문 상세
-                </button>
-                <button class="btn btn-dark cancel-button" onclick="location.href='Controller'">
-                    계속 쇼핑하기
-                </button>
-            </div>
         </c:forEach>
+        <div class="product-actions">
+            <button class="btn btn-outline-secondary cancel-button" onclick="location.href='Controller?type=orderDetails&action=select&order_code=${requestScope.order_code}'">
+                주문 상세
+            </button>
+            <button class="btn btn-dark cancel-button" onclick="location.href='Controller'">
+                계속 쇼핑하기
+            </button>
+        </div>
     </div>
 </c:if>
 

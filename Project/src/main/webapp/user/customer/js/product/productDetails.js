@@ -142,7 +142,7 @@ function onMovePayment() {
         return;
     }
 
-    window.location.href = "Controller?type=order&action=payment&prod_no=" + prod_no + "&inventory_no=" + inventory_no + "&count=" + count;
+    window.location.replace("Controller?type=order&action=payment&prod_no=" + prod_no + "&inventory_no=" + inventory_no + "&count=" + count);
 }
 
 // 좋아요 아이콘 클릭 시

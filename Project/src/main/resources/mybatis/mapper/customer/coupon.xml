@@ -8,7 +8,16 @@
         SELECT c.*
         FROM coupon c
         JOIN product p ON (p.category_no = c.category_no OR c.type = 1)
-        WHERE p.id = #{prod_no} AND c.grade_no = #{grade_no} AND c.status = '1' AND c.is_del = '0'
+        WHERE p.id = #{prod_no}
+            AND c.grade_no = #{grade_no}
+            AND c.status = '1'
+            AND c.is_del = '0'
+            AND NOT EXISTS (
+                SELECT 1
+                FROM cus_coupon cc
+                WHERE cc.cus_no = #{cus_no}
+                AND cc.coupon_no = c.id
+        )
     </select>
 
     <!-- 쿠폰 사용 이력 추가 -->
