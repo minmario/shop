@@ -1,7 +1,21 @@
 .product-menu {
     width: 250px;
-    margin-top: 20px;
     float: left;
+    overflow-y: auto;
+    height: 980px;
+}
+
+.product-menu::-webkit-scrollbar {
+    width: 5px;
+}
+
+.product-menu::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 12px 12px 12px 12px;
+}
+
+.product-menu::-webkit-scrollbar-track {
+    background: transparent;
 }
 
 .card {
