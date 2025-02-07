@@ -10,6 +10,7 @@ import user.action.Action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class AdminAddMiddleCategoryAction implements Action {
     @Override
@@ -36,17 +37,21 @@ public class AdminAddMiddleCategoryAction implements Action {
         mdvo.setType(type);
 
         boolean result = mddao.addMiddleCategory(mdvo);
+        int id = mddao.getId(name);
+      System.out.println("id"+id);
 
         JSONObject json = new JSONObject();
         json.put("success", result);
+        json.put("id", id);
 
 
         System.out.println("JSON Response: " + json.toString());
 
 
-        response.getWriter().write(json.toString());
-        response.getWriter().flush();
-        response.getWriter().close();
+      PrintWriter out = response.getWriter();
+      out.print(json.toString());
+      out.flush();
+      out.close();
 
         return null;
 

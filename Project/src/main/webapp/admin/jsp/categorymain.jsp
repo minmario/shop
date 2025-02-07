@@ -153,8 +153,11 @@
                     <td>${mdcl.name}</td>
                     <td>${mdcl.type}</td>
                     <td>
-                        <button class="btn btn-secondary add-user-btn" data-bs-toggle="modal" data-bs-target="#deleteMiddleModal"
-                                onclick = "setMiddleId('${mdcl.id}')">삭제</button>
+                        <button class="btn btn-secondary add-user-btn delete-middle-btn"
+                                data-bs-toggle="modal"
+                                data-bs-target="#deleteMiddleModal"
+                                data-middle-id="${mdcl.id}">삭제</button>
+
                     </td>
                 </tr>
                 </c:if>
@@ -265,7 +268,12 @@
                     <div class="col-md-2 fw-bold">상위 대분류</div>
                     <div class="col-md-6">
 
-                        <input type="text" class="form-control" id="majorCategoryId" name="majorCategoryId" placeholder="상위 대분류">
+                        <select class="form-select" id="majorCategoryId" name="majorCategoryId">
+                            <option value="1">상의</option>
+                            <option value="2">하의</option>
+                            <option value="3">아우터</option>
+                            <option value="4">신발</option>
+                        </select>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -441,10 +449,13 @@
 
 
     }
-    function setMiddleId(middleId){
+    $(document).on("click", ".delete-middle-btn", function () {
+        let middleId = $(this).data("middle-id"); // 버튼의 data-middle-id 값 가져오기
         console.log("전달된 중분류 ID:", middleId);
         $("#deleteMiddleId").val(middleId);
-    }
+      });
+
+
     $(document).ready(function () {<%--폼태그--%>
         $("#deleteMajorForm").submit(function (event) {
             event.preventDefault(); // 기본 form 제출 막기
@@ -568,36 +579,63 @@
         $("#addMiddleCategoryForm").submit(function (event) {
             event.preventDefault();
             let middleId = $("#deleteMiddleId").val();
+
+           let majorCategoryId = $("#majorCategoryId").val();
+           let middleCategoryName = $("#middleCategoryName").val().trim();
+          let middleCategoryType = $("#middleCategoryType").val().trim();
             console.log("md:"+middleId);
+          const categoryMap = {
+            "1": "상의",
+            "2": "하의",
+            "3": "아우터",
+            "4": "신발"
+          };
+          let majorCategoryText = categoryMap[majorCategoryId];
+
+
             $.ajax({
                 type: "POST",
                 url: "Controller?type=addMiddleCategory",
-                data: $(this).serialize(),
+                data: {
+                  majorCategoryId: majorCategoryId, // DB에 숫자로 저장
+                  middleCategoryName: middleCategoryName,
+                  middleCategoryType: middleCategoryType
+                },
                 dataType: "json",
                 success: function(response){
                     if(response.success) {
-                        let majorcategoryId = $("input[name='majorCategoryId']").val();
-                        let middlecategoryName = $("input[name='middleCategoryName']").val();
-                        let middlecategoryType = $("input[name='middleCategoryType']").val();
-                        let middleId = response.result;
-                        let newRow = `
-                      <tr id="row-` + middleId + `">
-                <td>` + majorcategoryId + `</td>
-                <td>` + middlecategoryName + `</td>
-                <td>` + middlecategoryType + `</td>
-                <td>
-                    <button class="btn btn-secondary add-user-btn"
-                            data-bs-toggle="modal"
-                            data-bs-target="#deleteMiddleModal"
-                            onclick="setMiddleId(` + middleId + `)">삭제</button>
-                </td>
-            </tr>
-        `;
+                      let middleId = response.id;
+                      console.log("middle"+middleId)
+
+                      if(! middleId){
+                        alert("서버에서 응다이없어");
+                        return;
+                      }
+
+                      const categoryMap = {
+                        "1": "상의",
+                        "2": "하의",
+                        "3": "아우터",
+                        "4": "신발"
+                      };
+                      let majorCategoryText = categoryMap[majorCategoryId]; // 변환된 텍스트
+                      let newRow = `
+                        <tr id="row-` + middleId + `">
+                            <td>` + majorCategoryText + `</td>
+                            <td>` + middleCategoryName + `</td>
+                            <td>` + middleCategoryType + `</td>
+                            <td>
+                                <button class="btn btn-secondary add-user-btn delete-middle-btn"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteMiddleModal"
+                                        data-middle-id="` + middleId + `">삭제</button>
+                            </td>
+                        </tr>`;
                         $("#row-" + middleId).remove();
                         $("#middleCategoryBody").append(newRow);
-                        $("input[name='majorCategoryId']").val('');
-                        $("input[name='middleCategoryName']").val('');
-                        $("input[name='middleCategoryType']").val('');
+                      $("#majorCategoryId").val('');
+                      $("#middleCategoryName").val('');
+                      $("#middleCategoryType").val('');
                     }else{
                         alert("카테고리 추가 실패!");
                     }

@@ -76,4 +76,10 @@ public class MiddleCategoryDao {
         boolean chk = true;
         return  chk;  // 추가된 레코드 수 반환
     }
+    public  static  int getId(String name){
+      SqlSession ss = FactoryService.getFactory().openSession();
+      int cnd = ss.selectOne("root.getId", name);
+      ss.close();
+      return cnd;
+    }
 }

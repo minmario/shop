@@ -241,8 +241,14 @@
 
   </select>
   <select id="getMiddleCategory" resultType="admin.vo.CategoryVO">
-    select mc.name as major_name,mdc.name,mdc.type from major_category as mc join middle_category as mdc on mc.id = mdc.major_no;
+    select mc.name as major_name,mdc.name,mdc.id,mdc.type from major_category as mc join middle_category as mdc on mc.id = mdc.major_no;
 
+
+  </select>
+
+  <select id="getId" resultType="int" parameterType="String">
+    SELECT id FROM shop.middle_category
+    where name =  #{cn};
 
   </select>
 
