@@ -14,12 +14,22 @@ public class MiddleCategoryVO {
     String major_name;
     String major_no;
     String name;
-    String type;
-    public String getType() {
+    int type;
+
+    public String getIs_del() {
+        return is_del;
+    }
+
+    public void setIs_del(String is_del) {
+        this.is_del = is_del;
+    }
+
+    String is_del;
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 

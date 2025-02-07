@@ -690,7 +690,7 @@
 
 
 
-                        $("stopSellerModal").modal("hide");
+                        $("#stopSellerModal").modal("hide");
 
                         alert("판매자가 정지되었습니다.");
                     } else {

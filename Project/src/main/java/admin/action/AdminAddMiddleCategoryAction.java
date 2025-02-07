@@ -16,9 +16,19 @@ public class AdminAddMiddleCategoryAction implements Action {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        String major_no = request.getParameter("major_no");
-        String name = request.getParameter("name");
-        String type = request.getParameter("type");
+        String major_no = request.getParameter("majorCategoryId");
+        String name = request.getParameter("middleCategoryName");
+        String typeStr = request.getParameter("middleCategoryType");
+        int type = 1;
+        try {
+            type = Integer.parseInt(typeStr); // 정수 변환
+        } catch (NumberFormatException e) {
+            throw new IOException("Invalid type value: must be an integer", e);
+        }
+
+
+
+
         MiddleCategoryDao mddao = new MiddleCategoryDao();
         MiddleCategoryVO mdvo = new MiddleCategoryVO();
         mdvo.setMajor_no(major_no);

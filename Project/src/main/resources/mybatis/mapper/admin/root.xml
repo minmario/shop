@@ -26,7 +26,7 @@
     select * from `major_category`
   </select>
   <select id ="allMiddle" resultType="admin.vo.MiddleCategoryVO">
-    select mdc.id,mc.name as major_name,mdc.name,mdc.type from major_category as mc join middle_category as mdc on mc.id = mdc.major_no
+    select mdc.is_del,mdc.id,mc.name as major_name,mdc.name,mdc.type from major_category as mc join middle_category as mdc on mc.id = mdc.major_no
   </select>
   <select id ="allBoard" resultType="admin.vo.BoardVO">
     select * from `board` where is_del = 0
@@ -107,12 +107,12 @@
     </trim>
   </select>
   <select id="searchMiddleCategory" parameterType="Map" resultType="admin.vo.MiddleCategoryVO">
-    select mdc.id,mc.name as major_name,mdc.name,mdc.type from major_category as mc join middle_category as mdc on mc.id = mdc.major_no
+    select mdc.is_del,mdc.id,mc.name as major_name,mdc.name as name,mdc.type from major_category as mc join middle_category as mdc on mc.id = mdc.major_no
     <trim prefix="where">
       <choose>
-        <when test=" searchType == 'major_name'">major_name LIKE CONCAT('%',#{searchValue},'%')</when>
-        <when test=" searchType == 'major_no'">major_no LIKE CONCAT('%',#{searchValue},'%')</when>
-        <when test=" searchType == 'name'">name LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test=" searchType == 'major_name'">mc.name LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test=" searchType == 'middle_name'">name LIKE CONCAT('%',#{searchValue},'%')</when>
+
         <when test=" searchType == 'type'">type LIKE CONCAT('%',#{searchValue},'%')</when>
       </choose>
     </trim>
@@ -229,7 +229,7 @@
 
   </insert>
   <insert id="addMiddleCategory" parameterType="admin.vo.MiddleCategoryVO">
-    INSERT INTO major_category (major_no,name,type,is_del)
+    INSERT INTO middle_category (major_no,name,type,is_del)
     VALUES (#{major_no},#{name},#{type},0)
 
   </insert>
