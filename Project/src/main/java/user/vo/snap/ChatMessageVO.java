@@ -11,16 +11,42 @@ public class ChatMessageVO {
   private String message;
   private Date created_at; //
   private boolean isRead;
+  private int is_read;
+  private String image_url;
+
+  public boolean isRead() {
+    return isRead;
+  }
+
+  public void setRead(boolean read) {
+    isRead = read;
+  }
+
+  public int getIs_read() {
+    return is_read;
+  }
+
+  public void setIs_read(int is_read) {
+    this.is_read = is_read;
+  }
+
+  public String getImage_url() {
+    return image_url;
+  }
+
+  public void setImage_url(String image_url) {
+    this.image_url = image_url;
+  }
 
   public ChatMessageVO() {}
 
-  public ChatMessageVO(int id, int roomId, int sender_id, String message, Date created_at, boolean isRead) {
+  public ChatMessageVO(int id, int roomId, int sender_id, String message, Date created_at, int is_read) {
     this.id = id;
     this.roomId = roomId;
     this.sender_id = sender_id;
     this.message = message;
     this.created_at = created_at;
-    this.isRead = isRead;
+    this.is_read = is_read;
   }
 
   public int getId() {
@@ -79,11 +105,5 @@ public class ChatMessageVO {
     this.created_at = created_at;
   }
 
-  public boolean isRead() {
-    return isRead;
-  }
 
-  public void setRead(boolean isRead) {
-    this.isRead = isRead;
-  }
 }

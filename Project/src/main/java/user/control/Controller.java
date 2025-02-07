@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.*;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,6 +25,11 @@ import user.action.Action;
 		initParams = {
 				@WebInitParam(name = "myParam", value = "/WEB-INF/action.properties")
 		})
+@MultipartConfig(
+    fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+    maxFileSize = 1024 * 1024 * 10,      // 10MB
+    maxRequestSize = 1024 * 1024 * 50    // 50MB
+)
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

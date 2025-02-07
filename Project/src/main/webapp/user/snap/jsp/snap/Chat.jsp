@@ -11,6 +11,54 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="/user/snap/css/Snap/mypage.css">
 </head>
+<style>
+    .chat-meta {
+        position: relative;  /* 부모 요소 설정 */
+        display: flex;
+        flex-direction: column; /* 요소를 세로로 정렬 */
+        align-items: center; /* 가운데 정렬 */
+    }
+
+    .last-message-time {
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 10px; /* 시간과 배지 간격 조정 */
+    }
+
+    .unread-badge {
+        position: absolute;
+        bottom: -10px;  /* 숫자 뱃지를 아래쪽으로 이동 */
+        left: 50%;
+        transform: translateX(-50%); /* 가운데 정렬 */
+        font-size: 12px;
+        font-weight: bold;
+        min-width: 20px;
+        height: 20px;
+        line-height: 18px;
+        text-align: center;
+        color: white;
+        background-color: red;
+        border-radius: 50%;
+    }
+    .unread-message-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: red;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+
+</style>
 
 <body>
 <%--<jsp:include page="../layout/header.jsp"></jsp:include>--%>
@@ -40,7 +88,8 @@
                         <ul class="list-group">
                             <c:forEach var="room" items="${chatRooms}">
                                 <li class="list-group-item d-flex justify-content-between align-items-center chat-room"
-                                    data-room-id="${room.id}">
+                                    data-room-id="${room.id}" data-profile="${room.otherUserProfileImage}"
+                                    data-nickname="${room.otherUserNickname}">
                                     <div class="d-flex align-items-center">
                                         <img src="${room.otherUserProfileImage}" alt="Profile" class="rounded-circle" style="width: 40px; height: 40px;">
                                         <div class="ms-2">
@@ -48,10 +97,10 @@
                                             <span class="text-muted">${room.lastMessage}</span>
                                         </div>
                                     </div>
-                                    <div class="text-end">
-                                        <span class="text-muted">${room.lastMessageTime}</span>
+                                    <div class="chat-meta">
+                                        <span class="last-message-time">${room.lastMessageTimeStr}</span>
                                         <c:if test="${room.unreadCount > 0}">
-                                            <span class="badge bg-danger">${room.unreadCount}</span>
+                                            <span class="unread-badge">${room.unreadCount}</span>
                                         </c:if>
                                     </div>
                                 </li>
@@ -78,10 +127,27 @@
                         </div>
 
                         <!-- 메시지 입력 -->
-                        <div class="d-flex mt-3">
-                            <input type="text" id="messageInput" class="form-control" placeholder="메시지를 입력하세요...">
-                            <button id="sendMessageBtn" class="btn btn-primary ms-2">전송</button>
+                        <div class="d-flex mt-3 align-items-center">
+                            <form id="uploadForm" enctype="multipart/form-data" class="d-flex w-100">
+                                <!-- 파일 업로드 아이콘 (기존 클립 모양을 다운로드 아이콘으로 변경) -->
+                                <label for="fileInput" class="btn btn-outline-secondary me-2 d-flex align-items-center justify-content-center"
+                                       style="width: 40px; height: 40px; padding: 0;">
+                                    <i class="bi bi-download" style="font-size: 20px;"></i>
+                                </label>
+
+                                <input type="file" id="fileInput" accept="image/*" style="display: none;">
+
+                                <!-- 메시지 입력창 -->
+                                <input type="text" id="messageInput" class="form-control me-2" placeholder="메시지를 입력하세요..." style="flex: 1;">
+
+                                <!-- 전송 버튼 -->
+                                <button type="button" id="sendMessageBtn" class="btn btn-primary d-flex align-items-center justify-content-center"
+                                        style="width: 100px;">
+                                    전송
+                                </button>
+                            </form>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -90,6 +156,26 @@
         </div>
     </div>
 </div>
+
+<!-- 이미지 모달 -->
+<div id="imageModal" class="modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">이미지 보기</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="modalImage" src="" class="img-fluid" style="max-height: 500px; object-fit: contain;">
+            </div>
+            <div class="modal-footer">
+                <a id="downloadImage" href="#" class="btn btn-primary" download>다운로드</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <jsp:include page="/user/snap/jsp/snap/snapModal.jsp"></jsp:include>
 <script src="/JS/snapModal.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -102,52 +188,49 @@
     const messageInput = document.getElementById("messageInput");
     const sendMessageBtn = document.getElementById("sendMessageBtn");
     const chatBox = document.getElementById("chat-box");
+    const fileInput = document.getElementById("fileInput");
+
+    let selectedProfileImage = "";
+    let selectedNickname = "";
     let messageInterval;
-    // JSP에서 받아온 사용자 정보를 JavaScript 변수로 저장
+
     const currentUserId = '<%= session.getAttribute("cus_id") %>';
 
+    // 이벤트 리스너 등록 (중복 제거)
+    sendMessageBtn.addEventListener("click", sendMessage);
+    fileInput.addEventListener("change", function() {
+      console.log("파일 선택됨: " + fileInput.files[0].name);
+    });
 
     if (currentRoomId && currentRoomId !== "null") {
-
       loadChatMessages(currentRoomId);
 
-      // 자동으로 상대방 프로필 & 닉네임 업데이트
       document.querySelectorAll('.chat-room').forEach(room => {
         if (room.getAttribute("data-room-id") === currentRoomId) {
           room.classList.add('active');
-          document.querySelector('#receiverProfileImg').src = room.getAttribute("data-profile");
-          document.querySelector('#receiverNickname').textContent = room.getAttribute("data-nickname");
+          document.getElementById("receiverProfileImg").src = room.getAttribute("data-profile");
+          document.getElementById("receiverNickname").textContent = room.getAttribute("data-nickname");
         }
       });
     }
-
-
-
+    document.getElementById("uploadForm").addEventListener("submit", function(e) {
+      e.preventDefault(); // 폼 전송 기본 동작 막기 (새로고침 방지)
+    });
 
     // 채팅방 클릭 이벤트 처리
     document.querySelectorAll('.chat-room').forEach(room => {
       room.addEventListener('click', function() {
-
         if (messageInterval) {
           clearInterval(messageInterval);
         }
 
-
-
         currentRoomId = this.dataset.roomId;
-        const userId = this.dataset.userId;
+        selectedProfileImage = this.dataset.profile;
+        selectedNickname = this.dataset.nickname;
 
+        document.getElementById("receiverProfileImg").src = selectedProfileImage;
+        document.getElementById("receiverNickname").textContent = selectedNickname;
 
-        const profileImage = this.dataset.profile;
-        const nickname = this.dataset.nickname;
-
-
-        document.querySelector('#receiverProfileImg').src = profileImage;
-        document.querySelector('#receiverNickname').textContent = nickname;
-
-
-
-        // 선택된 채팅방 스타일 변경
         document.querySelectorAll('.chat-room').forEach(r => r.classList.remove('active'));
         this.classList.add('active');
 
@@ -156,7 +239,6 @@
         messageInterval = setInterval(() => {
           loadChatMessages(currentRoomId);
         }, 2000);
-
       });
     });
 
@@ -165,99 +247,160 @@
       if (!roomId) return;
 
       fetch("/Controller?type=chatRoom&roomId=" + roomId)
-          .then(response => {
-            if (!response.ok) throw new Error('서버 응답 오류');
-            return response.json();
-          })
+          .then(response => response.json())
           .then(messages => {
             chatBox.innerHTML = '';
-            let lastDate = ''; // 날짜 중복 방지용 변수
+            let lastDate = '';
 
             messages.forEach((msg, index) => {
               let isMyMessage = parseInt(msg.sender_id) === parseInt(currentUserId);
-
-
               let messageDate = new Date(msg.created_at);
-              let options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
-              let formattedDate = messageDate.toLocaleDateString('ko-KR', options);
+              let formattedDate = messageDate.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+              let formattedTime = messageDate.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: true });
 
-
-              let timeOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
-              let formattedTime = messageDate.toLocaleTimeString('ko-KR', timeOptions);
-
+              let unreadBadge = msg.is_read == 0 ? `<span class="unread-message-badge">1</span>` : '';
 
               if (formattedDate !== lastDate) {
-                let dateHTML =
-                    '<div class="text-center my-3 text-muted fw-bold">' +
-                    formattedDate +
-                    '</div>';
-                chatBox.insertAdjacentHTML('beforeend', dateHTML);
+                chatBox.insertAdjacentHTML('beforeend', `<div class="text-center my-3 text-muted fw-bold">${formattedDate}</div>`);
                 lastDate = formattedDate;
               }
 
-
-              let messageHTML =
-                  '<div class="d-flex ' + (isMyMessage ? 'justify-content-end' : 'justify-content-start') + ' align-items-end mb-2">' +
-                  (isMyMessage
-                      ? '<div class="small text-muted me-2">' + formattedTime + '</div>'
+              let messageHTML = isMyMessage
+                  ? '<div class="d-flex flex-column align-items-end mb-2">' +
+                  '<div class="d-flex flex-column align-items-end">' +
+                  (msg.image_url
+                      ? '<img src="' + msg.image_url + '" class="chat-image rounded mb-1" ' +
+                      'style="max-width: 200px; max-height: 250px; object-fit: cover; cursor: pointer;">'
                       : '') +
-                  '<div class="p-2 rounded ' + (isMyMessage ? 'bg-warning text-dark' : 'bg-light') + '" style="max-width: 60%; border-radius: 15px;">' +
+                  '<div class="d-flex align-items-center">' +
+                  '<div class="small text-muted me-2">' +
+                  (msg.is_read == 0 ? '<span class="text-warning fw-bold me-1">1</span>' : '') +formattedTime +
+                  '</div>' +
+                  '<div class="p-2 rounded bg-warning text-dark" style="max-width: 60%; border-radius: 15px;">' +
                   msg.message +
                   '</div>' +
-                  (!isMyMessage
-                      ? '<div class="small text-muted ms-2">' + formattedTime + '</div>'
+                  '</div>' +
+                  '</div>' +
+                  '</div>'
+                  : '<div class="d-flex align-items-start mb-2">' +
+                  '<img src="' + selectedProfileImage + '" class="rounded-circle me-2" ' +
+                  'style="width: 40px; height: 40px; object-fit: cover;">' +
+                  '<div>' +
+                  '<div class="fw-bold text-dark">' + selectedNickname + '</div>' +
+                  '<div class="d-flex flex-column">' +
+                  (msg.image_url
+                      ? '<img src="' + msg.image_url + '" class="chat-image rounded mb-1" ' +
+                      'style="max-width: 200px; max-height: 250px; object-fit: cover; cursor: pointer;">'
                       : '') +
+                  '<div class="d-flex align-items-center">' +
+                  '<div class="p-2 rounded bg-light" style="max-width: 60%; border-radius: 15px;">' +
+                  msg.message +
+                  '</div>' +
+                  '<div class="small text-muted ms-2">' + formattedTime + '</div>' +
+                  '</div>' +
+                  '</div>' +
+                  '</div>' +
                   '</div>';
 
               chatBox.insertAdjacentHTML('beforeend', messageHTML);
+
+
+
+
+              markMessagesAsRead(roomId);
             });
+            // updateChatRoomList(roomId, latestMessage, latestTime);
 
             chatBox.scrollTop = chatBox.scrollHeight;
           })
           .catch(error => {
             console.error('메시지 로딩 오류:', error);
-            chatBox.innerHTML = '<p class="text- text-center">채팅방을 선택해주세요.</p>';
+            chatBox.innerHTML = '<p class="text-muted text-center">채팅방을 선택해주세요.</p>';
           });
     }
 
+    // 채팅방 읽음 처리
+    function markMessagesAsRead(roomId) {
+      fetch("/Controller?type=markAsRead&roomId=" + roomId, { method: "POST" })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              console.log("메시지를 읽음 상태로 변경 완료");
+              updateUnreadCount(roomId);
+            }
+          })
+          .catch(error => console.error("읽음 상태 업데이트 오류:", error));
+    }
+
+    // 채팅 목록에서 숫자 제거
+    function updateUnreadCount(roomId) {
+      let chatRoomElement = document.querySelector('.chat-room[data-room-id="' + roomId + '"]');
+      if (chatRoomElement) {
+        let unreadBadge = chatRoomElement.querySelector(".unread-badge");
+        if (unreadBadge) {
+          unreadBadge.remove();
+        }
+      }
+    }
+
     // 메시지 전송
-    function sendMessage() {
+    async function sendMessage() {
       if (!currentRoomId) {
         alert('채팅방을 선택해주세요.');
         return;
       }
 
       const message = messageInput.value.trim();
-      if (!message) return;
+      let imageUrl = null;
 
-      console.log(" 전송하는 채팅방 ID (currentRoomId):", currentRoomId);
-      console.log(" 현재 사용자 ID (currentUserId):", currentUserId);
-      console.log(message)
 
+
+      if (fileInput.files.length > 0) {
+        const formData = new FormData();
+        formData.append("file", fileInput.files[0]);
+         console.log("좋이"+fileInput.files[0].name)
+        try {
+          let response = await fetch('/Controller?type=uploadImage', {
+            method: 'POST', body: formData });
+          let data = await response.json();
+
+          if (data.success) {
+            imageUrl = data.imageUrl;
+
+          } else {
+            alert("이미지 업로드 실패");
+
+            return;
+          }
+        } catch (error) {
+          console.error('이미지 업로드 오류:', error);
+
+          return;
+        }
+      }
+
+      sendChatMessage(message, imageUrl);
+    }
+
+    function sendChatMessage(message, imageUrl) {
       const messageData = {
         roomId: currentRoomId,
+
         message: message,
         senderId: currentUserId,
-        timestamp: new Date().toISOString()
+        imageUrl: imageUrl
       };
-
-      console.log(" 전송할 데이터:", messageData);
 
       fetch('/Controller?type=chatSend', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
+        headers: { 'Content-Type': 'application/json; charset=UTF-8' },
         body: JSON.stringify(messageData)
       })
-          .then(response => {
-            if (!response.ok) throw new Error('메시지 전송 실패');
-            return response.json();
-          })
+          .then(response => response.json())
           .then(data => {
-            console.log(" 서버 응답 데이터:", data);
             if (data.success) {
               messageInput.value = '';
+              fileInput.value = '';
               loadChatMessages(currentRoomId);
             } else {
               throw new Error(data.message || '메시지 전송 실패');
@@ -269,20 +412,68 @@
           });
     }
 
-    // 이벤트 리스너 등록
-    sendMessageBtn.addEventListener('click', sendMessage);
-    messageInput.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        sendMessage();
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const chatBox = document.getElementById("chat-box");
+
+    // 이미지 클릭 이벤트 (모달 띄우기)
+    chatBox.addEventListener("click", function (event) {
+      if (event.target.tagName === "IMG" && event.target.classList.contains("chat-image")) {
+        let imageUrl = event.target.src;
+        document.getElementById("modalImage").src = imageUrl;
+        document.getElementById("downloadImage").setAttribute("data-url", imageUrl); // 다운로드 버튼에 이미지 URL 저장
+        new bootstrap.Modal(document.getElementById("imageModal")).show();
       }
     });
 
-    // 주기적으로 메시지 업데이트
-    if (currentRoomId) {
-      setInterval(() => loadChatMessages(currentRoomId), 2000);
-    }
+    // 다운로드 버튼 클릭 이벤트
+    document.getElementById("downloadImage").addEventListener("click", function() {
+      const imageUrl = this.getAttribute("data-url"); // 저장된 이미지 URL 가져오기
+      if (!imageUrl) {
+        alert("이미지를 찾을 수 없습니다.");
+        return;
+      }
+
+
+
+      // 이미지 다운로드 처리 (fetch -> blob -> 다운로드 실행)
+      fetch(imageUrl)
+          .then(response => response.blob()) // 이미지 데이터를 Blob으로 변환
+          .then(blob => {
+            const url = window.URL.createObjectURL(blob); // Blob을 객체 URL로 변환
+            const a = document.createElement("a");
+            a.style.display = "none";
+            a.href = url;
+            a.download = imageUrl.split('/').pop(); // 파일 이름 설정
+            document.body.appendChild(a);
+            a.click(); // 자동으로 클릭하여 다운로드 실행
+            window.URL.revokeObjectURL(url); // 다운로드 후 URL 해제
+            document.body.removeChild(a); // 요소 제거
+          })
+          .catch(error => {
+            console.error(" 다운로드 오류:", error);
+            alert("파일을 다운로드할 수 없습니다.");
+          });
+    });
   });
+
+  // function updateChatRoomList(roomId, message, time) {
+  //   let chatRoomElement = document.querySelector('.chat-room[data-room-id="' + roomId + '"]');
+  //
+  //   if (chatRoomElement) {
+  //     let lastMessageElement = chatRoomElement.querySelector(".text-muted");
+  //     let lastMessageTimeElement = chatRoomElement.querySelector(".last-message-time");
+  //
+  //     if (lastMessageElement) {
+  //       lastMessageElement.textContent = message;
+  //     }
+  //     if (lastMessageTimeElement) {
+  //       lastMessageTimeElement.textContent = time;
+  //     }
+  //   }
+  // }
+
 </script>
 
 

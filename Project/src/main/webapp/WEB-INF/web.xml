@@ -19,4 +19,9 @@
 <!--    <url-pattern>/user/control/Controller</url-pattern>-->
 <!--  </servlet-mapping>-->
 
+  <!-- Controller 서블릿 정의 -->
+
+
+    <!-- ✅ 파일 업로드 설정 (multipart-config) 추가 -->
+
 </web-app>

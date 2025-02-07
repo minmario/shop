@@ -7,6 +7,7 @@ import user.vo.snap.CustomerVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -35,8 +36,8 @@ public class ChatAction implements Action {
       String lastMessage = chatDao.getLastMessage(room.getId());
       int unreadCount = chatDao.getUnreadMessageCount(room.getId(), userId);
       LocalDateTime lastMessageTime = chatDao.getLastMessageTime(room.getId());
+      room.setLastMessageTimeStr(formatTimeAgo(lastMessageTime));
 
-      room.setLastMessage(lastMessage);
       room.setUnreadCount(unreadCount);
       room.setLastMessageTime(lastMessageTime);
     }
@@ -54,4 +55,22 @@ public class ChatAction implements Action {
 
     return "/user/snap/jsp/snap/Chat.jsp";
   }
+
+  public static String formatTimeAgo(LocalDateTime lastMessageTime) {
+    if (lastMessageTime == null) return "";
+    Duration duration = Duration.between(lastMessageTime, LocalDateTime.now());
+    long seconds = duration.getSeconds();
+
+    if (seconds < 60) return seconds + "초 전";
+    long minutes = seconds / 60;
+    if (minutes < 60) return minutes + "분 전";
+    long hours = minutes / 60;
+    if (hours < 24) return hours + "시간 전";
+    long days = hours / 24;
+    if (days < 30) return days + "일 전";
+    long months = days / 30;
+    if (months < 12) return months + "개월 전";
+    return (months / 12) + "년 전";
+  }
+
 }

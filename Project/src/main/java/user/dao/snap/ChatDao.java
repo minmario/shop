@@ -78,8 +78,10 @@ public class ChatDao {
   }
 
   public String getLastMessage(int roomId) {
-       SqlSession session = FactoryService.getFactory().openSession();
-      return session.selectOne("ChatMapper.getLastMessage", roomId);
+    SqlSession session = FactoryService.getFactory().openSession();
+    String lastMessage = session.selectOne("ChatMapper.getLastMessage", roomId);
+    session.close();
+    return lastMessage != null ? lastMessage : "";  // null 방지
 
   }
 
@@ -105,15 +107,35 @@ public class ChatDao {
 
   public LocalDateTime getLastMessageTime(int roomId) {
     SqlSession ss = FactoryService.getFactory().openSession();
-
-    // DB에서 Timestamp 값 가져오기
     Timestamp lastMessageTimeTs = ss.selectOne("ChatMapper.getLastMessageTime", roomId);
+    ss.close();
+    return (lastMessageTimeTs != null) ? lastMessageTimeTs.toLocalDateTime() : null;
+  }
 
-    // 세션 종료
+  //읽음처리
+  public boolean updateMessageReadStatus(int roomId, int userId) {
+    SqlSession ss = FactoryService.getFactory().openSession();
+    Map<String, Object> params = new HashMap<>();
+    params.put("roomId", roomId);
+    params.put("userId", userId);
+
+    int result = ss.update("ChatMapper.updateMessageReadStatus", params);
+    ss.commit();
     ss.close();
 
-    // Timestamp가 null이 아니라면 LocalDateTime으로 변환
-    return (lastMessageTimeTs != null) ? lastMessageTimeTs.toLocalDateTime() : null;
+    return result > 0;
+  }
+
+  public static boolean sendMessage(ChatMessageVO vo) {
+    SqlSession ss = FactoryService.getFactory().openSession();
+    Map<String, Object> params = new HashMap<>();
+   ;  // 이미지 URL 추가
+
+    int result = ss.insert("ChatMapper.sendMessage", vo);
+    ss.commit();
+    ss.close();
+
+    return result > 0;
   }
 
 
