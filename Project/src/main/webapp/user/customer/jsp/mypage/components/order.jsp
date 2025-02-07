@@ -38,9 +38,9 @@
                         <div class="custom-order-code-group">
                             <a href="Controller?type=orderDetails&action=select&order_code=${item.order_code}" class="custom-order-code custom-details-link">주문 코드: ${item.order_code}</a>
                             <div class="wrap-all-button">
-                                <button type="button" class="btn btn-outline-secondary" id="all-cancel" onclick="location.href='Controller?type=cancelOrder&action=select_all'">전체 구매취소</button>
-                                <button type="button" class="btn btn-outline-secondary" id="all-refund">전체 반품신청</button>
-                                <button type="button" class="btn btn-outline-secondary" id="all-exchange">전체 교환신청</button>
+                                <button type="button" class="btn btn-outline-secondary" id="all-cancel" onclick="location.href='Controller?type=cancelOrder&action=select_all&order_code=${item.order_code}'">전체 구매취소</button>
+                                <button type="button" class="btn btn-outline-secondary" id="all-refund" onclick="location.href='Controller?type=refundRequest&action=select_all&order_code=${item.order_code}'">전체 반품신청</button>
+                                <button type="button" class="btn btn-outline-secondary" id="all-exchange" onclick="location.href='Controller?type=exchangeRequest&action=select_all&order_code=${item.order_code}'">전체 교환신청</button>
                             </div>
                         </div>
 
@@ -59,7 +59,6 @@
                                 <c:when test="${item.status == 7}"><span class="custom-order-status">반품신청</span></c:when>
                                 <c:when test="${item.status == 8}"><span class="custom-order-status">교환신청</span></c:when>
                             </c:choose>
-<%--                            <a href="Controller?type=orderDetails&action=select&order_code=${item.order_code}" class="custom-details-link">주문 상세</a>--%>
                         </div>
                         <div class="custom-order-content">
                             <div class="custom-product-image">
@@ -72,11 +71,14 @@
                                 <p class="custom-product-price"><fmt:formatNumber value="${item.amount}"/>원</p>
                             </div>
                         </div>
+                        <c:if test="${item.status == '4'}">
+                            <button type="button" class="btn btn-outline-secondary custom-review-button" onclick="confirmPurchase('${item.id}')">구매 확정</button>
+                        </c:if>
                         <c:if test="${item.status == '5'}">
                             <button type="button" class="btn btn-outline-secondary custom-review-button" data-toggle="modal" data-target="#reviewModal">후기 작성</button>
                         </c:if>
                         <div class="custom-product-actions">
-                            <button type="button" class="btn btn-outline-secondary custom-action-button">배송 조회</button>
+                            <button type="button" class="btn btn-outline-secondary custom-action-button" onclick="location.href='Controller?type=deliveryStatus&order_code=${item.order_code}&brand=${item.brand}">배송 조회</button>
                             <button type="button" class="btn btn-outline-secondary custom-action-button" data-toggle="modal" data-target="#repurchaseModal">재구매</button>
                         </div>
                     </div>

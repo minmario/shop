@@ -11,6 +11,7 @@ import user.vo.customer.OrderVO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 public class RefundDetailsAction implements Action {
     @Override
@@ -23,30 +24,22 @@ public class RefundDetailsAction implements Action {
             return "/user/customer/jsp/error/error.jsp";
         }
 
-        String action = request.getParameter("action");
         String order_id = request.getParameter("order_id");
         String order_code = request.getParameter("order_code");
         String prod_no = request.getParameter("prod_no");
 
-        String viewPath = null;
-        if (action != null) {
-            switch (action) {
-                case "select":
-                    OrderVO refund = OrderDAO.selectDetailsByStatus(order_id, cvo.getId(), prod_no, order_code, "7");
-                    DeliveryVO delivery = DeliveryDAO.selectRetrieveInfo(order_id);
-                    OrderVO coupon = OrderDAO.selectOrderCoupon(cvo.getId(), prod_no, order_code);
-                    int point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code);
-                    OrderVO vo = OrderDAO.selectSellerAddress(order_id);
+        OrderVO refund = OrderDAO.selectDetailsByStatus(order_id, cvo.getId(), prod_no, order_code, "7");
+        DeliveryVO delivery = DeliveryDAO.selectRetrieveInfo(order_id);
+        List<OrderVO> coupon = OrderDAO.selectOrderCoupons(cvo.getId(), order_code, prod_no);
+        int point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code);
+        OrderVO vo = OrderDAO.selectSellerAddress(order_id);
 
-                    request.setAttribute("refund", refund);
-                    request.setAttribute("delivery", delivery);
-                    request.setAttribute("coupon", coupon);
-                    request.setAttribute("point_amount", point_amount);
-                    request.setAttribute("vo", vo);
-                    viewPath = "/user/customer/jsp/mypage/refundDetails.jsp";
-                    break;
-            }
-        }
-        return viewPath;
+        request.setAttribute("refund", refund);
+        request.setAttribute("delivery", delivery);
+        request.setAttribute("coupon", coupon);
+        request.setAttribute("point_amount", point_amount);
+        request.setAttribute("vo", vo);
+
+        return "/user/customer/jsp/mypage/refundDetails.jsp";
     }
 }

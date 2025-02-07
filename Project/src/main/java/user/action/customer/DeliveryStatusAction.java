@@ -21,12 +21,12 @@ public class DeliveryStatusAction implements Action {
             return "/user/customer/jsp/error/error.jsp";
         }
 
-        String order_id = request.getParameter("order_id");
         String order_code = request.getParameter("order_code");
+        String brand = request.getParameter("brand");
 
-        List<OrderVO> list = OrderDAO.selectDeliveryStatus(cvo.getId(), order_code);
+        List<OrderVO> list = OrderDAO.selectDeliveryStatus(cvo.getId(), order_code, brand);
         request.setAttribute("list", list);
-
+        System.out.println(list.get(0).getCourier());
         return "/user/customer/jsp/mypage/deliveryStatus.jsp";
     }
 }

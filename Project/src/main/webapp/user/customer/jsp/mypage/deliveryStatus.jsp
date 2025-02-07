@@ -36,11 +36,32 @@
 
                         <c:if test="${requestScope.list ne null}">
                             <div class="wrap-content">
+                                <c:set var="currentBrand" value="${requestScope.list[0].brand}" />
+
+                                <!-- 브랜드 헤더 -->
+                                <div class="order-group-header">
+                                    <h3 class="order-group-title">주문번호: ${requestScope.list[0].order_code}</h3>
+                                    <p class="brand-title">브랜드: ${currentBrand}</p>
+                                </div>
+
                                 <!-- 배송 상태 -->
                                 <div class="delivery-status">
                                     <div class="wrap-date">
                                         <span class="date">1/20(월)</span>
-                                        <span class="date-message">배송이 시작되었어요</span>
+                                        <c:choose>
+                                            <c:when test="${requestScope.list[0].status == '1'}">
+                                                <span class="date-message">결제 완료</span>
+                                            </c:when>
+                                            <c:when test="${requestScope.list[0].status == '2'}">
+                                                <span class="date-message">배송 시작</span>
+                                            </c:when>
+                                            <c:when test="${requestScope.list[0].status == '3'}">
+                                                <span class="date-message">배송 중</span>
+                                            </c:when>
+                                            <c:when test="${requestScope.list[0].status == '4'}">
+                                                <span class="date-message">배송 완료</span>
+                                            </c:when>
+                                        </c:choose>
                                     </div>
                                     <div class="status-bar">
                                         <span class="status active">배송 시작</span>
@@ -48,15 +69,28 @@
                                         <span class="status">배송 완료</span>
                                     </div>
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <c:choose>
+                                            <c:when test="${requestScope.list[0].status == '1'}">
+                                                <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </c:when>
+                                            <c:when test="${requestScope.list[0].status == '2'}">
+                                                <div class="progress-bar" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="33" aria-valuemax="100"></div>
+                                            </c:when>
+                                            <c:when test="${requestScope.list[0].status == '3'}">
+                                                <div class="progress-bar" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="66" aria-valuemax="100"></div>
+                                            </c:when>
+                                            <c:when test="${requestScope.list[0].status == '4'}">
+                                                <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100"></div>
+                                            </c:when>
+                                        </c:choose>
                                     </div>
                                 </div>
 
                                 <!-- 주문 내역 -->
                                 <div class="order-section">
                                     <div class="order-header">
-                                        <span class="order-date">25.01.17</span>
-                                        <a href="Controller?type=orderDetails&action" class="order-details">주문 상세</a>
+                                        <span class="order-date">${requestScope.list[0].order_date}</span>
+                                        <a href="Controller?type=orderDetails&action=select&order_code=${requestScope.list[0].order_code}" class="order-details">주문 상세</a>
                                     </div>
                                     <c:forEach var="item" items="${requestScope.list}">
                                         <div class="product-info">
@@ -75,12 +109,12 @@
                                 <div class="courier-info">
                                     <div class="wrap-courier">
                                         <p class="courier-title">택배사</p>
-                                        <p class="courier-name">롯데택배</p>
+                                        <p class="courier-name">${requestScope.list[0].courier}</p>
                                     </div>
                                     <div class="wrap-tracking">
                                         <p class="tracking-title">송장 번호</p>
                                         <div class="tracking-info">
-                                            <a href="#" class="tracking-number">316063401695</a>
+                                            <a href="#" class="tracking-number">${requestScope.list[0].invoice_number}</a>
                                             <i class="bi bi-copy"></i>
                                         </div>
                                     </div>

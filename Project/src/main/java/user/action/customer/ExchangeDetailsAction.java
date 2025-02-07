@@ -22,26 +22,18 @@ public class ExchangeDetailsAction implements Action {
             return "/user/customer/jsp/error/error.jsp";
         }
 
-        String action = request.getParameter("action");
         String order_id = request.getParameter("order_id");
         String order_code = request.getParameter("order_code");
         String prod_no = request.getParameter("prod_no");
 
-        String viewPath = null;
-        if (action != null) {
-            switch (action) {
-                case "select":
-                    OrderVO exchange = OrderDAO.selectDetailsByStatus(order_id, cvo.getId(), prod_no, order_code, "8");
-                    DeliveryVO delivery = DeliveryDAO.selectRetrieveInfo(order_id);
-                    OrderVO vo = OrderDAO.selectSellerAddress(order_id);
+        OrderVO exchange = OrderDAO.selectDetailsByStatus(order_id, cvo.getId(), prod_no, order_code, "8");
+        DeliveryVO delivery = DeliveryDAO.selectRetrieveInfo(order_id);
+        OrderVO vo = OrderDAO.selectSellerAddress(order_id);
 
-                    request.setAttribute("exchange", exchange);
-                    request.setAttribute("delivery", delivery);
-                    request.setAttribute("vo", vo);
-                    viewPath = "/user/customer/jsp/mypage/exchangeDetails.jsp";
-                    break;
-            }
-        }
-        return viewPath;
+        request.setAttribute("exchange", exchange);
+        request.setAttribute("delivery", delivery);
+        request.setAttribute("vo", vo);
+
+        return "/user/customer/jsp/mypage/exchangeDetails.jsp";
     }
 }

@@ -32,16 +32,34 @@
                         <div class="order-container">
                             <div class="order-status">
                                 <h2 class="order-title">진행 중 주문 현황</h2>
-                                <div class="wrap-order-item">
-                                    <c:if test="${requestScope.list eq null}">
-                                        <div class="order-item">
-                                            <span>현재 진행 중인 주문 현황이 없습니다.</span>
-                                        </div>
-                                    </c:if>
 
-                                    <c:if test="${requestScope.list ne null}">
-                                    <c:forEach var="item" items="${requestScope.list}">
-                                        <div class="order-item" onclick="location.href='Controller?type=deliveryStatus&action=select&order_id=${item.id}&order_code=${item.order_code}'">
+                                <c:if test="${requestScope.list eq null}">
+                                    <div class="order-item">
+                                        <span>현재 진행 중인 주문 현황이 없습니다.</span>
+                                    </div>
+                                </c:if>
+
+                                <c:if test="${requestScope.list ne null}">
+                                    <!-- 현재 주문 코드 추적 변수 -->
+                                    <c:set var="currentOrderCode" value="" />
+
+                                    <!-- 주문 목록 반복 -->
+                                    <c:forEach var="item" items="${requestScope.list}" varStatus="itemLoop">
+                                        <!-- 주문 코드가 바뀌었을 때 새로운 블록 생성 -->
+                                        <c:if test="${currentOrderCode != item.order_code}">
+                                            <c:set var="currentOrderCode" value="${item.order_code}" />
+
+                                            <!-- 주문 코드별 헤더 -->
+                                            <div class="order-group-header">
+                                                <h3 class="order-group-title">주문번호: ${currentOrderCode}</h3>
+                                            </div>
+
+                                            <!-- 새로운 주문 코드 그룹 시작 -->
+                                            <div class="wrap-order-item">
+                                        </c:if>
+
+                                        <!-- 주문 상품 출력 -->
+                                        <div class="order-item" onclick="location.href='Controller?type=deliveryStatus&action=select&order_code=${item.order_code}&brand=${item.brand}'">
                                             <img src="${fn:split(item.prod_image, ',')[0]}" alt="Product Image" class="product-image">
                                             <div class="order-details">
                                                 <c:choose>
@@ -64,10 +82,15 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <!-- 마지막 상품 또는 다음 주문 코드가 변경되었을 때 wrap-order-item 닫기 -->
+                                        <c:if test="${itemLoop.last || (itemLoop.index + 1) < fn:length(requestScope.list) && requestScope.list[itemLoop.index + 1].order_code != item.order_code}">
+                                            </div> <!-- wrap-order-item 닫기 -->
+                                        </c:if>
                                     </c:forEach>
-                                    </c:if>
-                                </div>
+                                </c:if>
                             </div>
+
                         </div>
                     </div>
                 </div>

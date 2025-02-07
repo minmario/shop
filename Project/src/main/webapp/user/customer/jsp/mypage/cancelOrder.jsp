@@ -124,26 +124,30 @@
                                             <c:set var="totalAmountInt" value="${fn:replace(totalAmount, ',', '')}" />
                                             <c:set var="pointUsedInt" value="${fn:replace(pointUsed, ',', '')}" />
 
-                                            <%-- 상품 가격에 수량을 곱하여 총 결제 금액 계산 --%>
-<%--                                            <c:set var="totalPrice" value="${totalAmountInt * prodCount}" />--%>
-
                                             <li><span>상품 결제 금액</span><span class="cancel-item-price"><fmt:formatNumber value="${totalAmountInt}"/>원</span></li>
 
                                             <c:if test="${requestScope.point_amount ne null}">
                                                 <li><span>적립금 사용</span><span class="cancel-item-price"><fmt:formatNumber value="${pointUsedInt}"/>원</span></li>
                                             </c:if>
 
-                                            <c:if test="${coupon ne null}">
-                                            <li>
-                                                <c:set var="couponDiscount" value="${totalAmountInt * (coupon.sale_per / 100)}" />
-                                                <span>쿠폰 사용</span><br/>
-                                                <span class="cancel-coupon-info">${coupon.coupon_name} (${coupon.sale_per}%)</span>
-                                                <span class="cancel-coupon">-<fmt:formatNumber value="${couponDiscount}" type="number" maxFractionDigits="0"/>원</span>
-                                            </li>
+                                            <c:set var="totalCouponDiscount" value="0" />
+                                            <c:if test="${not empty requestScope.coupon}">
+                                                <c:forEach var="coupon" items="${requestScope.coupon}">
+                                                    <!-- 쿠폰 할인 계산 -->
+                                                    <c:set var="couponDiscount" value="${totalAmountInt * (coupon.sale_per / 100)}" />
+                                                    <c:set var="totalCouponDiscount" value="${totalCouponDiscount + couponDiscount}" />
+
+                                                    <!-- 쿠폰 정보 출력 -->
+                                                    <li>
+                                                        <span>쿠폰 사용</span><br/>
+                                                        <span class="cancel-coupon-info">${coupon.coupon_name} (${coupon.sale_per}%)</span>
+                                                        <span class="cancel-coupon">-<fmt:formatNumber value="${couponDiscount}" type="number" maxFractionDigits="0"/>원</span>
+                                                    </li>
+                                                </c:forEach>
                                             </c:if>
 
                                             <!-- 환불 예정 금액 계산 (총 결제 금액 - 적립금 - 쿠폰) -->
-                                            <c:set var="refundAmount" value="${totalAmountInt - pointUsedInt - couponDiscount}" />
+                                            <c:set var="refundAmount" value="${totalAmountInt - pointUsedInt - totalCouponDiscount}" />
                                             <li><span>환불 예정 금액</span><span class="cancel-refund-amount"><fmt:formatNumber value="${refundAmount}" type="number" maxFractionDigits="0"/>원</span></li>
                                         </ul>
                                     </div>

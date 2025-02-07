@@ -29,13 +29,18 @@ public class CancelOrderAction implements Action {
         String order_code = request.getParameter("order_code");
         String prod_no = request.getParameter("prod_no");
 
+        List<OrderVO> o_list = null;
+        List<DeliveryVO> d_list = null;
+        List<OrderVO> coupon = null;
+        int point_amount = 0;
+
         if (action != null) {
             switch (action) {
                 case "select":
-                    List<OrderVO> o_list = OrderDAO.selectOrderProduct(id, cvo.getId(), order_code);
-                    List<DeliveryVO> d_list = DeliveryDAO.selectDelivery(cvo.getId());
-                    OrderVO coupon = OrderDAO.selectOrderCoupon(cvo.getId(), prod_no, order_code); // 쿠폰 정보 가져오기
-                    int point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code);
+                    o_list = OrderDAO.selectOrderProduct(id, cvo.getId(), order_code);
+                    d_list = DeliveryDAO.selectDelivery(cvo.getId());
+                    coupon = OrderDAO.selectOrderCoupons(cvo.getId(), order_code, prod_no); // 쿠폰 정보 가져오기
+                    point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code);
 
                     request.setAttribute("o_list", o_list);
                     request.setAttribute("d_list", d_list);
@@ -46,15 +51,15 @@ public class CancelOrderAction implements Action {
 
                 case "select_all":
                     try {
-                        List<OrderVO> o_list_all = OrderDAO.selectOrderProduct(id, cvo.getId(), order_code);
-                        List<DeliveryVO> d_list_all = DeliveryDAO.selectDelivery(cvo.getId());
-                        List<OrderVO> coupon_all = OrderDAO.selectOrderCouponList(cvo.getId(),order_code); // 쿠폰 정보 가져오기
-                        int point_amount_all = PointDAO.selectPointAmount(cvo.getId(), order_code);
+                        o_list = OrderDAO.selectOrderProduct(null, cvo.getId(), order_code);
+                        d_list = DeliveryDAO.selectDelivery(cvo.getId());
+                        coupon = OrderDAO.selectOrderCoupons(cvo.getId(),order_code, null); // 쿠폰 정보 가져오기
+                        point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code);
 
-                        request.setAttribute("o_list", o_list_all);
-                        request.setAttribute("d_list", d_list_all);
-                        request.setAttribute("coupon", coupon_all);
-                        request.setAttribute("point_amount", point_amount_all);
+                        request.setAttribute("o_list", o_list);
+                        request.setAttribute("d_list", d_list);
+                        request.setAttribute("coupon", coupon);
+                        request.setAttribute("point_amount", point_amount);
 
                         return "/user/customer/jsp/mypage/cancelOrder.jsp";
                     } catch (Exception e) {

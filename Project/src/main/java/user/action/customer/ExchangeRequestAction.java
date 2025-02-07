@@ -32,14 +32,31 @@ public class ExchangeRequestAction implements Action {
         String order_code = request.getParameter("order_code");
         String prod_no = request.getParameter("prod_no");
 
+        List<OrderVO> o_list = null;
+        List<DeliveryVO> d_list = null;
+
         if (action != null) {
             switch (action) {
                 case "select":
                     try {
-                        List<OrderVO> o_list = OrderDAO.selectOrderProduct(id, cvo.getId(), order_code);
-                        List<DeliveryVO> d_list = DeliveryDAO.selectDelivery(cvo.getId());
+                        o_list = OrderDAO.selectOrderProduct(id, cvo.getId(), order_code);
+                        d_list = DeliveryDAO.selectDelivery(cvo.getId());
 
-                        request.setAttribute("o_vo", o_list);
+                        request.setAttribute("o_list", o_list);
+                        request.setAttribute("d_list", d_list);
+
+                        return "/user/customer/jsp/mypage/exchangeRequest.jsp";
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return "/user/customer/jsp/error/error.jsp";
+                    }
+
+                case "select_all":
+                    try {
+                        o_list = OrderDAO.selectOrderProduct(null, cvo.getId(), order_code);
+                        d_list = DeliveryDAO.selectDelivery(cvo.getId());
+
+                        request.setAttribute("o_list", o_list);
                         request.setAttribute("d_list", d_list);
 
                         return "/user/customer/jsp/mypage/exchangeRequest.jsp";

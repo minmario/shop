@@ -55,15 +55,15 @@
                         </div>
                         <div class="wrap-buttons">
                             <c:if test="${all.status eq '6'}">
-                                <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=cancelDetails&action=select&order_id=${all.id}&order_code=${all.order_code}&prod_no=${all.prod_no}'">취소 상세</button>
+                                <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=cancelDetails&order_id=${all.id}&order_code=${all.order_code}&prod_no=${all.prod_no}'">취소 상세</button>
                             </c:if>
                             <c:if test="${all.status eq '7'}">
-                                <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=refundDetails&action=select&order_id=${all.id}&order_code=${all.order_code}&prod_no=${all.prod_no}'">반품 상세</button>
+                                <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=refundDetails&order_id=${all.id}&order_code=${all.order_code}&prod_no=${all.prod_no}'">반품 상세</button>
                                 <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">반품 배송 조회</button>
                                 <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">회수 배송 조회</button>
                             </c:if>
                             <c:if test="${all.status eq '8'}">
-                                <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=cancelDetails&action=select&order_id=${all.id}&order_code=${all.order_code}&prod_no=${all.prod_no}'">교환 상세</button>
+                                <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=cancelDetails&order_id=${all.id}&order_code=${all.order_code}&prod_no=${all.prod_no}'">교환 상세</button>
                                 <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">교환 배송 조회</button>
                                 <button class="btn btn-outline-secondary delivery-status-button" onclick="location.href='Controller?type=deliveryStatus'">회수 배송 조회</button>
                             </c:if>
@@ -101,11 +101,11 @@
                         </div>
                         <div class="wrap-buttons">
                             <c:if test="${cancelRefund.status eq '6'}">
-                                <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=cancelDetails&action=select&order_id=${cancelRefund.id}&order_code=${cancelRefund.order_code}&prod_no=${cancelRefund.prod_no}'">취소 상세</button>
+                                <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=cancelDetails&order_id=${cancelRefund.id}&order_code=${cancelRefund.order_code}&prod_no=${cancelRefund.prod_no}'">취소 상세</button>
                                 <%--                                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#repurchaseModal">재구매</button>--%>
                             </c:if>
                             <c:if test="${cancelRefund.status eq '7'}">
-                                <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=refundDetails&action=select&order_id=${cancelRefund.id}&order_code=${cancelRefund.order_code}&prod_no=${cancelRefund.prod_no}'">반품 상세</button>
+                                <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=refundDetails&order_id=${cancelRefund.id}&order_code=${cancelRefund.order_code}&prod_no=${cancelRefund.prod_no}'">반품 상세</button>
                                 <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#repurchaseModal">재구매</button>
                                 <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
                             </c:if>
@@ -139,7 +139,7 @@
                             </div>
                         </div>
                         <div class="wrap-buttons">
-                            <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=exchangeDetails&action=select&order_id=${exchange.id}&order_code=${exchange.order_code}&prod_no=${exchange.prod_no}'">교환 상세</button>
+                            <button type="button" class="btn btn-outline-secondary" onclick="location.href='Controller?type=exchangeDetails&order_id=${exchange.id}&order_code=${exchange.order_code}&prod_no=${exchange.prod_no}'">교환 상세</button>
                             <button type="button" class="btn btn-outline-secondary">교환 배송 조회</button>
                             <button type="button" class="btn btn-outline-secondary">회수 배송 조회</button>
                         </div>
