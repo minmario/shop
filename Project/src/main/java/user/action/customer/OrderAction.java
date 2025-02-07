@@ -350,7 +350,7 @@ public class OrderAction implements Action {
                                         }
 
                                         // DB inventory 테이블, 수량 감소
-                                        ProductDAO.updateInventory(inventory_no);
+                                        ProductDAO.updateInventory(inventory_no, String.valueOf(count));
 
                                         // DB log 테이블, 로그 저장
                                         LogVO lvo = new LogVO();

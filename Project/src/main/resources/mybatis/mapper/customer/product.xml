@@ -309,9 +309,9 @@
     </select>
 
     <!-- 구매 후 재고 업데이트 -->
-    <update id="update_inventory" parameterType="String">
+    <update id="update_inventory" parameterType="Map">
         UPDATE inventory
-        SET count = count - 1
+        SET count = count - #{count}
         WHERE id = #{id} AND count > 0
     </update>
 </mapper>
