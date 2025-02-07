@@ -510,7 +510,7 @@ public class OrderDAO {
             map.put("order_code", order_code);
             map.put("brand", brand);
 
-            list = ss.selectList("order.select_order_status", map);
+            list = ss.selectList("order.select_delivery_status", map);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

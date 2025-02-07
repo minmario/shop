@@ -26,7 +26,7 @@ public class DeliveryStatusAction implements Action {
 
         List<OrderVO> list = OrderDAO.selectDeliveryStatus(cvo.getId(), order_code, brand);
         request.setAttribute("list", list);
-        System.out.println(list.get(0).getCourier());
+
         return "/user/customer/jsp/mypage/deliveryStatus.jsp";
     }
 }
