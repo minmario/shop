@@ -8,10 +8,7 @@ import user.vo.customer.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -50,6 +47,28 @@ public class OrderAction implements Action {
                     request.setAttribute("o_list", d_list);
                     viewPage = "/user/customer/jsp/mypage/components/order.jsp";
                     break;
+                case "status":
+                    String orderCode = request.getParameter("orderCode");
+                    String status = request.getParameter("status");
+
+                    System.out.println("orderCode: " + orderCode);
+                    System.out.println("status: " + status);
+
+                    int u_cnt = OrderDAO.updateOrderStatus(cvo.getId(), orderCode, status);
+
+                    System.out.println("u_cnt: " + u_cnt);
+
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+
+                    try (PrintWriter out = response.getWriter())  {
+                        out.print("{\"response\": " + (u_cnt > 0) + "}");
+                        out.flush();
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
+
+                    return null;
                 case "payment":
                     try {
                         String p_prod_no = request.getParameter("prod_no");

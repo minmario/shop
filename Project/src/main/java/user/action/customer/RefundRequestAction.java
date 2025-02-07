@@ -43,7 +43,7 @@ public class RefundRequestAction implements Action {
                         coupon = OrderDAO.selectOrderCoupons(cvo.getId(), order_code, prod_no); // 쿠폰 정보 가져오기
                         point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code);
 
-                        request.setAttribute("o_vo", o_list);
+                        request.setAttribute("o_list", o_list);
                         request.setAttribute("d_list", d_list);
                         request.setAttribute("coupon", coupon);
                         request.setAttribute("point_amount", point_amount);
@@ -71,7 +71,6 @@ public class RefundRequestAction implements Action {
                         e.printStackTrace();
                         return "/user/customer/jsp/error/error.jsp";
                     }
-
 
                 case "update":
                     try {

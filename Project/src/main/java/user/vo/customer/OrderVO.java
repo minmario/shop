@@ -3,10 +3,18 @@ package user.vo.customer;
 import java.util.List;
 
 public class OrderVO {
-    private String id, tid, cus_no, prod_no, coupon_no, deli_no, order_code, count, order_date, amount, pay_type, status, refund_bank, refund_account, reason_customer,
+    private String id, tid, cus_no, prod_no, coupon_no, deli_no, order_code, count, order_date, amount, benefit_type, result_amount, pay_type, status, refund_bank, refund_account, reason_customer,
             retrieve_deli_no, prod_code, prod_name, prod_price, prod_sale, prod_image, prod_saled_price, brand, option_name, deli_name, pos_code, addr1,
             addr2, phone, deli_request, is_default, point_amount, inventory_no, coupon_name, sale_per, delivery_date, purchase_confirm_date, exchange_inventory_no,
             expected_point, refund_request_date, cancel_request_date, exchange_request_date, invoice_number, refund_completed_date, courier, seller_address;
+
+    public String getBenefit_type() {
+        return benefit_type;
+    }
+
+    public void setBenefit_type(String benefit_type) {
+        this.benefit_type = benefit_type;
+    }
 
     public String getCourier() {
         return courier;
@@ -26,6 +34,14 @@ public class OrderVO {
 
     public void setRefund_completed_date(String refund_completed_date) {
         this.refund_completed_date = refund_completed_date;
+    }
+
+    public String getResult_amount() {
+        return result_amount;
+    }
+
+    public void setResult_amount(String result_amount) {
+        this.result_amount = result_amount;
     }
 
     public String getSeller_address() {

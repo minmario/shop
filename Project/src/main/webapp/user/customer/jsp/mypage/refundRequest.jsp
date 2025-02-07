@@ -45,7 +45,7 @@
                                             <div class="product-content">
                                                 <input type="hidden" name="order_id" value="${item.id}"/>
                                                 <input type="hidden" name="prod_no" value="${item.prod_no}"/>
-                                                <input type="hidden" id="point-used" value="${item.point_amount}"/>
+                                                <input type="hidden" name="point-used" value="${requestScope.point_amount}"/>
                                                 <input type="hidden" name="orderCode" value="${item.order_code}"/>
                                                 <img src="${fn:split(item.prod_image, ',')[0]}" alt="상품 이미지" class="product-img">
                                                 <div class="product-detail">
@@ -129,10 +129,10 @@
                                             <c:set var="totalAmount" value="0" />
                                             <c:forEach var="item" items="${requestScope.o_list}">
                                                 <!-- 쉼표 제거 후 숫자로 변환 -->
-                                                <c:set var="amountInt" value="${fn:replace(item.amount, ',', '')}" />
+                                                <c:set var="resultAmountInt" value="${fn:replace(item.result_amount, ',', '')}" />
 
                                                 <!-- 누적 합계 계산 -->
-                                                <c:set var="totalAmount" value="${totalAmount + amountInt}" />
+                                                <c:set var="totalAmount" value="${totalAmount + resultAmountInt}" />
                                             </c:forEach>
 
                                             <c:set var="pointUsed" value="${not empty requestScope.point_amount ? requestScope.point_amount : '0'}" />

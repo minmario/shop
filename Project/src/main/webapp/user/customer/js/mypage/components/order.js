@@ -78,18 +78,23 @@ function searchOrder(){
     });
 }
 
-function confirmPurchase(orderId) {
+function confirmPurchase(orderCode) {
     if (confirm("해당 상품을 구매 확정하시겠습니까?")) {
         $.ajax({
-            url: 'Controller?type=order&action=update_status',
+            url: 'Controller?type=order&action=status',
             type: 'POST',
             data: {
-                order_id: orderId,
-                status: 5
+                orderCode: orderCode,
+                status: '5'
             },
+            dataType: 'json',
             success: function(response) {
-                alert("구매 확정이 완료되었습니다.");
-                location.reload();
+                if (response.response) {
+                    alert("구매 확정이 완료되었습니다.");
+                    location.reload();
+                } else {
+                    alert("구매 확정에 실패했습니다.");
+                }
             },
             error: function(xhr, status, error) {
                 alert("구매 확정에 실패했습니다. 다시 시도해 주세요.");

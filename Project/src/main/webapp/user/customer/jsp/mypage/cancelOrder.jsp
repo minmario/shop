@@ -46,13 +46,14 @@
                                         <input type="hidden" name="order_id" value="${item.id}">
                                         <input type="hidden" id="orderCode" value="${item.order_code}">
                                         <input type="hidden" name="prod_no" value="${item.prod_no}"/>
-                                        <input type="hidden" id="cancel-point-used" value="${item.point_amount}"/>
+                                        <input type="hidden" name="cancel-point-used" value="${requestScope.point_amount}"/>
+                                        <input type="hidden" name="benefit_type" value="${item.benefit_type}"/>
                                         <img src="${fn:split(item.prod_image, ',')[0]}" alt="상품 이미지" class="product-img">
                                         <div class="product-details">
                                             <p class="product-brand">${item.brand}</p>
                                             <p class="product-name">${item.prod_name}<br>${item.option_name} / <span class="product-count">${item.count}</span>개</p>
-                                            <p class="product-price" data-price="${item.amount}">
-                                                <fmt:formatNumber value="${item.amount}"/>원
+                                            <p class="product-price" data-price="${item.result_amount}">
+                                                <fmt:formatNumber value="${item.result_amount}"/>원
                                             </p>
                                         </div>
                                     </c:forEach>
@@ -109,7 +110,7 @@
                                             <c:set var="totalAmount" value="0" />
                                             <c:forEach var="item" items="${requestScope.o_list}">
                                                 <!-- 쉼표 제거 후 숫자로 변환 -->
-                                                <c:set var="amountInt" value="${fn:replace(item.amount, ',', '')}" />
+                                                <c:set var="amountInt" value="${fn:replace(item.result_amount, ',', '')}" />
 
                                                 <!-- 누적 합계 계산 -->
                                                 <c:set var="totalAmount" value="${totalAmount + amountInt}" />
@@ -117,7 +118,6 @@
 
 
                                             <c:set var="pointUsed" value="${not empty requestScope.point_amount ? requestScope.point_amount : '0'}" />
-<%--                                            <c:set var="prodCount" value="${o_list.count}" />--%>
                                             <c:set var="coupon" value="${requestScope.coupon}"/>
 
                                                 <%-- 숫자만 추출하여 int형으로 변환 --%>

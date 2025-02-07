@@ -76,6 +76,8 @@ public class CancelOrderAction implements Action {
                         String refund_account = request.getParameter("account_number");
                         String refundAmount = request.getParameter("refund_amount");
                         String point_used = request.getParameter("point_used");
+                        String benefit_type = request.getParameter("benefit_type");
+                        System.out.println(benefit_type);
 
                         // 주문 정보 업데이트 (취소 상태로 변경)
                         int u_o_cnt = OrderDAO.updateOrderCancel(id, cvo.getId(), prod_no, orderCode, refund_bank, refund_account, reason);
@@ -124,10 +126,12 @@ public class CancelOrderAction implements Action {
 
                         // 이전 적립금 내역 삭제
                         int d_p_cnt = 0;
-                        if (point_used != null && !point_used.isEmpty() && !point_used.equals("0")) {
-                            d_p_cnt = PointDAO.deletePoint(cvo.getId(), orderCode);
+                        if(benefit_type.equals("0")) {
+                            if (point_used != null && !point_used.isEmpty() && !point_used.equals("0")) {
+                                d_p_cnt = PointDAO.deletePoint(cvo.getId(), orderCode);
+                            }
+                            System.out.println("포인트 내역 삭제" + d_p_cnt);
                         }
-                        System.out.println("포인트 내역 삭제" + d_p_cnt);
 
                         // 사용한 적립금 복구 (point_used가 null이 아닌 경우에만 실행)
                         int u_p_cnt = 0;

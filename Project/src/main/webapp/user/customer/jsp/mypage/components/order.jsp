@@ -72,7 +72,7 @@
                             </div>
                         </div>
                         <c:if test="${item.status == '4'}">
-                            <button type="button" class="btn btn-outline-secondary custom-review-button" onclick="confirmPurchase('${item.id}')">구매 확정</button>
+                            <button type="button" class="btn btn-outline-secondary custom-review-button" onclick="confirmPurchase('${item.order_code}')">구매 확정</button>
                         </c:if>
                         <c:if test="${item.status == '5'}">
                             <button type="button" class="btn btn-outline-secondary custom-review-button" data-toggle="modal" data-target="#reviewModal">후기 작성</button>

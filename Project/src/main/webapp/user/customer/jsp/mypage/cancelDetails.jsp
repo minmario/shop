@@ -88,7 +88,7 @@
                                 <ul class="detail-list">
                                     <li>
                                         <span class="detail-label">상품 결제금액</span>
-                                        <span class="detail-value"><fmt:formatNumber value="${cancel.amount}"/>원</span>
+                                        <span class="detail-value"><fmt:formatNumber value="${cancel.result_amount}"/>원</span>
                                     </li>
                                     <li>
                                         <c:if test="${requestScope.coupon ne null}">
@@ -118,7 +118,7 @@
                             <div class="refund-amount">
                                 <div class="wrap-p">
                                     <h3 class="subtitle">환불 금액</h3>
-                                    <p class="refund-expected"><fmt:formatNumber value="${cancel.amount - couponDiscount - requestScope.point_amount}" type="number" maxFractionDigits="0" />원</p>
+                                    <p class="refund-expected"><fmt:formatNumber value="${cancel.result_amount - couponDiscount - requestScope.point_amount}" type="number" maxFractionDigits="0" />원</p>
                                 </div>
                             </div>
 

@@ -36,6 +36,10 @@ function cancelRequest() {
     // ordercode 값을 가져오기
     const orderCode = $('#orderCode').val();
 
+    //benefit_type 값 가져오기
+    const benefit_type = $('input[name="benefit_type"]').val();
+    console.log(benefit_type);
+
     // 취소 사유 가져오기
     let reason = getSelectedCancelReason();
     if (!reason) {
@@ -53,7 +57,7 @@ function cancelRequest() {
     }
 
     // 사용된 적립금 가져오기
-    const pointUsed = $('#cancel-point-used').val();
+    const pointUsed = $('input[name="cancel-point-used"]').val();
 
     // 계좌 정보는 주문 상태가 '0'이 아닌 경우에만 가져오기
     let bank = '';
@@ -98,7 +102,8 @@ function cancelRequest() {
             account_number: accountNumber || null,
             orderCode: orderCode,
             refund_amount: refundAmount || null,
-            point_used: pointUsed || null
+            point_used: pointUsed || null,
+            benefit_type: benefit_type
         },
         success: function (response) {
             if (response && response.success) {

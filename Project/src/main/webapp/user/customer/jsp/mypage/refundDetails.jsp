@@ -63,7 +63,7 @@
                                             <p class="product-brand">${refund.brand}</p>
                                             <p class="product-name">${refund.prod_name}</p>
                                             <p class="product-options">${refund.option_name} / ${refund.count}개</p>
-                                            <p class="product-price"><fmt:formatNumber value="${refund.amount}"/>원</p>
+                                            <p class="product-price"><fmt:formatNumber value="${refund.result_amount}"/>원</p>
                                         </div>
                                     </div>
                                 </div>
@@ -119,7 +119,7 @@
                                     <ul class="detail-list">
                                         <li>
                                             <span class="detail-label">상품 결제금액</span>
-                                            <span class="detail-value"><fmt:formatNumber value="${refund.amount}"/>원</span>
+                                            <span class="detail-value"><fmt:formatNumber value="${refund.result_amount}"/>원</span>
                                         </li>
                                         <c:if test="${requestScope.coupon ne null}">
 
@@ -147,7 +147,7 @@
                                     <h3 class="subtitle">환불 예정 금액</h3>
                                     <div class="wrap-p">
                                         <p class="refund-method">${refund.pay_type}</p>
-                                        <p class="refund-expected"><fmt:formatNumber value="${refund.amount - couponDiscount - requestScope.point_amount}" type="number" maxFractionDigits="0" />원</p>
+                                        <p class="refund-expected"><fmt:formatNumber value="${refund.result_amount  - couponDiscount - requestScope.point_amount}" type="number" maxFractionDigits="0" />원</p>
                                     </div>
                                 </div>
 
