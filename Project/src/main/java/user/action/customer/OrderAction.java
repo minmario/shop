@@ -414,7 +414,7 @@ public class OrderAction implements Action {
 
                     List<OrderVO> o_list = OrderDAO.selectOrderCode(cvo.getId(), order_code); // 주문상세 정보 list
                     List<DeliveryVO> deli_list = DeliveryDAO.selectDelivery(cvo.getId()); // 해당 주문의 배송지 정보
-                    List<OrderVO> coupon_list = OrderDAO.selectOrderCouponList(cvo.getId(), order_code, null);
+                    List<OrderVO> coupon_list = OrderDAO.selectOrderCoupons(cvo.getId(), order_code, null);
                     GradeVO grade = GradeDAO.selectGradeCustomer(cvo.getId());
                     int totalAmount = OrderDAO.selectTotalAmount(cvo.getId(), order_code); // 결제 총 금액
                     int totalPrice = OrderDAO.selectTotalPrice(cvo.getId(), order_code); // 원가 총 금액

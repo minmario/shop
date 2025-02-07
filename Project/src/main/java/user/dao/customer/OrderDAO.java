@@ -322,7 +322,7 @@ public class OrderDAO {
     }
 
     // 주문 시 사용한 쿠폰 조회(주문 상세 조회)
-    public static List<OrderVO> selectOrderCouponList(String cus_no, String order_code, String prod_no){
+    public static List<OrderVO> selectOrderCoupons(String cus_no, String order_code, String prod_no){
         List<OrderVO> list = null;
         SqlSession ss = FactoryService.getFactory().openSession();
 
