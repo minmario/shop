@@ -38,7 +38,14 @@ public class CategoryDAO {
         SqlSession ss = FactoryService.getFactory().openSession();
 
         MiddleCategoryVO vo = ss.selectOne("category.get_prod_category",id);
+        ss.close();
+        return vo;
+    }
+    public static MajorCategoryVO majorCategoryOne(String id){
+        SqlSession ss = FactoryService.getFactory().openSession();
 
+        MajorCategoryVO vo = ss.selectOne("category.major_category_one",id);
+        ss.close();
         return vo;
     }
 }

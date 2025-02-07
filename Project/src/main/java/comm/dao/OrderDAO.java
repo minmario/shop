@@ -25,6 +25,22 @@ public class OrderDAO {
     public static OrderVO getOrderOne(String order_no){
         SqlSession ss = FactoryService.getFactory().openSession();
         OrderVO vo = ss.selectOne("order.get_order_one",order_no);
+        if(vo.getReason()==null)
+            vo.setReason("사유를 입력하지 않았습니다");
+        switch (vo.getStatus()){
+            case "1": vo.setStatus("신규주문"); break;
+            case "2": vo.setStatus("발송준비"); break;
+            case "3": vo.setStatus("발송완료"); break;
+            case "4": vo.setStatus("배송완료"); break;
+            case "5": vo.setStatus("구매확정"); break;
+            case "6": vo.setStatus("구매취소"); break;
+            case "7": vo.setStatus("반품신청"); break;
+            case "8": vo.setStatus("교환신청"); break;
+            case "9": vo.setStatus("반품거부"); break;
+            case "10": vo.setStatus("교환거부"); break;
+            case "11": vo.setStatus("반품완료"); break;
+        }
+
         ss.close();
         return vo;
     }

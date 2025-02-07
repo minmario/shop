@@ -23,7 +23,12 @@
   </select>
   <update id="change_status" parameterType="String">
     UPDATE `order`
-    SET status=#{status}
+    SET
+    status = #{status},
+    refund_completed_date = CASE
+    WHEN #{status} = '11' THEN NOW()
+    ELSE refund_completed_date
+    END
     WHERE tid = #{tid}
   </update>
   <select id="count" parameterType="String" resultType="java.util.Map">

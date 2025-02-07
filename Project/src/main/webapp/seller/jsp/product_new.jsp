@@ -60,7 +60,6 @@
     .placeholder {
       background-color: #f9f9f9;
     }
-
   </style>
 </header>
 <body>
@@ -122,12 +121,15 @@
       <hr/>
       <!-- 상품 옵션 -->
       <div class="mb-3">
-        <label class="form-label">상품 옵션</label>
+        <label class="form-label"><h3>상품 옵션</h3></label>
         <div id="productOptionsContainer">
+          <p class="center">옵션</p>
           <div class="option-group">
             <input type="text" class="form-control" name="prod_option[]" placeholder="옵션을 입력하세요">
+
             <input type="number" class="form-control" name="inventory_option[]" placeholder="재고 수량을 입력하세요">
           </div>
+          <div name="option_details"></div>
         </div>
         <button type="button" class="btn btn-outline-success mt-2" onclick="addOption()">옵션 추가</button>
       </div>
@@ -171,20 +173,24 @@
             <span class="placeholder">+</span>
             <img src="" alt="추가 이미지 미리보기" class="additional-image-preview" style="display: none;"/>
           </div>
-          <button type="button" class="btn btn-outline-secondary mt-2" onclick="triggerAdditionalImageInput(this)">이미지 선택</button>
+          <button type="button" class="btn btn-outline-secondary mt-2"  onclick="triggerAdditionalImageInput(this)">이미지 선택</button>
           <input type="file" name="additional_images[]" accept="image/*" style="display: none;" multiple onchange="previewAdditionalImage(event, this)"/>
         </div>
       </div>
       <button type="button" class="btn btn-outline-success mt-3" onclick="addAdditionalImage()">이미지 추가</button>
+
     </div>
     <hr/>
     <!-- 추가 이미지 아래에 HTML 에디터 추가 -->
     <div class="mb-3" style="margin-top: 30px;">
       <label for="content">상세 설명(HTML)</label>
+      <p>HTML 작성 후 이미지로 저장을 하실 수 있습니다.</p>
+      <p>이미지로 저장 후 파일 선택을 통해 이미지로 저장된 상세 설명을 선택해주시거나 개별적으로 작성한 상세설명을 첨부하실 수 있습니다.</p>
       <textarea id="content" name="content"></textarea>
+      <button type="button" class="btn btn-outline-secondary mt-2" onclick="saveAsImage()">이미지로 저장</button>
     </div>
-
-
+    <input type="file"  id ="content_image" name="content_image" accept="image/*" class="btn btn-outline-secondary mt-2"/>
+    <hr/>
     <!-- 수정/저장 버튼 -->
     <div class="button-container">
       <button type="button" class="btn btn-success" onclick="addProduct(this.form)">저장</button>
@@ -193,8 +199,10 @@
   </form>
 </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 <script>
   $(function(){
     $("#content").summernote({
@@ -212,7 +220,7 @@
     });
   });
 
-  function saveImg(file, editor){
+  function saveImg(file,editor){
     // 서버로 이미지를 보내기 위해 폼객체 준비
     let frm = new FormData();
 
@@ -237,12 +245,18 @@
   function addOption() {
     const container = document.getElementById('productOptionsContainer');
     const newOptionGroup = document.createElement('div');
-    newOptionGroup.className = 'option-group';
+    newOptionGroup.className = 'productOptionsContainer';
     newOptionGroup.innerHTML = `
+          <p class="center">+옵션</p>
+          <div class="option-group">
             <input type="text" class="form-control" name="prod_option[]" placeholder="옵션을 입력하세요">
-            <input type="number" class="form-control" name="inventory_option[]" placeholder="재고 수량을 입력하세요"">
+
+            <input type="number" class="form-control" name="inventory_option[]" placeholder="재고 수량을 입력하세요">
+          </div>
+          <div name="option_details"></div>
         `;
     container.appendChild(newOptionGroup);
+    addDetail();
   }
 
   // 대표 이미지 미리보기
@@ -257,6 +271,7 @@
 
 
     };
+
     reader.readAsDataURL(event.target.files[0]);
   }
 
@@ -295,8 +310,8 @@
             <input type="file" name="additional_images[]" accept="image/*" style="display: none;" multiple onchange="previewAdditionalImage(event, this) "/>
 
         `;
-
     container.appendChild(newImageWrapper);
+
   }
   window.onload = function() {
     updateDiscountedPrice();
@@ -320,78 +335,175 @@
       discountedPriceElement.innerText = "할인 후 가격: " +parseInt(discountedPrice)+"원"; // innerText 사용
     }
   }
+  function saveAsImage(){
+    let contentHtml = $("#content").summernote("code");
+    let tempDiv = document.createElement("div");
+    tempDiv.innerHTML = contentHtml;
+    document.body.appendChild(tempDiv);
 
+    html2canvas(tempDiv).then(function(canvas) {
+      document.body.removeChild(tempDiv);
+      canvas.toBlob(function(blob) {
+        if (!blob) {
+          console.error("Blob 생성 실패!");
+          return;
+        }
+        saveAs(blob, "content.png");
+      }, "image/png");
+    }).catch(error => {
+      console.error("html2canvas 오류 발생:", error);
+    });
+  }
   function addProduct(frm){
+    let isValid=true;
     if($("#prod_name").val().trim().length==0){
       alert("상품 이름을 입력하세요.");
       $("#prod_name").focus();
       return;
     }
-    let isValid=true;
-    $("input[name='prod_option']").each(function(){
-      if($(this).val().trim().length==0){
+
+    $("input[name='prod_option[]']").each(function(){
+      if(!$(this).val()){
         alert("모든 옵션을 입력하세요");
         isValid=false;
+        $(this).focus();
         return;
       }
     });
-    $("input[name='inventory_option']").each(function(){
-      if($(this).val().trim().length==0){
+    $("input[name='inventory_option[]']").each(function(){
+      if(!$(this).val()){
         alert("모든 재고(수량)를 입력하세요");
         isValid=false;
-        return ;
+        return false ;
       }
-    });
-    if($("#prod_color").val()==""){
-      alert("색상을 선책해주세요")
-      isValid=false;
       return;
-    }
+    });
     if($("#price").val().trim().length==0){
       alert("가격을 입력해주세요");
       isValid=false;
-      return;
+      return false;
     }
     if($("#mainImageInput").val().trim().length==0){
       alert("대표이미지를 선택해주세요");
       isValid=false;
       return;
     }
-    if($("#content").val().trim().length==0){
-      alert("상세설명을 작성해주세요");
+    if($("#content_image").val().trim().length==0){
+      alert("이미지를 등록 해주세요");
       isValid=false;
-      return;
+      return false;
     }
     if(!isValid){
       return;
     }
-    saveImage($("mainImageInput").val());
-    frm.submit();
+   frm.submit();
+  }
+  $(document).ready(function() {
+    $("#major_category").on("change", function() {
+      optionDetail();
+    });
+  });
+  function optionDetail(){
+
+      const selectedCategory = $("#major_category").val(); // major_category에서 선택된 값
+      const container = $("[name='option_details']");
+
+      // 카테고리별 입력 필드 데이터 정의
+      const optionFields = {
+        "1": [
+          { name: "total_length[]", placeholder: "총 길이" },
+          { name: "shoulder[]", placeholder: "어깨 너비" },
+          { name: "chest[]", placeholder: "가슴 둘레" },
+          { name: "sleeve[]", placeholder: "소매 길이" },
+          { name: "waist[]", placeholder: "허리 둘레" }
+        ],
+        "3": [
+          { name: "total_length[]", placeholder: "총 길이" },
+          { name: "shoulder[]", placeholder: "어깨 너비" },
+          { name: "chest[]", placeholder: "가슴 둘레" },
+          { name: "sleeve[]", placeholder: "소매 길이" },
+          { name: "waist[]", placeholder: "허리 둘레" }
+        ],
+        "2": [
+          { name: "total_length[]", placeholder: "총 길이" },
+          { name: "hip[]", placeholder: "엉덩이 둘레" },
+          { name: "thigh[]", placeholder: "허벅지 둘레" },
+          { name: "rise[]", placeholder: "밑위 길이" },
+          { name: "hem[]", placeholder: "밑단 둘레" }
+        ],
+        "4": [
+          { name: "foot_length[]", placeholder: "발 길이" },
+          { name: "foot_width[]", placeholder: "발볼 너비" },
+          { name: "ankle_height[]", placeholder: "발목 높이" },
+          { name: "heel_height[]", placeholder: "굽 높이" }
+        ]
+      };
+
+      // 각 option_details 요소를 순회하면서 업데이트
+      container.each(function() {
+        $(this).empty(); // 기존 입력 필드 삭제
+
+        if (optionFields[selectedCategory]) {
+          optionFields[selectedCategory].forEach(field => {
+            const label = $("<label>").text(field.placeholder);
+            const input = $("<input>")
+                    .attr("type", "text")
+                    .attr("class", "form-control")
+                    .attr("name", field.name)
+                    .attr("placeholder", field.placeholder);
+            $(this).append(label).append(input);
+          });
+        }
+      });
+  }
+  function addDetail(){
+    const selectedCategory = $("#major_category").val(); // major_category에서 선택된 값
+    // 카테고리별 입력 필드 데이터 정의
+    const optionFields = {
+      "1": [
+        {name: "total_length[]", placeholder: "총 길이"},
+        {name: "shoulder[]", placeholder: "어깨 너비"},
+        {name: "chest[]", placeholder: "가슴 둘레"},
+        {name: "sleeve[]", placeholder: "소매 길이"},
+        {name: "waist[]", placeholder: "허리 둘레"}
+      ],
+      "3": [
+        {name: "total_length[]", placeholder: "총 길이"},
+        {name: "shoulder[]", placeholder: "어깨 너비"},
+        {name: "chest[]", placeholder: "가슴 둘레"},
+        {name: "sleeve[]", placeholder: "소매 길이"},
+        {name: "waist[]", placeholder: "허리 둘레"}
+      ],
+      "2": [
+        {name: "total_length[]", placeholder: "총 길이"},
+        {name: "hip[]", placeholder: "엉덩이 둘레"},
+        {name: "thigh[]", placeholder: "허벅지 둘레"},
+        {name: "rise[]", placeholder: "밑위 길이"},
+        {name: "hem[]", placeholder: "밑단 둘레"}
+      ],
+      "4": [
+        {name: "foot_length[]", placeholder: "발 길이"},
+        {name: "foot_width[]", placeholder: "발볼 너비"},
+        {name: "ankle_height[]", placeholder: "발목 높이"},
+        {name: "heel_height[]", placeholder: "굽 높이"}
+      ]
+    };
+    const option = $("[name='option_details']").last();
+    const field = optionFields[selectedCategory].forEach(field=>{
+      const label = $("<label>").text(field.placeholder);
+      const input = $("<input>")
+              .attr("type", "text")
+              .attr("class", "form-control")
+              .attr("name", field.name)
+              .attr("placeholder", field.placeholder)
+      option.append(label).append(input);
+    });
+
   }
   // 정가나 할인 금액이 변경될 때마다 가격 업데이트
   document.getElementById('price').addEventListener('input', updateDiscountedPrice);
   document.getElementById('sale').addEventListener('input', updateDiscountedPrice);
-  function saveImage(file){
-    // 서버로 이미지를 보내기 위해 폼객체 준비
-    let frm = new FormData();
 
-    // 서버로 파일을 보내기 위해 폼객체에 파라미터를 지정
-    frm.append("upload", file);
-
-    //비 동기식 통신
-    $.ajax({
-      url: "Controller?type=saveImg",
-      data: frm,
-      type: "post",
-      contentType: false,
-      processData: false,// 첨부파일을 보내는 것이고, 일반적인 데이터 전송이 아님!
-      dataType: "json"
-    }).done(function(res){
-      //서버에서 보내는 json데이터는 res가 되며, 그 res안에 img_url을 가지고
-      //img요소를 에디터에 추가
-      console.log("경로:"+res.img_url);
-    });
-  }
 </script>
 </body>
 <footer>

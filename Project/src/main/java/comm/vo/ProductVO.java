@@ -5,19 +5,6 @@ public class ProductVO {
     private String category_no;
     private String seller_no;
     private String name;
-    private String length;
-    private String shoulder;
-    private String chest;
-    private String sleeve;
-    private String waist;
-    private String hip;
-    private String thigh;
-    private String rise;
-    private String hem;
-    private String foot_length;
-    private String foot_width;
-    private String ankle_height;
-    private String heel_height;
     private String price;
     private String add_date;
     private String view_count;
@@ -28,6 +15,27 @@ public class ProductVO {
     private String additional_images;
     private String is_del;
     private String saled_price;
+    private String major_category;
+    private String content;
+    private String content_image;
+    private String[] ar_images;
+    private InventoryVO[] options;
+
+    public String getContent_image() {
+        return content_image;
+    }
+
+    public void setContent_image(String content_image) {
+        this.content_image = content_image;
+    }
+
+    public String getMajor_category() {
+        return major_category;
+    }
+
+    public void setMajor_category(String major_category) {
+        this.major_category = major_category;
+    }
 
     public String getContent() {
         return content;
@@ -37,9 +45,7 @@ public class ProductVO {
         this.content = content;
     }
 
-    private String content;
-    private String[] ar_images;
-    private InventoryVO[] options;
+
 
     public String[] getAr_images() {
         return ar_images;
@@ -113,110 +119,6 @@ public class ProductVO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getLength() {
-        return length;
-    }
-
-    public void setLength(String length) {
-        this.length = length;
-    }
-
-    public String getShoulder() {
-        return shoulder;
-    }
-
-    public void setShoulder(String shoulder) {
-        this.shoulder = shoulder;
-    }
-
-    public String getChest() {
-        return chest;
-    }
-
-    public void setChest(String chest) {
-        this.chest = chest;
-    }
-
-    public String getSleeve() {
-        return sleeve;
-    }
-
-    public void setSleeve(String sleeve) {
-        this.sleeve = sleeve;
-    }
-
-    public String getWaist() {
-        return waist;
-    }
-
-    public void setWaist(String waist) {
-        this.waist = waist;
-    }
-
-    public String getHip() {
-        return hip;
-    }
-
-    public void setHip(String hip) {
-        this.hip = hip;
-    }
-
-    public String getThigh() {
-        return thigh;
-    }
-
-    public void setThigh(String thigh) {
-        this.thigh = thigh;
-    }
-
-    public String getRise() {
-        return rise;
-    }
-
-    public void setRise(String rise) {
-        this.rise = rise;
-    }
-
-    public String getHem() {
-        return hem;
-    }
-
-    public void setHem(String hem) {
-        this.hem = hem;
-    }
-
-    public String getFoot_length() {
-        return foot_length;
-    }
-
-    public void setFoot_length(String foot_length) {
-        this.foot_length = foot_length;
-    }
-
-    public String getFoot_width() {
-        return foot_width;
-    }
-
-    public void setFoot_width(String foot_width) {
-        this.foot_width = foot_width;
-    }
-
-    public String getAnkle_height() {
-        return ankle_height;
-    }
-
-    public void setAnkle_height(String ankle_height) {
-        this.ankle_height = ankle_height;
-    }
-
-    public String getHeel_height() {
-        return heel_height;
-    }
-
-    public void setHeel_height(String heel_height) {
-        this.heel_height = heel_height;
     }
 
     public String getPrice() {

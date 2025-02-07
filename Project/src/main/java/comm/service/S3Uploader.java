@@ -3,6 +3,7 @@ package comm.service;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.PutObjectRequest;
@@ -23,10 +24,10 @@ public class S3Uploader {
 
 
 
-    BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKeyId, secretAccessKey);
+    //BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKeyId, secretAccessKey);
     this.s3Client = AmazonS3ClientBuilder.standard()
         .withRegion("ap-northeast-2")
-        .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
+        .withCredentials(DefaultAWSCredentialsProviderChain.getInstance())
         .build();
   }
 

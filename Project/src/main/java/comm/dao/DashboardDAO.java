@@ -12,7 +12,6 @@ public class DashboardDAO {
         SqlSession ss= FactoryService.getFactory().openSession();
         List<Map<String,Object>> list = ss.selectList("order.count",seller_no);
         Map<String,Object>[] ar = null;
-        System.out.println("size="+list.size());
         if(list!=null) {
             ar = new Map[list.size()];
             list.toArray(ar);

@@ -38,19 +38,21 @@
     WHERE id=#{prod_no}
   </update>
   <insert id="addProduct" parameterType="map" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-    INSERT INTO product (name,category_no, price, sale,seller_no,add_date,prod_image,additional_images,content,saled_price)
-    VALUES (#{prod_name}, #{middle_category}, #{price}, #{sale},#{seller_no},NOW(),#{prod_image},#{additional_image},#{content},#{saled_price})
+    INSERT INTO product (name,major_category,category_no ,price, sale,seller_no,add_date,prod_image,additional_images,content,saled_price,content_image)
+    VALUES (#{prod_name},#{major_category}, #{middle_category}, #{price}, #{sale},#{seller_no},NOW(),#{prod_image},#{additional_image},#{content},#{saled_price},#{content_image})
   </insert>
   <update id="updateProduct" parameterType="map">
     UPDATE product SET
     name = #{prod_name},
+    major_category=#{major_category},
     category_no = #{middle_category},
     price = #{price},
     sale = #{sale},
     prod_image = #{prod_image},
     additional_images=#{additional_image},
     content = #{content},
-    saled_price = #{saled_price}
+    saled_price = #{saled_price},
+    content_image=#{content_image}
     WHERE id = #{prod_no}
   </update>
 </mapper>

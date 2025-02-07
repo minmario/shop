@@ -21,8 +21,8 @@ public class ProductEditAction implements Action{
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
 
-        String  prod_no = (String) request.getParameter("prod_no");
-        String  cPage = (String) request.getParameter("cPage");
+        String  prod_no = request.getParameter("prod_no");
+        String  cPage = request.getParameter("cPage");
         ProductVO vo = ProductDAO.getProductOne(prod_no);
         MajorCategoryVO[] majorCategoryAr = CategoryDAO.AllMajorCategory();
         MiddleCategoryVO[] middleCategoryAr = CategoryDAO.AllMiddleCategory();
@@ -32,14 +32,17 @@ public class ProductEditAction implements Action{
         if(vo!=null) {
             InventoryVO[] options = InventoryDAO.getOptions(prod_no);
 
-            MiddleCategoryVO categoryInfo = CategoryDAO.getProdCategory(vo.getCategory_no());
+            MajorCategoryVO majorCategory = CategoryDAO.majorCategoryOne(vo.getMajor_category());
+
+            MiddleCategoryVO middleCategory = CategoryDAO.getProdCategory(vo.getCategory_no());
             vo.setOptions(options);
             if(vo.getAdditional_images()!=null) {
                 String[] images = vo.getAdditional_images().replace(" ", "").split(",");
                 vo.setAr_images(images);
             }
             System.out.println("내용: "+vo.getContent());
-            request.setAttribute("categoryInfo",categoryInfo);
+            request.setAttribute("middleCategory",middleCategory);
+            request.setAttribute("majorCategory",majorCategory);
             request.setAttribute("vo", vo);
             request.setAttribute("cPage", cPage);
             return "/seller/jsp/product_edit.jsp";

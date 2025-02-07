@@ -11,5 +11,12 @@
     <update id="updateSellerInfo">
         update shop.seller set seller_id = #{seller_id}, name = #{name}, phone = #{phone}, email = #{email}, `desc` = #{desc}, address = #{address} where id = 2
     </update>
-
+    <select id="check_id" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM seller
+        WHERE seller_id = #{seller_id}
+    </select>
+    <insert id="add_seller" parameterType="Map">
+        INSERT INTO seller(seller_id,seller_pw,email,phone,name,address,courier,`desc`)
+        VALUES(#{seller_id},#{seller_pw},#{email},#{phone},#{name},#{address},#{courier},#{desc})
+    </insert>
 </mapper>

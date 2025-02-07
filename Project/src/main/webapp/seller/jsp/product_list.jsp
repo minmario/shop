@@ -131,7 +131,7 @@
                         </a>
                     </td>
                     <td>${prod.price }원</td>
-                    <td>${prod.sale }원</td>
+                    <td>${prod.sale }%</td>
                     <td>
                         <select id="active" onchange="changeActive(${prod.id})" name="active">
                             <option value="0" <c:if test="${prod.active == 0}">selected</c:if>>판매</option>
@@ -276,7 +276,7 @@
                                     </a>
                                 </td>
                                 <td>`+ vo.price +`원</td>
-                                <td>`+ vo.sale +`원</td>
+                                <td>`+ vo.sale +`%</td>
                                 <td>
                                     <select id="active" onchange="changeActive(`+ vo.id +`)">
                                         <option value="0" `+ (vo.active == 0 ? 'selected' : '') +`>판매</option>

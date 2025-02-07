@@ -80,10 +80,11 @@ public class ProductDAO {
         ss.close();
         return cnt;
     }
-    public static String addProduct(String prod_name, String middle_category,String price,String sale,
-                                    String seller_no, String prod_image, String additional_image ,String content,String saled_price){
+    public static String addProduct(String prod_name,String major_category ,String middle_category,String price,String sale,
+                                    String seller_no, String prod_image, String additional_image ,String content,String saled_price,String content_image){
         HashMap<String,Object> map = new HashMap<>();
         map.put("prod_name",prod_name);
+        map.put("major_category",major_category);
         map.put("middle_category",middle_category);
         map.put("price",price);
         map.put("sale",sale);
@@ -92,6 +93,7 @@ public class ProductDAO {
         map.put("additional_image",additional_image);
         map.put("content",content);
         map.put("saled_price",saled_price);
+        map.put("content_image",content_image);
 
         SqlSession ss = FactoryService.getFactory().openSession();
 
@@ -109,12 +111,13 @@ public class ProductDAO {
 
         return prod_no;
     }
-    public static int updateProduct(String prod_no,String prod_name, String middle_category,String price,String sale,
-                                    String prod_image, String additional_image ,String content,String saled_price){
+    public static int updateProduct(String prod_no,String prod_name, String major_category,String middle_category,String price,String sale,
+                                    String prod_image, String additional_image ,String content,String saled_price,String content_image){
         HashMap<String,Object> map = new HashMap<>();
 
         map.put("prod_no",prod_no);
         map.put("prod_name",prod_name);
+        map.put("major_category",major_category);
         map.put("middle_category",middle_category);
         map.put("price",price);
         map.put("sale",sale);
@@ -122,7 +125,7 @@ public class ProductDAO {
         map.put("additional_image",additional_image);
         map.put("content",content);
         map.put("saled_price",saled_price);
-
+        map.put("content_image",content_image);
         SqlSession ss = FactoryService.getFactory().openSession();
 
         int cnt = ss.update("product.updateProduct",map);

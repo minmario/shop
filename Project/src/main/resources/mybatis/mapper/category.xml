@@ -17,5 +17,8 @@
     JOIN major_category ON major_category.id = middle_category.major_no
     WHERE middle_category.id = 1;
   </select>
-
+  <select id="major_category_one" parameterType="String" resultType="comm.vo.MajorCategoryVO">
+    SELECT * FROM major_category
+    WHERE id = #{id}
+  </select>
 </mapper>

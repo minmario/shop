@@ -12,7 +12,7 @@
 {
 "cus_id":"<%=vo.getCus_id()%>",
 "prod_name":"<%=vo.getProd_name()%>",
-"order_no":"<%=vo.getId()%>",
+"order_no":"<%=vo.getTid()%>",
 "option_name":"<%=vo.getOption_name()%>",
 "cus_name":"<%=vo.getCus_name()%>",
 "count":"<%=vo.getOption_count()%>",

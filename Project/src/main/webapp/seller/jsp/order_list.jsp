@@ -105,7 +105,7 @@
             <tbody>
             <c:if test="${ar != null}">
                 <c:forEach var="order" items="${ar}">
-                    <c:if test="${order.status == 0}">
+                    <c:if test="${order.status == 1}">
                     <tr class="list">
                         <td><input type="checkbox" name="newBox"></td>
                         <td> <a href="#" class="text-primary"
@@ -178,9 +178,9 @@
             <tbody>
             <c:if test="${ar != null}">
                 <c:forEach var="order" items="${ar}">
-                    <c:if test="${order.status eq '1' || order.status eq '2'}">
+                    <c:if test="${order.status == 2 || order.status == 3}">
                         <tr class="list">
-                            <td><c:if test="${order.status eq 1}">
+                            <td><c:if test="${order.status == 2}">
                                 <input type="checkbox" name="returnBox">
                             </c:if></td>
                             <td> <a href="#" class="text-primary" onclick="setModal('${order.id}')" >
@@ -191,8 +191,8 @@
                             <td>${order.option_name}</td>
                             <td>${order.option_count}</td>
                             <td>
-                                <c:if test="${order.status eq 1}">발송 준비</c:if>
-                                <c:if test="${order.status eq 2}">발송 완료</c:if>
+                                <c:if test="${order.status == 2}">발송 준비</c:if>
+                                <c:if test="${order.status == 3}">발송 완료</c:if>
                             </td>
                             <td>${order.order_date}</td>
                             <td>64161651</td>
@@ -247,28 +247,28 @@
             <tbody>
             <c:if test="${ar != null}">
                 <c:forEach var="order" items="${ar}">
-                    <c:if test="${order.status eq 3 or order.status eq 4 or order.status eq 5 or order.status eq 6 or
-                    order.status eq 7}">
+                    <c:if test="${order.status == 7 or order.status == 8 or order.status == 9 or order.status == 10 or
+                    order.status == 11}">
                         <tr class="list">
-                            <td><c:if test="${order.status eq 3 or order.status eq 4}">
+                            <td><c:if test="${order.status == 7 or order.status == 8}">
                             <input type="checkbox" name="returnBox">
                             </c:if></td>
                             <td> <a href="#" class="text-primary" onclick="setModal('${order.id}')" >
                                     ${order.tid}
                             </a></td>
                             <td id="division">
-                                <c:if test="${order.status eq 3 or order.status eq 5}">교환</c:if>
-                                <c:if test="${order.status eq 4 or order.status eq 6 or order.status eq 7}">반품</c:if>
+                                <c:if test="${order.status == 8 or order.status == 10}">교환</c:if>
+                                <c:if test="${order.status == 7 or order.status == 9 or order.status == 11}">반품</c:if>
                             </td>
                             <td>
-                                <c:if test="${order.status eq 3}">교환 신청</c:if>
-                                <c:if test="${order.status eq 4}">반품 신청</c:if>
-                                <c:if test="${order.status eq 5}">교환 거부</c:if>
-                                <c:if test="${order.status eq 6}">반품 거부</c:if>
-                                <c:if test="${order.status eq 7}">반품 완료</c:if>
+                                <c:if test="${order.status == 8}">교환 신청</c:if>
+                                <c:if test="${order.status == 7}">반품 신청</c:if>
+                                <c:if test="${order.status == 10}">교환 거부</c:if>
+                                <c:if test="${order.status == 9}">반품 거부</c:if>
+                                <c:if test="${order.status == 11}">반품 완료</c:if>
                             </td>
                             <td>${order.order_date}</td>
-                            <td><c:if test="${order.status eq 3 or order.status eq 4}"><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelReasonModal" style="height: 30px" onclick="cancelModal('${order.id}',this.closest('table'),'${order.status}')" >
+                            <td><c:if test="${order.status == 7 or order.status == 8}"><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelReasonModal" style="height: 30px" onclick="cancelModal('${order.id}',this.closest('table'),'${order.status}')" >
                                 거부사유 입력
                             </button></c:if>  </td>
                         </tr>
@@ -566,35 +566,38 @@
     function processSelected(button) {
         const selectedOrders = [];
         let checkboxes = [];
-        let status=[];
+        let status = [];
         let chk = false;
         if (button.id === "ready_btn") {
             checkboxes = document.querySelectorAll('input[name="newBox"]:checked');
-            status[0] = 1;
+            status[0] = 2;
         } else if (button.id === "done_btn") {
             checkboxes = document.querySelectorAll('input[name="readyBox"]:checked');
-            status[0] = 2;
-        } else if (button.id === "return_btn"){
+            status[0] = 3;
+        } else if (button.id === "return_btn") {
             checkboxes = document.querySelectorAll('input[name="returnBox"]:checked')
             chk = true;
         }
 
-        let i=0;
-       checkboxes.forEach(checkbox => {
-           // checkbox가 속한 tr 요소를 찾아서 그 안의 td 값 추출
-           const row = checkbox.closest('tr');  // 체크박스가 속한 <tr> 찾기
-           const orderValue = row.querySelector('td:nth-child(2)').textContent;// 두 번째 <td>의 값 가져오기
-           const division = row.querySelector('td:nth-child(3)').textContent.trim();
-           if (chk) {
-               if (division === '반품')
-                   status[i] = 7;
-               else if (division === '교환')
-                   status[i] = 2;
-           }
 
-            selectedOrders.push(orderValue);
-            i++;
-        });
+        if (chk) {
+            let i = 0;
+            checkboxes.forEach(checkbox => {
+                // checkbox가 속한 tr 요소를 찾아서 그 안의 td 값 추출
+                const row = checkbox.closest('tr');  // 체크박스가 속한 <tr> 찾기
+                const orderValue = row.querySelector('td:nth-child(2)').textContent;// 두 번째 <td>의 값 가져오기
+                const division = row.querySelector('td:nth-child(3)').textContent.trim();
+                if (chk) {
+                    if (division === '반품')
+                        status[i] = 11;
+                    else if (division === '교환')
+                        status[i] = 2;
+                }
+
+                selectedOrders.push(orderValue);
+                i++;
+            });
+        }
         const param = "type=changeStatus&selectedOrders="+encodeURIComponent(selectedOrders.join(','))+"&status="+encodeURIComponent(status.join(','));
         $.ajax({
             url: "Controller",
@@ -606,19 +609,19 @@
                 location.reload();
                 let message;
                 switch (status[0]){
-                    case 1:
+                    case 2:
                         message ="주문 접수 완료!";
                         break;
-                    case 2:
+                    case 3:
                         message="상품 발송 완료!";
                         break;
-                    case 7:
+                    case 11:
                         message="환불/반품 완료!"
                         break;
-                    case 5:
+                    case 10:
                         message="교환 거부 사유를 보냈습니다."
                         break;
-                    case 6:
+                    case 9:
                         message="반품 거부 사유를 보냈습니다.";
                         break;
                 }
@@ -654,10 +657,10 @@
                     <option value="4">직접 입력</option>
                     `;
             select.html(res);
-            if(order_status=="3")
-                status="5";
-            else if(order_status=="4")
-                status="6";
+            if(order_status=="8")
+                status="10";
+            else if(order_status=="7")
+                status="9";
         }
 
 

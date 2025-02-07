@@ -23,15 +23,14 @@ public class DashBoardAction implements Action {
         Map<String,Object>[] ar = DashboardDAO.getDashboard(seller_no);
         request.setAttribute("ar",ar);
         for(Map<String,Object> map : ar){
-            System.out.println("status: "+map.get("status")+"/count: "+map.get("count"));
             switch ((Integer)map.get("status")){
-                case 0: newOrder=((Number)map.get("count")).intValue();
+                case 1: newOrder=((Number)map.get("count")).intValue();
                     break;
-                case 1: readyDeli=((Number)map.get("count")).intValue();
+                case 2: readyDeli=((Number)map.get("count")).intValue();
                     break;
-                case 3: changeProd=((Number)map.get("count")).intValue();
+                case 8: changeProd=((Number)map.get("count")).intValue();
                     break;
-                case 5: returnProd=((Number)map.get("count")).intValue();
+                case 7: returnProd=((Number)map.get("count")).intValue();
 
             }
         }
