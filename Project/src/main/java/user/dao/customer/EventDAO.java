@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class EventDAO {
+    // 이벤트 가져오기
     public static List<EventVO> selectEvent(String cus_no, String grade_no) {
         List<EventVO> list = null;
         SqlSession ss = FactoryService.getFactory().openSession();

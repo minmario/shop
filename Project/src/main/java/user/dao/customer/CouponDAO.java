@@ -80,4 +80,46 @@ public class CouponDAO {
 
         return cnt;
     }
+
+    // 보유 쿠폰 수
+    public static int selectCouponCount(String cus_no, String grade_no) {
+        int cnt = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("cus_no", cus_no);
+            map.put("grade_no", grade_no);
+
+            cnt = ss.selectOne("coupon.select_coupon_count", map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
+    }
+
+    // 보유 쿠폰 목록
+    public static List<CouponVO> selectCoupon(String cus_no, String grade_no, String searchValue, String sort) {
+        List<CouponVO> list = null;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("cus_no", cus_no);
+            map.put("grade_no", grade_no);
+            map.put("searchValue", searchValue != null && !searchValue.isEmpty() ? searchValue : null);
+            map.put("sort", sort);
+
+            list = ss.selectList("coupon.select_coupon", map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return list;
+    }
 }

@@ -182,7 +182,6 @@ public class CartDAO {
     // 장바구니 전체 삭제
     public static int deleteAllCart(String cus_no) {
         int cnt = 0;
-
         SqlSession ss = FactoryService.getFactory().openSession();
 
         try {

@@ -122,14 +122,14 @@ public class PointDAO {
 
     // 이전 사용 포인트 찾기
     public static int selectPointAmount(String cus_no, String order_code) {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("cus_no", cus_no);
-        map.put("order_code", order_code);
-
-        Integer amount = null;
+        int amount = 0;
         SqlSession ss = FactoryService.getFactory().openSession();
 
         try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("cus_no", cus_no);
+            map.put("order_code", order_code);
+
             amount = ss.selectOne("point.select_point_amount", map);
         } catch (Exception e) {
             e.printStackTrace();
@@ -137,7 +137,7 @@ public class PointDAO {
             ss.close();
         }
 
-        return amount != null ? amount : 0;
+        return amount != 0 ? amount : 0;
     }
 
     // 사용 적립금 복구
@@ -145,12 +145,12 @@ public class PointDAO {
         int cnt = 0;
         SqlSession ss = FactoryService.getFactory().openSession();
 
-        HashMap<String, String> map = new HashMap<>();
-        map.put("cus_no", cus_no);
-        map.put("amount", amount);
-        map.put("order_code", order_code);
-
         try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("cus_no", cus_no);
+            map.put("amount", amount);
+            map.put("order_code", order_code);
+
             cnt = ss.insert("point.insert_point_refund", map);
 
             if (cnt > 0) {
@@ -168,14 +168,14 @@ public class PointDAO {
 
     // 환불 시 적립금 내역 삭제
     public static int deletePoint(String cus_no, String order_code) {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("cus_no", cus_no);
-        map.put("order_code", order_code);
-
-        SqlSession ss = FactoryService.getFactory().openSession();
         int cnt = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
 
         try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("cus_no", cus_no);
+            map.put("order_code", order_code);
+
             cnt = ss.delete("point.delete_point", map);
 
             if (cnt > 0) {

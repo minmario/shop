@@ -2,6 +2,7 @@ package user.dao.customer;
 
 import org.apache.ibatis.session.SqlSession;
 import service.FactoryService;
+import user.vo.customer.MajorCategoryVO;
 import user.vo.customer.ProductVO;
 import user.vo.customer.ReviewVO;
 
@@ -9,6 +10,22 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ProductDAO {
+    // 카테고리 가져오기
+    public static List<MajorCategoryVO> selectCategory() {
+        List<MajorCategoryVO> categories = null;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            categories = ss.selectList("category.select_major_category");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return categories;
+    }
+    
     // 상품 수 조회
     public static int selectTotalCountProduct(String category_no, String search) {
         int cnt = 0;

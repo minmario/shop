@@ -1,7 +1,7 @@
 package user.vo.customer;
 
 public class CouponVO {
-    private String id, root_no, category_no, seller_no, grade_no, type, name, sale_per, sale_price, start_date, end_date, status;
+    private String id, root_no, category_no, seller_no, grade_no, type, name, sale_per, sale_price, start_date, end_date, status, brand;
 
     public String getId() {
         return id;
@@ -97,5 +97,13 @@ public class CouponVO {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 }

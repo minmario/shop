@@ -70,7 +70,7 @@ public class OrderDAO {
         List<OrderVO> list = null;
         SqlSession ss = FactoryService.getFactory().openSession();
 
-        try{
+        try {
             HashMap<String, String> map = new HashMap<>();
             if (id != null) {
                 map.put("id", id);
@@ -93,7 +93,7 @@ public class OrderDAO {
         int totalAmount = 0;
         SqlSession ss = FactoryService.getFactory().openSession();
 
-        try{
+        try {
             HashMap<String, String> map = new HashMap<>();
             map.put("cus_no", cus_no);
             map.put("order_code", order_code);
@@ -326,7 +326,7 @@ public class OrderDAO {
         List<OrderVO> list = null;
         SqlSession ss = FactoryService.getFactory().openSession();
 
-        try{
+        try {
             HashMap<String, String> map = new HashMap<>();
             map.put("cus_no", cus_no);
             map.put("order_code", order_code);
@@ -450,7 +450,7 @@ public class OrderDAO {
         OrderVO vo = null;
         SqlSession ss = FactoryService.getFactory().openSession();
 
-        try{
+        try {
             HashMap<String, String> map = new HashMap<>();
             map.put("id", id);
             map.put("cus_no", cus_no);
@@ -473,7 +473,7 @@ public class OrderDAO {
         OrderVO vo = null;
         SqlSession ss = FactoryService.getFactory().openSession();
 
-        try{
+        try {
             vo = ss.selectOne("order.select_seller_address", id);
         } catch (Exception e) {
             e.printStackTrace();
@@ -489,7 +489,7 @@ public class OrderDAO {
         List<OrderVO> list = null;
         SqlSession ss = FactoryService.getFactory().openSession();
 
-        try{
+        try {
             list = ss.selectList("order.select_order_status", cus_no);
         } catch (Exception e) {
             e.printStackTrace();
@@ -516,6 +516,50 @@ public class OrderDAO {
         } finally {
             ss.close();
         }
+
         return list;
+    }
+
+    // 구매 확정 처리
+    public static int updateOrderStatus(String cus_no, String order_code, String status){
+        int cnt = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("cus_no", cus_no);
+            map.put("order_code", order_code);
+            map.put("status", status);
+
+            cnt = ss.update("order.update_order_status", map);
+
+            if (cnt > 0) {
+                ss.commit();
+            } else {
+                ss.rollback();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
+    }
+
+    // 리뷰 가능 건수
+    public static int selectReviewAbleCount(String cus_no) {
+        int cnt = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            cnt = ss.selectOne("order.select_review_able_count", cus_no);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
     }
 }
