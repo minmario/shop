@@ -19,17 +19,7 @@
     <link rel="stylesheet" type="text/css" href="./user/customer/css/login/login.css"/>
 </head>
 <body class="bg-light d-flex justify-content-center align-items-center vh-100">
-    <c:if test="${not empty requestScope.response and requestScope.response eq true}">
-        <script>
-            alert("회원 가입이 완료되었습니다.");
-        </script>
-    </c:if>
     <c:if test="${not empty sessionScope.isLoggedIn and not sessionScope.isLoggedIn}">
-        <script>
-            alert("아이디 또는 비밀번호를 확인하세요.");
-        </script>
-    </c:if>
-    <c:if test="${not empty requestScope.isNotFound and requestScope.isNotFound eq true}">
         <script>
             alert("아이디 또는 비밀번호를 확인하세요.");
         </script>

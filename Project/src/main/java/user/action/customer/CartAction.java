@@ -37,9 +37,8 @@ public class CartAction implements Action {
                     String i_prod_no = request.getParameter("prod_no");
                     String i_inventory_no = request.getParameter("inventory_no");
                     String i_count = request.getParameter("count");
-                    String i_size = request.getParameter("size");
 
-                    if (i_prod_no != null && i_inventory_no != null && i_count != null && i_size != null) {
+                    if (i_prod_no != null && i_inventory_no != null && i_count != null) {
                         // 존재 여부 확인
                         int exists = CartDAO.selectExistsCart(cvo.getId(), i_prod_no, i_inventory_no);
 

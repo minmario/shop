@@ -93,7 +93,6 @@ public class LoginAction  implements Action {
             if (loginResult == null) {
                 // 로그인 실패
                 session.setAttribute("isLoggedIn", false);
-                request.setAttribute("isNotFound", true);
                 return "/user/customer/jsp/login/login.jsp";
             }
 
