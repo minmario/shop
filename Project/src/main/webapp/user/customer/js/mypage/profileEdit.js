@@ -4,7 +4,6 @@ function selectCustomer() {
         url: "Controller?type=profileEdit&action=select",
         method: "POST",
         success: function (response) {
-            console.log(response);
             $("#profile-acticle").html(response);
         },
         error: function (err) {

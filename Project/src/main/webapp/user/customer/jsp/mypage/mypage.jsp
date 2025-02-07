@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -49,27 +50,29 @@
                                             <img src="./user/images/blank-profile.png" alt="User Profile Image">
                                         </div>
                                         <div class="profile-info">
-                                            <div class="profile-name">터키플랫슈즈 <button type="button" data-toggle="modal" data-target="#profileSettingModal"><i class="bi bi-gear"></i></button></div>
-                                            <div class="profile-level">LV.5 실버 · 2% 적립</div>
+                                            <c:if test="${not empty sessionScope.customer_info}">
+                                                <div class="profile-name">${sessionScope.customer_info.nickname} <button type="button" data-toggle="modal" data-target="#profileSettingModal"><i class="bi bi-gear"></i></button></div>
+                                                <div class="profile-level">${sessionScope.customer_info.grade_name} · ${sessionScope.customer_info.point_condition}% 적립</div>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="profile-stats">
                                     <div class="stats-item">
                                         <div class="stats-label">적립금</div>
-                                        <div class="stats-value">7,023원</div>
+                                        <div class="stats-value"><fmt:formatNumber value="${requestScope.points}"/>원</div>
                                     </div>
                                     <div class="stats-item">
                                         <div class="stats-label">쿠폰</div>
-                                        <div class="stats-value">107장</div>
+                                        <div class="stats-value"><fmt:formatNumber value="${requestScope.coupons}"/>장</div>
                                     </div>
                                     <div class="stats-item">
                                         <div class="stats-label">후기 작성</div>
-                                        <div class="stats-value">1건</div>
+                                        <div class="stats-value"><fmt:formatNumber value="${requestScope.ableCount}"/>건</div>
                                     </div>
                                 </div>
                                 <div class="profile-buttons">
-                                    <button type="button" class="btn btn-outline-secondary btn-sm profile-button" onclick="location.href='Controller?type=pwConfirm'">프로필</button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm profile-button" onclick="location.href='Controller?type=myPage&action=profile'">프로필</button>
                                     <button type="button" class="btn btn-outline-secondary btn-sm snap-profile-button">스냅 프로필</button>
                                 </div>
                             </div>
@@ -90,7 +93,7 @@
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-point" autocomplete="off">
                                 <label class="btn btn-outline-dark" for="btnradio-point" onclick="selectPoint('all')">적립금</label>
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-coupon" autocomplete="off">
-                                <label class="btn btn-outline-dark" for="btnradio-coupon">쿠폰</label>
+                                <label class="btn btn-outline-dark" for="btnradio-coupon" onclick="selectCoupons()">쿠폰</label>
                                 <input type="radio" class="btn-check" name="btnradiotab" id="btnradio-delivery" autocomplete="off">
                                 <label class="btn btn-outline-dark" for="btnradio-delivery" onclick="selectDelivery()">배송지</label>
                             </div>
@@ -392,6 +395,7 @@
     <script src="./user/customer/js/mypage/components/order.js"></script>
     <script src="./user/customer/js/mypage/components/refund.js"></script>
     <script src="./user/customer/js/mypage/components/review.js"></script>
+    <script src="./user/customer/js/mypage/components/coupon.js"></script>
 
     <script>
         $(function () {

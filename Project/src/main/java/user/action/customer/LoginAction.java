@@ -4,8 +4,8 @@ import org.json.JSONObject;
 import org.mindrot.jbcrypt.BCrypt;
 import user.action.Action;
 import user.dao.customer.CartDAO;
-import user.dao.customer.CategoryDAO;
 import user.dao.customer.CustomerDAO;
+import user.dao.customer.ProductDAO;
 import user.vo.customer.CustomerVO;
 import user.vo.customer.MajorCategoryVO;
 
@@ -110,7 +110,7 @@ public class LoginAction  implements Action {
                     session.setAttribute("cart_count", cart_count);
 
                     // 카테고리
-                    List<MajorCategoryVO> categories = CategoryDAO.getCategory();
+                    List<MajorCategoryVO> categories = ProductDAO.selectCategory();
 
                     if (categories != null && !categories.isEmpty()) {
                         request.setAttribute("categories", categories);

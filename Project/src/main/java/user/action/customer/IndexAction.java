@@ -1,7 +1,6 @@
 package user.action.customer;
 
 import user.action.Action;
-import user.dao.customer.CategoryDAO;
 import user.dao.customer.ProductDAO;
 import user.util.Paging;
 import user.vo.customer.CustomerVO;
@@ -63,7 +62,7 @@ public class IndexAction implements Action {
               }
           } else {
               // 초기 로드 시 카테고리
-              List<MajorCategoryVO> categories = CategoryDAO.getCategory();
+              List<MajorCategoryVO> categories = ProductDAO.selectCategory();
 
               if (categories != null && categories.size() > 0) {
                   request.setAttribute("categories", categories);

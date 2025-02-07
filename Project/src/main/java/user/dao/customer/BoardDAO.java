@@ -10,10 +10,10 @@ import java.util.List;
 public class BoardDAO {
     // 1:1문의 전체 조회
     public static List<BoardVO> selectAll(String cus_no) {
-        SqlSession ss = FactoryService.getFactory().openSession();
         List<BoardVO> list = null;
+        SqlSession ss = FactoryService.getFactory().openSession();
 
-        try{
+        try {
             list = ss.selectList("inquiry.select_all", cus_no);
         } catch (Exception e) {
             e.printStackTrace();
@@ -26,16 +26,16 @@ public class BoardDAO {
 
     // 1:1문의 검색 조건 조회
     public static List<BoardVO> selectSearch(String cus_no, String status, String startDate, String endDate) {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("cus_no", cus_no);
-        map.put("status", status);
-        map.put("startDate", startDate);
-        map.put("endDate", endDate);
-
-        SqlSession ss = FactoryService.getFactory().openSession();
         List<BoardVO> list = null;
+        SqlSession ss = FactoryService.getFactory().openSession();
 
-        try{
+        try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("cus_no", cus_no);
+            map.put("status", status);
+            map.put("startDate", startDate);
+            map.put("endDate", endDate);
+
             list = ss.selectList("inquiry.select_search", map);
         } catch (Exception e) {
             e.printStackTrace();
