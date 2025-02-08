@@ -112,22 +112,20 @@
                                 <h5>결제 정보</h5>
                                 <ul class="payment-list">
                                     <c:set var="totalPrice" value="${requestScope.totalPrice}" />
-                                    <c:set var="discountAmount" value="${requestScope.totalPrice - requestScope.totalAmount}" />
+                                    <c:set var="totalSaledPrice" value="${requestScope.totalSaledPrice}" />
+                                    <c:set var="discountAmount" value="${totalPrice - totalSaledPrice}" />
                                     <c:set var="pointAmount" value="${requestScope.point_amount}" />
                                     <c:set var="couponSalePer" value="${requestScope.coupon.sale_per}" />
-
-                                    <!-- 상품 금액에서 할인 금액을 뺌 -->
-                                    <c:set var="priceAfterDiscount" value="${totalPrice - discountAmount}" />
 
                                     <!-- 화면에 표시 -->
                                     <li><span>상품 금액</span> <span class="item-price"><fmt:formatNumber value="${totalPrice}"/>원</span></li>
                                     <li><span>할인 금액</span> <span class="discount">-<fmt:formatNumber value="${discountAmount}"/>원</span></li><br/>
 
-                                    <c:if test="${requestScope.coupon_list ne null}">
+                                    <c:if test="${requestScope.coupon ne null}">
                                         <h5>쿠폰 할인</h5>
                                         <c:set var="couponDiscount" value="0" />
-                                        <c:forEach var="coupon" items="${requestScope.coupon_list}">
-                                            <c:set var="individualDiscount" value="${priceAfterDiscount * (coupon.sale_per / 100)}" />
+                                        <c:forEach var="coupon" items="${requestScope.coupon}">
+                                            <c:set var="individualDiscount" value="${totalSaledPrice * (coupon.sale_per / 100)}" />
                                             <c:set var="couponDiscount" value="${couponDiscount + individualDiscount}" />
                                         <li>
                                             <span class="coupon_info">${coupon.coupon_name} (${coupon.sale_per}%)</span>

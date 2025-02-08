@@ -51,12 +51,7 @@ public class OrderAction implements Action {
                     String orderCode = request.getParameter("orderCode");
                     String status = request.getParameter("status");
 
-                    System.out.println("orderCode: " + orderCode);
-                    System.out.println("status: " + status);
-
                     int u_cnt = OrderDAO.updateOrderStatus(cvo.getId(), orderCode, status);
-
-                    System.out.println("u_cnt: " + u_cnt);
 
                     response.setContentType("application/json");
                     response.setCharacterEncoding("UTF-8");
@@ -64,8 +59,8 @@ public class OrderAction implements Action {
                     try (PrintWriter out = response.getWriter())  {
                         out.print("{\"response\": " + (u_cnt > 0) + "}");
                         out.flush();
-                    } catch (IOException ioException) {
-                        ioException.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
 
                     return null;
@@ -160,7 +155,6 @@ public class OrderAction implements Action {
 
                     return null;
                 case "kakaopay":
-                    // 쿠폰 목록
                     String order_code = request.getParameter("order_code");
                     String deli_no = request.getParameter("deli_no");
                     String used_point = request.getParameter("used_point"); // 사용한 적립금
@@ -433,7 +427,7 @@ public class OrderAction implements Action {
 
                     List<OrderVO> o_list = OrderDAO.selectOrderCode(cvo.getId(), order_code); // 주문상세 정보 list
                     List<DeliveryVO> deli_list = DeliveryDAO.selectDelivery(cvo.getId()); // 해당 주문의 배송지 정보
-                    List<OrderVO> coupon_list = OrderDAO.selectOrderCoupons(cvo.getId(), order_code, null);
+                    List<OrderVO> coupon_list = OrderDAO.selectOrderCoupons(null, cvo.getId(), order_code, null);
                     GradeVO grade = GradeDAO.selectGradeCustomer(cvo.getId());
                     int totalAmount = OrderDAO.selectTotalAmount(cvo.getId(), order_code); // 결제 총 금액
                     int totalPrice = OrderDAO.selectTotalPrice(cvo.getId(), order_code); // 원가 총 금액

@@ -50,21 +50,6 @@ public class ExchangeRequestAction implements Action {
                         e.printStackTrace();
                         return "/user/customer/jsp/error/error.jsp";
                     }
-
-                case "select_all":
-                    try {
-                        o_list = OrderDAO.selectOrderProduct(null, cvo.getId(), order_code);
-                        d_list = DeliveryDAO.selectDelivery(cvo.getId());
-
-                        request.setAttribute("o_list", o_list);
-                        request.setAttribute("d_list", d_list);
-
-                        return "/user/customer/jsp/mypage/exchangeRequest.jsp";
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        return "/user/customer/jsp/error/error.jsp";
-                    }
-
                 case "select_size":
                     // 상품 사이즈 목록 조회
                     List<ProductVO> productSize = ProductDAO.selectSize(prod_no);

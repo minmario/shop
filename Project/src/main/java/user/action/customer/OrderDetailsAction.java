@@ -33,15 +33,15 @@ public class OrderDetailsAction implements Action {
                 case "select":
                     List<OrderVO> o_list = OrderDAO.selectOrderCode(cvo.getId(), order_code); // 주문상세 정보 list
                     List<DeliveryVO> deli_list = DeliveryDAO.selectDelivery(cvo.getId()); // 해당 주문의 배송지 정보
-                    List<OrderVO> coupon_list = OrderDAO.selectOrderCoupons(cvo.getId(), order_code, null);
+                    List<OrderVO> coupon = OrderDAO.selectOrderCoupons(null, cvo.getId(), order_code, null);
                     GradeVO grade = GradeDAO.selectGradeCustomer(cvo.getId());
                     int totalAmount = OrderDAO.selectTotalAmount(cvo.getId(), order_code); // 총 결제 금액
                     int totalPrice = OrderDAO.selectTotalPrice(cvo.getId(), order_code); // 원가 총 금액
-                    int point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code); // 사용한 적립금
+                    int point_amount = PointDAO.selectPointAmount( cvo.getId(), order_code); // 사용한 적립금
 
                     request.setAttribute("o_list", o_list);
                     request.setAttribute("deli_list", deli_list);
-                    request.setAttribute("coupon_list", coupon_list);
+                    request.setAttribute("coupon", coupon);
                     request.setAttribute("grade", grade);
                     request.setAttribute("totalAmount", totalAmount);
                     request.setAttribute("totalPrice", totalPrice);

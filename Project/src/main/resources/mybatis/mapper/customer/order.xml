@@ -57,6 +57,18 @@
         </if>
     </select>
 
+    <!-- 전체 취소/반품/교환 상품 가져오기 -->
+    <select id="select_order_product_all" resultType="user.vo.customer.OrderVO" parameterType="map">
+        SELECT o.*, s.name AS brand, d.name AS deli_name, d.pos_code, d.addr1, d.addr2, d.phone, d.request AS deli_request, d.is_default AS is_default, p.prod_code AS prod_code,
+        p.name AS prod_name, p.price AS prod_price, p.sale AS prod_sale, p.prod_image AS prod_image, p.saled_price AS prod_saled_price, i.option_name AS option_name
+        FROM `order` o
+        INNER JOIN product p ON o.prod_no = p.id
+        INNER JOIN delivery d ON o.deli_no = d.id
+        INNER JOIN seller s ON p.seller_no = s.id
+        LEFT JOIN inventory i ON i.id = o.inventory_no
+        WHERE o.order_code = #{order_code} AND o.cus_no = #{cus_no} AND o.status NOT IN (6,7,8)
+    </select>
+
     <!-- 취소/반품/교환 상품 전체 조회 -->
     <select id="select_refund_all" resultType="user.vo.customer.OrderVO" parameterType="String">
         SELECT DISTINCT s.name AS brand, p.prod_code AS prod_code, p.name AS prod_name, p.price AS prod_price, p.sale AS prod_sale,
@@ -110,6 +122,17 @@
         ) subquery
     </select>
 
+    <!-- 주문코드 별 할인가 금액 총 합 -->
+    <select id="select_total_saled_price" resultType="int" parameterType="map">
+        SELECT IFNULL(SUM(re), 0) AS total_re
+        FROM (
+            SELECT (p.saled_price * o.count) AS re FROM `order` o
+            INNER JOIN product p ON o.prod_no = p.id
+            WHERE cus_no = #{cus_no} AND order_code = #{order_code}
+            GROUP BY p.saled_price, o.count
+        ) subquery;
+    </select>
+
     <!-- 주문 상세 조회(배송지 변경 로그 입력 시 사용) -->
     <select id="select_order_details" resultType="user.vo.customer.OrderVO" parameterType="map">
         SELECT DISTINCT cus_no, order_code, deli_no FROM `order`
@@ -156,13 +179,16 @@
         WHERE id = #{id} AND cus_no = #{cus_no} AND order_code = #{order_code} AND prod_no = #{prod_no}
     </update>
 
-    <!-- 주문 시 사용한 쿠폰 내용 가져오기 -->
+    <!-- 주문 시 사용한 쿠폰 내용 가져오기(전체 상품) -->
     <select id="select_order_coupons" resultType="user.vo.customer.OrderVO" parameterType="map">
         SELECT DISTINCT c.name AS coupon_name, c.sale_per AS sale_per
         FROM `order` o
         INNER JOIN coupon c ON o.coupon_no = c.id
         INNER JOIN cus_coupon cc ON cc.coupon_no = c.id
         WHERE o.cus_no = #{cus_no} AND o.order_code = #{order_code} AND cc.status = '2'
+        <if test="id != null">
+            AND o.id = #{id}
+        </if>
         <if test="prod_no != null">
             AND o.prod_no = #{prod_no}
         </if>

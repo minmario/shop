@@ -40,7 +40,6 @@
                             <div class="wrap-all-button">
                                 <button type="button" class="btn btn-outline-secondary" id="all-cancel" onclick="location.href='Controller?type=cancelOrder&action=select_all&order_code=${item.order_code}'">전체 구매취소</button>
                                 <button type="button" class="btn btn-outline-secondary" id="all-refund" onclick="location.href='Controller?type=refundRequest&action=select_all&order_code=${item.order_code}'">전체 반품신청</button>
-                                <button type="button" class="btn btn-outline-secondary" id="all-exchange" onclick="location.href='Controller?type=exchangeRequest&action=select_all&order_code=${item.order_code}'">전체 교환신청</button>
                             </div>
                         </div>
 
@@ -68,17 +67,17 @@
                                 <p class="custom-product-name">${item.brand}</p>
                                 <p class="custom-product-description">${item.prod_name}</p>
                                 <p class="custom-product-size">${item.option_name} / ${item.count}개</p>
-                                <p class="custom-product-price"><fmt:formatNumber value="${item.amount}"/>원</p>
+                                <p class="custom-product-price"><fmt:formatNumber value="${item.result_amount}"/>원</p>
                             </div>
                         </div>
                         <c:if test="${item.status == '4'}">
                             <button type="button" class="btn btn-outline-secondary custom-review-button" onclick="confirmPurchase('${item.order_code}')">구매 확정</button>
                         </c:if>
                         <c:if test="${item.status == '5'}">
-                            <button type="button" class="btn btn-outline-secondary custom-review-button" data-toggle="modal" data-target="#reviewModal">후기 작성</button>
+                            <button type="button" class="btn btn-outline-secondary custom-review-button" onclick="location.href='Controller?type=writeReview&action=select&prod_no=${item.prod_no}&order_code=${item.order_code}'">후기 작성</button>
                         </c:if>
                         <div class="custom-product-actions">
-                            <button type="button" class="btn btn-outline-secondary custom-action-button" onclick="location.href='Controller?type=deliveryStatus&order_code=${item.order_code}&brand=${item.brand}">배송 조회</button>
+                            <button type="button" class="btn btn-outline-secondary custom-action-button" onclick="location.href='Controller?type=deliveryStatus&action=select&order_code=${item.order_code}&brand=${item.brand}'">배송 조회</button>
                             <button type="button" class="btn btn-outline-secondary custom-action-button" data-toggle="modal" data-target="#repurchaseModal">재구매</button>
                         </div>
                     </div>

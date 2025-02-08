@@ -32,6 +32,8 @@ public class RefundRequestAction implements Action {
         List<OrderVO> o_list = null;
         List<DeliveryVO> d_list = null;
         List<OrderVO> coupon = null;
+        int totalPrice = 0;
+        int totalSaledPrice = 0;
         int point_amount = 0;
 
         if (action != null) {
@@ -40,12 +42,16 @@ public class RefundRequestAction implements Action {
                     try {
                         o_list = OrderDAO.selectOrderProduct(id, cvo.getId(), order_code);
                         d_list = DeliveryDAO.selectDelivery(cvo.getId());
-                        coupon = OrderDAO.selectOrderCoupons(cvo.getId(), order_code, prod_no); // 쿠폰 정보 가져오기
+                        coupon = OrderDAO.selectOrderCoupons(id, cvo.getId(), order_code, prod_no); // 쿠폰 정보 가져오기
+                        totalPrice = OrderDAO.selectTotalPrice(cvo.getId(), order_code);
+                        totalSaledPrice = OrderDAO.selectTotalSaledPrice(cvo.getId(), order_code);
                         point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code);
 
                         request.setAttribute("o_list", o_list);
                         request.setAttribute("d_list", d_list);
                         request.setAttribute("coupon", coupon);
+                        request.setAttribute("totalPrice", totalPrice);
+                        request.setAttribute("totalSaledPrice", totalSaledPrice);
                         request.setAttribute("point_amount", point_amount);
 
                         return "/user/customer/jsp/mypage/refundRequest.jsp";
@@ -56,14 +62,18 @@ public class RefundRequestAction implements Action {
 
                 case "select_all":
                     try {
-                        o_list = OrderDAO.selectOrderProduct(null, cvo.getId(), order_code);
+                        o_list = OrderDAO.selectOrderProductAll(cvo.getId(), order_code);
                         d_list = DeliveryDAO.selectDelivery(cvo.getId());
-                        coupon = OrderDAO.selectOrderCoupons(cvo.getId(), order_code, null); // 쿠폰 정보 가져오기
+                        coupon = OrderDAO.selectOrderCoupons(null, cvo.getId(), order_code, null); // 쿠폰 정보 가져오기
+                        totalPrice = OrderDAO.selectTotalPrice(cvo.getId(), order_code);
+                        totalSaledPrice = OrderDAO.selectTotalSaledPrice(cvo.getId(), order_code);
                         point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code);
 
                         request.setAttribute("o_list", o_list);
                         request.setAttribute("d_list", d_list);
                         request.setAttribute("coupon", coupon);
+                        request.setAttribute("totalPrice", totalPrice);
+                        request.setAttribute("totalSaledPrice", totalSaledPrice);
                         request.setAttribute("point_amount", point_amount);
 
                         return "/user/customer/jsp/mypage/refundRequest.jsp";
@@ -84,16 +94,6 @@ public class RefundRequestAction implements Action {
                         String refundAmount = request.getParameter("refund_amount");
                         String point_used = request.getParameter("point_used");
 
-                        System.out.println(id);
-                        System.out.println(prodNo);
-                        System.out.println(orderCode);
-                        System.out.println(reason);
-                        System.out.println(retrieve_deli_no);
-                        System.out.println(refund_bank);
-                        System.out.println(refund_account);
-                        System.out.println(refundAmount);
-                        System.out.println(point_used);
-
                         // String 값을 숫자로 변환
                         int currentTotal = Integer.parseInt(cvo.getTotal());  // cvo.getTotal()을 정수로 변환
                         int refundAmountValue = Integer.parseInt(refundAmount);  // refundAmount를 정수로 변환
@@ -109,13 +109,13 @@ public class RefundRequestAction implements Action {
 
                         // 이전 적립금 내역 삭제
                         int d_p_cnt = 0;
-                        if (point_used != null && !point_used.isEmpty()) {
+                        if (point_used != null && !point_used.isEmpty() || !point_used.equals("0")) {
                             d_p_cnt = PointDAO.deletePoint(cvo.getId(), orderCode);
                         }
 
                         // 사용한 적립금 복구 (point_used null이 아닌 경우에만 실행)
                         int u_p_cnt = 0;
-                        if (point_used != null && !point_used.isEmpty()) {
+                        if (point_used != null && !point_used.isEmpty() || !point_used.equals("0")) {
                             u_p_cnt = PointDAO.insertPoint(cvo.getId(), point_used, orderCode);
                         }
 

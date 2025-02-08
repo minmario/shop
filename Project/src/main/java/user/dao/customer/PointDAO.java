@@ -214,4 +214,14 @@ public class PointDAO {
 
         return cnt;
     }
+
+    //
+    public static int calculateRefundPoint(int totalAmount, int refundAmount, int usedPoint) {
+        if (totalAmount == 0) {
+            return 0;  // 분모가 0인 경우 포인트 계산 불가
+        }
+        // 사용 포인트의 환불 비율 계산
+        double pointRatio = (double) refundAmount / totalAmount;
+        return (int) Math.round(usedPoint * pointRatio);
+    }
 }

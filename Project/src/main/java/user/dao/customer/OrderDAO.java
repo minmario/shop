@@ -88,6 +88,26 @@ public class OrderDAO {
         return list;
     }
 
+    // 전체 취소, 반품, 교환할 상품 조회
+    public static List<OrderVO> selectOrderProductAll(String cus_no, String order_code){
+        List<OrderVO> list = null;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("cus_no", cus_no);
+            map.put("order_code", order_code);
+
+            list = ss.selectList("order.select_order_product_all", map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return list;
+    }
+
     // 주문 총 금액
     public static int selectTotalAmount(String cus_no, String order_code){
         int totalAmount = 0;
@@ -126,6 +146,25 @@ public class OrderDAO {
         }
 
         return totalPrice;
+    }
+
+    // 상품 총 할인가 금액
+    public static int selectTotalSaledPrice(String cus_no, String order_code){
+        int totalSaledPrice = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("cus_no", cus_no);
+            map.put("order_code", order_code);
+
+            totalSaledPrice = ss.selectOne("order.select_total_saled_price", map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+        return totalSaledPrice;
     }
 
     //배송지 변경
@@ -322,12 +361,15 @@ public class OrderDAO {
     }
 
     // 주문 시 사용한 쿠폰 조회(주문 상세 조회)
-    public static List<OrderVO> selectOrderCoupons(String cus_no, String order_code, String prod_no){
+    public static List<OrderVO> selectOrderCoupons(String id, String cus_no, String order_code, String prod_no){
         List<OrderVO> list = null;
         SqlSession ss = FactoryService.getFactory().openSession();
 
         try {
             HashMap<String, String> map = new HashMap<>();
+            if (id != null) {
+                map.put("id", id);
+            }
             map.put("cus_no", cus_no);
             map.put("order_code", order_code);
             if (prod_no != null) {
@@ -345,12 +387,13 @@ public class OrderDAO {
     }
 
     // 주문 시 사용한 쿠폰 조회(개별 상품 환불)
-    public static OrderVO selectOrderCoupon(String cus_no, String prod_no, String order_code){
+    public static OrderVO selectOrderCoupon(String id, String cus_no, String prod_no, String order_code){
         OrderVO vo = null;
         SqlSession ss = FactoryService.getFactory().openSession();
 
         try {
             HashMap<String, String> map = new HashMap<>();
+            map.put("id", id);
             map.put("cus_no", cus_no);
             map.put("order_code", order_code);
             if (prod_no != null) {

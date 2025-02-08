@@ -47,7 +47,7 @@
                                 <!-- 배송 상태 -->
                                 <div class="delivery-status">
                                     <div class="wrap-date">
-                                        <span class="date">1/20(월)</span>
+<%--                                        <span class="date">주문날짜 : ${requestScope.list[0].order_date}</span>--%>
                                         <c:choose>
                                             <c:when test="${requestScope.list[0].status == '1'}">
                                                 <span class="date-message">결제 완료</span>
