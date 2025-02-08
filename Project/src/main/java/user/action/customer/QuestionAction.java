@@ -34,12 +34,12 @@ public class QuestionAction implements Action {
         String viewPage = null;
         if(action != null) {
             switch (action) {
-                case "all":
+                case "select":
                     list = QuestionDAO.selectAll(cvo.getId());
                     request.setAttribute("list", list);
                     viewPage = "/user/customer/jsp/mypage/components/question.jsp";
                     break;
-                case "option":
+                case "search":
                     list = QuestionDAO.selectOption(cvo.getId(), status, startDate, endDate);
                     request.setAttribute("list", list);
                     viewPage = "/user/customer/jsp/mypage/components/question.jsp";

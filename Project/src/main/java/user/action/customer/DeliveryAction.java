@@ -10,6 +10,7 @@ import user.vo.customer.LogVO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
 import java.util.List;
 
 public class DeliveryAction implements Action {
@@ -34,6 +35,52 @@ public class DeliveryAction implements Action {
 
                     viewPage = "/user/customer/jsp/mypage/components/delivery.jsp";
                     break;
+                case "search":
+                    String id = request.getParameter("id");
+
+                    DeliveryVO d_vo = DeliveryDAO.selectDeliveryById(id);
+
+                    // JSON 응답 설정
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+
+                    if (d_vo != null) {
+                        // JSON 응답 반환
+                        try (PrintWriter out = response.getWriter()) {
+                            out.print("{");
+                            out.print("\"success\": true,");
+                            out.print("\"data\": {");
+                            out.print("\"id\": \"" + d_vo.getId() + "\",");
+                            out.print("\"name\": \"" + d_vo.getName() + "\",");
+                            out.print("\"pos_code\": \"" + d_vo.getPos_code() + "\",");
+                            out.print("\"addr1\": \"" + d_vo.getAddr1() + "\",");
+                            out.print("\"addr2\": \"" + d_vo.getAddr2() + "\",");
+                            out.print("\"phone\": \"" + d_vo.getPhone() + "\",");
+                            out.print("\"request\": \"" + d_vo.getRequest() + "\",");
+                            out.print("\"is_default\": \"" + d_vo.getIs_default() + "\"");
+                            out.print("}");
+                            out.print("}");
+
+                            out.flush();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        // JSON 응답 반환
+                        try (PrintWriter out = response.getWriter()) {
+                            out.print("{");
+                            out.print("\"success\": false,");
+                            out.print("\"data\": {");
+                            out.print("}");
+                            out.print("}");
+
+                            out.flush();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    return null;
                 case "insert":
                     String i_name = request.getParameter("name");
                     String i_phone = request.getParameter("phone");
@@ -89,7 +136,7 @@ public class DeliveryAction implements Action {
                     int u_cnt = DeliveryDAO.updateDelivery(u_id, u_name, u_phone, u_pos_code, u_addr1, u_addr2, u_chkDefault, u_deli_request);
 
                     if (u_cnt > 0) {
-                        DeliveryVO d_vo = DeliveryDAO.selectDeliveryById(u_id);
+                        d_vo = DeliveryDAO.selectDeliveryById(u_id);
 
                         // 수정 로그
                         LogVO lvo = new LogVO();

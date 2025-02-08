@@ -2,9 +2,8 @@ package user.action.customer;
 
 import user.action.Action;
 import user.dao.customer.BoardDAO;
-import user.dao.customer.OrderDAO;
 import user.vo.customer.CustomerVO;
-import user.vo.customer.OrderVO;
+import user.vo.customer.ReviewVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,9 +25,9 @@ public class ReviewAction implements Action {
         String viewPath = null;
         if (action != null) {
             switch (action) {
-                case "all":
-                    List<OrderVO> list = OrderDAO.selectPurchaseConfirm(cvo.getId());
-                    request.setAttribute("list", list);
+                case "select":
+                    List<ReviewVO> list = BoardDAO.selectWriteReview(cvo.getId());
+                    request.setAttribute("r_list", list);
                     viewPath = "/user/customer/jsp/mypage/components/review.jsp";
                     break;
             }

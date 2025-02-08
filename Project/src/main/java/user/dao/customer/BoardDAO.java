@@ -3,6 +3,7 @@ package user.dao.customer;
 import org.apache.ibatis.session.SqlSession;
 import service.FactoryService;
 import user.vo.customer.BoardVO;
+import user.vo.customer.ReviewVO;
 
 import java.util.HashMap;
 import java.util.List;
@@ -108,5 +109,21 @@ public class BoardDAO {
         }
 
         return reviewExists;
+    }
+
+    // 작성한 리뷰 목록 가져오기
+    public static List<ReviewVO> selectWriteReview(String cus_no){
+        List<ReviewVO> list = null;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            list = ss.selectList("review.select_write_review", cus_no);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return list;
     }
 }

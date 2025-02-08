@@ -145,12 +145,12 @@ public class MyPageAction implements Action {
                     // 구매자 조회
                     CustomerVO result = CustomerDAO.selectCustomerByCusId(cvo.getCus_id());
 
+                    // JSON 응답 설정
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+
                     if (result != null) {
                         String cus_pw = request.getParameter("cus_pw");
-
-                        // JSON 응답 설정
-                        response.setContentType("application/json");
-                        response.setCharacterEncoding("UTF-8");
 
                         boolean isValid = BCrypt.checkpw(cus_pw, result.getCus_pw());
 

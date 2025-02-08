@@ -20,40 +20,7 @@ function insertDeliveryModal() {
     $("#addrModal #request-select").val("0");
     $("#addrModal #chkDefault").prop("checked", false);
     $("#addrModal #addr_id").val("");
-}
-
-// 배송지 수정 모달 열기
-function updateDeliveryModal(obj) {
-    $("#addrModalTitle").text("배송지 수정");
-    $(".btn-delivery-event").text("수정");
-
-    // 기존 데이터를 입력란에 채우기
-    $("#addrModal #name").val($(obj).closest(".address-details").find(".name").text());
-    $("#addrModal #phone").val($(obj).closest(".address-details").find(".phone").text());
-    $("#addrModal #pos_code").val($(obj).closest(".address-details").find(".pos_code").text());
-    $("#addrModal #addr1").val($(obj).closest(".address-details").find(".addr1").text());
-    $("#addrModal #addr2").val($(obj).closest(".address-details").find(".addr2").text());
-    const request = $(obj).closest(".address-details").find(".request").text();
-    $("#addrModal #deli_request").val(request);
-    let is_default = $(obj).closest(".address-details").find(".default").length > 0;
-
-    // 요청 사항 select 박스와 직접 입력 동기화
-    if (["문 앞에 놔주세요", "경비실에 맡겨주세요", "택배함에 넣어주세요", "배송 전에 연락주세요"].includes(request)) {
-        $("#addrModal #request-select").val(request);
-        $("#addrModal #custom-input").hide();
-    } else if (request.length == 0) {
-        $("#addrModal #request-select").val("0");
-        $("#addrModal #custom-input").hide();
-    } else {
-        $("#addrModal #request-select").val("직접 입력");
-        $("#addrModal #custom-input").show();
-        $("#addrModal #deli_request").val(request);
-    }
-
-    // 기본 배송지 설정 체크박스
-    $("#addrModal #chkDefault").prop("checked", is_default);
-
-    $("#addrModal #addr_id").val($(obj).closest(".address-box").data("value"));
+    $("#addrModal #deli_request").val("");
 }
 
 // 배송지 추가 및 수정
