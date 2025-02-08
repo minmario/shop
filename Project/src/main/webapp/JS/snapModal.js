@@ -12,7 +12,11 @@ document.addEventListener('DOMContentLoaded', function () {
       fetch('/Controller?type=likeToggle', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ boardNo: boardNo, status: isLiked ? 0 : 1 })
+        body: JSON.stringify({
+          boardNo: boardNo,
+
+          status: isLiked ? 0 : 1 // 좋아요 상태 토글
+        })
       })
           .then(response => response.json())
           .then(data => {
@@ -133,7 +137,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // 메인 이미지 미리보기
   const mainImageInput = document.getElementById('mainImage');
   const mainImagePreview = document.getElementById('mainImagePreview').querySelector('img');
-
+  mainImagePreview.style.width = "300px";
+  mainImagePreview.style.height = "300px";
+  mainImagePreview.style.objectFit = "cover";
   mainImageInput.addEventListener('change', (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -232,3 +238,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+//내가구매한상품 체크 콤보박스
+
+document.addEventListener('DOMContentLoaded', () => {
+  const productCheckboxes = document.querySelectorAll('.product-checkbox');
+  const hiddenInput = document.getElementById('selectedProdNo');
+
+  function updateSelectedProducts() {
+    const selectedValues = Array.from(productCheckboxes)
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value);
+    hiddenInput.value = selectedValues.join(',');
+    console.log('Selected products:', hiddenInput.value); // 디버깅용
+  }
+
+  productCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', updateSelectedProducts);
+  });
+
+  // 폼 제출 전 선택된 제품 확인
+  document.querySelector('form').addEventListener('submit', (e) => {
+    console.log('Form submitted. Selected products:', hiddenInput.value); // 디버깅용
+  });
+});
+

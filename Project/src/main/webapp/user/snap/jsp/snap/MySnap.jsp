@@ -138,12 +138,11 @@
                                                     ...
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <li>
-                                                        <a href="#" class="dropdown-item edit-snap-btn text-primary" data-snap-id="${snap.id}">
-                                                            수정하기
-                                                        </a>
-                                                    </li>
 
+                                                    <a href="#" class="dropdown-item edit-snap-btn text-primary"
+                                                       data-snap-id="${snap.id}" data-bs-toggle="modal" data-bs-target="#snapEditModal">
+                                                        수정하기
+                                                    </a>
                                                     <li><a class="dropdown-item" href="${pageContext.request.contextPath}/Controller?type=boardDelte&id=${snap.id}">삭제하기</a></li>
 
                                                 </ul>
@@ -238,17 +237,40 @@
                                     <i class="bi bi-share" style="font-size: 24px; cursor: pointer;"></i>
                                 </div>
 
+                                <!-- 게시글 내용 표시 (내용이 있을 경우에만 출력) -->
+                                <c:if test="${not empty snap.content}">
+                                    <div id="snapContent_${snap.id}" class="snap-content clamped-content" style="margin-bottom: 8px;">
+                                            ${snap.content}
+                                    </div>
+                                    <!-- 더보기 버튼: 내용 길이에 따라 필요할 경우 보이도록 JavaScript로 제어 -->
+                                    <div id="moreBtnContainer_${snap.id}" style="margin-bottom: 12px; display: none;">
+                                        <span class="more-btn" onclick="toggleContent('${snap.id}')">더보기</span>
+                                    </div>
+                                </c:if>
+
+                                <!-- 태그 표시 (태그가 있을 경우에만 출력) -->
+                                <c:if test="${not empty snap.tags}">
+                                    <div class="snap-tags" style="margin-bottom: 12px;">
+                                        <c:forEach var="tag" items="${fn:split(snap.tags, ',')}">
+                                            <c:if test="${not empty tag}">
+                                                <span class="snap-tag">${tag}</span>
+                                            </c:if>
+                                        </c:forEach>
+                                    </div>
+                                </c:if>
+
                                 <!-- 댓글 모두 보기 -->
                                  <c:if test="${not empty latestReply.nickname}">
                                 <button class="btn btn-light btn-sm mt-2" id="viewAllCommentsBtn">댓글 모두 보기</button>
                                  </c:if>
+                                <c:if test="${not empty latestReply}">
                                      <!-- 최신 댓글 표시 -->
                                 <div id="latestComment" class="list-group">
                                     <p class="mb-0">
                                             <strong>${latestReply.nickname}</strong>&nbsp;&nbsp;${latestReply.content}
                                         </p>
                                 </div>
-
+                                </c:if>
                                 <%--//댓글모달--%>
                                 <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
@@ -305,7 +327,7 @@
                     </div>
                 </div>
 
-                <!-- ✅ 추천 사용자 목록 (4 컬럼) -->
+                <!--  추천 사용자 목록 (4 컬럼) -->
                 <div class="col-md-4 border-start p-3"
                      style="height: 100vh; overflow-y: auto; position: sticky; top: 0;">
                     <!-- 현재 로그인한 사용자 -->
@@ -341,14 +363,48 @@
             </div>
         </div>
     </div>
-    <jsp:include page="/user/snap/jsp/snap/snapModal.jsp"></jsp:include>
+
+    <!-- 수정 모달 컨테이너 -->
+    <div class="modal fade" id="snapEditModal" tabindex="-1" aria-labelledby="snapEditModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Ajax로 로드될 내용이 이곳에 삽입됩니다. -->
+                <div class="text-center p-4">
+                    <span>로딩 중...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<jsp:include page="/user/snap/jsp/snap/snapModal.jsp"></jsp:include>
+    <jsp:include page="/user/snap/jsp/snap/snapEdit.jsp" />
     <script src="${pageContext.request.contextPath}/JS/snapModal.js"></script>
     <script src="${pageContext.request.contextPath}/JS/snap/MySnap.js"></script>
 
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  $(document).on('click', '.edit-snap-btn', function(e) {
+    e.preventDefault();
+    var snapId = $(this).data('snap-id');
+    // Ajax 호출하여 수정 모달 컨텐츠 로드
+    $.ajax({
+      url: "${pageContext.request.contextPath}/Controller?type=xx&id=" + snapId,
+      method: "GET",
+      success: function(response) {
+        // 모달 내부의 .modal-content에 수정 페이지 HTML 삽입
+        $('#snapEditModal .modal-content').html(response);
+        // 모달을 강제로 열어둔다면 (data-bs-toggle과 data-bs-target가 있으므로 자동으로 열리지만, 필요시 아래 코드를 사용)
+        // $('#snapEditModal').modal('show');
+      },
+      error: function() {
+        alert("게시글 정보를 불러오는데 실패했습니다.");
+      }
+    });
+  });
 
+</script>
 
 </body>
 </html>

@@ -158,4 +158,55 @@
     WHERE cus_no = #{customerId} AND iS_del = 0
   </select>
 
-</mapper>
+
+
+
+  <!-- 테스트용 -->
+  <select id="selectBoardById" parameterType="int" resultType="user.vo.BoardVO">
+    SELECT id, cus_no, bname, gender, season, style, tags, content, snapshot_image, additional_images,
+    like_count, write_date, order_code, type, status, is_del, is_private, prod_no
+    FROM board
+    WHERE id = #{id}
+  </select>
+
+  <!-- 게시글 업데이트 -->
+  <update id="updateBoard" parameterType="user.vo.BoardVO">
+    UPDATE board
+    SET
+    gender = #{gender},
+    season = #{season},
+    style = #{style},
+    tags = #{tags},
+    content = #{content}
+
+    WHERE id = #{id}
+  </update>
+
+
+  <select id="selectProductsByBoardId" parameterType="int" resultType="user.vo.snap.ProductVO">
+    SELECT p.id,
+    p.category_no,
+    p.seller_no,
+    p.prod_code,
+    p.name,
+    p.price,
+    p.add_date,
+    p.view_count,
+    p.active,
+    p.sale,
+    p.prod_image,
+    p.additional_images,
+    p.content,
+    p.is_del,
+    p.saled_price,
+    p.content_image,
+    p.major_category
+    FROM board_prod bp
+    JOIN product p ON bp.prod_no = p.id
+    WHERE bp.board_no = #{boardId}
+  </select>
+
+  </mapper>
+
+
+

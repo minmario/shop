@@ -143,17 +143,17 @@ public class SnapDao {
 
   }
 
-  public boolean  updateBoard(BoardVO board) {
-    SqlSession session = FactoryService.getFactory().openSession();
-    int rows = session.update("board.updateSnap", board);
-    if (rows > 0) {
-      session.commit();
-      session.close();
-      return true;
-    }
-    session.close();
-    return false;
-  }
+//  public boolean  updateBoard(BoardVO board) {
+//    SqlSession session = FactoryService.getFactory().openSession();
+//    int rows = session.update("board.updateSnap", board);
+//    if (rows > 0) {
+//      session.commit();
+//      session.close();
+//      return true;
+//    }
+//    session.close();
+//    return false;
+//  }
 
 
 
@@ -179,5 +179,29 @@ public class SnapDao {
     return chk;
   }
 
+  //확인하는부분
 
+  public BoardVO selectBoardById(int boardId) {
+    SqlSession session = FactoryService.getFactory().openSession();
+    BoardVO board = session.selectOne("board.selectBoardById", boardId);
+    session.close();
+    return board;
+  }
+
+  public int updateBoard(BoardVO board) {
+    SqlSession session = FactoryService.getFactory().openSession();
+    int result = session.update("board.updateBoard", board);
+    session.commit();
+    session.close();
+    return result;
+  }
+
+
+  public List<ProductVO> selectProductsByBoardId(int boardId) {
+    SqlSession session = FactoryService.getFactory().openSession();
+    List<ProductVO> productList = session.selectList("board.selectProductsByBoardId", boardId);
+    session.close();
+    return productList;
+  }
 }
+

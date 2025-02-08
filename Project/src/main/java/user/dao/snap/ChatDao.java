@@ -7,13 +7,14 @@ import user.vo.snap.ChatMessageVO;
 
 import user.vo.snap.CustomerVO;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.math.BigInteger;
 public class ChatDao {
 
 
@@ -29,17 +30,30 @@ public class ChatDao {
     return chatRoom;
   }
 
+
+
   public int createChatRoom(int user1Id, int user2Id) {
     SqlSession ss = FactoryService.getFactory().openSession();
-    Map<String, Integer> params = new HashMap<>();
+    Map<String, Object> params = new HashMap<>();
     params.put("user1Id", user1Id);
     params.put("user2Id", user2Id);
     ss.insert("ChatMapper.createChatRoom", params);
     ss.commit();
-    int chatRoomId = params.get("id");
+
+    Object idObj = params.get("id");
+    int chatRoomId;
+    if (idObj instanceof BigInteger) {
+      chatRoomId = ((BigInteger) idObj).intValue();
+    } else if (idObj instanceof Integer) {
+      chatRoomId = (Integer) idObj;
+    } else {
+      throw new IllegalStateException("Unexpected id type: " + idObj.getClass());
+    }
+
     ss.close();
     return chatRoomId;
   }
+
 
   public List<ChatRoomVO> getChatRooms(int userId) {
     SqlSession ss = FactoryService.getFactory().openSession();

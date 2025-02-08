@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
       //  댓글 수정 요청
       fetch(`/Controller?type=updateComment`, {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        headers: {"Content-Type": "application/x-www-form-urlencoded"},
         body: "comment_id=" + editingCommentId + "&content=" + encodeURIComponent(content)
       })
           .then(response => response.json())
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
       //  새 댓글 작성 요청
       fetch(`/Controller?type=reply`, {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded; charset=utf-8" },
+        headers: {"Content-Type": "application/x-www-form-urlencoded; charset=utf-8"},
         body: "board_no=" + boardNo + "&content=" + encodeURIComponent(content)
       })
           .then(response => response.json())
@@ -204,7 +204,7 @@ function deleteComment(commentId) {
 
   fetch(`/Controller?type=deleteComment`, {
     method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    headers: {"Content-Type": "application/x-www-form-urlencoded"},
     body: "comment_id=" + commentId
   })
       .then(response => response.json())
@@ -219,6 +219,7 @@ function deleteComment(commentId) {
       })
       .catch(error => console.error(" 댓글 삭제 오류:", error));
 }
+
 //최신댓글 업데이트임
 function updateLatestComment(boardNo) {
   fetch(`/Controller?type=reply&board_no=` + boardNo)
@@ -231,7 +232,7 @@ function updateLatestComment(boardNo) {
           return;
         }
 
-        // ✅ 최신 댓글 UI 업데이트
+        //  최신 댓글 UI 업데이트
         latestCommentContainer.innerHTML =
             "<p class='mb-0'>" +
             "<strong>" + comment.nickname + "</strong>&nbsp;&nbsp;" + comment.content +
@@ -255,7 +256,7 @@ document.getElementById("postCommentBtn").addEventListener("click", function () 
   const boardNo = heartIcon ? heartIcon.getAttribute("data-board-no") : null;
 
   if (!boardNo) {
-    console.error("❌ boardNo 값이 없습니다.");
+    console.error(" boardNo 값이 없습니다.");
     return;
   }
 
@@ -263,22 +264,56 @@ document.getElementById("postCommentBtn").addEventListener("click", function () 
 
   fetch(`/Controller?type=reply`, {
     method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8 " },
+    headers: {"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8 "},
     body: "board_no=" + boardNo + "&content=" + encodeURIComponent(content),
   })
       .then(response => response.json())
       .then(data => {
         if (data) {
-          console.log("✅ 댓글 추가 성공:", data);
+          console.log(" 댓글 추가 성공:", data);
           commentInput.value = ""; // 입력창 초기화
           updateLatestComment(boardNo);
           addCommentToDOM(data.nickname, data.profile_image, data.content);
-          loadComments(boardNo); // ✅ 댓글 목록 즉시 업데이트
-          setTimeout(() => loadComments(boardNo), 500); // ✅ 추가 업데이트
+          loadComments(boardNo); //  댓글 목록 즉시 업데이트
+          setTimeout(() => loadComments(boardNo), 500); //  추가 업데이트
         }
       })
-      .catch(error => console.error("❌ 댓글 전송 오류:", error));
+      .catch(error => console.error(" 댓글 전송 오류:", error));
 });
+
+
+
+  // 페이지 로딩 시 각 게시글 내용에 대해 더보기 버튼 표시 여부를 결정
+  document.addEventListener("DOMContentLoaded", function() {
+  // 모든 게시글 내용 요소를 순회
+  var contentElements = document.querySelectorAll(".snap-content");
+  contentElements.forEach(function(el) {
+  // 실제 내용 높이와 클램프된 높이를 비교해서 더보기 버튼을 보여줌
+  // 클램프된 경우 대략 2줄의 높이를 가지므로, 2줄보다 높으면 버튼을 보임
+  if (el.scrollHeight > el.clientHeight + 5) { // 여유 5px
+  var id = el.id.split("_")[1]; // 예: "snapContent_123" → "123"
+  var moreBtnContainer = document.getElementById("moreBtnContainer_" + id);
+  if (moreBtnContainer) {
+  moreBtnContainer.style.display = "block";
+}
+}
+});
+});
+
+  // 더보기 버튼 클릭 시 확장/축소 기능
+  function toggleContent(id) {
+  var contentEl = document.getElementById("snapContent_" + id);
+  var btnContainer = document.getElementById("moreBtnContainer_" + id);
+  if (contentEl.classList.contains("expanded")) {
+  // 접기: 클램프 효과 적용
+  contentEl.classList.remove("expanded");
+  btnContainer.innerHTML = '<span class="more-btn" onclick="toggleContent(\''+id+'\')">더보기</span>';
+} else {
+  // 펼치기: clamped 효과 제거
+  contentEl.classList.add("expanded");
+  btnContainer.innerHTML = '<span class="more-btn" onclick="toggleContent(\''+id+'\')">접기</span>';
+}
+}
 
 
 

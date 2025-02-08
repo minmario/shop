@@ -130,7 +130,7 @@
                             <button type="button" class="btn btn-secondary" id="prevStep" disabled>이전</button>
                             <button type="button" class="btn btn-primary" id="nextStep">다음</button>
                             <!-- type="button"을 유지 -->
-                            <button type="button" id="submitSnap">저장</button>
+                            <button type="submit" id="submitSnap">저장</button>
                         </div>
                     </div>
                 </form>
@@ -141,15 +141,15 @@
 
 <!-- 저장 버튼 클릭 시 폼 제출 처리 -->
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const submitButton = document.getElementById('submitSnap');
-    const form = document.getElementById('snapForm');
-
-    submitButton.addEventListener('click', function () {
-      console.log('폼 제출 시도!');
-      form.submit(); // 폼 강제 제출
-    });
-  });
+  // document.addEventListener('DOMContentLoaded', function () {
+  //   const submitButton = document.getElementById('submitSnap');
+  //   const form = document.getElementById('snapForm');
+  //
+  //   submitButton.addEventListener('click', function () {
+  //     console.log('폼 제출 시도!');
+  //     form.submit(); // 폼 강제 제출
+  //   });
+  // });
 </script>
 </body>
 </html>

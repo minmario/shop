@@ -26,6 +26,7 @@ public class ChatAction implements Action {
       if (chatRoom == null) {
         // 채팅방이 없으면 생성
         int newRoomId = chatDao.createChatRoom(userId, receiverId);
+        System.out.println();
         chatRoom = chatDao.getChatRoom(userId, receiverId);
       }
     }

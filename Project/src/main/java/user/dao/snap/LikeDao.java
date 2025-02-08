@@ -19,11 +19,12 @@ public class LikeDao {
       if (currentStatus == 1) {
         vo.setStatus(0);
         session.update("likes.updateLike", vo);
-        session.update("board.incrementLikeCount", vo.getBoardNo());
+
+        session.update("board.decrementLikeCount", vo.getBoardNo());
       } else if (currentStatus == 0) {
         vo.setStatus(1);
         session.update("likes.updateLike", vo);
-        session.update("board.decrementLikeCount", vo.getBoardNo());
+        session.update("board.incrementLikeCount", vo.getBoardNo());
       }
     }
 

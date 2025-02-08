@@ -4,6 +4,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <link rel="stylesheet" href="/user/css/snapcommon.css">
+<script>
+  const isLoggedIn = ${isLoggedIn ? "true" : "false"};
+</script>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -63,7 +67,7 @@
                                 </c:choose>
                                 <form id="messageForm" action="Controller" method="get">
                                     <input type="hidden" name="type" value="dm">
-                                    <input type="hidden" name="receiverId" value="${board[0].cus_no}">
+                                    <input type="hidden" name="receiverId" value="${board[0].id}">
                                     <button id="messageButton" type="submit" class="btn btn-outline-secondary btn-sm" style="font-size: 0.875rem;">메시지 보내기</button>
                                 </form>
                             </c:if>
@@ -144,14 +148,13 @@
       const messageButton = document.getElementById("messageButton");
 
 
-      const isLoggedIn = followButton.getAttribute('data-logged-in') === "true";
-
-
+      // const isLoggedIn = followButton.getAttribute('data-logged-in') === "true";
+      //  console.log(isLoggedIn);
 
 
       followButton.addEventListener('click', function () {
         if (!isLoggedIn) {
-          loginModal.show(); //
+          // loginModal.show();
           return;
         }
             const followingId = this.getAttribute('data-following-id');
@@ -167,20 +170,17 @@
             // Ajax 요청 (재시도 로직 포함)
             sendRequest(action, followingId, this);
           });
-      confirmLoginBtn.addEventListener('click', function () {
-        window.location.href = "/Controller?type=showlogin&action=profile"; // 로그인 페이지로 이동
-      });
+      // confirmLoginBtn.addEventListener('click', function () {
+      //   window.location.href = "/Controller?type=showlogin&action=profile"; // 로그인 페이지로 이동
+      // });
 
-      messageForm?.addEventListener('submit', function (event) {
-        if (!isLoggedIn) {
-          event.preventDefault();
-          loginModal.show();
-        }
-      });
+      // messageForm?.addEventListener('submit', function (event) {
+      //   if (!isLoggedIn) {
+      //     event.preventDefault();
+      //     loginModal.show();
+      //   }
+      // });
 
-      confirmLoginBtn.addEventListener('click', function () {
-        window.location.href = "/Controller?type=showlogin&action=profile"; // 로그인 페이지로 이동
-      });
 
       function updateButtonUI(button, isFollowing) {
         if (isFollowing) {

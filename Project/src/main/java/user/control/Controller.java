@@ -141,14 +141,20 @@ public class Controller extends HttpServlet {
       System.out.println("action:"+action);
 
 			String viewPath = action.execute(request, response);
+      if (viewPath.startsWith("redirect:")) {
+        String redirectUrl = viewPath.substring("redirect:".length());
+        response.sendRedirect(request.getContextPath() + redirectUrl);
+      } else {
+        RequestDispatcher disp = request.getRequestDispatcher(viewPath);
+        disp.forward(request, response);
+      }
 
 			// viewPath가 null이면 현재 컨트롤러를 sendRedirect로
 			//다시 호출하도록 하자!
 
 
 				//forward 준비
-				RequestDispatcher disp = request.getRequestDispatcher(viewPath);
-				disp.forward(request, response);
+
 
 		}
 

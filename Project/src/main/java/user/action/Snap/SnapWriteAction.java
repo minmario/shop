@@ -26,6 +26,7 @@ public class SnapWriteAction implements Action {
 
   @Override
   public String execute(HttpServletRequest request, HttpServletResponse response) {
+
     // --- 일반 폼 필드는 request.getParameter()로 받음 ---
     String content = request.getParameter("content");
     System.out.println();
@@ -97,7 +98,7 @@ public class SnapWriteAction implements Action {
     } catch (Exception e) {
       e.printStackTrace();
       request.setAttribute("error", "파일 업로드 중 문제가 발생했습니다.");
-      return "/Controller?type=snap";
+      return "/user/snap/jsp/snap.mypage.jsp";
     }
 
     // --- BoardVO 객체에 값 설정 ---
@@ -127,8 +128,9 @@ public class SnapWriteAction implements Action {
             .map(Integer::parseInt)
             .collect(Collectors.toList());
         dao.insertBoardProd(boardNo, prodNoIntList);
-      }
-      return "/user/snap/jsp/snap.mypage.jsp";
+
+     }
+      return "redirect:/Controller?type=snap";
     } else {
       request.setAttribute("error", "게시글 저장에 실패했습니다.");
       return "/Controller?type=snap";
