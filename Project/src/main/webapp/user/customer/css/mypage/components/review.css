@@ -1,11 +1,11 @@
-.earnings-section {
+.review-section {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin: 20px auto 5px auto;
 }
 
-.earnings-title {
+.review-title {
     font-size: 18px;
     font-weight: bold;
     margin-right: 10px;
@@ -13,131 +13,156 @@
     margin-bottom: 10px;
 }
 
-.earnings-summary {
-    margin: 10px 0;
-    height: 20px;
+.review-option-container {
+    padding: 10px;
 }
 
-.earnings-summary .earnings-info {
-    width: 50%;
-    float: left;
+.review-search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.earnings-possible {
-    font-size: 14px;
-    font-weight: bold;
+.review-label {
+    width: 55px;
     margin-right: 10px;
+    margin-bottom: 0;
 }
 
-.earnings-amount {
+.review-select {
+    width: 150px !important;
+}
+
+.review-input {
+    width: 180px !important;
+}
+
+.review-date-picker {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.search-button {
+    padding: 6px 12px;
     font-size: 14px;
-    color: #007bff;
     font-weight: bold;
-    margin-right: auto;
 }
 
-.earnings-guide {
-    font-size: 14px;
-    color: #888;
-    text-decoration: underline !important;
-    margin-left: auto;
-    display: flex;
-    justify-content: right;
-}
-
-.earnings-guide:hover, .earnings-guide:visited, .earnings-guide:active {
-    text-decoration: underline;
-}
-
-.earnings-container {
-    margin: 0 auto 20px auto;
-    background-color: #fff;
-    border: 1px solid #eaeaea;
-    border-radius: 8px;
-    padding: 20px;
-}
-
-.earnings-content {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 30px;
-    border-bottom: 1px solid #eaeaea;
-    padding-bottom: 20px;
-}
-
-.earnings-content:last-child {
+.review-content:last-child {
     border-bottom: none;
     margin-bottom: 0;
     padding-bottom: 0;
 }
 
-.product-item {
-    display: flex;
-    align-items: center;
-    margin: 15px 0;
+.review-content .review-item:hover {
+    background-color: #fff;
 }
 
-.product-img{
-    width: 100px;
-    height: 100px;
+.review-item {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px 0;
+    background-color: #fff;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
     margin-right: 10px;
 }
 
-.product-info-details {
+.review-info {
     display: flex;
     flex-direction: column;
 }
 
-.max-reward {
-    font-size: 14px;
-    margin-bottom: 5px;
+.review-author {
     font-weight: bold;
-}
-
-.reward-highlight {
-    color: #007bff;
-    font-weight: bold;
-}
-
-.item-name {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.item-description {
     font-size: 14px;
-    color: #666;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
 }
 
-.item-size {
-    font-size: 14px;
+.review-date {
+    font-size: 12px;
     color: #888;
-    margin-bottom: 0;
+    margin-bottom: 5px;
 }
 
-.action-buttons {
+.review-score {
     display: flex;
-    justify-content: space-between;
-    gap: 10px;
+    align-items: center;
 }
 
-.custom-btn {
-    padding: 10px 15px;
-    background-color: #fff;
+.review-score i {
+    color: #FFD700;
+    font-size: 16px;
+    margin-right: 2px;
+}
+
+.score-text {
+    margin-left: 5px;
     font-size: 14px;
-    flex: 1;
+    font-weight: bold;
 }
 
-.custom-btn:hover {
-    background-color: #fff !important;
-    color: #6c757d !important;
+.purchase-type {
+    font-weight: bold;
+    color: #666;
 }
 
-.custom-btn.disabled {
-    color: #aaa;
-    border-color: #ddd;
-    background-color: #f9f9f9;
-    cursor: not-allowed;
+.product-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.product-link:hover, .product-link:active, .product-link:visited {
+    text-decoration: none;
+}
+
+.product-img-container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.product-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid #eee;
+}
+
+.review-content {
+    font-size: 14px;
+    color: #333;
+    margin: 15px 0;
+}
+
+.review-footer {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.review-footer i {
+    font-size: 20px;
+    margin-right: 5px;
+    color: #f00;
 }

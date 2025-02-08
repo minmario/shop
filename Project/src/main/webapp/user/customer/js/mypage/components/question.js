@@ -1,6 +1,6 @@
 function selectQuestion() {
     $.ajax({
-        url: "Controller?type=question&action=all",
+        url: "Controller?type=question&action=select",
         type: "POST",
         success: function (response) {
             // 상품문의 섹션만 표시하고 다른 섹션은 숨김
@@ -57,7 +57,7 @@ function searchQuestion(){
     }
 
     $.ajax({
-        url: "Controller?type=question&action=option",
+        url: "Controller?type=question&action=search",
         type: "POST",
         data: {
             status: status,

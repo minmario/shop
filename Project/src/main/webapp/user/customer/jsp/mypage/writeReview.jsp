@@ -29,7 +29,6 @@
             <div class="wrap">
                 <div class="row">
                     <div class="container">
-
                         <c:if test="${requestScope.o_vo ne null}">
                         <c:set var="item" value="${requestScope.o_vo}"/>
                             <div class="review-container">
@@ -53,7 +52,8 @@
                                 <form id="review-form" action="Controller?type=writeReview&action=insert" method="POST" enctype="multipart/form-data" onsubmit="event.preventDefault(); insertReview();">
                                     <div class="review-rating">
                                         <p class="section-title">이 상품 어떠셨나요?</p>
-                                        <input type="hidden" id="prod_no" name="prod_no" value="item.prod_no">
+                                        <input type="hidden" id="prod_no" name="prod_no" value="${item.prod_no}">
+                                        <input type="hidden" id="order_code" name="order_code" value="${item.order_code}">
                                         <input type="hidden" id="rating-value" name="rating" />
                                         <div class="rating-stars">
                                             <span class="star" data-value="1">&#9734;</span>

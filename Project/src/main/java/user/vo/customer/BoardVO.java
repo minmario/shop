@@ -3,7 +3,7 @@ package user.vo.customer;
 import java.util.List;
 
 public class BoardVO {
-    private String id, cus_no, prod_no, bname, title, content, write_date, order_code, additional_images, is_private, brand, r_content, r_write_date, c_cus_id, type, status, gender, weight, height, score;
+    private String id, cus_no, prod_no, bname, title, content, write_date, order_code, additional_images, is_private, brand, r_content, r_write_date, c_cus_id, type, status, gender, weight, height, score, like_count, nickname, profile_image, p_name, option_name;
 
     public String getGender() {
         return gender;
@@ -173,5 +173,45 @@ public class BoardVO {
 
     public void setList(List<BoardVO> list) {
         this.list = list;
+    }
+
+    public String getLike_count() {
+        return like_count;
+    }
+
+    public void setLike_count(String like_count) {
+        this.like_count = like_count;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getProfile_image() {
+        return profile_image;
+    }
+
+    public void setProfile_image(String profile_image) {
+        this.profile_image = profile_image;
+    }
+
+    public String getP_name() {
+        return p_name;
+    }
+
+    public void setP_name(String p_name) {
+        this.p_name = p_name;
+    }
+
+    public String getOption_name() {
+        return option_name;
+    }
+
+    public void setOption_name(String option_name) {
+        this.option_name = option_name;
     }
 }

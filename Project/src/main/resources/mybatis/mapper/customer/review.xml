@@ -17,4 +17,24 @@
         WHERE cus_no = #{cus_no} AND prod_no = #{prod_no} AND bname = 'review'
         ) AS record_exists
     </select>
+
+    <!-- 작성한 리뷰 목록 -->
+    <select id="select_write_review" resultType="user.vo.customer.BoardVO" parameterType="String">
+        SELECT c.nickname, c.profile_image, p.name AS p_name, i.option_name, b.id, b.cus_no, b.prod_no, b.bname, b.title, b.content, b.additional_images, IFNULL(b.like_count, 0) AS like_count, b.score, b.write_date, b.order_code, b.is_private
+        FROM board b
+        INNER JOIN customer c ON b.cus_no = c.id
+        INNER JOIN product p ON b.prod_no = p.id
+        INNER JOIN `order` o ON b.order_code = o.order_code
+        INNER JOIN inventory i ON o.inventory_no = i.id
+        WHERE b.bname = 'review'
+            AND b.cus_no = #{cus_no}
+            AND b.is_del = 0
+            AND EXISTS (
+                SELECT 1
+                FROM `order` o
+                WHERE o.prod_no = b.prod_no
+                AND o.order_code = b.order_code
+                AND o.cus_no = #{cus_no}
+            )
+    </select>
 </mapper>

@@ -33,6 +33,7 @@ public class BoardAction implements Action {
                 case "select":
                     List<BoardVO> all_list = BoardDAO.selectAll(cvo.getId());
                     request.setAttribute("inquiry_list", all_list);
+                    System.out.println("inquiry_list = " + all_list.size());
                     viewPage = "/user/customer/jsp/mypage/components/inquiry.jsp";
                     break;
                 case "search":
