@@ -9,10 +9,11 @@
         <%-- CSS --%>
         <link href="./user/customer/css/common/common.css" rel="stylesheet" type="text/css">
         <link href="./user/customer/css/layout/header.css" rel="stylesheet" type="text/css">
-        <link href="./user/customer/css/event/event.css" rel="stylesheet" type="text/css">
+        <%--<link href="./user/customer/css/event/event.css" rel="stylesheet" type="text/css">--%>
 
         <%-- JS --%>
-        <script src="./user/customer/js/event/event.js"></script>
+        <script src="./user/customer/js/layout/header.js"></script>
+        <%--<script src="./user/customer/js/event/event.js"></script>--%>
 
         <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
             <div class="container-fluid">
@@ -79,7 +80,7 @@
                 <c:choose>
                     <c:when test="${not empty sessionScope.customer_info}">
                         <!-- 로그인 상태 -->
-                        <span class="nickname">${sessionScope.customer_info.nickname}님 &nbsp;&nbsp; <button type="button" class="btn btn-outline-danger" onclick="location.href='${pageContext.request.contextPath}/Controller?type=logout';">로그아웃</button></span>
+                        <span class="nickname">${sessionScope.customer_info.nickname}님 &nbsp;&nbsp; <button type="button" class="btn btn-outline-danger" onclick="onClickLogout()">로그아웃</button></span>
                         <div class="d-flex gap-3 align-items-center user-header-menu">
                             <%-- 좋아요 --%>
                             <a href="Controller?type=like&action=select" class="text-decoration-none text-danger">
@@ -87,11 +88,11 @@
                                 <span class="like_title">좋아요</span>
                             </a>
                             <%-- 알림 --%>
-                            <a href="#" class="text-decoration-none text-dark position-relative" id="event-toggle">
+                            <%--<a href="#" class="text-decoration-none text-dark position-relative" id="event-toggle">
                                 <i class="bi bi-bell-fill"></i>
                                 <span>알림</span>
                                 <span class="new_alert"></span>
-                            </a>
+                            </a>--%>
                             <%-- 장바구니 --%>
                             <a href="Controller?type=cart" class="text-decoration-none text-dark position-relative">
                                 <i class="bi bi-basket-fill"></i>
@@ -124,7 +125,7 @@
     </header>
 
     <%-- event --%>
-    <div class="event-container d-none">
+    <%--<div class="event-container d-none">
         <jsp:include page="../event/event.jsp"></jsp:include>
-    </div>
+    </div>--%>
 </html>

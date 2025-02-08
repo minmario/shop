@@ -119,6 +119,8 @@ public class CustomerDAO {
             map.put("cus_id", cus_id);
             map.put("cus_pw", cus_pw);
 
+            System.out.println("cus_id:" + cus_id + ",cus_pw:" + cus_pw);
+
             cnt = ss.update("customer.update_cus_pw", map);
 
             if (cnt > 0) {
@@ -157,16 +159,38 @@ public class CustomerDAO {
         return cnt;
     }
 
-    // 누적 금액 수정(취소/반품)
-    public static int updateTotal(String id, String total) {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("id", id);
-        map.put("total", total);
-
-        SqlSession ss = FactoryService.getFactory().openSession();
+    // 프로필 변경
+    public static int updateProfile(CustomerVO vo) {
         int cnt = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
 
         try {
+            cnt = ss.update("customer.update_profile", vo);
+
+            if (cnt > 0) {
+                ss.commit();
+            } else {
+                ss.rollback();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
+    }
+
+    // 누적 금액 수정(취소/반품)
+    public static int updateTotal(String id, String total) {
+        int cnt = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("id", id);
+            map.put("total", total);
+
             cnt = ss.update("customer.update_total", map);
 
             if (cnt > 0) {
@@ -210,16 +234,38 @@ public class CustomerDAO {
 
     // 신체정보 업데이트
     public static int updateBodyInfo(String id, String weight, String height){
-        HashMap<String, String> map = new HashMap<>();
-        map.put("id", id);
-        map.put("weight", weight);
-        map.put("height", height);
-
         int cnt = 0;
         SqlSession ss = FactoryService.getFactory().openSession();
 
         try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("id", id);
+            map.put("weight", weight);
+            map.put("height", height);
+
             cnt = ss.update("customer.update_customer", map);
+
+            if (cnt > 0) {
+                ss.commit();
+            } else {
+                ss.rollback();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
+    }
+
+    // 회원 탈퇴
+    public static int deleteCustomer(String id){
+        int cnt = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            cnt = ss.update("customer.delete_customer", id);
 
             if (cnt > 0) {
                 ss.commit();

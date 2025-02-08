@@ -436,12 +436,15 @@ input.addr2, input.toggle, #request-select {
     padding: 20px;
 }
 
-.profile-image-preview {
-    width: 50px;
-    height: 50px;
+.profile-change-notice {
+    color: #8a8989;
+}
+
+.photo-box img {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
     border-radius: 50%;
-    object-fit: cover;
-    border: 1px solid #ddd;
 }
 
 .profile-settings-form .form-group:last-child {
@@ -449,7 +452,11 @@ input.addr2, input.toggle, #request-select {
     margin-bottom: 0 !important;
 }
 
-#profileSettingModal .close-modal-btn:hover, #profileSettingModal .save-changes-btn:hover {
+.profile-actions {
+    text-align: right;
+}
+
+#profileSettingModal .btn:hover {
     background-color: #fff !important;
     color: #6c757d !important;
 }

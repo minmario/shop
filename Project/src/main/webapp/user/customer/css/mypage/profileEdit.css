@@ -117,3 +117,8 @@
 .change-button-container button {
     width: 100%;
 }
+
+/* 회원 탈퇴 모달 */
+.modal-actions {
+    text-align: right;
+}

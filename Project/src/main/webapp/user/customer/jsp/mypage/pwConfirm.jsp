@@ -45,7 +45,7 @@
                             <div class="input-group password-input-container">
                                 <input type="password" class="form-control password-input" placeholder="비밀번호 입력" id="cus_pw" name="cus_pw" autoComplete="off"/>
                             </div>
-                            <small id="errorMessage" class="error-message">4자 이상 입력해 주십시오</small>
+                            <small id="errorMessage" class="error-message">8자 이상 입력해 주십시오</small>
                             <div class="confirm-button-container">
                                 <button class="btn btn-dark" id="btn-confirm" onclick="onCustomerConfirm()">완료</button>
                             </div>

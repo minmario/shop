@@ -47,7 +47,7 @@
                                 <div class="profile-header">
                                     <div class="profile-left">
                                         <div class="profile-image">
-                                            <img src="./user/images/blank-profile.png" alt="User Profile Image">
+                                            <img src="${sessionScope.customer_info.profile_image}" alt="User Profile Image">
                                         </div>
                                         <div class="profile-info">
                                             <c:if test="${not empty sessionScope.customer_info}">
@@ -140,23 +140,27 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="profile-settings-form">
-                                <div class="form-group">
-                                    <label for="newProfileImage" class="form-label">프로필 사진</label>
-                                    <div class="d-flex align-items-center">
-                                        <img src="./user/images/blank-profile.png" alt="프로필 사진" class="profile-image-preview mr-3"/>
-                                        <input type="file" class="form-control-file" id="newProfileImage"/>
+                            <form id="change-profile-form" action="Controller?type=myPage&action=update_profile" method="POST" enctype="multipart/form-data" onsubmit="event.preventDefault(); updateProfile();">
+                                <div class="profile-settings-form">
+                                    <div class="form-group">
+                                        <label class="form-label">프로필 사진 <span class="profile-change-notice">(변경 시 프로필 사진을 클릭해 주세요)</span></label>
+                                        <div class="d-flex align-items-center">
+                                            <div class="photo-box" onclick="triggerProfileInput()">
+                                                <img src="${sessionScope.customer_info.profile_image}" alt="프로필 사진" class="profile-image-preview mr-3"/>
+                                            </div>
+                                            <input type="file" id="profile-input" accept="image/*" style="display: none;">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nickname-input" class="form-label">닉네임</label>
+                                        <input type="text" class="form-control" id="nickname-input" value="${sessionScope.customer_info.nickname}"/>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="newNickname" class="form-label">닉네임</label>
-                                    <input type="text" class="form-control" id="newNickname" placeholder="새 닉네임 입력"/>
+                                <div class="profile-actions">
+                                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">닫기</button>
+                                    <button type="submit" class="btn btn-outline-secondary">변경</button>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-secondary close-modal-btn" data-dismiss="modal">닫기</button>
-                            <button type="button" class="btn btn-outline-secondary save-changes-btn" data-dismiss="modal">변경</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -303,7 +307,6 @@
                             <ul class="review-list">
                                 <li>
                                     <div class="review-item" onclick="location.href='<%= request.getContextPath() %>/Controller?type=writeReview'">
-
                                     <span class="review-title">후기</span>
                                         <span class="arrow-icon">&gt;</span>
                                     </div>
@@ -396,6 +399,7 @@
     <script src="./user/customer/js/mypage/components/refund.js"></script>
     <script src="./user/customer/js/mypage/components/review.js"></script>
     <script src="./user/customer/js/mypage/components/coupon.js"></script>
+    <script src="./user/customer/js/mypage/myPage.js"></script>
 
     <script>
         $(function () {

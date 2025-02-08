@@ -39,6 +39,13 @@
         WHERE id = #{id}
     </update>
 
+    <!-- 회원 프로필 수정 -->
+    <update id="update_profile" parameterType="user.vo.customer.CustomerVO">
+        UPDATE customer
+        SET nickname = #{nickname}, profile_image = #{profile_image}
+        WHERE id = #{id}
+    </update>
+
     <!-- 회원 정보 보기(id) -->
     <select id="select_customer" resultType="user.vo.customer.CustomerVO" parameterType="String">
         SELECT * FROM customer
@@ -74,5 +81,12 @@
         UPDATE customer
         SET weight = #{weight}, height = #{height}
         WHERE id = #{id} AND is_del = 0
+    </update>
+
+    <!-- 회원 탈퇴 -->
+    <update id="delete_customer" parameterType="String">
+        UPDATE customer
+        SET is_del = 1
+        WHERE id = #{id}
     </update>
 </mapper>

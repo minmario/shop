@@ -138,10 +138,10 @@
             </div>
         </c:forEach>
         <div class="product-actions">
-            <button class="btn btn-outline-secondary cancel-button" onclick="location.href='Controller?type=orderDetails&action=select&order_code=${requestScope.order_code}'">
+            <button class="btn btn-outline-secondary" onclick="location.href='Controller?type=orderDetails&action=select&order_code=${requestScope.order_code}'">
                 주문 상세
             </button>
-            <button class="btn btn-dark cancel-button" onclick="location.href='Controller'">
+            <button class="btn btn-dark" onclick="location.href='Controller'">
                 계속 쇼핑하기
             </button>
         </div>

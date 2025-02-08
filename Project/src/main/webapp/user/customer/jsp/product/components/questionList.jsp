@@ -20,23 +20,24 @@
 
                 <c:choose>
                     <c:when test="${item.is_private eq '0'}">
+                        <c:choose>
+                            <c:when test="${item.status eq '1'}">
+                                <div class="question-meta"><img src="./user/images/icon_q.png" alt="문의 아이콘"/> 답변대기</div>
+                            </c:when>
+                            <c:when test="${item.status eq '2'}">
+                                <div class="question-meta"><img src="./user/images/icon_q.png" alt="문의 아이콘"/> 답변확인중</div>
+                            </c:when>
+                            <c:when test="${item.status eq '3'}">
+                                <div class="question-meta"><img src="./user/images/icon_q.png" alt="문의 아이콘"/> 답변완료</div>
+                            </c:when>
+                        </c:choose>
                         <div class="question-header">
                             <span class="question-title">${item.title}</span>
                         </div>
                         <c:choose>
-                            <c:when test="${item.status eq '1'}">
-                                <div class="question-meta">답변대기 · ${item.c_cus_id} · ${item.write_date}</div>
-                            </c:when>
-                            <c:when test="${item.status eq '2'}">
-                                <div class="question-meta">답변확인중 · ${item.c_cus_id} · ${item.write_date}</div>
-                            </c:when>
-                            <c:when test="${item.status eq '3'}">
-                                <div class="question-meta">답변완료 · ${item.c_cus_id} · ${item.write_date}</div>
-                            </c:when>
-                        </c:choose>
-                        <c:choose>
                             <c:when test="${item.status ne '3'}">
                                 <div class="question-content">
+                                    <p class="question">${item.content}</p>
                                     <p class="answer">답변이 등록되지 않았습니다.</p>
                                 </div>
                             </c:when>
@@ -51,29 +52,31 @@
                                 </div>
                             </c:otherwise>
                         </c:choose>
+                        <div class="question-meta">${item.write_date}</div>
                     </c:when>
                     <c:otherwise>
                         <c:choose>
                             <c:when test="${item.is_private eq '1' and not empty sessionScope.customer_info and (item.cus_no eq sessionScope.customer_info.id)}">
-                                <i class="bi bi-lock"></i>
+                                <c:choose>
+                                    <c:when test="${item.status eq '1'}">
+                                        <div class="question-meta"><img src="./user/images/icon_q.png" alt="문의 아이콘"/> 답변대기</div>
+                                    </c:when>
+                                    <c:when test="${item.status eq '2'}">
+                                        <div class="question-meta"><img src="./user/images/icon_q.png" alt="문의 아이콘"/> 답변확인중</div>
+                                    </c:when>
+                                    <c:when test="${item.status eq '3'}">
+                                        <div class="question-meta"><img src="./user/images/icon_q.png" alt="문의 아이콘"/> 답변완료</div>
+                                    </c:when>
+                                </c:choose>
+                                <i class="bi bi-lock-fill"></i>
                                 <span class="question-title">비밀글로 설정된 글입니다.</span>
                                 <div class="question-header">
                                     <span class="question-title">${item.title}</span>
                                 </div>
                                 <c:choose>
-                                    <c:when test="${item.status eq '1'}">
-                                        <div class="question-meta">답변대기 · ${item.c_cus_id} · ${item.write_date}</div>
-                                    </c:when>
-                                    <c:when test="${item.status eq '2'}">
-                                        <div class="question-meta">답변확인중 · ${item.c_cus_id} · ${item.write_date}</div>
-                                    </c:when>
-                                    <c:when test="${item.status eq '3'}">
-                                        <div class="question-meta">답변완료 · ${item.c_cus_id} · ${item.write_date}</div>
-                                    </c:when>
-                                </c:choose>
-                                <c:choose>
                                     <c:when test="${item.status ne '3'}">
                                         <div class="question-content">
+                                            <p class="question">${item.content}</p>
                                             <p class="answer">답변이 등록되지 않았습니다.</p>
                                         </div>
                                     </c:when>
@@ -83,15 +86,16 @@
                                             <div class="answer">
                                                 <strong>A. ${item.brand}</strong>
                                                 <p>${item.r_content}</p>
-                                                <span class="answer-date">${item.r_write_date}</span>
+                                            <span class="answer-date">${item.r_write_date}</span>
                                             </div>
                                         </div>
                                     </c:otherwise>
                                 </c:choose>
+                                <div class="question-meta">${item.write_date}</div>
                             </c:when>
                             <c:when test="${(item.is_private eq '1' and sessionScope.customer_info eq null) or (item.is_private eq '1' and item.cus_no ne sessionScope.customer_info.id)}">
                                 <div class="question-header">
-                                    <i class="bi bi-lock"></i>
+                                    <i class="bi bi-lock-fill"></i>
                                     <span class="question-title">비밀글로 설정된 글입니다.</span>
                                 </div>
                             </c:when>

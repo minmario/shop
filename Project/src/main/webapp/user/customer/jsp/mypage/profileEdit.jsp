@@ -34,7 +34,7 @@
                             <jsp:include page="./components/profile.jsp"></jsp:include>
                         </div>
                         <div class="retired-link-container">
-                            <a href="Controller?type=retiredReason">회원탈퇴</a>
+                            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#retiredCustomerModal">회원탈퇴</button>
                         </div>
                     </div>
                 </div>
@@ -66,6 +66,57 @@
                                 <div class="change-button-container">
                                     <button type="button" class="btn btn-dark" id="btn-change" onclick="updateCustomer()">변경</button>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <%-- 비밀번호 변경 모달 --%>
+            <div class="modal fade" id="changePwModal" tabindex="-1" role="dialog" aria-labelledby="changePwModalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">비밀번호 변경</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="email-change-form">
+                                <div class="form-group">
+                                    <label>현재 비밀번호</label>
+                                    <input type="password" class="form-control current-pw-input" id="current_pw" name="current_pw" placeholder="현재 비밀번호를 입력하세요" autoComplete="off"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>변경 비밀번호</label>
+                                    <input type="password" class="form-control change-pw-input" id="change_pw" name="change_pw" placeholder="변경 비밀번호를 입력하세요" autoComplete="off"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>비밀번호 확인</label>
+                                    <input type="password" class="form-control confirm-pw-input" id="confirm_pw" name="confirm_pw" placeholder="비밀번호를 재입력하세요" autoComplete="off"/>
+                                </div>
+                                <div class="change-button-container">
+                                    <button type="button" class="btn btn-dark" id="btn-pw-change" onclick="updatePassword()">변경</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <%-- 회원 탈퇴 모달 --%>
+            <div class="modal fade" id="retiredCustomerModal" tabindex="-1" role="dialog" aria-labelledby="retiredCustomerModalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <h5 class="modal-title">정말 탈퇴 하시겠습니까?</h5>
+                            <p class="modal-description">
+                                탈퇴 후 계정 정보가 영구히 삭제되며 복구가 불가합니다.
+                            </p>
+                            <div class="modal-actions">
+                                <button type="button" class="btn btn-outline-dark" data-dismiss="modal">취소</button>
+                                <button type="button" class="btn btn-dark" onclick="retiredCustomer()">탈퇴</button>
                             </div>
                         </div>
                     </div>

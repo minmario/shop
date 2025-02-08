@@ -6,7 +6,7 @@ function addInput() {
     customInput.style.display = selectValue === "직접 입력" ? "block" : "none";
 }
 
-// 추가 모달 열기
+// 배송지 추가 모달 열기
 function insertDeliveryModal() {
     $("#addrModalTitle").text("배송지 추가");
     $(".btn-delivery-event").text("추가");
@@ -22,7 +22,7 @@ function insertDeliveryModal() {
     $("#addrModal #addr_id").val("");
 }
 
-// 수정 모달 열기
+// 배송지 수정 모달 열기
 function updateDeliveryModal(obj) {
     $("#addrModalTitle").text("배송지 수정");
     $(".btn-delivery-event").text("수정");
@@ -56,7 +56,7 @@ function updateDeliveryModal(obj) {
     $("#addrModal #addr_id").val($(obj).closest(".address-box").data("value"));
 }
 
-// 추가 및 수정
+// 배송지 추가 및 수정
 function onSendDeliveryInfo() {
     const regPhone = /^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
     if(!regPhone.test($("#phone").val())) {

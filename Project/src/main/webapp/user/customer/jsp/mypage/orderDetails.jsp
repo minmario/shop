@@ -121,7 +121,7 @@
 
                                     <!-- 화면에 표시 -->
                                     <li><span>상품 금액</span> <span class="item-price"><fmt:formatNumber value="${totalPrice}"/>원</span></li>
-                                    <li><span>할인 금액</span> <span class="discount">-<fmt:formatNumber value="${discountAmount}"/>원</span></li><br/>
+                                    <li><span>할인 금액</span> <span class="discount">- <fmt:formatNumber value="${discountAmount}"/>원</span></li><br/>
 
                                     <c:if test="${requestScope.coupon_list ne null}">
                                         <h5>쿠폰 할인</h5>
@@ -131,11 +131,11 @@
                                             <c:set var="couponDiscount" value="${couponDiscount + individualDiscount}" />
                                         <li>
                                             <span class="coupon_info">${coupon.coupon_name} (${coupon.sale_per}%)</span>
-                                            <span>-<fmt:formatNumber value="${individualDiscount}" type="number" maxFractionDigits="0" />원</span>
+                                            <span>- <fmt:formatNumber value="${individualDiscount}" type="number" maxFractionDigits="0" />원</span>
                                         </li>
                                         </c:forEach>
-                                        <li><span>총 쿠폰 할인</span> <span class="coupon-discount discount">-<fmt:formatNumber value="${couponDiscount}" type="number" maxFractionDigits="0" />원</span></li><br/>
-                                        <li><span>적립금 사용</span> <span class="points-amount discount">-<fmt:formatNumber value="${pointAmount}"/>원</span></li>
+                                        <li><span>총 쿠폰 할인</span> <span class="coupon-discount discount">- <fmt:formatNumber value="${couponDiscount}" type="number" maxFractionDigits="0" />원</span></li><br/>
+                                        <li><span>적립금 사용</span> <span class="points-amount discount">- <fmt:formatNumber value="${pointAmount}"/>원</span></li>
                                     </c:if>
                                     <li class="total">
                                         <!-- 3. 쿠폰 할인 금액을 차감한 후 적립금 사용 금액을 차감 -->
@@ -145,7 +145,20 @@
                                     </li>
                                     <li>
                                         <span>결제 수단</span>
-                                        <span class="payment-method">${requestScope.o_list[0].pay_type}</span>
+                                        <c:choose>
+                                            <c:when test="${requestScope.o_list[0].pay_type == '1'}">
+                                                <span class="payment-method">계좌이체-[${requestScope.o_list[0].order_bank}]${requestScope.o_list[0].order_account}</span>
+                                            </c:when>
+                                            <c:when test="${requestScope.o_list[0].pay_type == '2'}">
+                                                <span class="payment-method">토스페이</span>
+                                            </c:when>
+                                            <c:when test="${requestScope.o_list[0].pay_type == '3'}">
+                                                <span class="payment-method">카카오페이</span>
+                                            </c:when>
+                                            <c:when test="${requestScope.o_list[0].pay_type == '4'}">
+                                                <span class="payment-method">카드-${requestScope.o_list[0].card_name}</span>
+                                            </c:when>
+                                        </c:choose>
                                     </li>
                                 </ul>
                             </div>

@@ -21,4 +21,5 @@
 </table>
 <div class="button-container">
     <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#editModal">회원정보 변경</button>
+    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#changePwModal">비밀번호 변경</button>
 </div>

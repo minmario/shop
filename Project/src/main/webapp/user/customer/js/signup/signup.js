@@ -63,6 +63,31 @@ function validateFields() {
             document.getElementById(field.id).focus();
             return false;
         }
+
+        if (field.id === 'cus_pw') {
+            // 비밀번호 길이 체크
+            if (value.length < 8) {
+                alert('비밀번호는 8자 이상이어야 합니다.');
+                document.getElementById(field.id).focus();
+                return false;
+            }
+
+            // 비밀번호 유효성 체크: 대소문자, 숫자, 특수문자 포함
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
+            if (!passwordRegex.test(value)) {
+                alert('비밀번호는 대문자, 소문자, 숫자, 특수문자를 포함해야 합니다.');
+                document.getElementById(field.id).focus();
+                return false;
+            }
+
+            // 비밀번호 연속된 문자/숫자 체크
+            const sequentialRegex = /(.)\1{2,}/;
+            if (sequentialRegex.test(value)) {
+                alert('비밀번호에 연속된 동일한 문자 또는 숫자를 사용할 수 없습니다.');
+                document.getElementById(field.id).focus();
+                return false;
+            }
+        }
     }
 
     const genderElement = document.querySelector('input[name="cus_gender"]:checked');

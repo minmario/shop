@@ -507,6 +507,11 @@
     margin: 5px 0 10px 0;
 }
 
+.question-meta img {
+    width: 20px;
+    height: 20px;
+}
+
 .question-content {
     margin-top: 10px;
     font-size: 14px;
