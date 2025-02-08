@@ -30,7 +30,7 @@ public class RefundDetailsAction implements Action {
 
         OrderVO refund = OrderDAO.selectDetailsByStatus(order_id, cvo.getId(), prod_no, order_code, "7");
         DeliveryVO delivery = DeliveryDAO.selectRetrieveInfo(order_id);
-        List<OrderVO> coupon = OrderDAO.selectOrderCoupons(cvo.getId(), order_code, prod_no);
+        List<OrderVO> coupon = OrderDAO.selectOrderCoupons(order_id, cvo.getId(), order_code, prod_no);
         int point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code);
         OrderVO vo = OrderDAO.selectSellerAddress(order_id);
 

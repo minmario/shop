@@ -28,7 +28,7 @@ public class CancelDetailsAction implements Action {
         String prod_no = request.getParameter("prod_no");
 
         OrderVO cancel = OrderDAO.selectDetailsByStatus(order_id, cvo.getId(), prod_no, order_code, "6");
-        List<OrderVO> coupon = OrderDAO.selectOrderCoupons(cvo.getId(), order_code, prod_no);
+        List<OrderVO> coupon = OrderDAO.selectOrderCoupons(order_id, cvo.getId(), order_code, prod_no);
         int point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code);
         request.setAttribute("cancel", cancel);
         request.setAttribute("coupon", coupon);

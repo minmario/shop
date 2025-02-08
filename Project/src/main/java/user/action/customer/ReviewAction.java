@@ -1,6 +1,7 @@
 package user.action.customer;
 
 import user.action.Action;
+import user.dao.customer.BoardDAO;
 import user.dao.customer.OrderDAO;
 import user.vo.customer.CustomerVO;
 import user.vo.customer.OrderVO;

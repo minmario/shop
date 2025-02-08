@@ -53,6 +53,7 @@
                                 <form id="review-form" action="Controller?type=writeReview&action=insert" method="POST" enctype="multipart/form-data" onsubmit="event.preventDefault(); insertReview();">
                                     <div class="review-rating">
                                         <p class="section-title">이 상품 어떠셨나요?</p>
+                                        <input type="hidden" id="prod_no" name="prod_no" value="item.prod_no">
                                         <input type="hidden" id="rating-value" name="rating" />
                                         <div class="rating-stars">
                                             <span class="star" data-value="1">&#9734;</span>

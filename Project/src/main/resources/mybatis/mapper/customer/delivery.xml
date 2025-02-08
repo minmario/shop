@@ -54,4 +54,7 @@
         INNER JOIN `order` o ON o.deli_no = d.id
         WHERE o.id = #{id}
     </select>
+
+    <!-- 회수 배송 조회 -->
+
 </mapper>

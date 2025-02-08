@@ -52,7 +52,7 @@ function insertReview() {
   formData.append('height', document.getElementById('height').value);
   formData.append('weight', document.getElementById('weight').value);
   formData.append('isUpdateChecked', document.getElementById('update-body-info').checked);
-
+  formData.append('prod_no', document.getElementById('prod_no').value);
 
 
   for (let pair of formData.entries()) {

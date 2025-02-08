@@ -20,13 +20,25 @@ public class DeliveryStatusAction implements Action {
             request.setAttribute("session_expired", true);
             return "/user/customer/jsp/error/error.jsp";
         }
-
+        String action = request.getParameter("action");
         String order_code = request.getParameter("order_code");
         String brand = request.getParameter("brand");
+        String viewPath = null;
+        if(action != null){
+            switch (action){
+                case "select":
+                    List<OrderVO> list = OrderDAO.selectDeliveryStatus(cvo.getId(), order_code, brand);
+                    request.setAttribute("list", list);
+                    viewPath = "/user/customer/jsp/mypage/deliveryStatus.jsp";
+                    break;
 
-        List<OrderVO> list = OrderDAO.selectDeliveryStatus(cvo.getId(), order_code, brand);
-        request.setAttribute("list", list);
+                case "select_exchange":
 
-        return "/user/customer/jsp/mypage/deliveryStatus.jsp";
+                    viewPath = "/user/customer/jsp/mypage/deliveryStatus.jsp";
+                    break;
+
+            }
+        }
+        return viewPath;
     }
 }

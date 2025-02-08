@@ -62,9 +62,6 @@ function exchangeRequest() {
     // ordercode 값을 가져오기
     const orderCode = $('input[name="orderCode"]').val();
 
-    // 현재 inventory_no 값 가져오기
-    const currentInventoryNo = $('input[name="inventory_no"]').val();
-
     // 교환 사유 가져오기
     let reason = $('#select-reason').val();
     if (reason === ":: 교환 사유를 선택하세요 ::") {
@@ -92,12 +89,6 @@ function exchangeRequest() {
     const selectedInventoryNo = $('#exchange-option-size').val();
     if (selectedInventoryNo === ":: 사이즈 ::") {
         alert("교환할 사이즈를 선택해 주세요.");
-        return;
-    }
-
-    // 선택된 사이즈가 현재 사이즈와 동일할 경우 경고 표시
-    if (selectedInventoryNo === currentInventoryNo) {
-        alert("현재 선택한 사이즈가 기존 사이즈와 동일합니다. 다른 사이즈를 선택해 주세요.");
         return;
     }
 

@@ -20,6 +20,10 @@ function refundRequest() {
     // ordercode 값을 가져오기
     const orderCode = $('input[name="orderCode"]').val();
 
+    //benefit_type 값 가져오기
+    const benefit_type = $('input[name="benefit_type"]').val();
+    console.log(benefit_type);
+
     // 반품 사유 가져오기
     let reason = $('#select').val();
     if (reason === "0") {
@@ -54,7 +58,8 @@ function refundRequest() {
     // 환불 예정 금액 가져오기
     const refundAmount = $('.refund-info .refund-amount').text().replace(/[^0-9]/g, '');
 
-    const pointUsed = $('#cancel-point-used').val();
+    // 사용된 적립금 가져오기
+    const pointUsed = $('input[name="point-used"]').val();
 
     // 반품 신청 확인 경고창
     if (!confirm("반품 신청하시겠습니까?")) {
@@ -74,7 +79,8 @@ function refundRequest() {
             account_number: accountNumber,
             orderCode: orderCode,
             refund_amount: refundAmount,
-            point_used: pointUsed || null                                                                                               ,
+            point_used: pointUsed || null,
+            benefit_type: benefit_type
         },
         success: function (response) {
             if (response && response.success) {
