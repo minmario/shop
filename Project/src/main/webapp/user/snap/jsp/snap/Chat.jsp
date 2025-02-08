@@ -238,7 +238,7 @@
 
         messageInterval = setInterval(() => {
           loadChatMessages(currentRoomId);
-        }, 2000);
+        }, 1000000);
       });
     });
 
@@ -307,7 +307,7 @@
 
 
 
-              markMessagesAsRead(roomId);
+              // markMessagesAsRead(roomId);
             });
             // updateChatRoomList(roomId, latestMessage, latestTime);
 

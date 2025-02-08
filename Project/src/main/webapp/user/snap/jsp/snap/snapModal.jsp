@@ -3,13 +3,12 @@
   User: gjcks
   Date: 2025-01-22
   Time: 오후 9:09
-  To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-
+    <!-- 필요한 CSS/JS 파일 추가 (예: Bootstrap) -->
 </head>
 <body>
 <div class="modal fade" id="snapModal" tabindex="-1" aria-labelledby="snapModalLabel" aria-hidden="true">
@@ -20,16 +19,17 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="${pageContext.request.contextPath}/Controller?type=snapWrite" method="post" enctype="multipart/form-data">
+                <!-- id="snapForm" 추가 -->
+                <form id="snapForm" action="${pageContext.request.contextPath}/Controller?type=snapWrite" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="prod_no" id="selectedProdNo">
                     <div id="snapSteps">
                         <!-- Step 1: 메인 이미지 업로드 -->
                         <div class="step" id="step1">
                             <label for="mainImage" class="form-label">메인 이미지 업로드</label>
-                                <input type="file" cla="form-control" id="mainImage" name="mainImage" accept="image/*" required>
-                                <div id="mainImagePreview" class="mt-3">
-                                    <img src="" alt="Main Image Preview" class="img-fluid" style="max-width: 100%; display: none;">
-                                </div>
+                            <input type="file" class="form-control" id="mainImage" name="mainImage" accept="image/*" required>
+                            <div id="mainImagePreview" class="mt-3">
+                                <img src="" alt="Main Image Preview" class="img-fluid" style="max-width: 100%; display: none;">
+                            </div>
                         </div>
 
                         <!-- Step 2: 추가 이미지 업로드 -->
@@ -51,13 +51,11 @@
                             <h6 class="mb-3">내가 구매한 상품</h6>
                             <div class="row row-cols-1 row-cols-md-4 g-3" id="productList">
                                 <c:forEach var="product" items="${sessionScope.purchasedProducts}">
-
                                     <div class="col text-center">
                                         <div class="card h-100">
                                             <div class="position-relative">
                                                 <img src="${product.prod_image}" class="card-img-top" alt="${product.name}">
-
-                                                <input type="checkbox" class="form-check-input position-absolute top-0 end-0 m-2 product-checkbox" value="${product.id}">
+                                                <input type="checkbox" name="prod_no" class="form-check-input position-absolute top-0 end-0 m-2 product-checkbox" value="${product.id}">
                                             </div>
                                             <div class="card-body p-2">
                                                 <p class="card-text">${product.name}</p>
@@ -66,11 +64,10 @@
                                     </div>
                                 </c:forEach>
                             </div>
-
                         </div>
+
                         <!-- Step 4: 내용 입력 -->
                         <div class="step d-none" id="step4">
-                            <!-- 내용 -->
                             <label for="content" class="form-label mt-3">내용</label>
                             <textarea class="form-control" id="content" name="content" rows="5" placeholder="내용을 입력하세요" required></textarea>
 
@@ -132,15 +129,27 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" id="prevStep" disabled>이전</button>
                             <button type="button" class="btn btn-primary" id="nextStep">다음</button>
-                            <button type="submit" class="btn btn-success d-none" id="submitSnap">작성 완료</button>
+                            <!-- type="button"을 유지 -->
+                            <button type="button" id="submitSnap">저장</button>
                         </div>
+                    </div>
                 </form>
-
-
             </div>
         </div>
     </div>
 </div>
 
+<!-- 저장 버튼 클릭 시 폼 제출 처리 -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const submitButton = document.getElementById('submitSnap');
+    const form = document.getElementById('snapForm');
+
+    submitButton.addEventListener('click', function () {
+      console.log('폼 제출 시도!');
+      form.submit(); // 폼 강제 제출
+    });
+  });
+</script>
 </body>
 </html>
