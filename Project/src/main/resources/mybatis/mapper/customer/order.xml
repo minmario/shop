@@ -115,11 +115,10 @@
     <select id="select_total_price" resultType="int" parameterType="map">
         SELECT IFNULL(SUM(re), 0) AS total_re
         FROM (
-            SELECT (p.price * o.count) AS re FROM `order` o
-            INNER JOIN product p ON o.prod_no = p.id
-            WHERE cus_no = #{cus_no} AND order_code = #{order_code}
-            GROUP BY p.price, o.count
-        ) subquery
+        SELECT (p.price * o.count) AS re FROM `order` o
+        INNER JOIN product p ON o.prod_no = p.id
+        WHERE cus_no = #{cus_no} AND order_code = #{order_code}
+        ) subquery;
     </select>
 
     <!-- 주문코드 별 할인가 금액 총 합 -->
@@ -129,7 +128,6 @@
             SELECT (p.saled_price * o.count) AS re FROM `order` o
             INNER JOIN product p ON o.prod_no = p.id
             WHERE cus_no = #{cus_no} AND order_code = #{order_code}
-            GROUP BY p.saled_price, o.count
         ) subquery;
     </select>
 
@@ -181,7 +179,7 @@
 
     <!-- 주문 시 사용한 쿠폰 내용 가져오기(전체 상품) -->
     <select id="select_order_coupons" resultType="user.vo.customer.OrderVO" parameterType="map">
-        SELECT DISTINCT c.name AS coupon_name, c.sale_per AS sale_per
+        SELECT DISTINCT o.coupon_no, c.name AS coupon_name, c.sale_per AS sale_per
         FROM `order` o
         INNER JOIN coupon c ON o.coupon_no = c.id
         INNER JOIN cus_coupon cc ON cc.coupon_no = c.id

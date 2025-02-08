@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 
 public class OrderDetailsAction implements Action {
@@ -40,15 +41,61 @@ public class OrderDetailsAction implements Action {
                     int totalPrice = OrderDAO.selectTotalPrice(cvo.getId(), order_code); // 원가 총 금액
                     int point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code); // 사용한 적립금
 
+                    // 각 상품의 수량 합산
+                    int totalCount = 0;
+                    if (o_list != null && !o_list.isEmpty()) {
+                        for (OrderVO item : o_list) {
+                            totalCount += Integer.parseInt(item.getCount());  // 상품 수량 누적
+                        }
+                    }
+
+                    // 각 상품별 쿠폰 할인 계산
+                    HashMap<String, Double> couponDiscounts = new HashMap<>();
+                    double totalCouponDiscount = 0.0;
+                    int totalUsedPointAmount = 0;
+
+                    if (coupon != null && !coupon.isEmpty() && o_list != null && !o_list.isEmpty()) {
+                        for (OrderVO coupon_vo : coupon) {
+                            double salePer = Double.parseDouble(coupon_vo.getSale_per());  // 쿠폰의 할인율(%)
+
+                            for (OrderVO item : o_list) {
+                                if (item.getCoupon_no() != null && item.getCoupon_no().equals(coupon_vo.getCoupon_no())) {  // 쿠폰과 상품 연결
+                                    double itemDiscount = Integer.parseInt(item.getProd_saled_price()) * (salePer / 100.0);  // 상품별 할인 금액
+                                    couponDiscounts.put(coupon_vo.getCoupon_no(), itemDiscount);  // 상품 이름 기준으로 할인 금액 저장
+                                    totalCouponDiscount += itemDiscount;  // 총 할인 금액 누적
+                                }
+                            }
+                        }
+                    }
+
+                    // 적립금 사용 계산
+                    if (o_list != null && !o_list.isEmpty()) {
+                        for (OrderVO item : o_list) {
+                            if ("1".equals(item.getBenefit_type())) {  // benefit_type이 1인 경우(적립금 선할인)
+                                String amountStr = item.getAmount() != null ? item.getAmount() : "0";
+                                String resultAmountStr = item.getResult_amount() != null ? item.getResult_amount() : "0";
+
+                                int usedPoint = Integer.parseInt(amountStr) - Integer.parseInt(resultAmountStr);
+                                if (usedPoint > 0) {
+                                    totalUsedPointAmount += usedPoint;
+                                }
+                                System.out.println("Used point for item: " + usedPoint);
+                            }
+                        }
+                    }
+
                     request.setAttribute("o_list", o_list);
                     request.setAttribute("deli_list", deli_list);
                     request.setAttribute("coupon", coupon);
-                    request.setAttribute("grade", grade);
                     request.setAttribute("grade", grade);
                     request.setAttribute("totalSaledPrice", totalSaledPrice);
                     request.setAttribute("totalAmount", totalAmount);
                     request.setAttribute("totalPrice", totalPrice);
                     request.setAttribute("point_amount", point_amount);
+                    request.setAttribute("totalCouponDiscount", totalCouponDiscount);
+                    request.setAttribute("couponDiscounts", couponDiscounts);
+                    request.setAttribute("totalUsedPointAmount", totalUsedPointAmount);
+                    request.setAttribute("totalCount", totalCount);
 
                     viewPage = "/user/customer/jsp/mypage/orderDetails.jsp";
                     break;

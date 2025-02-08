@@ -117,7 +117,6 @@
                                             </c:forEach>
 
                                             <c:set var="pointUsed" value="${not empty requestScope.point_amount ? requestScope.point_amount : '0'}" />
-                                            <c:set var="coupon" value="${requestScope.coupon}"/>
 
                                                 <%-- 숫자만 추출하여 int형으로 변환 --%>
                                             <c:set var="totalAmountInt" value="${fn:replace(totalAmount, ',', '')}" />

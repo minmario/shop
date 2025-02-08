@@ -88,7 +88,6 @@ public class CancelOrderAction implements Action {
                         String refund_account = request.getParameter("account_number");
                         String refundAmount = request.getParameter("refund_amount");
                         String point_used = request.getParameter("point_used");
-                        String benefit_type = request.getParameter("benefit_type");
 
                         // 주문 정보 업데이트 (취소 상태로 변경)
                         int u_o_cnt = OrderDAO.updateOrderCancel(id, cvo.getId(), prod_no, orderCode, refund_bank, refund_account, reason);
@@ -116,15 +115,15 @@ public class CancelOrderAction implements Action {
                             return null;
                         }
 
-                        // 포인트 관련 로직
+                        // point_used가 존재하고 사용된 경우에만 실행
                         int refundAmountValue = Integer.parseInt(refundAmount);
-                        int totalOrderAmount = OrderDAO.selectTotalAmount(cvo.getId(), orderCode);
-                        int usedPointAmount = PointDAO.selectPointAmount(cvo.getId(), orderCode);
+                        if (point_used != null && !point_used.isEmpty() && Integer.parseInt(point_used) > 0) {
+                            int totalOrderAmount = OrderDAO.selectTotalAmount(cvo.getId(), orderCode);
+                            int usedPointAmount = Integer.parseInt(point_used);
 
-                        int refundPointAmount = PointDAO.calculateRefundPoint(totalOrderAmount, refundAmountValue, usedPointAmount);
+                            int refundPointAmount = PointDAO.calculateRefundPoint(totalOrderAmount, refundAmountValue, usedPointAmount);
 
-                        // 포인트 삭제 및 복구
-                        if ("0".equals(benefit_type) && usedPointAmount > 0) {
+                            // 포인트 삭제 및 복구
                             PointDAO.deletePoint(cvo.getId(), orderCode);
                             PointDAO.insertPoint(cvo.getId(), String.valueOf(refundPointAmount), orderCode);
                         }
