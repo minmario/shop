@@ -16,12 +16,14 @@ public class MajorCategoryDao {
         SqlSession ss = FactoryService.getFactory().openSession();
         List<MajorCategoryVO> vo = new ArrayList<MajorCategoryVO>();
         vo = ss.selectList("root.allMajor");
+        ss.close();
         return vo;
     }
     public static List<String> allMajorCategory(){
         SqlSession ss = FactoryService.getFactory().openSession();
         List<String> name = new ArrayList<>();
         name = ss.selectList("root.allMajorCol");
+        ss.close();
         return name;
     }
     public static MajorCategoryVO[] searchMajorCategory(String searchType, String searchValue){

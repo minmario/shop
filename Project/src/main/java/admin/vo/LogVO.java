@@ -4,6 +4,10 @@ public class LogVO {
   String id,   seller_no, cus_no, writer_type, target, log_type, prev, current, log_date;
   int root_no;
 
+
+
+  String is_del;
+
   public String getId() {
     return id;
   }

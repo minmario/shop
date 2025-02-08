@@ -185,6 +185,91 @@
         </div>
 
         <hr/><!---------------------------------------------->
+        <!-- 일반 게시판 목록 영역 -->
+        <div class="col-9">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5>게시판 목록</h5>
+                <div>
+                    <!-- 게시판 추가 버튼, 모달 연결 -->
+                    <button class="btn btn-primary add-user-btn" data-bs-toggle="modal" data-bs-target="#boardModal">게시판 추가</button>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <div class="input-group">
+                    <!-- 검색 아이콘 -->
+                    <span class="input-group-text">
+                    <i class="bi bi-search"></i>
+                </span>
+                    <select class="form-select" aria-label="Default select example" id="board_name">
+                        <c:forEach var="name" items="${boardName}" varStatus="st">
+                            <c:if test="${name ne 'id' && name ne 'cus_no' && name ne 'season' && name ne 'prod_no' && name ne 'snapshot_image' && name ne 'additional_images' && name ne 'tags' && name ne 'gender' && name ne 'style' && name ne 'like_count' && name ne 'order_code' && name ne 'type' && name ne 'order_code' && name ne 'type' && name ne 'status' && name ne 'is_del' && name ne 'is_private' }">
+                                <option value="${name}" class="column-name">${name}</option>
+                            </c:if>
+                        </c:forEach>
+
+                    </select>
+
+
+                    <!-- 검색 입력 -->
+                    <input type="text" class="form-control" placeholder="검색할 열을 선택" aria-label="Search" id="board_word">
+                    <!-- 드롭다운 버튼 -->
+                    <button class="btn btn-outline-secondary" type="button" aria-expanded="false" id="board_search_btn">
+                        검색
+                    </button>
+                    <!-- 드롭다운 메뉴 -->
+                    <%--<ul class="dropdown-menu dropdown-menu-end">
+                        <c:forEach var="name" items="${majorcategoryName}" begin="1">
+                            <li><a class="dropdown-item" href="#">${name}</a></li>
+                        </c:forEach>
+                    </ul>--%>
+                </div>
+            </div>
+
+            <table class="table mt-3" id="board_table">
+                <thead class="table-light">
+
+                <tr>
+
+                    <c:forEach var="name" items="${boardName}">
+                        <c:if test="${name ne 'id' && name ne 'cus_no' &&name ne 'season' &&  name ne 'prod_no' && name ne 'snapshot_image' && name ne 'additional_images' && name ne 'tags' && name ne 'gender' && name ne 'style' && name ne 'like_count' && name ne 'order_code' && name ne 'type' && name ne 'order_code' && name ne 'type' && name ne 'status' && name ne 'is_del' && name ne 'is_private' }">
+                            <th class="column-name">${name}</th>
+                        </c:if>
+                    </c:forEach>
+
+                    <th> </th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var ="bl"  items="${boardList}">
+                    <%--tr의 해당 레코드를 id로 지정해줘 삭제하면 된다--%>
+                    <tr id="row-${bl.id}">
+
+                        <td>${bl.bname}</td>
+                        <td>${bl.title}</td>
+                        <td>${bl.content}</td>
+                        <td>${bl.score}</td>
+                        <td>${bl.write_date}</td>
+
+
+                        <td>
+
+                            <button class="btn btn-secondary add-user-btn" data-bs-toggle="modal" data-bs-target="#deleteBoardModal"
+                                    onclick="setBoardInfo('${bl.id}', '${bl.cus_no}')"> 삭제</button>
+                            <button class="btn btn-outline-secondary add-user-btn" data-bs-toggle="modal" data-bs-target="#boardModal">
+                                자세히
+                            </button>
+
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+
+            <div class="mt-3 mb-4">
+                <button class="btn btn-outline-secondary" onclick = "location.href='Controller?type=boardmain'">초기화</button>
+            </div>
 
 
 
@@ -207,7 +292,7 @@
                 <form id="deleteBoardForm">
                     <div class="modal-body">
                         <input type="hidden" id="deleteBoardId" name="id">
-
+                        <input type="hidden" id="deleteBoardCusNo" name="id">
                         <textarea class="form-control" id="deleteReason" name="content" rows="3">보드를 삭제할 이유를 적어주세요.</textarea>
                         <span class="text-danger">*특수문자사용시 스마트스토어 정책에 따라 전송 에러가 발생합니다. 텍스트와 숫자로 안내문구를 작성해주시기 바랍니다.</span>
                     </div>

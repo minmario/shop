@@ -6,7 +6,7 @@ public class CouponVO {
     String category_no;
     String seller_no;
     String type;
-    String grade_code;
+    String grade_no;
     String name;
     String sale_per;
     String sale_price;
@@ -54,12 +54,12 @@ public class CouponVO {
         this.type = type;
     }
 
-    public String getGrade_code() {
-        return grade_code;
+    public String getGrade_no() {
+        return grade_no;
     }
 
-    public void setGrade_code(String grade_code) {
-        this.grade_code = grade_code;
+    public void setGrade_no(String grade_no) {
+        this.grade_no = grade_no;
     }
 
     public String getName() {

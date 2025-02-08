@@ -59,6 +59,7 @@
             <a href="${pageContext.request.contextPath}/Controller?type=categorymain" class="text-decoration-none text-dark">카테고리관리</a>
             <a href="${pageContext.request.contextPath}/Controller?type=boardmain" class="text-decoration-none text-dark">게시판관리</a>
             <a href="${pageContext.request.contextPath}/Controller?type=couponmain" class="text-decoration-none text-dark">쿠폰관리</a>
+            <a href="${pageContext.request.contextPath}/Controller?type=logsee" class="text-decoration-none text-dark">로그확인</a>
         </div>
 
     </div>

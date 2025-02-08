@@ -14,6 +14,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
   <title>쿠폰 관리</title>
 </head>
+<link rel="stylesheet" href="css/table.css></link>
 <body>
 <jsp:include page="layout/header.jsp"></jsp:include>
 
@@ -35,11 +36,19 @@
                     <i class="bi bi-search"></i>
                 </span>
         <select class="form-select" aria-label="Default select example" id="coupon_name">
-          <c:forEach var="name" items="${couponName}" varStatus="st">
-            <c:if test="${name ne 'id'}">
-              <option value="${name}"><a class="dropdown-item" href="#">${name}</a></option>
-            </c:if>
-          </c:forEach>
+
+          <option value="root_no">관리자번호</option>
+          <option value="category_no">카테고리번호</option>
+          <option value="seller_no">판매자번호</option>
+          <option value="grade_no">등급번호</option>
+          <option value="type">종류</option>
+          <option value="name">이름</option>
+          <option value="sale_per">할인율</option>
+          <option value="start_date">시작일자</option>
+          <option value="end_date">끝일자</option>
+          <option value="status">상태</option>
+
+
 
         </select>
 
@@ -63,27 +72,34 @@
       <thead class="table-light">
 
       <tr>
-        <th><input type="checkbox"></th>
-        <c:forEach var="name" items="${couponName}">
-          <c:if test="${name ne 'id'}">
-            <th>${name}</th>
-          </c:if>
-        </c:forEach>
+
+        <th>관리자번호</th>
+        <th>카테고리번호</th>
+        <th>판매자번호</th>
+        <th>등급번호</th>
+        <th>종류</th>
+        <th>이름</th>
+        <th>할인율</th>
+        <th></th>
+        <th>시작일자</th>
+        <th>끝일자</th>
+        <th>상태</th>
+        <th></th>
 
 
-        <th>&nbsp;</th>
+
       </tr>
       </thead>
       <tbody>
       <c:forEach var ="coul"  items="${couponList}">
         <tr>
-          <td><input type="checkbox"></td>
+
 
           <td>${coul.root_no}</td>
           <td>${coul.category_no}</td>
           <td>${coul.seller_no}</td>
+          <td>${coul.grade_no}</td>
           <td>${coul.type}</td>
-          <td>${coul.grade_code}</td>
           <td>${coul.name}</td>
           <td>${coul.sale_per}</td>
           <td>${coul.sale_price}</td>

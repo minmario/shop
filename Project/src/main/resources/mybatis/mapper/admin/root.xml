@@ -40,6 +40,9 @@
   <select id="allSeller" resultType="admin.vo.SellerVO">
     select * from `seller`;
   </select>
+  <select id="allLog" resultType="admin.vo.LogVO">
+    select * from `log`;
+  </select>
 
   <!--열이름 전체-->
   <select id="allMajorCol" resultType="String">
@@ -159,7 +162,7 @@
         <when test="searchType == 'category_no'">category_no LIKE CONCAT('%',#{searchValue},'%')</when>
         <when test="searchType == 'seller_no'">seller_no LIKE CONCAT('%',#{searchValue},'%')</when>
         <when test="searchType == 'type'">type LIKE CONCAT('%',#{searchValue},'%')</when>
-        <when test="searchType == 'grade_code'">grade_code LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test="searchType == 'grade_no'">grade_no LIKE CONCAT('%',#{searchValue},'%')</when>
         <when test="searchType == 'name'">name LIKE CONCAT('%',#{searchValue},'%')</when>
         <when test="searchType == 'sale_per'">sale_per LIKE CONCAT('%',#{searchValue},'%')</when>
         <when test="searchType == 'sale_price'">sale_price LIKE CONCAT('%',#{searchValue},'%')</when>
@@ -218,6 +221,25 @@
         <when test="searchType == 'desc'">desc LIKE CONCAT('%',#{searchValue},'%')</when>
         <when test="searchType == 'courier'">courierLIKE CONCAT('%',#{searchValue},'%')</when>
         <when test="searchType == 'address'">address LIKE CONCAT('%',#{searchValue},'%')</when>
+
+      </choose>
+    </trim>
+
+  </select>
+  <select id="searchLog" parameterType="Map" resultType="admin.vo.LogVO">
+    select * from log
+    <trim prefix="where">
+      <choose>
+        <when test="searchType == 'root_no'">root_no LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test="searchType == 'seller_no'">seller_no LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test="searchType == 'cus_no'">cus_no LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test="searchType == 'writer_type'">writer_type LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test="searchType == 'target'">target LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test="searchType == 'log_type'">log_type LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test="searchType == 'prev'">prev LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test="searchType == 'current'">current LIKE CONCAT('%',#{searchValue},'%')</when>
+        <when test="searchType == 'log_date'">log_date LIKE CONCAT('%',#{searchValue},'%')</when>
+
 
       </choose>
     </trim>
