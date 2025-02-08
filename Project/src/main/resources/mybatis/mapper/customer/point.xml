@@ -77,8 +77,7 @@
 
     <!-- order_code로 이전 사용 적립금 찾기 -->
     <select id="select_point_amount" resultType="int" parameterType="map">
-        SELECT IFNULL(SUM(p.amount), 0) FROM point p
-        INNER JOIN `order` o ON o.id = p.order_no
+        SELECT IFNULL(SUM(IFNULL(amount, 0)), 0) AS total_amount FROM point
         WHERE cus_no = #{cus_no} AND order_code = #{order_code} AND p_type = 1
     </select>
 

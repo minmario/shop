@@ -48,7 +48,7 @@
                                 </div>
                                 <p class="phone">${o_list[0].phone}</p>
                                 <div class="address-row">
-                                    <p class="address">${o_list[0].pos_code} ${o_list[0].addr1} ${o_list[0].addr2}</p>
+                                    <p class="address">(${o_list[0].pos_code}) ${o_list[0].addr1} ${o_list[0].addr2}</p>
                                     <p class="request">${o_list[0].deli_request}</p>
                                 </div>
                             </div>
@@ -66,7 +66,7 @@
                                         <c:when test="${item.status == '8'}"><p class="payment-status">교환신청</p></c:when>
                                     </c:choose>
                                     <div class="product-item">
-                                        <img src="${fn:split(item.prod_image, ',')[0]}" alt="상품 이미지" class="product-img">
+                                        <img src="${item.prod_image}" alt="상품 이미지" class="product-img">
                                         <div class="product-details">
                                             <div class="product-header">
                                                 <p class="product-brand"><strong>${item.brand}</strong></p>
@@ -74,7 +74,7 @@
                                             <p class="product-name">${item.prod_name}<br>${item.option_name} / ${item.count}개</p>
                                             <div class="product-price-row">
                                                 <p class="product-price">
-                                                    <fmt:formatNumber value="${item.amount}"/>원
+                                                    <fmt:formatNumber value="${item.result_amount}"/>원
                                                 </p>
                                             </div>
                                         </div>
@@ -113,19 +113,24 @@
                                 <ul class="payment-list">
                                     <c:set var="totalPrice" value="${requestScope.totalPrice}" />
                                     <c:set var="totalSaledPrice" value="${requestScope.totalSaledPrice}" />
+                                    <c:set var="totalAmount" value="${requestScope.totalAmount}" />
                                     <c:set var="discountAmount" value="${totalPrice - totalSaledPrice}" />
                                     <c:set var="pointAmount" value="${requestScope.point_amount}" />
-                                    <c:set var="couponSalePer" value="${requestScope.coupon.sale_per}" />
+                                    <c:set var="couponSalePer" value="${couponSalePer ne null ? couponSalePer : 0}" />
 
                                     <!-- 화면에 표시 -->
                                     <li><span>상품 금액</span> <span class="item-price"><fmt:formatNumber value="${totalPrice}"/>원</span></li>
                                     <li><span>할인 금액</span> <span class="discount">- <fmt:formatNumber value="${discountAmount}"/>원</span></li><br/>
 
+                                    <c:if test="${requestScope.coupon eq null}">
+                                        <h5>쿠폰 할인</h5>
+                                        <li><span>총 쿠폰 할인</span><span class="coupon-discount discount">0원</span></li><br/>
+                                    </c:if>
                                     <c:if test="${requestScope.coupon ne null}">
                                         <h5>쿠폰 할인</h5>
                                         <c:set var="couponDiscount" value="0" />
                                         <c:forEach var="coupon" items="${requestScope.coupon}">
-                                            <c:set var="individualDiscount" value="${totalSaledPrice * (coupon.sale_per / 100)}" />
+                                            <c:set var="individualDiscount" value="${totalSaledPrice * (couponSalePer / 100)}" />
                                             <c:set var="couponDiscount" value="${couponDiscount + individualDiscount}" />
                                         <li>
                                             <span class="coupon_info">${coupon.coupon_name} (${coupon.sale_per}%)</span>
@@ -133,13 +138,18 @@
                                         </li>
                                         </c:forEach>
                                         <li><span>총 쿠폰 할인</span> <span class="coupon-discount discount">- <fmt:formatNumber value="${couponDiscount}" type="number" maxFractionDigits="0" />원</span></li><br/>
+                                    </c:if>
+
+                                    <c:if test="${pointAmount eq null}">
+                                        <li><span>적립금 사용</span> <span class="points-amount discount">0원</span></li>
+                                    </c:if>
+                                    <c:if test="${pointAmount ne null}">
                                         <li><span>적립금 사용</span> <span class="points-amount discount">- <fmt:formatNumber value="${pointAmount}"/>원</span></li>
                                     </c:if>
+
                                     <li class="total">
-                                        <!-- 3. 쿠폰 할인 금액을 차감한 후 적립금 사용 금액을 차감 -->
-                                        <c:set var="finalPrice" value="${priceAfterDiscount - couponDiscount - pointAmount}" />
                                         <span class="payment-price">결제 금액</span>
-                                        <span class="final-price"><fmt:formatNumber value="${requestScope.totalAmount}" type="number" maxFractionDigits="0"/>원</span>
+                                        <span class="final-price"><fmt:formatNumber value="${totalAmount}" type="number" maxFractionDigits="0"/>원</span>
                                     </li>
                                     <li>
                                         <span>결제 수단</span>

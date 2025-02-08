@@ -251,9 +251,6 @@ public class MyPageAction implements Action {
             // 갱신
             CustomerVO rvo = CustomerDAO.selectCustomerByCusId(cvo.getCus_id());
 
-            System.out.println("rvo grade name : " + rvo.getGrade_name());
-            System.out.println("rvo save : " + rvo.getSale_condition());
-
             session.setAttribute("customer_info", rvo);
 
             // 보유 적립금
