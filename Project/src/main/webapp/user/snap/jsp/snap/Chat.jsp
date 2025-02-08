@@ -196,6 +196,28 @@
 
     const currentUserId = '<%= session.getAttribute("cus_id") %>';
 
+
+
+    const userId = currentUserId; // 현재 로그인된 사용자 ID
+    const socket = new WebSocket(`ws://localhost:8080/chatSocket?userId=${userId}`);
+
+    socket.onmessage = function(event) {
+      const data = JSON.parse(event.data);
+      // 메시지를 채팅 UI에 표시하는 로직 추가
+      console.log(data);
+    };
+
+    function sendMessage(roomId, receiverId, messageText, imageUrl) {
+      const message = {
+        roomId: roomId,
+        senderId: userId,
+        receiverId: receiverId,
+        message: messageText,
+        imageUrl: imageUrl || null
+      };
+      socket.send(JSON.stringify(message));
+    }
+
     // 이벤트 리스너 등록 (중복 제거)
     sendMessageBtn.addEventListener("click", sendMessage);
     fileInput.addEventListener("change", function() {
@@ -236,9 +258,9 @@
 
         loadChatMessages(currentRoomId);
 
-        messageInterval = setInterval(() => {
-          loadChatMessages(currentRoomId);
-        }, 1000000);
+        // messageInterval = setInterval(() => {
+        //   loadChatMessages(currentRoomId);
+        // }, 2000);
       });
     });
 
@@ -307,7 +329,7 @@
 
 
 
-              // markMessagesAsRead(roomId);
+              markMessagesAsRead(roomId);
             });
             // updateChatRoomList(roomId, latestMessage, latestTime);
 
@@ -457,6 +479,73 @@
           });
     });
   });
+
+  // 웹소켓 연결
+  const userId = '<%= session.getAttribute("cus_id") %>';
+  const socket = new WebSocket("ws://localhost:8080/chatSocket?userId=" + userId);
+
+  socket.onopen = function(event) {
+    console.log("✅ 웹소켓 연결 성공");
+  };
+
+  socket.onmessage = function(event) {
+    console.log("📩 웹소켓 메시지 수신: ", event.data);
+    const msg = JSON.parse(event.data);
+    displayMessage(msg);
+  };
+
+  socket.onclose = function(event) {
+    console.log("❌ 웹소켓 연결 종료");
+  };
+
+  // 웹소켓으로 메시지 보내기
+  function sendMessage() {
+    if (!currentRoomId) {
+      alert('채팅방을 선택해주세요.');
+      return;
+    }
+
+    const message = messageInput.value.trim();
+    let imageUrl = null;
+
+    if (fileInput.files.length > 0) {
+      const formData = new FormData();
+      formData.append("file", fileInput.files[0]);
+
+      fetch('/Controller?type=uploadImage', {
+        method: 'POST',
+        body: formData
+      })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              imageUrl = data.imageUrl;
+              sendWebSocketMessage(message, imageUrl);
+            } else {
+              alert("이미지 업로드 실패");
+            }
+          })
+          .catch(error => console.error('이미지 업로드 오류:', error));
+    } else {
+      sendWebSocketMessage(message, null);
+    }
+  }
+
+  function sendWebSocketMessage(message, imageUrl) {
+    const msgData = {
+      roomId: currentRoomId,
+      senderId: userId,
+      message: message,
+      imageUrl: imageUrl
+    };
+
+    if (socket.readyState === WebSocket.OPEN) {
+      socket.send(JSON.stringify(msgData));
+    } else {
+      console.error("❌ 웹소켓이 닫혀있음");
+    }
+  }
+
 
   // function updateChatRoomList(roomId, message, time) {
   //   let chatRoomElement = document.querySelector('.chat-room[data-room-id="' + roomId + '"]');

@@ -346,7 +346,7 @@
                                     <c:forEach var="user" items="${recommendedUsers}">
                                         <li class="d-flex align-items-center justify-content-between mb-2">
                                             <div class="d-flex align-items-center">
-                                                <img src="${user.profile_image}" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
+                                                <img  onclick="location.href='Controller?type=profile&cus_no=${user.id}'" src="${user.profile_image}" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
                                                 <div class="ms-2">${user.nickname}</div>
                                             </div>
                                             <button class="btn btn-primary btn-sm follow-btn" data-user-id="${user.id}">팔로우</button>

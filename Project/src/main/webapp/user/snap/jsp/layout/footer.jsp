@@ -23,7 +23,6 @@
             <div class="col-md-4 mb-3">
                 <h5 class="text-uppercase">주요 링크</h5>
                 <ul class="list-unstyled">
-
                     <li><a href="#" class="text-white text-decoration-none">홈</a></li>
                     <li><a href="#" class="text-white text-decoration-none">서비스</a></li>
                     <li><a href="#" class="text-white text-decoration-none">문의</a></li>
@@ -46,7 +45,7 @@
     </div>
 </footer>
 
-
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
+<!-- Bootstrap Icons -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">

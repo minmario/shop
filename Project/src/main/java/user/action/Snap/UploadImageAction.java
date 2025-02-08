@@ -25,7 +25,7 @@ public class UploadImageAction implements Action {
     JsonObject jsonResponse = new JsonObject();
     response.setContentType("application/json");
 
-    System.out.println("📌 파일 업로드 시작");
+
 
     Part filePart = request.getPart("file"); // input name="file"
     if (filePart == null) {

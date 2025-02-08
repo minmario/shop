@@ -5,8 +5,8 @@
 <mapper namespace="ReplyDao">
   <!-- 댓글 저장 -->
   <insert id="insertReply" parameterType="user.vo.snap.ReplyVO">
-    INSERT INTO reply (board_no, seller_no, cus_no, content, is_like, write_date, is_del)
-    VALUES (#{board_no}, #{seller_no}, #{cus_no}, #{content}, 0, NOW(), 0)
+    INSERT INTO reply (board_no, cus_no, content, is_like, write_date, is_del)
+    VALUES (#{board_no},  #{cus_no}, #{content}, 0, NOW(), 0)
   </insert>
 
   <!-- 최신 댓글 1개 조회 -->

@@ -30,7 +30,7 @@ public class S3Uploader {
         .build();
   }
 
-  public  String uploadFile(File file, String fileName) {
+  public String uploadFile(File file, String fileName) {
     String fileUrl = "https://" + bucketName + ".s3.amazonaws.com/" + fileName;
     s3Client.putObject(new PutObjectRequest(bucketName, fileName, file));
 
