@@ -220,10 +220,28 @@
                                     <thead>
                                         <tr>
                                             <th>사이즈</th>
-                                            <th>총장 (cm)</th>
-                                            <th>어깨너비 (cm)</th>
-                                            <th>가슴단면 (cm)</th>
-                                            <th>소매길이 (cm)</th>
+                                            <c:choose>
+                                                <c:when test="${pvo.ma_category_name eq '상의' or pvo.ma_category_name eq '아우터'}">
+                                                    <th>총장 (cm)</th>
+                                                    <th>어깨너비 (cm)</th>
+                                                    <th>가슴단면 (cm)</th>
+                                                    <th>소매길이 (cm)</th>
+                                                </c:when>
+                                                <c:when test="${pvo.ma_category_name eq '하의'}">
+                                                    <th>총장 (cm)</th>
+                                                    <th>허리단면 (cm)</th>
+                                                    <th>엉덩이단면 (cm)</th>
+                                                    <th>허벅지단면 (cm)</th>
+                                                    <th>밑위 (cm)</th>
+                                                    <th>밑위단면 (cm)</th>
+                                                </c:when>
+                                                <c:when test="${pvo.ma_category_name eq '신발'}">
+                                                    <th>신발길이 (cm)</th>
+                                                    <th>발볼 (cm)</th>
+                                                    <th>발목길이 (cm)</th>
+                                                    <th>굽높이 (cm)</th>
+                                                </c:when>
+                                            </c:choose>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -231,43 +249,43 @@
                                             <c:forEach var="size" items="${requestScope.productSize}">
                                                 <tr>
                                                     <td>${size.i_option_name}</td>
-                                                    <c:if test="${size.total_length ne null}">
+                                                    <c:if test="${size.total_length ne null and size.total_length ne '0'}">
                                                         <td><fmt:formatNumber value="${size.total_length}"/></td>
                                                     </c:if>
-                                                    <c:if test="${size.shoulder ne null}">
+                                                    <c:if test="${size.shoulder ne null and size.shoulder ne '0'}">
                                                         <td><fmt:formatNumber value="${size.shoulder}"/></td>
                                                     </c:if>
-                                                    <c:if test="${size.chest ne null}">
+                                                    <c:if test="${size.chest ne null and size.chest ne '0'}">
                                                         <td><fmt:formatNumber value="${size.chest}"/></td>
                                                     </c:if>
-                                                    <c:if test="${size.sleeve ne null}">
+                                                    <c:if test="${size.sleeve ne null and size.sleeve ne '0'}">
                                                         <td><fmt:formatNumber value="${size.sleeve}"/></td>
                                                     </c:if>
-                                                    <c:if test="${size.waist ne null}">
+                                                    <c:if test="${size.waist ne null and size.waist ne '0'}">
                                                         <td><fmt:formatNumber value="${size.waist}"/></td>
                                                     </c:if>
-                                                    <c:if test="${size.hip ne null}">
+                                                    <c:if test="${size.hip ne null and size.hip ne '0'}">
                                                         <td><fmt:formatNumber value="${size.hip}"/></td>
                                                     </c:if>
-                                                    <c:if test="${size.thigh ne null}">
+                                                    <c:if test="${size.thigh ne null and size.thigh ne '0'}">
                                                         <td><fmt:formatNumber value="${size.thigh}"/></td>
                                                     </c:if>
-                                                    <c:if test="${size.rise ne null}">
+                                                    <c:if test="${size.rise ne null and size.rise ne '0'}">
                                                         <td><fmt:formatNumber value="${size.rise}"/></td>
                                                     </c:if>
-                                                    <c:if test="${size.hem ne null}">
+                                                    <c:if test="${size.hem ne null and size.hem ne '0'}">
                                                         <td><fmt:formatNumber value="${size.hem}"/></td>
                                                     </c:if>
-                                                    <c:if test="${size.foot_length ne null}">
+                                                    <c:if test="${size.foot_length ne null and size.foot_length ne '0'}">
                                                         <td><fmt:formatNumber value="${size.foot_length}"/></td>
                                                     </c:if>
-                                                    <c:if test="${size.foot_width ne null}">
+                                                    <c:if test="${size.foot_width ne null and size.foot_width ne '0'}">
                                                         <td><fmt:formatNumber value="${size.foot_width}"/></td>
                                                     </c:if>
-                                                    <c:if test="${size.ankle_height ne null}">
+                                                    <c:if test="${size.ankle_height ne null and size.ankle_height ne '0'}">
                                                         <td><fmt:formatNumber value="${size.ankle_height}"/></td>
                                                     </c:if>
-                                                    <c:if test="${size.heel_height ne null}">
+                                                    <c:if test="${size.heel_height ne null and size.heel_height ne '0'}">
                                                         <td><fmt:formatNumber value="${size.heel_height}"/></td>
                                                     </c:if>
                                                 </tr>
