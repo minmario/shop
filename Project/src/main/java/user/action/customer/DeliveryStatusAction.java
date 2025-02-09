@@ -28,8 +28,7 @@ public class DeliveryStatusAction implements Action {
 
         // 배송 상태에 따른 타입 설정
         for (OrderVO order : list) {
-            if (order.getExchange_request_date() != null &&
-                    (order.getStatus().equals("1") || order.getStatus().equals("2") || order.getStatus().equals("3") || order.getStatus().equals("4"))) {
+            if (order.getExchange_request_date() != null && (order.getStatus().equals("1") || order.getStatus().equals("2") || order.getStatus().equals("3") || order.getStatus().equals("4"))) {
                 // 교환 진행 중 상태
                 order.setDelivery_type("EXCHANGE_IN_PROGRESS");
             } else if (order.getStatus().equals("8")) {

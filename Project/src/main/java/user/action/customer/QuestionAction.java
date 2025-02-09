@@ -65,7 +65,7 @@ public class QuestionAction implements Action {
                         LogVO lvo = new LogVO();
                         StringBuffer sb = new StringBuffer();
                         lvo.setCus_no(cvo.getId());
-                        lvo.setTarget("board");
+                        lvo.setTarget("board 추가");
                         sb.append("cus_no : " + cvo.getId() + ", ");
                         sb.append("prod_no : " + i_prod_no + ", ");
                         sb.append("title : " + title + ", ");

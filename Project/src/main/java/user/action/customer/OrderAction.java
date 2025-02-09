@@ -52,6 +52,21 @@ public class OrderAction implements Action {
                     String status = request.getParameter("status");
 
                     int u_cnt = OrderDAO.updateOrderStatus(cvo.getId(), orderCode, status);
+                    
+                    if (u_cnt > 0) {
+                        // 구매 확정, 로그 추가
+                        LogVO lvo = new LogVO();
+                        lvo.setCus_no(cvo.getId());
+                        lvo.setTarget("order 수정");
+                        StringBuffer sb = new StringBuffer();
+                        sb.append("orderCode : " + orderCode + "\n");
+                        sb.append("status : 4");
+                        sb = new StringBuffer();
+                        sb.append("orderCode : " + orderCode + "\n");
+                        sb.append("status : " + status);
+                        lvo.setCurrent(sb.toString());
+                        LogDAO.updateLog(lvo);
+                    }
 
                     response.setContentType("application/json");
                     response.setCharacterEncoding("UTF-8");

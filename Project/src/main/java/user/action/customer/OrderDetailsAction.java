@@ -26,7 +26,6 @@ public class OrderDetailsAction implements Action {
         String action = request.getParameter("action");
         String order_code = request.getParameter("order_code");
 
-        OrderVO vo = null;
         String viewPage = null;
         if(action != null){
             switch (action) {
@@ -112,19 +111,17 @@ public class OrderDetailsAction implements Action {
                             // 배송지 변경 성공 시, 변경된 데이터를 다시 조회
                             DeliveryVO updatedDelivery = DeliveryDAO.selectDeliveryById(deli_no);
 
-                            // 로그 입력
+                            // 배송지 변경, 로그 추가
                             LogVO lvo = new LogVO();
                             StringBuffer sb = new StringBuffer();
                             lvo.setCus_no(cvo.getId());
-                            lvo.setTarget("order");
-                            sb.append("cus_no : " + cvo.getId() + ", ");
-                            sb.append("deli_no : " + prev_deli_no + ", ");
-                            sb.append("order_code : " + order_code + ", ");
+                            lvo.setTarget("order delivery 수정");
+                            sb.append("deli_no : " + prev_deli_no);
+                            sb.append("order_code : " + order_code);
                             lvo.setPrev(sb.toString());
                             sb = new StringBuffer();
-                            sb.append("cus_no : " + cvo.getId() + ", ");
-                            sb.append("deli_no : " + deli_no + ", ");
-                            sb.append("order_code : " + order_code + ", ");
+                            sb.append("deli_no : " + deli_no + "\n");
+                            sb.append("order_code : " + order_code);
                             lvo.setCurrent(sb.toString());
                             LogDAO.updateLog(lvo);
 
@@ -203,7 +200,7 @@ public class OrderDetailsAction implements Action {
                     String us_id = request.getParameter("order_id");
                     String us_order_code = request.getParameter("order_code");
                     String us_prod_no = request.getParameter("prod_no");
-                    String us_inventory_no = request.getParameter("inventory_no");
+                    String us_inventory_no = request.getParameter("inventory_no"); // 변경할 값
 
                     int u_cnt = OrderDAO.updateOrderSize(us_id, cvo.getId(), us_prod_no, us_order_code, us_inventory_no);
 
@@ -213,9 +210,25 @@ public class OrderDetailsAction implements Action {
                     try (PrintWriter out = response.getWriter()) {
                         if (u_cnt > 0) {
                             out.print("{\"success\": true}");
+
+                            // 사이즈 변경, 로그 추가 //// 수정할 것!
+                            LogVO lvo = new LogVO();
+                            StringBuffer sb = new StringBuffer();
+                            lvo.setCus_no(cvo.getId());
+                            lvo.setTarget("order size 수정");
+                            sb.append("order_code : " + order_code);
+                            lvo.setPrev(sb.toString());
+                            sb = new StringBuffer();
+                            sb.append("prod_no : " + us_prod_no + "\n");
+                            sb.append("inventory_no : " + us_inventory_no + "\n");
+                            sb.append("order_code : " + us_order_code);
+                            lvo.setCurrent(sb.toString());
+                            LogDAO.updateLog(lvo);
                         } else {
                             out.print("{\"success\": false, \"message\": \"업데이트 실패\"}");
                         }
+
+                        out.flush();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

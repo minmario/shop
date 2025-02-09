@@ -103,7 +103,7 @@ public class DeliveryAction implements Action {
                         LogVO lvo = new LogVO();
                         StringBuffer sb = new StringBuffer();
                         lvo.setCus_no(cvo.getId());
-                        lvo.setTarget("delivery");
+                        lvo.setTarget("delivery 추가");
                         sb.append("name : " + i_name + ", ");
                         sb.append("phone : " + i_phone + ", ");
                         sb.append("pos_code : " + i_pos_code + ", ");
@@ -142,7 +142,7 @@ public class DeliveryAction implements Action {
                         LogVO lvo = new LogVO();
                         StringBuffer sb = new StringBuffer();
                         lvo.setCus_no(cvo.getId());
-                        lvo.setTarget("delivery");
+                        lvo.setTarget("delivery 수정");
                         sb.append("id : " + d_vo.getId() + ", ");
                         sb.append("name : " + d_vo.getName() + ", ");
                         sb.append("phone : " + d_vo.getPhone() + ", ");
@@ -178,7 +178,7 @@ public class DeliveryAction implements Action {
                         LogVO lvo = new LogVO();
                         StringBuffer sb = new StringBuffer();
                         lvo.setCus_no(cvo.getId());
-                        lvo.setTarget("delivery");
+                        lvo.setTarget("delivery 삭제");
                         sb.append("id : " + d_id + "\n");
                         lvo.setPrev(sb.toString());
                         LogDAO.deleteLog(lvo);
