@@ -103,6 +103,7 @@
 
   <!-- 매출 요약 -->
   <c:set var="totalFinalPrice" value="0" />
+  <c:set var="filteredSales" value="0" />
   <c:forEach var="sale" items="${salesList}">
     <c:if test="${sale.status eq 5}">
       <c:set var="totalFinalPrice" value="${totalFinalPrice + sale.final_price}" />
@@ -322,6 +323,45 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 <script>
+
+  function updateTotalSalesAmount() {
+    const startDate = document.getElementById("startDate").value;
+    const endDate = document.getElementById("endDate").value;
+    let totalAmount = 0;
+
+    if (!startDate || !endDate) {
+      document.getElementById("totalSalesAmount").textContent = "₩ 0"; // 초기 값 유지
+      return;
+    }
+
+    // ✅ 시작일, 종료일을 Date 객체로 변환
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    end.setHours(23, 59, 59, 999); // ✅ 종료일을 하루 끝으로 설정
+
+    document.querySelectorAll("#mainTable tbody tr").forEach(row => {
+      const orderDateText = row.children[1].textContent.trim(); // 주문일 (YYYY-MM-DD)
+      const finalPriceText = row.children[5].textContent.replace(/[₩,]/g, "").trim(); // ✅ ₩ 및 , 제거
+      const statusText = row.children[6].textContent.trim(); // 상태
+
+      // ✅ 정산 금액을 정수로 변환
+      const finalPrice = parseInt(finalPriceText) || 0;
+
+      // ✅ 주문일을 Date 객체로 변환
+      const orderDate = new Date(orderDateText);
+
+      // ✅ 기간 내 포함 && 상태가 "구매확정"일 경우만 합산
+      if (!isNaN(orderDate) && orderDate >= start && orderDate <= end && statusText === "구매확정") {
+        totalAmount += finalPrice;
+      }
+    });
+
+    // ✅ totalAmount가 0이어도 "₩ 0"이 유지되도록 처리
+    document.getElementById("totalSalesAmount").textContent = `₩ ${totalAmount.toLocaleString() || "0"}`;
+  }
+  document.getElementById("dateSearchBtn").addEventListener("click", updateTotalSalesAmount);
+  document.addEventListener("DOMContentLoaded", updateTotalSalesAmount);
+
   const rowsPerPage = 5; // 한 페이지에 표시할 행 수
   let currentPage = 1; // 현재 페이지
   const rows = document.querySelectorAll("#mainTable tbody tr"); // 모든 주문 목록

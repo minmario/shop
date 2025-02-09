@@ -77,57 +77,48 @@
 
 
     <!-- 브랜드 정보 폼 -->
-    <form method="POST" action="Controller?type=updateSeller" class="brand-form" >
+    <form method="POST" action="Controller?type=updateSeller" class="brand-form" enctype="multipart/form-data">
         <!-- 왼쪽: 브랜드 로고 이미지 -->
         <div class="logo-container">
             <img id="logoImage" src="${vo.seller_icon}" alt="브랜드 로고" class="img-fluid"/>
-            <!-- 파일 선택 버튼 추가 -->
-            <input type="file" id="logoFileInput" style="display: none;" onchange="uploadLogo(event)">
-            <button type="button" id="customButton" class="btn btn-outline-primary" onclick="document.getElementById('logoFileInput').click();">
+
+            <input type="file" id="brandImage" name="brandImage" style="display: none;" onchange="uploadLogo(event)">
+            <button type="button" id="customButton" class="btn btn-outline-primary" onclick="document.getElementById('brandImage').click();">
                 로고 변경
             </button>
         </div>
-
-        <%
-            Object obj = request.getAttribute("vo");
-            if (obj == null) {
-                System.out.println("❌ JSP: request.getAttribute('vo') is NULL!");
-            } else {
-                System.out.println("✅ JSP: request.getAttribute('vo') found!");
-            }
-        %>
 
         <!-- 오른쪽: 브랜드 정보 폼 -->
         <div style="flex-grow: 1;">
             <div class="mb-3">
                 <label for="sellerId" class="form-label">판매자 아이디</label>
-                <input type="text" class="form-control" id="sellerId" name="sellerId" value="${vo.seller_id}" disabled style="width: 100%;">
+                <input type="text" class="form-control" id="sellerId" name="sellerId" value="${vo.seller_id}" disabled>
             </div>
             <div class="mb-3">
                 <label for="brandName" class="form-label">브랜드 이름</label>
-                <input type="text" class="form-control" id="brandName" name="brandName" value="${vo.name}" disabled style="width: 100%;">
+                <input type="text" class="form-control" id="brandName" name="brandName" value="${vo.name}" disabled>
             </div>
             <div class="mb-3">
                 <label for="brandPhone" class="form-label">브랜드 전화번호</label>
-                <input type="text" class="form-control" id="brandPhone" name="brandPhone" value="${vo.phone}" disabled style="width: 100%;">
+                <input type="text" class="form-control" id="brandPhone" name="brandPhone" value="${vo.phone}" disabled>
             </div>
             <div class="mb-3">
                 <label for="brandEmail" class="form-label">브랜드 이메일 주소</label>
-                <input type="email" class="form-control" id="brandEmail" name="brandEmail" value="${vo.email}" disabled style="width: 100%;">
+                <input type="email" class="form-control" id="brandEmail" name="brandEmail" value="${vo.email}" disabled>
             </div>
             <div class="mb-3">
                 <label for="brandAddress" class="form-label">회사 주소</label>
-                <input type="text" class="form-control" id="brandAddress" name="brandAddress" value="${vo.address}" disabled style="width: 100%;">
+                <input type="text" class="form-control" id="brandAddress" name="brandAddress" value="${vo.address}" disabled>
             </div>
             <div class="mb-3">
                 <label for="brandDesc" class="form-label">브랜드 설명</label>
-                <textarea class="form-control" id="brandDesc" name="brandDesc" disabled style="width: 100%; height: 150px;">${vo.desc}</textarea>
+                <textarea class="form-control" id="brandDesc" name="brandDesc" disabled>${vo.desc}</textarea>
             </div>
 
             <!-- 수정/저장 버튼 -->
             <div class="d-flex gap-3">
                 <button type="button" class="btn btn-primary" id="editButton" onclick="enableEditing()">수정</button>
-                <button type="submit" class="btn btn-success" id="saveButton" onclick="this.form" disabled>저장</button>
+                <button type="submit" class="btn btn-success" id="saveButton" disabled>저장</button>
             </div>
         </div>
     </form>
@@ -145,45 +136,22 @@
             document.getElementById('saveButton').disabled = false;
         }
 
-        // 이미지 미리보기 함수
+
+        document.getElementById('saveButton').addEventListener("click", function () {
+            document.querySelector("form").submit();
+        });
+
+
         function uploadLogo(event) {
             var file = event.target.files[0];
             if (!file) return;
 
-            var formData = new FormData();
-            formData.append("logoFile", file);
 
-            fetch("/shop/UploadLogoServlet", {
-                method: "POST",
-                body: formData
-            })
-                .then(response => response.text()) // 🔥 서버에서 응답 확인
-                .then(imageUrl => {
-                    console.log("🚀 업로드된 이미지 URL:", imageUrl);
-
-                    if (!imageUrl) {
-                        alert("❌ 이미지 업로드 실패: 서버에서 URL을 받지 못함");
-                        return;
-                    }
-
-                    document.getElementById("logoImage").src = imageUrl;
-
-                    // 🚀 업로드된 URL을 서버에 저장 요청 (DB 업데이트)
-                    fetch("/shop/Controller?type=uploadlogo", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({ logoUrl: imageUrl })
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log("✅ DB 업데이트 응답: ", data);
-                            alert("✅ 로고가 변경되었습니다.");
-                        })
-                        .catch(error => console.error("❌ 로고 업데이트 실패:", error));
-                })
-                .catch(error => console.error("❌ 로고 업로드 실패:", error));
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById("logoImage").src = e.target.result;
+            };
+            reader.readAsDataURL(file);
         }
     </script>
 </div>
