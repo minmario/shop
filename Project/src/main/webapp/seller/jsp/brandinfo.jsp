@@ -70,7 +70,7 @@
         }
     </style>
 </head>
-<%@ include file="layout/header.jsp" %>
+<%@ include file="header.jsp" %>
 <body>
 
 <div class="container mt-4">
@@ -126,32 +126,32 @@
     <script>
         // 텍스트 필드 활성화
         function enableEditing() {
-          document.getElementById('sellerId').disabled = false;
-          document.getElementById('brandName').disabled = false;
-          document.getElementById('brandPhone').disabled = false;
-          document.getElementById('brandEmail').disabled = false;
-          document.getElementById('brandAddress').disabled = false;
-          document.getElementById('brandDesc').disabled = false;
+            document.getElementById('sellerId').disabled = false;
+            document.getElementById('brandName').disabled = false;
+            document.getElementById('brandPhone').disabled = false;
+            document.getElementById('brandEmail').disabled = false;
+            document.getElementById('brandAddress').disabled = false;
+            document.getElementById('brandDesc').disabled = false;
 
-          document.getElementById('saveButton').disabled = false;
+            document.getElementById('saveButton').disabled = false;
         }
 
 
         document.getElementById('saveButton').addEventListener("click", function () {
-          document.querySelector("form").submit();
+            document.querySelector("form").submit();
         });
 
 
         function uploadLogo(event) {
-          var file = event.target.files[0];
-          if (!file) return;
+            var file = event.target.files[0];
+            if (!file) return;
 
 
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            document.getElementById("logoImage").src = e.target.result;
-          };
-          reader.readAsDataURL(file);
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById("logoImage").src = e.target.result;
+            };
+            reader.readAsDataURL(file);
         }
     </script>
 </div>

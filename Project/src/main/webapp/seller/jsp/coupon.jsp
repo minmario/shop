@@ -210,10 +210,10 @@
 
         <select class="form-select search-category" style="display: none; width: 150px;">
           <option value="all">전체</option>
-          <option value="outer">아우터</option>
-          <option value="top">상의</option>
-          <option value="pants">바지</option>
-          <option value="dress_skirt">원피스/스커트</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
         </select>
 
         <button type="button" class="btn btn-outline-secondary search-button">검색</button>
@@ -363,11 +363,25 @@
   </div>
 </div>
 
+
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
 
 <script>
+  document.querySelector(".search-criteria").addEventListener("change", function () {
+    const criteria = this.value;
+
+    // 입력 필드 전환
+    if (criteria === "category") {
+      document.querySelector(".search-input").style.display = "none"; // 텍스트 입력 숨김
+      document.querySelector(".search-category").style.display = "block"; // 카테고리 선택 표시
+    } else {
+      document.querySelector(".search-input").style.display = "block"; // 텍스트 입력 표시
+      document.querySelector(".search-category").style.display = "none"; // 카테고리 숨김
+    }
+  });
+
   const rowsPerPage = 5; // 한 페이지에 표시할 행 수
   let currentPage = 1; // 현재 페이지
   const rows = document.querySelectorAll("#couponTableBody tr"); // 모든 쿠폰 목록
@@ -446,6 +460,8 @@
   // 페이지 초기화
   showPage(1);
 
+
+
   document.querySelector(".search-button").addEventListener("click", function () {
     const criteria = document.querySelector(".search-criteria").value; // 선택된 검색 기준
     const rows = document.querySelectorAll("#couponTableBody tr"); // 쿠폰 테이블의 모든 행
@@ -491,6 +507,7 @@
       }
     });
   });
+
 
   // 신규 쿠폰 발급 버튼 클릭 시 AJAX 요청
   $("#addCouponButton").on("click", function () {
@@ -560,7 +577,7 @@
     });
 
 
-  // 모달 닫기
+    // 모달 닫기
     $('#newCouponModal').modal('hide');
 
     // 모달 초기화 (입력된 값 초기화)
@@ -631,7 +648,7 @@
           grade_no: grade,
           category_no: category
         },
-        success: function (response) {
+        success: function () {
           alert("쿠폰이 수정되었습니다.");
           $(`#name-${couponId}, #start-${couponId}, #end-${couponId}, #discount-${couponId}, #grade-${couponId}, #category-${couponId}`).prop("disabled", true);
           $(`.save-button[data-id='${couponId}']`).hide();
@@ -655,7 +672,7 @@
         type: "POST",
         data: { id: couponId },
         success: function () {
-          alert("쿠폰이 삭제되었습니다.");
+          alert("쿠폰이 삭제되었습니다!");
           $(`tr[data-id='${couponId}']`).remove();
         },
         error: function () {

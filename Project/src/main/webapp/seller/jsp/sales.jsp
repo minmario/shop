@@ -8,7 +8,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <style>
     body {
-      margin: 20px;
+    margin: 20px;
       font-family: Arial, sans-serif;
     }
     .header-spacing {
@@ -102,16 +102,17 @@
   <h1 class="section-title">매출/정산 관리</h1>
 
   <!-- 매출 요약 -->
-  <c:set var="totalFinalPrice" value="0" />
+  <c:set var="totalFinalPrice" value="0"/>
   <c:forEach var="sale" items="${salesList}">
     <c:if test="${sale.status eq 5}">
-      <c:set var="totalFinalPrice" value="${totalFinalPrice + sale.final_price}" />
+      <c:set var="totalFinalPrice" value="${totalFinalPrice + sale.final_price}"/>
     </c:if>
   </c:forEach>
   <div class="summary-card d-flex-between">
     <div>
       <h5>기간 별 매출</h5>
-      <p class="text-primary fw-bold" id="totalSalesAmount">₩ 0</p>  <%-- ✅ JS에서 동적으로 업데이트됨 --%>
+      <p class="text-primary fw-bold" id="totalSalesAmount" name="totalSalesAmount">₩ ${totalFinalPrice}</p>
+      <%-- ✅ 초기값을 `totalFinalPrice`로 설정 --%>
     </div>
     <div>
       <h5>총 주문 수</h5>
@@ -119,7 +120,7 @@
     </div>
     <div>
       <h5>총 정산 금액</h5>
-      <p class="text-danger fw-bold">₩ ${totalFinalPrice}</p>  <%-- ✅ JSP에서 합산 후 출력 --%>
+      <p class="text-danger fw-bold">₩ ${totalFinalPrice}</p> <%-- ✅ JSP에서 합산 후 출력 --%>
     </div>
   </div>
   <div class="search-container"> <!-- 날짜 설정 버튼 -->
@@ -129,7 +130,8 @@
     <label for="endDate">종료일:</label>
     <input type="date" class="form-control" id="endDate">
 
-    <button type="button" class="btn btn-outline-secondary" id="dateSearchBtn">기간 검색</button>
+    <button type="button" class="btn btn-outline-secondary" id="dateSearchBtn">🔍 기간 검색</button>
+    <button type="button" class="btn btn-outline-secondary" id="calculateSalesBtn">💰 기간별 매출 계산</button>
   </div>
   <!-- 검색 필드 -->
   <div class="search-container">
@@ -188,7 +190,7 @@
         <th>주문일</th>
         <th>상품명</th>
         <th>카테고리</th>
-        <th>판매 금액</th>
+        <th>쿠폰 할인률</th>
         <th>정산 금액</th>
         <th>상태</th>
         <th>관리</th>
@@ -201,7 +203,7 @@
           <td>${sale.order_date}</td>
           <td>${sale.product_name}</td>
           <td>${sale.category_name}</td>
-          <td>₩${sale.discount_value}</td>
+          <td>${sale.discount_value}%</td>
           <td>₩${sale.final_price}</td>
           <td>
             <c:choose>
@@ -322,6 +324,66 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 <script>
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const calculateSalesBtn = document.getElementById("calculateSalesBtn");
+    const totalSalesAmountElement = document.getElementById("totalSalesAmount");
+
+    console.log("🔵 totalSalesAmountElement:", totalSalesAmountElement);
+
+    if (calculateSalesBtn) {
+      calculateSalesBtn.addEventListener("click", function () {
+        const startDate = document.getElementById("startDate").value;
+        const endDate = document.getElementById("endDate").value;
+        let totalAmount = 0;
+
+        if (!startDate || !endDate) {
+          alert("📅 시작일과 종료일을 모두 선택하세요!");
+          return;
+        }
+
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        end.setHours(23, 59, 59, 999);
+
+        document.querySelectorAll("#mainTable tbody tr").forEach(row => {
+
+          const orderDateText = row.children[1].textContent.trim();
+          const finalPriceText = row.children[5].textContent.replace(/[₩,]/g, "").trim();
+          const statusText = row.children[6].textContent.trim();
+
+          console.log("🔍 finalPriceText 값:", finalPriceText);
+
+          const finalPrice = parseInt(finalPriceText) || 0;
+          const orderDate = new Date(orderDateText);
+
+          if (!isNaN(orderDate) && orderDate >= start && orderDate <= end && statusText === "구매확정") {
+            totalAmount += finalPrice;
+          }
+        });
+        console.log("💰 totalAmount 계산 중: ", totalAmount)
+        if (isNaN(totalAmount)) {
+          totalAmount = 0;
+        }
+
+        console.log("💰 최종 계산된 매출:", totalAmount);
+        if (totalSalesAmountElement) {
+          setTimeout(() => {
+            totalSalesAmountElement.innerHTML = "";
+            totalSalesAmountElement.innerHTML = "₩ "+totalAmount;
+            console.log(`나 나 나 ${totalAmount.toLocaleString()}`);
+            console.log("🟢 최종 표시될 금액:", totalSalesAmountElement.innerHTML);
+          }, 50);
+        } else {
+          console.error("❌ totalSalesAmountElement가 존재하지 않습니다.");
+        }
+      });
+    } else {
+      console.error("❌ 'calculateSalesBtn' 버튼을 찾을 수 없음.");
+    }
+  });
+
+
   const rowsPerPage = 5; // 한 페이지에 표시할 행 수
   let currentPage = 1; // 현재 페이지
   const rows = document.querySelectorAll("#mainTable tbody tr"); // 모든 주문 목록
@@ -491,8 +553,9 @@
     const rows = document.querySelectorAll("#mainTable tbody tr");
 
     // ✅ 모든 행을 초기화하여 다시 보이게 설정
-    rows.forEach(row => row.style.display = "");
-
+    rows.forEach(row => {
+      row.style.display = "";
+    });
     rows.forEach(row => {
       const orderDate = row.children[1].textContent.trim(); // 주문일 컬럼 (YYYY-MM-DD)
 
@@ -505,8 +568,6 @@
         row.style.display = "none";  // ❌ 날짜 범위 밖 → 숨김
       }
     });
-
-    attachDetailButtonEvent(); // ✅ 상세보기 버튼 이벤트 다시 등록
   });
 
   // ✅ 전체 검색 기능 개선
