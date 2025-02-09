@@ -21,6 +21,6 @@ public class CouponDeleteAction implements Action {
             System.err.println("❌ CouponDeleteAction: Failed to delete coupon.");
         }
 
-        return null; // 삭제 후 쿠폰 목록 페이지로 이동
+        return "seller/jsp/ajax/coupon_delete.jsp"; // 삭제 후 쿠폰 목록 페이지로 이동
     }
 }

@@ -58,6 +58,6 @@ public class CouponUpdateAction implements Action {
             e.printStackTrace();
         }
 
-        return null; // AJAX 요청이므로 JSP 이동 불필요
+        return "seller/jsp/ajax/coupon_delete.jsp"; // AJAX 요청이므로 JSP 이동 불필요
     }
 }
