@@ -128,8 +128,8 @@
                                                 <li><span>적립금 사용</span><span class="cancel-point-used"><fmt:formatNumber value="${pointUsedInt}"/>원</span></li>
                                             </c:if>
 
-                                            <!-- 환불 예정 금액 계산 (총 결제 금액 - 적립금 - 쿠폰) -->
-                                            <c:set var="refundAmount" value="${totalAmountInt - pointUsedInt}" />
+                                            <!-- 환불 예정 금액 계산 (총 결제 금액) -->
+                                            <c:set var="refundAmount" value="${totalAmountInt}" />
                                             <li><span>환불 예정 금액</span><span class="cancel-refund-amount"><fmt:formatNumber value="${refundAmount}" type="number" maxFractionDigits="0"/>원</span></li>
                                         </ul>
                                     </div>
@@ -137,7 +137,7 @@
                                     <p>결제 시 사용한 적립금 및 할인 쿠폰은 취소 완료 즉시 반환됩니다.</p>
                                 </div>
                                 <div class="cancel-button-container">
-                                    <button type="button" class="btn btn-dark cancel-request-btn" onclick="cancelRequest()">취소 요청하기</button>
+                                    <button type="button" class="btn btn-dark cancel-request-btn" id="cancelRequestButton">취소 요청하기</button>
                                 </div>
                             </div>
                         </c:if>

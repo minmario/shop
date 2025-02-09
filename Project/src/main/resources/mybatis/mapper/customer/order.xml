@@ -153,6 +153,17 @@
         AND prod_no = #{prod_no}
     </update>
 
+    <!-- 전체 취소 요청 -->
+    <update id="update_order_cancel_all" parameterType="map">
+        UPDATE `order`
+        SET status = 6, refund_bank = #{refund_bank}, refund_account = #{refund_account}, reason_customer = #{reason_customer}, cancel_request_date = CURRENT_DATE
+        WHERE cus_no = #{cus_no} AND order_code = #{order_code} AND status = 1
+        AND id IN
+        <foreach item="id" collection="idList" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
     <!-- 배송 전 상품 사이즈 변경 -->
     <update id="update_order_size" parameterType="map">
         UPDATE `order`
@@ -169,6 +180,18 @@
         WHERE id = #{id} AND cus_no = #{cus_no} AND order_code = #{order_code} AND prod_no = #{prod_no}
     </update>
 
+    <!-- 전체 반품 요청 -->
+    <update id="update_order_refund_all" parameterType="map">
+        UPDATE `order`
+        SET status = 7, refund_bank = #{refund_bank}, refund_account = #{refund_account},
+        reason_customer = #{reason_customer}, retrieve_deli_no = #{retrieve_deli_no}, refund_request_date = CURRENT_DATE
+        WHERE cus_no = #{cus_no} AND order_code = #{order_code} AND status IN (2, 3, 4)
+        AND id IN
+        <foreach item="id" collection="idList" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
     <!-- 교환 요청 -->
     <update id="update_order_exchange" parameterType="map">
         UPDATE `order`
@@ -183,7 +206,7 @@
         FROM `order` o
         INNER JOIN coupon c ON o.coupon_no = c.id
         INNER JOIN cus_coupon cc ON cc.coupon_no = c.id
-        WHERE o.cus_no = #{cus_no} AND o.order_code = #{order_code} AND cc.status = '2'
+        WHERE o.cus_no = #{cus_no} AND o.order_code = #{order_code}
         <if test="id != null">
             AND o.id = #{id}
         </if>
