@@ -211,7 +211,7 @@ public class OrderAction implements Action {
                         map.put("quantity", quantity); // 상품 수량
                         map.put("total_amount", total_amount); // 상품 가격
                         map.put("tax_free_amount", tax_free_amount); // 비과세 금액
-                        map.put("approval_url", "http://localhost:8080/shop/user/customer/jsp/payment/approve.jsp"); // 성공 시 url
+                        map.put("approval_url", "http://localhost:8080/user/customer/jsp/payment/approve.jsp"); // 성공 시 url
                         map.put("fail_url", "http://localhost:8080/fail"); // 실패 시 url
                         map.put("cancel_url", "http://localhost:8080/cancel"); // 취소 시 url
 
