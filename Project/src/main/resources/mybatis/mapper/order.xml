@@ -45,4 +45,13 @@
     status=#{status}
     WHERE id = #{order_no}
   </update>
+  <select id="get_confirm_month" parameterType="String" resultType="int">
+    SELECT COUNT(o.purchase_confirm_date)
+    FROM `order` as o
+    JOIN product as p ON p.id = o.prod_no
+    WHERE YEAR(o.purchase_confirm_date) = YEAR(CURDATE())
+    AND MONTH(o.purchase_confirm_date) = MONTH(CURDATE())
+    AND p.seller_no = #{seller_no}
+  </select>
+
 </mapper>

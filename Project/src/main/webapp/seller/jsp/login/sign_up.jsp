@@ -18,6 +18,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script>
+    let check=false;
     $(document).ready(function () {
         $("#seller_pw, #chk_pw").on("blur", function () {
             if ($("#seller_pw").val() !== $("#chk_pw").val()) {
@@ -31,8 +32,10 @@
     });
 
     function chk() {
+
         const id = $("#seller_id").val();
         const param = "type=checkId&seller_id=" + encodeURIComponent(id);
+        console.log("idCheck:" +id);
         $.ajax({
             url: "/shop/Controller",
             type: "post",
@@ -45,6 +48,7 @@
                 submitBtn.removeAttribute("disabled"); // 버튼 활성화
                 submitBtn.style.backgroundColor = "blue"; // 배경색 변경
                 document.getElementById("seller_id").setAttribute("readonly","true");
+                check=true;
             } else {
                 alert("사용 불가능한 ID입니다!");
             }
@@ -54,6 +58,10 @@
         if(!frm.seller_id.value){
             alert("판매자 ID를 입력해주세요");
             frm.seller_id.focus();
+            return;
+        }
+        if(!check){
+            alert("중복 확인을 해주세요")
             return;
         }
         if(!frm.seller_pw.value || frm.seller_pw.value!=frm.chk_pw.value){

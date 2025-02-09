@@ -68,8 +68,14 @@
                     </c:if><label>문의 글: </label>
                     <a href="Controller?type=question" id="ready">
                         <span class="badge bg-secondary">${quest}건</span>
-                    </a></div>
-                <div class="col-md-4">구매 확정: <span class="badge bg-secondary">0건</span></div>
+                    </a>
+                </div>
+                <div class="col-md-4">
+                   <label> 구매 확정:</label>
+                    <a href="Controller?type=sales">
+                        <span class="badge bg-secondary">${confirm}건</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -86,12 +92,14 @@
 <script>
     var ctx = document.getElementById('salesChart').getContext('2d');
     var salesChart = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
-            labels: ['1일', '2일', '3일', '4일', '5일', '6일', '7일'],
+            labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월' ,'8월','9월','10월',
+                '11월', '12월'],
             datasets: [{
-                label: '일별 매출',
-                data: [10, 20, 15, 30, 25, 40, 35],
+                label: '월별 매출',
+                data: [55000000, 20000000, 16000000, 30000000, 50000000,23790000, 20000000,
+                32000000,37000000,65000000,76000000,77000000],
                 borderColor: 'rgba(75, 192, 192, 1)',
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 borderWidth: 2
@@ -101,7 +109,23 @@
             responsive: true,
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    ticks: {
+                        // 화폐 형식으로 표시
+                        callback: function(value) {
+                            return '₩' + value.toLocaleString();  // 숫자를 화폐 형식으로 변환
+                        }
+                    }
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        // 툴팁에도 화폐 형식으로 표시
+                        label: function(tooltipItem) {
+                            return '₩' + tooltipItem.raw.toLocaleString();  // 툴팁 숫자 화폐 형식
+                        }
+                    }
                 }
             }
         }

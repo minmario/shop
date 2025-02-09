@@ -1,14 +1,125 @@
 package comm.vo;
 
 public class OrderVO {
-    private String id, tid, cus_no, prod_no, coupon_no, point_no, deli_no, order_code, count, order_date, pay_type, order_bank, order_account, refund_bank,
-            refund_account, card_name, is_install, install_month, status, inventory_no, reason, retrieve_deli_no;
+    private String id, cus_no, prod_no, coupon_no, deli_no, retrieve_deli_no, inventory_no, exchange_inventory_no, tid, order_code, count, amount, benefit_type, result_amount, expected_point, pay_type, status, order_date, invoice_number, delivery_date, purchase_confirm_date, refund_bank, refund_account, refund_request_date, cancel_request_date, exchange_request_date, reason_customer, reason_seller, refund_completed_date;
     private String cus_id, cus_name;
     private String prod_name;
     private String addr1,addr2,deli_name,phone;
     private String option_name, option_count;
     ProductVO product;
     DeliveryVO delivery;
+
+    public String getExchange_inventory_no() {
+        return exchange_inventory_no;
+    }
+
+    public void setExchange_inventory_no(String exchange_inventory_no) {
+        this.exchange_inventory_no = exchange_inventory_no;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public String getBenefit_type() {
+        return benefit_type;
+    }
+
+    public void setBenefit_type(String benefit_type) {
+        this.benefit_type = benefit_type;
+    }
+
+    public String getResult_amount() {
+        return result_amount;
+    }
+
+    public void setResult_amount(String result_amount) {
+        this.result_amount = result_amount;
+    }
+
+    public String getExpected_point() {
+        return expected_point;
+    }
+
+    public void setExpected_point(String expected_point) {
+        this.expected_point = expected_point;
+    }
+
+    public String getInvoice_number() {
+        return invoice_number;
+    }
+
+    public void setInvoice_number(String invoice_number) {
+        this.invoice_number = invoice_number;
+    }
+
+    public String getDelivery_date() {
+        return delivery_date;
+    }
+
+    public void setDelivery_date(String delivery_date) {
+        this.delivery_date = delivery_date;
+    }
+
+    public String getPurchase_confirm_date() {
+        return purchase_confirm_date;
+    }
+
+    public void setPurchase_confirm_date(String purchase_confirm_date) {
+        this.purchase_confirm_date = purchase_confirm_date;
+    }
+
+    public String getRefund_request_date() {
+        return refund_request_date;
+    }
+
+    public void setRefund_request_date(String refund_request_date) {
+        this.refund_request_date = refund_request_date;
+    }
+
+    public String getCancel_request_date() {
+        return cancel_request_date;
+    }
+
+    public void setCancel_request_date(String cancel_request_date) {
+        this.cancel_request_date = cancel_request_date;
+    }
+
+    public String getExchange_request_date() {
+        return exchange_request_date;
+    }
+
+    public void setExchange_request_date(String exchange_request_date) {
+        this.exchange_request_date = exchange_request_date;
+    }
+
+    public String getReason_customer() {
+        return reason_customer;
+    }
+
+    public void setReason_customer(String reason_customer) {
+        this.reason_customer = reason_customer;
+    }
+
+    public String getReason_seller() {
+        return reason_seller;
+    }
+
+    public void setReason_seller(String reason_seller) {
+        this.reason_seller = reason_seller;
+    }
+
+    public String getRefund_completed_date() {
+        return refund_completed_date;
+    }
+
+    public void setRefund_completed_date(String refund_completed_date) {
+        this.refund_completed_date = refund_completed_date;
+    }
 
     public String getAddr1() {
         return addr1;
@@ -90,13 +201,6 @@ public class OrderVO {
         this.coupon_no = coupon_no;
     }
 
-    public String getPoint_no() {
-        return point_no;
-    }
-
-    public void setPoint_no(String point_no) {
-        this.point_no = point_no;
-    }
 
     public String getDeli_no() {
         return deli_no;
@@ -138,22 +242,6 @@ public class OrderVO {
         this.pay_type = pay_type;
     }
 
-    public String getOrder_bank() {
-        return order_bank;
-    }
-
-    public void setOrder_bank(String order_bank) {
-        this.order_bank = order_bank;
-    }
-
-    public String getOrder_account() {
-        return order_account;
-    }
-
-    public void setOrder_account(String order_account) {
-        this.order_account = order_account;
-    }
-
     public String getRefund_bank() {
         return refund_bank;
     }
@@ -170,29 +258,6 @@ public class OrderVO {
         this.refund_account = refund_account;
     }
 
-    public String getCard_name() {
-        return card_name;
-    }
-
-    public void setCard_name(String card_name) {
-        this.card_name = card_name;
-    }
-
-    public String getIs_install() {
-        return is_install;
-    }
-
-    public void setIs_install(String is_install) {
-        this.is_install = is_install;
-    }
-
-    public String getInstall_month() {
-        return install_month;
-    }
-
-    public void setInstall_month(String install_month) {
-        this.install_month = install_month;
-    }
 
     public String getStatus() {
         return status;
@@ -208,14 +273,6 @@ public class OrderVO {
 
     public void setInventory_no(String inventory_no) {
         this.inventory_no = inventory_no;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
     }
 
     public String getRetrieve_deli_no() {

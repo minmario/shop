@@ -15,7 +15,6 @@ public class DashBoardAction implements Action {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         String seller_no = (String) session.getAttribute("seller_no");
-        System.out.println("seller_no:"+seller_no);
         int newOrder = 0;
         int readyDeli =0;
         int changeProd =0;
@@ -34,7 +33,10 @@ public class DashBoardAction implements Action {
 
             }
         }
-        int quest = DashboardDAO.getQuestionCount(seller_no);
+        int[] arr = DashboardDAO.getQuestConfirm(seller_no);
+        int quest = arr[0];
+        int confirm = arr[1];
+        request.setAttribute("confirm",confirm);
         request.setAttribute("quest",quest);
         request.setAttribute("newOrder",newOrder);
         request.setAttribute("readyDeli",readyDeli);

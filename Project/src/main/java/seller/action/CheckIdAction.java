@@ -11,7 +11,8 @@ public class CheckIdAction implements Action {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String seller_id = request.getParameter("seller_id");
-        System.out.println(seller_id);
+
+        System.out.println("CheckIDAction: " +seller_id);
         int cnt = SellerDAO.checkId(seller_id);
         // JSON 응답 반환
         request.setAttribute("cnt",cnt);

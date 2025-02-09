@@ -26,6 +26,6 @@ public class AddSellerAction implements Action {
 
         // JSON 응답 반환
         request.setAttribute("cnt",cnt);
-        return "/seller/jsp/dash_board.jsp";
+        return "/seller/jsp/login/login.jsp";
     }
 }

@@ -40,17 +40,10 @@
 <div class="index header d-flex align-items-center p-3 bg-light border-bottom">
     <!-- 왼쪽: 로그인 버튼 -->
     <div class="d-flex align-items-center">
-        <c:choose>
-            <c:when test="${isLoggedIn}">
-                <span class="me-2">환영합니다, <strong>${nickname}님</strong></span>
+
+                <span class="me-2">환영합니다, <strong>${seller_id}님</strong></span>
                 <button type="button" class="btn btn-outline-secondary"
-                        onclick="location.href='Controller?type=logout';">로그아웃</button>
-            </c:when>
-            <c:otherwise>
-                <button type="button" class="btn btn-outline-primary"
-                        onclick="location.href='user/jsp/login/login.jsp';">로그인</button>
-            </c:otherwise>
-        </c:choose>
+                        onclick="location.href='Controller?type=sellerLogout';">로그아웃</button>
     </div>
 
     <!-- 중앙: 상품 관리 ~ 브랜드 관리-->

@@ -144,7 +144,7 @@
     function previewAdditionalImage(event, inputElement) {
         const reader = new FileReader();
         reader.onload = function () {
-            const container = inputElement.parentElement.querySelector('.image-container');
+            const container = inputElement.parentElement.querySelector('.additional-image');
             const previewImage = container.querySelector('.additional-image-preview');
             const placeholder = container.querySelector('.placeholder');
             previewImage.src = reader.result;
@@ -504,7 +504,7 @@
         <label class="form-label">추가 이미지</label>
         <div id="additionalImagesContainer" style="display: flex; gap: 10px; flex-wrap: wrap;">
             <c:choose>
-                <c:when test ="${vo.ar_images!=null}">
+                <c:when test ="${not empty vo.ar_images}">
                 <c:forEach var="additionalImage" items="${vo.ar_images}">
                     <div class="additional-image-wrapper">
                         <div class="image-container additional-image" >

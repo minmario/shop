@@ -122,15 +122,19 @@ public class Controller extends HttpServlet {
 		 */
 		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			// type이라는 파라미터를 받기
+			request.setCharacterEncoding("utf-8");
 			String type = request.getParameter("type");
 			HttpSession session = request.getSession();
-			session.setAttribute("seller_no","4");
-			// 만약! type이 null이면 기본객체(DateAction)을 지정한다.
-			if(type == null)
-                if(type == null)
-                    type = "dashBoard";
 			// type으로 받은 값이 actionMap의 key로 사용되고 있으며
 			// actionMap으로부터 원하는 객체를 얻도록 한다.
+			if(type==null){
+				type="sellerLogout";
+			}
+			else if(session.getAttribute("seller_no")==null){
+				System.out.println("seller_no is null!!");
+				if(!type.equals("checkId")&&!type.equals("addSeller")&&!type.equals("sellerLogin"))
+					type="sellerLogout";
+			}
 			Action action = actionMap.get(type);
 			String viewPath = action.execute(request, response);
 			

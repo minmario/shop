@@ -21,11 +21,13 @@ public class DashboardDAO {
         return ar;
 
     }
-    public static int getQuestionCount(String seller_no){
+    public static int[] getQuestConfirm(String seller_no){
         SqlSession ss = FactoryService.getFactory().openSession();
+        int[] ar = new int[2];
 
-        int cnt = ss.selectOne("question.count",seller_no);
+        ar[0] = ss.selectOne("question.count",seller_no);
+        ar[1] = ss.selectOne("order.get_confirm_month",seller_no);
         ss.close();
-        return cnt;
+        return ar;
     }
 }

@@ -25,8 +25,8 @@ public class OrderDAO {
     public static OrderVO getOrderOne(String order_no){
         SqlSession ss = FactoryService.getFactory().openSession();
         OrderVO vo = ss.selectOne("order.get_order_one",order_no);
-        if(vo.getReason()==null)
-            vo.setReason("사유를 입력하지 않았습니다");
+        if(vo.getReason_seller()==null)
+            vo.setReason_seller("사유를 입력하지 않았습니다");
         switch (vo.getStatus()){
             case "1": vo.setStatus("신규주문"); break;
             case "2": vo.setStatus("발송준비"); break;
@@ -87,6 +87,5 @@ public class OrderDAO {
 
         ss.close();
         return cnt;
-
     }
 }

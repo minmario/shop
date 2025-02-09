@@ -12,11 +12,12 @@
   </update>
   <insert id="addStock" parameterType="Map">
     INSERT INTO inventory(prod_no, count)
-    VALUES(#{id},#{stock}
+    VALUES(#{id},#{stock})
   </insert>
   <select id="getOptions" parameterType="String" resultType="comm.vo.InventoryVO">
     SELECT * FROM inventory
     WHERE prod_no = #{prod_no}
+    AND status =0
   </select>
   <insert id="addOptions" parameterType="list">
     INSERT INTO inventory(prod_no, option_name, count,total_length,shoulder,chest,sleeve,waist,hip,thigh,rise,hem,foot_length,foot_width,ankle_height,heel_height)
@@ -29,10 +30,5 @@
     UPDATE inventory
     SET status=1
     WHERE prod_no=#{prod_no}
-  </update>
-  <update id="update_option" parameterType="map">
-    UPDATE inventory
-    SET prod_no = ${prod_no},
-    SET count = ${
   </update>
 </mapper>
