@@ -22,7 +22,7 @@ public class ChatWebSocketServer {
   @OnOpen
   public void onOpen(Session session, @PathParam("userId") String userId) {
     if (userId == null || session == null) {
-      System.err.println("❌ userId 또는 session이 null입니다. 연결 실패.");
+      System.err.println(" userId 또는 session이 null입니다. 연결 실패.");
       return;
     }
 
@@ -31,7 +31,7 @@ public class ChatWebSocketServer {
     String roomId = params.containsKey("roomId") ? params.get("roomId").get(0) : null;
 
     if (roomId == null) {
-      System.out.println("⚠️ roomId가 전달되지 않았습니다. 추후 메시지에서 업데이트 될 예정입니다.");
+      System.out.println("⚠ roomId가 전달되지 않았습니다. 추후 메시지에서 업데이트 될 예정입니다.");
       // roomId가 없는 경우에도 연결은 유지합니다.
     }
 
@@ -39,7 +39,7 @@ public class ChatWebSocketServer {
     clients.put(userId, session);
     session.getUserProperties().put("userId", userId);
     session.getUserProperties().put("roomId", roomId);
-    System.out.println("✅ 웹소켓 연결 성공: userId=" + userId + ", roomId=" + roomId);
+    System.out.println(" 웹소켓 연결 성공: userId=" + userId + ", roomId=" + roomId);
   }
 
   @OnMessage

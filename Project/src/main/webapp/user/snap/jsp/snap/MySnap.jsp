@@ -205,7 +205,7 @@
                                                 <div class="carousel-item ${status.index == 0 ? 'active' : ''}">
                                                     <div class="d-flex align-items-center">
                                                         <!-- 제품 이미지 -->
-                                                        <img src="${product.prod_image}" class="img-fluid me-3" alt="제품 이미지"
+                                                        <img src="${product.prod_image}"  class="img-fluid me-3" alt="제품 이미지"
                                                              style="width: 120px; height: 120px; object-fit: cover;">
 
                                                         <!-- 제품 정보 -->
