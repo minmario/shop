@@ -97,7 +97,6 @@ public class SellerDAO {
     public static SellerVO login(String seller_id){
         SqlSession ss = FactoryService.getFactory().openSession();
         SellerVO vo = ss.selectOne("seller.login",seller_id);
-        System.out.println("DAOvo: "+vo.toString());
         ss.close();
         return  vo;
     }

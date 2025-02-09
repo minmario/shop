@@ -1,17 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="shop:war exploded" />
+    </artifacts-to-build>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5b829c05-df2b-409a-9128-08397fbb7afd" name="Changes" comment="">
+    <list default="true" id="5b829c05-df2b-409a-9128-08397fbb7afd" name="Changes" comment="병합 중간 푸쉬">
+      <change afterPath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/ajax/coupon_delete.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/dao/SellerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/dao/SellerDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/CouponDeleteAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/CouponDeleteAction.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Jsp File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -48,6 +62,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "Tomcat 서버.Tomcat 9.0.98.executor": "Run",
     "git-widget-placeholder": "seller",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/my_study/HTML_Study/work/shop/Project",
@@ -72,7 +87,13 @@
     <configuration name="Tomcat 9.0.98" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.98" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
       <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/shop/Controller" />
       <option name="UPDATING_POLICY" value="restart-server" />
-      <deployment />
+      <deployment>
+        <artifact name="shop:war exploded">
+          <settings>
+            <option name="CONTEXT_PATH" value="/shop" />
+          </settings>
+        </artifact>
+      </deployment>
       <server-settings>
         <option name="BASE_DIRECTORY_NAME" value="3aaa332c-6cb1-4f77-8d33-77ba305fca82" />
       </server-settings>
@@ -171,6 +192,15 @@
       <workItem from="1738758163410" duration="12000" />
       <workItem from="1738819173605" duration="43000" />
     </task>
+    <task id="LOCAL-00001" summary="병합 중간 푸쉬">
+      <option name="closed" value="true" />
+      <created>1739083854645</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1739083854645</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -178,6 +208,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes" />
+    <MESSAGE value="병합 중간 푸쉬" />
+    <option name="LAST_COMMIT_MESSAGE" value="병합 중간 푸쉬" />
   </component>
 </project>
