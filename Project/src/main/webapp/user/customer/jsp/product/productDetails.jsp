@@ -250,43 +250,43 @@
                                                 <tr>
                                                     <td>${size.i_option_name}</td>
                                                     <c:if test="${size.total_length ne null and size.total_length ne '0'}">
-                                                        <td><fmt:formatNumber value="${size.total_length}"/></td>
+                                                        <td>${size.total_length}</td>
                                                     </c:if>
                                                     <c:if test="${size.shoulder ne null and size.shoulder ne '0'}">
-                                                        <td><fmt:formatNumber value="${size.shoulder}"/></td>
+                                                        <td>${size.shoulder}</td>
                                                     </c:if>
                                                     <c:if test="${size.chest ne null and size.chest ne '0'}">
-                                                        <td><fmt:formatNumber value="${size.chest}"/></td>
+                                                        <td>${size.chest}</td>
                                                     </c:if>
                                                     <c:if test="${size.sleeve ne null and size.sleeve ne '0'}">
-                                                        <td><fmt:formatNumber value="${size.sleeve}"/></td>
+                                                        <td>${size.sleeve}</td>
                                                     </c:if>
                                                     <c:if test="${size.waist ne null and size.waist ne '0'}">
-                                                        <td><fmt:formatNumber value="${size.waist}"/></td>
+                                                        <td>${size.waist}</td>
                                                     </c:if>
                                                     <c:if test="${size.hip ne null and size.hip ne '0'}">
-                                                        <td><fmt:formatNumber value="${size.hip}"/></td>
+                                                        <td>${size.hip}</td>
                                                     </c:if>
                                                     <c:if test="${size.thigh ne null and size.thigh ne '0'}">
-                                                        <td><fmt:formatNumber value="${size.thigh}"/></td>
+                                                        <td>${size.thigh}</td>
                                                     </c:if>
                                                     <c:if test="${size.rise ne null and size.rise ne '0'}">
-                                                        <td><fmt:formatNumber value="${size.rise}"/></td>
+                                                        <td>${size.rise}</td>
                                                     </c:if>
                                                     <c:if test="${size.hem ne null and size.hem ne '0'}">
-                                                        <td><fmt:formatNumber value="${size.hem}"/></td>
+                                                        <td>${size.hem}</td>
                                                     </c:if>
                                                     <c:if test="${size.foot_length ne null and size.foot_length ne '0'}">
-                                                        <td><fmt:formatNumber value="${size.foot_length}"/></td>
+                                                        <td>${size.foot_length}</td>
                                                     </c:if>
                                                     <c:if test="${size.foot_width ne null and size.foot_width ne '0'}">
-                                                        <td><fmt:formatNumber value="${size.foot_width}"/></td>
+                                                        <td>${size.foot_width}</td>
                                                     </c:if>
                                                     <c:if test="${size.ankle_height ne null and size.ankle_height ne '0'}">
-                                                        <td><fmt:formatNumber value="${size.ankle_height}"/></td>
+                                                        <td>${size.ankle_height}</td>
                                                     </c:if>
                                                     <c:if test="${size.heel_height ne null and size.heel_height ne '0'}">
-                                                        <td><fmt:formatNumber value="${size.heel_height}"/></td>
+                                                        <td>${size.heel_height}</td>
                                                     </c:if>
                                                 </tr>
                                             </c:forEach>

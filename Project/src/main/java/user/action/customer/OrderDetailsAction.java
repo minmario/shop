@@ -158,8 +158,8 @@ public class OrderDetailsAction implements Action {
                             ex.printStackTrace();
                         }
                     }
-                    return null;
 
+                    return null;
                 case "select_size":
                     String prod_no = request.getParameter("prod_no");
 
@@ -198,7 +198,6 @@ public class OrderDetailsAction implements Action {
                     }
 
                     return null;
-
                 case "update_size":
                     // 사이즈 변경
                     String us_id = request.getParameter("order_id");
@@ -220,8 +219,8 @@ public class OrderDetailsAction implements Action {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    return null;
 
+                    return null;
             }
 
         }

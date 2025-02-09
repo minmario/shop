@@ -90,26 +90,6 @@ public class BoardDAO {
         return cnt;
     }
 
-    // 리뷰 작성 여부 가져오기
-    public static boolean selectReview(String cus_no, String prod_no){
-        boolean reviewExists = false;
-        SqlSession ss = FactoryService.getFactory().openSession();
-
-        try {
-            HashMap<String, String> map = new HashMap<>();
-            map.put("cus_no", cus_no);
-            map.put("prod_no", prod_no);
-
-            reviewExists = ss.selectOne("review.select_review", map);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            ss.close();
-        }
-
-        return reviewExists;
-    }
-
     // 작성한 리뷰 목록 가져오기
     public static List<BoardVO> selectWriteReview(String cus_no, String startDate, String endDate) {
         List<BoardVO> list = null;

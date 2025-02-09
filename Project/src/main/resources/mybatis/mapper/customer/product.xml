@@ -278,7 +278,8 @@
     <select id="select_review" resultType="user.vo.customer.BoardVO" parameterType="Map">
         SELECT
             b.*,
-            c.name AS c_name,
+            c.nickname,
+            c.profile_image,
             c.gender AS c_gender,
             c.height AS c_height,
             c.weight AS c_weight,
