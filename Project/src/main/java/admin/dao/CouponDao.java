@@ -3,6 +3,7 @@ package admin.dao;
 import admin.vo.BoardProdVO;
 import admin.vo.CouponVO;
 import admin.vo.CustomerVO;
+import admin.vo.LogVO;
 import org.apache.ibatis.session.SqlSession;
 import service.FactoryService;
 
@@ -40,5 +41,26 @@ public class CouponDao {
         }
         ss.close();
         return ar;
+    }
+    public static boolean deleteCoupon(int id){
+        SqlSession ss = FactoryService.getFactory().openSession();
+        int updatedRows = ss.update("root.deleteCoupon", id);
+        if(updatedRows > 0){
+            ss.commit();
+            ss.close();
+            return true;
+        }
+        ss.rollback();
+        ss.close();
+        return false;
+    }
+    public static int logininsert(LogVO CouponVO) {
+        SqlSession ss = FactoryService.getFactory().openSession();
+        int chk = ss.insert("root.loginsert",CouponVO);
+        ss.commit();
+        ss.close();
+        return chk;
+
+
     }
 }

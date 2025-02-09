@@ -28,6 +28,7 @@ public class BoardDao {
 
 
 
+
   public boolean deleteBoard(int id) {
     SqlSession ss = FactoryService.getFactory().openSession();
 
@@ -75,6 +76,12 @@ public class BoardDao {
         }
         ss.close();
         return ar;
+    }
+    public static BoardVO getBoardById(String boardId) {
+        SqlSession ss = FactoryService.getFactory().openSession();
+        BoardVO board = ss.selectOne("root.getBoardById", boardId); // SQL에서 해당 id로 데이터를 조회
+        ss.close();
+        return board;
     }
 
 }

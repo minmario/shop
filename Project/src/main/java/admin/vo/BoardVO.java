@@ -8,6 +8,16 @@ public class BoardVO {
     String title;
     String content;
     String snapshot_image;
+
+    public String getAdditional_images() {
+        return additional_images;
+    }
+
+    public void setAdditional_images(String additional_images) {
+        this.additional_images = additional_images;
+    }
+
+    String additional_images;
     String tags;
     String gender;
     String season;
@@ -137,13 +147,5 @@ public class BoardVO {
         this.is_del = is_del;
     }
 
-    public String getAdditional_images() {
-        return additional_images;
-    }
 
-    public void setAdditional_images(String additional_images) {
-        this.additional_images = additional_images;
-    }
-
-    String additional_images;
 }

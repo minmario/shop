@@ -1,10 +1,6 @@
 package admin.action;
 
-import admin.dao.BoardDao;
-import admin.dao.BoardProdDao;
 import admin.dao.CustomerDao;
-import admin.vo.BoardProdVO;
-import admin.vo.BoardVO;
 import user.action.Action;
 import admin.vo.CustomerVO;
 

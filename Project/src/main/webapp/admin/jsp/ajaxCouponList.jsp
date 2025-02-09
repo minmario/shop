@@ -24,7 +24,6 @@ category_no, seller_no, type, grade_no, name, sale_per, sale_price, start_date, 
         <td>${coul.status}</td>
 
 
-        <td><button class="btn btn-outline-secondary btn-sm">수정</button>
-            <button class="btn btn-outline-secondary btn-sm">삭제</button></td>
+
     </tr>
 </c:forEach>
