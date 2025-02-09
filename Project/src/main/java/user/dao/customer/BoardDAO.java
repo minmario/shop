@@ -3,7 +3,6 @@ package user.dao.customer;
 import org.apache.ibatis.session.SqlSession;
 import service.FactoryService;
 import user.vo.customer.BoardVO;
-import user.vo.customer.ReviewVO;
 
 import java.util.HashMap;
 import java.util.List;
@@ -112,12 +111,17 @@ public class BoardDAO {
     }
 
     // 작성한 리뷰 목록 가져오기
-    public static List<ReviewVO> selectWriteReview(String cus_no){
-        List<ReviewVO> list = null;
+    public static List<BoardVO> selectWriteReview(String cus_no, String startDate, String endDate) {
+        List<BoardVO> list = null;
         SqlSession ss = FactoryService.getFactory().openSession();
 
         try {
-            list = ss.selectList("review.select_write_review", cus_no);
+            HashMap<String, String> map = new HashMap<>();
+            map.put("cus_no", cus_no);
+            map.put("startDate", startDate);
+            map.put("endDate", endDate);
+
+            list = ss.selectList("review.select_write_review", map);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -125,5 +129,69 @@ public class BoardDAO {
         }
 
         return list;
+    }
+
+    // 리뷰 상세 조회
+    public static BoardVO selectReviewDetails(String cus_no, String board_no) {
+        BoardVO vo = null;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("cus_no", cus_no);
+            map.put("id", board_no);
+
+            vo = ss.selectOne("review.select_review_details", map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return vo;
+    }
+
+    // 리뷰 수정
+    public static int updateReview(BoardVO vo) {
+        int cnt = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            cnt = ss.update("review.update_review", vo);
+
+            if (cnt > 0) {
+                ss.commit();
+            } else {
+                ss.rollback();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
+    }
+
+    // 리뷰 삭제
+    public static int deleteReview(String id) {
+        int cnt = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            cnt = ss.update("review.delete_review", id);
+
+            if (cnt > 0) {
+                ss.commit();
+            } else {
+                ss.rollback();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
     }
 }

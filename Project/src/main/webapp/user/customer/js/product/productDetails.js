@@ -200,15 +200,15 @@ function settingLike(obj, value, isLiked) {
 
 // 리뷰 조회
 function selectReview() {
-    const gender = document.getElementById('gender-select').value;
-    const height = document.getElementById('height-input').value;
-    const weight = document.getElementById('weight-input').value;
+    // const gender = document.getElementById('gender-select').value;
+    // const height = document.getElementById('height-input').value;
+    // const weight = document.getElementById('weight-input').value;
 
     const data = {
         prod_no: document.getElementById("prod_id").dataset.item,
-        gender: gender,
-        height: height,
-        weight: weight
+        // gender: gender,
+        // height: height,
+        // weight: weight
     };
 
     $.ajax({
@@ -218,9 +218,9 @@ function selectReview() {
         success: function (response) {
             $("#review").html(response);
 
-            document.getElementById("gender-select").value = gender;
+            /*document.getElementById("gender-select").value = gender;
             document.getElementById("height-input").value = height;
-            document.getElementById("weight-input").value = weight;
+            document.getElementById("weight-input").value = weight;*/
         },
         error: function (error) {
             alert("리뷰 데이터를 가져오는 중 오류가 발생했습니다.");

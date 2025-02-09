@@ -1,7 +1,7 @@
 package user.vo.customer;
 
 public class ProductVO {
-    private String brand, courier, id, category_no, seller_no, inventory_no, prod_code, name, p_name, total_length, shoulder, chest, sleeve, waist, hip, thigh, rise, hem, foot_length, foot_width, ankle_height, heel_height, price, view_count, inventory, active, sale, prod_image, additional_images, content, saled_price, like_count, i_option_name, count, avg_score, review_count, sales_count, user_like_status;
+    private String brand, courier, id, category_no, seller_no, inventory_no, prod_code, name, total_length, shoulder, chest, sleeve, waist, hip, thigh, rise, hem, foot_length, foot_width, ankle_height, heel_height, price, view_count, inventory, active, sale, prod_image, additional_images, content, saled_price, like_count, i_option_name, count, avg_score, review_count, sales_count, user_like_status, mi_category_name, ma_category_name;
 
     public String getInventory_no() {
         return inventory_no;
@@ -297,5 +297,21 @@ public class ProductVO {
 
     public void setSales_count(String sales_count) {
         this.sales_count = sales_count;
+    }
+
+    public String getMi_category_name() {
+        return mi_category_name;
+    }
+
+    public void setMi_category_name(String mi_category_name) {
+        this.mi_category_name = mi_category_name;
+    }
+
+    public String getMa_category_name() {
+        return ma_category_name;
+    }
+
+    public void setMa_category_name(String ma_category_name) {
+        this.ma_category_name = ma_category_name;
     }
 }

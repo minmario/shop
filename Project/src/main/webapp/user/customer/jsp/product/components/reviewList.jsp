@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div class="review-options">
-    <div class="option-group">
+    <%--<div class="option-group">
         <label for="gender-select">성별</label>
         <select id="gender-select" class="form-select custom-select">
             <option value="0">전체</option>
@@ -21,7 +21,7 @@
     <div class="option-group btn-group">
         <button type="button" class="btn btn-outline-primary" id="review-search-btn" onclick="selectReview()">검색
         </button>
-    </div>
+    </div>--%>
 </div>
 <div class="review-list" id="review-list">
     <c:if test="${requestScope.reviews ne null}">

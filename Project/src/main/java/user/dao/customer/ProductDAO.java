@@ -2,9 +2,9 @@ package user.dao.customer;
 
 import org.apache.ibatis.session.SqlSession;
 import service.FactoryService;
+import user.vo.customer.BoardVO;
 import user.vo.customer.MajorCategoryVO;
 import user.vo.customer.ProductVO;
-import user.vo.customer.ReviewVO;
 
 import java.util.HashMap;
 import java.util.List;
@@ -156,8 +156,8 @@ public class ProductDAO {
     }
 
     // 상품 리뷰 조회
-    public static List<ReviewVO> selectReview(String id, String gender, String height, String weight) {
-        List<ReviewVO> r_list = null;
+    public static List<BoardVO> selectReview(String id, String gender, String height, String weight) {
+        List<BoardVO> r_list = null;
         SqlSession ss= FactoryService.getFactory().openSession();
 
         try {

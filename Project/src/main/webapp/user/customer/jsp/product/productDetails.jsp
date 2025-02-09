@@ -25,12 +25,12 @@
     <div class="wrap">
         <div class="row">
             <div class="container">
-                <c:if test="${not empty productDetails}">
+                <c:if test="${not empty requestScope.productDetails}">
                     <c:set var="pvo" value="${requestScope.productDetails}"/>
                     <div class="product-overview">
                         <h2 class="product-title">${pvo.name}</h2>
                         <p class="brand"><strong>브랜드</strong> <a href="#">${pvo.brand}</a></p>
-                        <p class="product-category"><strong>제품분류</strong> <a href="#">상의</a> | <a href="#">반소매 티셔츠</a></p>
+                        <p class="product-category"><strong>제품분류</strong> <a href="#">${pvo.ma_category_name}</a> | <a href="#">${pvo.mi_category_name}</a></p>
                     </div>
                     <div class="product-details">
                         <div class="image-section">

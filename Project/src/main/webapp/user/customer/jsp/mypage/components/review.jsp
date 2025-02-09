@@ -29,7 +29,7 @@
         </c:if>
         <c:if test="${requestScope.r_list ne null}">
             <c:forEach var="item" items="${requestScope.r_list}">
-                <div class="review-item">
+                <div class="review-item" data-value="${item.id}">
                     <div class="review-header">
                         <img src="${item.profile_image}" alt="사용자 프로필 사진" class="profile-img">
                         <div class="review-info">
@@ -47,6 +47,15 @@
                                     </c:choose>
                                 </c:forEach>
                                 <span class="score-text">${item.score}</span>
+                            </div>
+                        </div>
+                        <div class="dropdown review-dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="bi bi-three-dots"></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="Controller?type=review&action=edit&board_no=${item.id}">수정</a>
+                                <a class="dropdown-item" href="javascript:void(0);" onclick="onDeleteReview('${item.id}')">삭제</a>
                             </div>
                         </div>
                     </div>

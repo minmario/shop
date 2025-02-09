@@ -31,10 +31,12 @@
 
 .review-select {
     width: 150px !important;
+    cursor: pointer;
 }
 
 .review-input {
     width: 180px !important;
+    cursor: pointer;
 }
 
 .review-date-picker {
@@ -74,7 +76,9 @@
 .review-header {
     display: flex;
     align-items: center;
+    justify-content: space-between; /* 양쪽 끝으로 정렬 */
     margin-bottom: 15px;
+    width: 100%;
 }
 
 .profile-img {
@@ -88,6 +92,7 @@
 .review-info {
     display: flex;
     flex-direction: column;
+    flex: 1; /* 남은 공간을 차지하여 dropdown 메뉴가 오른쪽으로 밀리도록 설정 */
 }
 
 .review-author {
@@ -117,6 +122,39 @@
     margin-left: 5px;
     font-size: 14px;
     font-weight: bold;
+}
+
+.review-dropdown {
+    margin-left: auto;
+}
+
+.dropdown-toggle {
+    border: none;
+}
+
+.review-dropdown .dropdown-toggle:active, .review-dropdown .dropdown-toggle:hover, .review-dropdown .dropdown-toggle:focus {
+    background-color: #fff !important;
+    border: none !important;;
+    color: #6c757d !important;
+}
+
+.dropdown-menu {
+    min-width: 60px !important;
+    padding: 5px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+.dropdown-item {
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #333;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-item:hover {
+    background-color: #f1f1f1;
 }
 
 .purchase-type {

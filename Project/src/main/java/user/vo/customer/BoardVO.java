@@ -1,51 +1,10 @@
 package user.vo.customer;
 
-import java.util.List;
-
 public class BoardVO {
-    private String id, cus_no, prod_no, bname, title, content, write_date, order_code, additional_images, is_private, brand, r_content, r_write_date, c_cus_id, type, status, gender, weight, height, score, like_count, nickname, profile_image, p_name, option_name;
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getWeight() {
-        return weight;
-    }
-
-    public void setWeight(String weight) {
-        this.weight = weight;
-    }
-
-    public String getHeight() {
-        return height;
-    }
-
-    public void setHeight(String height) {
-        this.height = height;
-    }
-
-    public String getScore() {
-        return score;
-    }
-
-    public void setScore(String score) {
-        this.score = score;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    private List<BoardVO> list;
+    private String id, cus_no, prod_no, bname, title, content, write_date, order_code, additional_images,
+            is_private, brand, r_content, r_write_date, c_cus_id, type, status, gender, weight, height,
+            score, like_count, nickname, profile_image, p_name, option_name, snapshot_image, tags,
+            season, style, c_name, c_gender, c_height, c_weight, i_option_name, prod_image, prod_name, count;
 
     public String getId() {
         return id;
@@ -167,12 +126,44 @@ public class BoardVO {
         this.type = type;
     }
 
-    public List<BoardVO> getList() {
-        return list;
+    public String getStatus() {
+        return status;
     }
 
-    public void setList(List<BoardVO> list) {
-        this.list = list;
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
     }
 
     public String getLike_count() {
@@ -213,5 +204,101 @@ public class BoardVO {
 
     public void setOption_name(String option_name) {
         this.option_name = option_name;
+    }
+
+    public String getSnapshot_image() {
+        return snapshot_image;
+    }
+
+    public void setSnapshot_image(String snapshot_image) {
+        this.snapshot_image = snapshot_image;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public String getSeason() {
+        return season;
+    }
+
+    public void setSeason(String season) {
+        this.season = season;
+    }
+
+    public String getStyle() {
+        return style;
+    }
+
+    public void setStyle(String style) {
+        this.style = style;
+    }
+
+    public String getC_name() {
+        return c_name;
+    }
+
+    public void setC_name(String c_name) {
+        this.c_name = c_name;
+    }
+
+    public String getC_gender() {
+        return c_gender;
+    }
+
+    public void setC_gender(String c_gender) {
+        this.c_gender = c_gender;
+    }
+
+    public String getC_height() {
+        return c_height;
+    }
+
+    public void setC_height(String c_height) {
+        this.c_height = c_height;
+    }
+
+    public String getC_weight() {
+        return c_weight;
+    }
+
+    public void setC_weight(String c_weight) {
+        this.c_weight = c_weight;
+    }
+
+    public String getI_option_name() {
+        return i_option_name;
+    }
+
+    public void setI_option_name(String i_option_name) {
+        this.i_option_name = i_option_name;
+    }
+
+    public String getProd_image() {
+        return prod_image;
+    }
+
+    public void setProd_image(String prod_image) {
+        this.prod_image = prod_image;
+    }
+
+    public String getProd_name() {
+        return prod_name;
+    }
+
+    public void setProd_name(String prod_name) {
+        this.prod_name = prod_name;
+    }
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
     }
 }
