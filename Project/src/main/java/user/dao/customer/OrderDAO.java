@@ -664,4 +664,38 @@ public class OrderDAO {
 
         return cnt;
     }
+
+    // 주문 상세 내역
+    public static OrderVO selectOrderById(String id){
+        OrderVO vo = new OrderVO();
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            vo = ss.selectOne("order.select_order_by_id", id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+        return vo;
+    }
+
+    // 사용한 쿠폰 내역 찾기
+    public static OrderVO selectCusCoupon(String cus_no, String order_code){
+        OrderVO vo = new OrderVO();
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("cus_no", cus_no);
+            map.put("order_code", order_code);
+
+            vo = ss.selectOne("coupon.select_cus_coupon", map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+        return vo;
+    }
 }

@@ -327,4 +327,10 @@
             AND b.is_del = 0
         )
     </select>
+
+    <!-- 주문 상세 내역 -->
+    <select id="select_order_by_id" resultType="user.vo.customer.OrderVO" parameterType="String">
+        SELECT * FROM `order`
+        WHERE id = #{id}
+    </select>
 </mapper>

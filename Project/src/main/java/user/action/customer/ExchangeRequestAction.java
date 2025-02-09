@@ -2,12 +2,10 @@ package user.action.customer;
 
 import user.action.Action;
 import user.dao.customer.DeliveryDAO;
+import user.dao.customer.LogDAO;
 import user.dao.customer.OrderDAO;
 import user.dao.customer.ProductDAO;
-import user.vo.customer.CustomerVO;
-import user.vo.customer.DeliveryVO;
-import user.vo.customer.OrderVO;
-import user.vo.customer.ProductVO;
+import user.vo.customer.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -92,10 +90,10 @@ public class ExchangeRequestAction implements Action {
                         String reason = request.getParameter("reason");
                         String orderCode = request.getParameter("orderCode");
                         String retrieve_deli_no = request.getParameter("retrieve_deli_no");
-                        String inventory_vo = request.getParameter("inventory_no");
+                        String inventory_no = request.getParameter("inventory_no");
 
                         // 주문 정보 업데이트 (반품 상태로 변경)
-                        int u_o_cnt = OrderDAO.updateOrderExchange(id, cvo.getId(), prod_no, orderCode, reason, retrieve_deli_no, inventory_vo);
+                        int u_o_cnt = OrderDAO.updateOrderExchange(id, cvo.getId(), prod_no, orderCode, reason, retrieve_deli_no, inventory_no);
 
                         // JSON 응답 설정
                         response.setContentType("application/json");
@@ -103,6 +101,27 @@ public class ExchangeRequestAction implements Action {
 
                         try (PrintWriter out = response.getWriter()) {
                             if (u_o_cnt > 0) {
+                                OrderVO o_vo = OrderDAO.selectOrderById(id);
+
+                                LogVO lvo = new LogVO();
+                                StringBuffer sb = new StringBuffer();
+                                lvo.setCus_no(cvo.getId());
+                                lvo.setTarget("order 수정");
+                                sb.append("id : " + o_vo.getId() + ", ");
+                                sb.append("cus_co : " + o_vo.getCus_no() + ", ");
+                                sb.append("order_code : " + o_vo.getOrder_code() + ", ");
+                                sb.append("status : " + o_vo.getStatus() + ", ");
+                                sb.append("inventory_no : " + o_vo.getInventory_no() + ", ");
+                                lvo.setPrev(sb.toString());
+                                sb = new StringBuffer();
+                                sb.append("id : " + id + ", ");
+                                sb.append("cus_co : " + cvo.getId() + ", ");
+                                sb.append("order_code : " + orderCode + ", ");
+                                sb.append("status : " + "8" + ", ");
+                                sb.append("inventory_no : " + inventory_no + ", ");
+                                lvo.setCurrent(sb.toString());
+                                LogDAO.updateLog(lvo);
+
                                 out.print("{\"success\": true}");
                             } else {
                                 System.err.println("Database update failed: Order or Point update affected 0 rows.");
