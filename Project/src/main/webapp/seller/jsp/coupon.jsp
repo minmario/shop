@@ -672,7 +672,7 @@
         type: "POST",
         data: { id: couponId },
         success: function () {
-          alert("쿠폰이 삭제되었습니다.");
+          alert("쿠폰이 삭제되었습니다!");
           $(`tr[data-id='${couponId}']`).remove();
         },
         error: function () {
