@@ -136,8 +136,6 @@ function insertCustomer() {
             weight: document.getElementById('weight').value || null,
         },
         success: function(response) {
-            console.log('response:', response);
-
             if (response.success) {
                 if (response.is_exists) {
                     alert("이미 존재하는 아이디입니다.");

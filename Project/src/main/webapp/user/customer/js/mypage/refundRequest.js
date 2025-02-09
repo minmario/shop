@@ -32,7 +32,6 @@ function refundRequest() {
 
     //benefit_type 값 가져오기
     const benefit_type = $('input[name="benefit_type"]').val();
-    console.log(benefit_type);
 
     // 반품 사유 가져오기
     let reason = $('#select').val();

@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // 글자수 카운트 이벤트
     document.getElementById('review-comment').addEventListener('input', function () {
         document.querySelector('.text-count').textContent = `${this.value.length}/500`;
-        console.log("리뷰 입력 중... 현재 글자수:", this.value.length);
     });
 });
 
@@ -25,7 +24,6 @@ function updateStarRating(selectedStar) {
 
     // 별점 값을 hidden input에 설정
     document.getElementById('rating-value').value = selectedStar;
-    console.log('선택된 별점:', selectedStar);
 }
 
 // 리뷰 수정
@@ -64,7 +62,6 @@ function updateReview() {
         processData: false,  // 데이터 직렬화 금지
         contentType: false,  // multipart 형식 설정
         success: function (response) {
-            console.log("서버 응답:", response);
             if (response.success) {
                 alert(response.message);
                 window.location.href = "Controller?type=myPage";

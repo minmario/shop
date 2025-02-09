@@ -21,7 +21,7 @@ public class LogoutAction implements Action {
         lvo.setCus_no(cvo.getId());
         lvo.setTarget("customer 로그아웃");
         lvo.setLog_type("3");
-        LogDAO.insertLog(lvo);
+        LogDAO.insertEtcLog(lvo);
 
         // 세션 종료
         session.invalidate();

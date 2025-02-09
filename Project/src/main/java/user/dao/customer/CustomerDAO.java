@@ -119,8 +119,6 @@ public class CustomerDAO {
             map.put("cus_id", cus_id);
             map.put("cus_pw", cus_pw);
 
-            System.out.println("cus_id:" + cus_id + ",cus_pw:" + cus_pw);
-
             cnt = ss.update("customer.update_cus_pw", map);
 
             if (cnt > 0) {

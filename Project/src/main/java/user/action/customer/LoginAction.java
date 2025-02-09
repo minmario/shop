@@ -140,7 +140,7 @@ public class LoginAction  implements Action {
                     LogVO lvo = new LogVO();
                     lvo.setCus_no(loginResult.getId());
                     lvo.setTarget("customer 로그인");
-                    LogDAO.insertLog(lvo);
+                    LogDAO.insertEtcLog(lvo);
 
                     viewPath = "/user/customer/jsp/index.jsp";
                 } else {

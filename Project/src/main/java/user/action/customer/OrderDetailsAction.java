@@ -202,6 +202,10 @@ public class OrderDetailsAction implements Action {
                     String us_prod_no = request.getParameter("prod_no");
                     String us_inventory_no = request.getParameter("inventory_no"); // 변경할 값
 
+                    // 기존 주문 정보 가져오기
+                    OrderVO p_vo = OrderDAO.selectOrderById(us_id);
+
+                    // 사이즈 수정
                     int u_cnt = OrderDAO.updateOrderSize(us_id, cvo.getId(), us_prod_no, us_order_code, us_inventory_no);
 
                     response.setContentType("application/json");
@@ -211,14 +215,18 @@ public class OrderDetailsAction implements Action {
                         if (u_cnt > 0) {
                             out.print("{\"success\": true}");
 
-                            // 사이즈 변경, 로그 추가 //// 수정할 것!
+                            // 사이즈 변경, 로그 추가
                             LogVO lvo = new LogVO();
                             StringBuffer sb = new StringBuffer();
                             lvo.setCus_no(cvo.getId());
                             lvo.setTarget("order size 수정");
+                            sb.append("id : " + us_id + "\n");
+                            sb.append("prod_no : " + us_prod_no + "\n");
+                            sb.append("inventory_no : " + p_vo.getInventory_no() + "\n");
                             sb.append("order_code : " + order_code);
                             lvo.setPrev(sb.toString());
                             sb = new StringBuffer();
+                            sb.append("id : " + us_id + "\n");
                             sb.append("prod_no : " + us_prod_no + "\n");
                             sb.append("inventory_no : " + us_inventory_no + "\n");
                             sb.append("order_code : " + us_order_code);
@@ -235,7 +243,6 @@ public class OrderDetailsAction implements Action {
 
                     return null;
             }
-
         }
 
         return viewPage;

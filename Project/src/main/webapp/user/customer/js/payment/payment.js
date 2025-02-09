@@ -450,8 +450,6 @@ function onPayment() {
     const products = mergeProducts();
     const benefit_type = getSelectedReward();
 
-    console.log('Final Products for Payment:', products);
-
     const totalAmount = parseInt(document.getElementById("total_amount").innerText.replaceAll(',', '').replace('원', ''), 10);
     const taxFreeAmount = Math.floor(totalAmount * 0.1);
 

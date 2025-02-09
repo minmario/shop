@@ -11,10 +11,6 @@ function updateProfile() {
         formData.append('photo', photoInput.files[0]);
     }
 
-    for (let pair of formData.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
-    }
-
     // 입력 데이터 유효성 검사
     if (!formData.get('nickname')) {
         alert("닉네임을 입력해 주세요.");
@@ -32,7 +28,6 @@ function updateProfile() {
         processData: false,  // 데이터 직렬화 금지
         contentType: false,  // 기본적으로 multipart로 설정됨
         success: function (response) {
-            console.log("서버 응답:", response);
             if (response.success) {
                 alert(response.message);
             } else {
@@ -236,7 +231,6 @@ function onDeleteReview(value) {
             id: value
         },
         success: function (response) {
-            console.log("서버 응답:", response);
             if (response.success) {
                 alert("리뷰가 삭제되었습니다.");
             } else {

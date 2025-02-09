@@ -17,16 +17,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // 선택한 별점 값을 숨겨진 input에 저장
             document.getElementById('rating-value').value = value;
-
-            // 별점 값 콘솔에 출력
-            console.log("선택된 별점:", value);
         });
     });
 
     // 글자수 카운트 이벤트
     document.getElementById('review-comment').addEventListener('input', function () {
         document.querySelector('.text-count').textContent = `${this.value.length}/500`;
-        console.log("리뷰 입력 중... 현재 글자수:", this.value.length);
     });
 });
 
@@ -55,9 +51,6 @@ function insertReview() {
     formData.append('isUpdateChecked', document.getElementById('update-body-info').checked);
     formData.append('prod_no', document.getElementById('prod_no').value);
 
-    for (let pair of formData.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
-    }
     // 입력 데이터 유효성 검사
     if (!formData.get('rating')) {
         alert("별점을 선택해 주세요.");
@@ -84,7 +77,6 @@ function insertReview() {
     }
 
     // AJAX 요청
-    console.log("리뷰 등록 요청 전송...");
     $.ajax({
         url: 'Controller?type=review&action=insert',
         type: 'POST',
@@ -92,7 +84,6 @@ function insertReview() {
         processData: false,  // 데이터 직렬화 금지
         contentType: false,  // 기본적으로 multipart로 설정됨
         success: function (response) {
-            console.log("서버 응답:", response);
             if (response.success) {
                 alert(response.message);
                 window.location.href = "Controller?type=myPage";

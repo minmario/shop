@@ -134,8 +134,6 @@ function retiredCustomer() {
         url: 'Controller?type=myPage&action=retired_customer',
         type: 'POST',
         success: function (response) {
-            console.log("서버 응답:", response);
-
             if (response.success) {
                 alert("회원 탈퇴가 되었습니다. 그동안 이용해주셔서 감사합니다.");
                 window.location.replace('Controller');
