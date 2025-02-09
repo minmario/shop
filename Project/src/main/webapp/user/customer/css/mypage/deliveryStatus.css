@@ -4,13 +4,12 @@
 
 .wrap-title{
     padding: 5px 10px;
-    margin: 20px auto;
 }
 
 .title {
     font-size: 22px;
     padding: 10px 0;
-    margin: 10px auto 20px auto;
+    margin: 10px auto 10px auto;
     font-weight: bold;
 }
 

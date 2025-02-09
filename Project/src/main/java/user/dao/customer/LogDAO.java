@@ -61,4 +61,23 @@ public class LogDAO {
             ss.close();
         }
     }
+
+    // 기타 로그
+    public static void insertEtcLog(LogVO vo) {
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            int cnt = ss.insert("log.insert_etc_log", vo);
+
+            if (cnt > 0) {
+                ss.commit();
+            } else {
+                ss.rollback();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+    }
 }

@@ -30,24 +30,30 @@
             <div class="wrap">
                 <div class="row">
                     <div class="container">
-                        <div class="wrap-title">
-                            <span class="title">배송 조회</span>
-                        </div>
-
                         <c:if test="${requestScope.list ne null}">
-                            <div class="wrap-content">
-                                <c:set var="currentBrand" value="${requestScope.list[0].brand}" />
+                            <c:set var="currentBrand" value="${requestScope.list[0].brand}" />
+                            <c:set var="deliveryType" value="${requestScope.list[0].delivery_type}" />
+                            <div class="wrap-title">
+                                <c:choose>
+                                    <c:when test="${deliveryType == 'EXCHANGE_REQUESTED' || deliveryType == 'EXCHANGE_IN_PROGRESS'}">
+                                        <h3 class="title">교환 배송 조회</h3>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <h3 class="title">배송 조회</h3>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
 
+                            <div class="wrap-content">
                                 <!-- 브랜드 헤더 -->
                                 <div class="order-group-header">
-                                    <h3 class="order-group-title">주문번호: ${requestScope.list[0].order_code}</h3>
-                                    <p class="brand-title">브랜드: ${currentBrand}</p>
+                                    <h3 class="order-group-title">${requestScope.list[0].order_code}</h3>
+                                    <p class="brand-title">${currentBrand}</p>
                                 </div>
 
                                 <!-- 배송 상태 -->
                                 <div class="delivery-status">
                                     <div class="wrap-date">
-<%--                                        <span class="date">주문날짜 : ${requestScope.list[0].order_date}</span>--%>
                                         <c:choose>
                                             <c:when test="${requestScope.list[0].status == '1'}">
                                                 <span class="date-message">결제 완료</span>
@@ -73,13 +79,13 @@
                                             <c:when test="${requestScope.list[0].status == '1'}">
                                                 <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                                             </c:when>
-                                            <c:when test="${requestScope.list[0].status == '2'}">
+                                            <c:when test="${requestScope.list[0].status == '2' || requestScope.list[0].status == '8'}">
                                                 <div class="progress-bar" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="33" aria-valuemax="100"></div>
                                             </c:when>
                                             <c:when test="${requestScope.list[0].status == '3'}">
                                                 <div class="progress-bar" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="66" aria-valuemax="100"></div>
                                             </c:when>
-                                            <c:when test="${requestScope.list[0].status == '4'}">
+                                            <c:when test="${requestScope.list[0].status == '4' || requestScope.list[0].status == '5'}">
                                                 <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100"></div>
                                             </c:when>
                                         </c:choose>
@@ -105,20 +111,22 @@
                                     </c:forEach>
                                 </div>
 
-                                <!-- 택배 정보 -->
-                                <div class="courier-info">
-                                    <div class="wrap-courier">
-                                        <p class="courier-title">택배사</p>
-                                        <p class="courier-name">${requestScope.list[0].courier}</p>
-                                    </div>
-                                    <div class="wrap-tracking">
-                                        <p class="tracking-title">송장 번호</p>
-                                        <div class="tracking-info">
-                                            <a href="#" class="tracking-number">${requestScope.list[0].invoice_number}</a>
-                                            <i class="bi bi-copy"></i>
+                                <c:if test="${requestScope.list[0].status != '1'}">
+                                    <!-- 택배 정보 -->
+                                    <div class="courier-info">
+                                        <div class="wrap-courier">
+                                            <p class="courier-title">택배사</p>
+                                            <p class="courier-name">${requestScope.list[0].courier}</p>
+                                        </div>
+                                        <div class="wrap-tracking">
+                                            <p class="tracking-title">송장 번호</p>
+                                            <div class="tracking-info">
+                                                <a href="#" class="tracking-number">${requestScope.list[0].invoice_number}</a>
+                                                <i class="bi bi-copy"></i>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </c:if>
                                 <p class="delivery-notice">상품이 집하된 후 배송 상태를 조회하실 수 있습니다.</p>
                                 <div class="accordion" id="accordionExample">
                                     <div class="accordion-item">

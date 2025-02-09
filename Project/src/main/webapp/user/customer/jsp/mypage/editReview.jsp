@@ -17,7 +17,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <%-- CSS --%>
-    <link rel="stylesheet" type="text/css" href="./user/customer/css/mypage/writeReview.css"/>
+    <link rel="stylesheet" type="text/css" href="./user/customer/css/mypage/editReview.css"/>
 </head>
 <body>
     <c:choose>
@@ -42,32 +42,29 @@
                                     </div>
                                 </div>
                                 <div class="review-product">
-                                    <img src="${fn:split(item.prod_image, ',')[0]}" alt="상품 이미지" class="product-img">
+                                    <img src="${item.prod_image}" alt="상품 이미지" class="product-img">
                                     <div class="product-details">
                                         <p class="product-brand">${item.brand}</p>
                                         <p class="product-name">${item.prod_name}</p>
                                         <p class="product-option">${item.option_name} / ${item.count}개</p>
                                     </div>
                                 </div>
-                                <form id="review-form" action="Controller?type=writeReview&action=insert" method="POST" enctype="multipart/form-data" onsubmit="event.preventDefault(); insertReview();">
+                                <form id="review-form" action="Controller?type=review&action=update" method="POST" enctype="multipart/form-data" onsubmit="event.preventDefault(); updateReview();">
                                     <div class="review-rating">
                                         <p class="section-title">이 상품 어떠셨나요?</p>
-                                        <input type="hidden" id="prod_no" name="prod_no" value="${item.prod_no}">
-                                        <input type="hidden" id="order_code" name="order_code" value="${item.order_code}">
-                                        <input type="hidden" id="rating-value" name="rating" />
-                                        <div class="rating-stars">
-                                            <span class="star" data-value="1">&#9734;</span>
-                                            <span class="star" data-value="2">&#9734;</span>
-                                            <span class="star" data-value="3">&#9734;</span>
-                                            <span class="star" data-value="4">&#9734;</span>
-                                            <span class="star" data-value="5">&#9734;</span>
+                                        <input type="hidden" id="board_no" name="board_no" value="${item.id}">
+                                        <input type="hidden" id="rating-value" name="rating" value="${item.score}" />
+                                        <div class="review-score" id="review-score">
+                                            <c:forEach var="i" begin="1" end="5">
+                                                <i class="bi ${item.score >= i ? 'bi-star-fill' : 'bi-star'}" data-star="${i}" onclick="updateStarRating(${i})"></i>
+                                            </c:forEach>
                                         </div>
                                     </div>
                                     <div class="review-comment">
                                         <label for="review-comment" class="section-title">어떤 점이 좋았나요?</label>
-                                        <textarea id="review-comment" maxlength="500" placeholder="사용하시면서 느꼈던 장점에 대해 의견을 자세히 입력해주세요."></textarea>
+                                        <textarea id="review-comment" maxlength="500" placeholder="사용하시면서 느꼈던 장점에 대해 의견을 자세히 입력해주세요.">${item.content}</textarea>
                                         <div class="comment-footer">
-                                            <span class="text-count">0/500</span>
+                                            <span class="text-count">${fn:length(item.content)}/500</span>
                                         </div>
                                     </div>
                                     <!-- 사진 정보 -->
@@ -77,40 +74,22 @@
                                         </div>
                                         <input type="file" id="photo-input" accept="image/*" style="display: none;">
                                         <div class="photo-box" onclick="triggerFileInput()">
-                                            <span class="plus">+</span><br/>
-                                            <span class="add-photo">사진 추가</span>
+                                            <c:choose>
+                                                <c:when test="${not empty item.additional_images}">
+                                                    <c:forEach var="i" items="${item.additional_images}" varStatus="st">
+                                                        <img src="${fn:split(item.additional_images, ',')[st.index]}" alt="Review Image">
+                                                    </c:forEach>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <span class="plus">+</span><br/>
+                                                    <span class="add-photo">사진 추가</span>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
                                     </div>
-                                    <!-- 체형 정보 -->
-                                    <%--<div class="body-info">
-                                        <p class="section-title">내 체형정보를 입력해주세요 (필수)</p>
-                                        <div class="gender-selection">
-                                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                <label class="btn btn-outline-secondary active">
-                                                    <input type="radio" name="options" id="option1" value="남성" autocomplete="off" checked>남성
-                                                </label>
-                                                <label class="btn btn-outline-secondary">
-                                                    <input type="radio" name="options" id="option2" value="여성" autocomplete="off">여성
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="input-group">
-                                            <input type="text" id="height" placeholder="키를 입력해주세요" />
-                                            <span class="unit">cm</span>
-                                        </div>
-                                        <div class="input-group">
-                                            <input type="text" id="weight" placeholder="몸무게를 입력해주세요" />
-                                            <span class="unit">kg</span>
-                                        </div>
-                                        <div class="checkbox-group">
-                                            <label>
-                                                <input type="checkbox" id="update-body-info"> 나의 신체정보에 업데이트
-                                            </label>
-                                        </div>
-                                    </div>--%>
-                                    <!-- 등록 버튼 -->
+                                    <!-- 수정 버튼 -->
                                     <div class="action-buttons">
-                                        <button type="submit" class="btn btn-dark">등록하기</button>
+                                        <button type="submit" class="btn btn-dark">수정하기</button>
                                     </div>
                                 </form>
                             </div>
@@ -157,6 +136,6 @@
     <%-- Bootstrap --%>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script src="./user/customer/js/mypage/writeReview.js"></script>
+    <script src="./user/customer/js/mypage/editReview.js"></script>
 </body>
 </html>

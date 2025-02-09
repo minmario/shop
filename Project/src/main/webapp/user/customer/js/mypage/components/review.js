@@ -1,7 +1,7 @@
-//리뷰내역 클릭 시 실행되는 함수
+// 리뷰내역 클릭 시 실행되는 함수
 function selectMypageReview() {
     $.ajax({
-        url: "Controller?type=review&action=all",
+        url: "Controller?type=review&action=select",
         type: "POST",
         success: function (response) {
             // 상품문의 섹션만 표시하고 다른 섹션은 숨김

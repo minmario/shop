@@ -34,12 +34,12 @@ public class QuestionAction implements Action {
         String viewPage = null;
         if(action != null) {
             switch (action) {
-                case "all":
+                case "select":
                     list = QuestionDAO.selectAll(cvo.getId());
                     request.setAttribute("list", list);
                     viewPage = "/user/customer/jsp/mypage/components/question.jsp";
                     break;
-                case "option":
+                case "search":
                     list = QuestionDAO.selectOption(cvo.getId(), status, startDate, endDate);
                     request.setAttribute("list", list);
                     viewPage = "/user/customer/jsp/mypage/components/question.jsp";
@@ -65,7 +65,7 @@ public class QuestionAction implements Action {
                         LogVO lvo = new LogVO();
                         StringBuffer sb = new StringBuffer();
                         lvo.setCus_no(cvo.getId());
-                        lvo.setTarget("board");
+                        lvo.setTarget("board 추가");
                         sb.append("cus_no : " + cvo.getId() + ", ");
                         sb.append("prod_no : " + i_prod_no + ", ");
                         sb.append("title : " + title + ", ");

@@ -5,12 +5,25 @@
 <mapper namespace="order">
     <!-- 전체 주문내역 조회 -->
     <select id="select_all" resultType="user.vo.customer.OrderVO" parameterType="String">
-        SELECT DISTINCT s.name AS brand, p.prod_code AS prod_code, p.name AS prod_name, p.price AS prod_price, p.sale AS prod_sale,
-        p.prod_image AS prod_image, p.saled_price AS prod_saled_price, i.option_name AS option_name, o.*
+        SELECT DISTINCT
+        s.name AS brand,
+        p.prod_code AS prod_code,
+        p.name AS prod_name,
+        p.price AS prod_price,
+        p.sale AS prod_sale,
+        p.prod_image AS prod_image,
+        p.saled_price AS prod_saled_price,
+        i.option_name AS option_name,
+        o.*,
+        CASE
+        WHEN b.order_code IS NOT NULL THEN 1
+        ELSE 0
+        END AS is_write_review
         FROM `order` o
         INNER JOIN product p ON o.prod_no = p.id
         INNER JOIN seller s ON p.seller_no = s.id
         LEFT JOIN inventory i ON i.id = o.inventory_no
+        LEFT JOIN board b ON b.order_code = o.order_code AND b.bname = 'review' AND b.is_del = 0
         WHERE o.cus_no = #{cus_no}
         ORDER BY o.order_date DESC
     </select>
@@ -66,7 +79,7 @@
         INNER JOIN delivery d ON o.deli_no = d.id
         INNER JOIN seller s ON p.seller_no = s.id
         LEFT JOIN inventory i ON i.id = o.inventory_no
-        WHERE o.order_code = #{order_code} AND o.cus_no = #{cus_no} AND o.status NOT IN (6,7,8)
+        WHERE o.order_code = #{order_code} AND o.cus_no = #{cus_no} AND o.status NOT IN (5,6,7,8)
     </select>
 
     <!-- 취소/반품/교환 상품 전체 조회 -->
@@ -89,7 +102,7 @@
         INNER JOIN product p ON o.prod_no = p.id
         INNER JOIN seller s ON p.seller_no = s.id
         LEFT JOIN inventory i ON i.id = o.inventory_no
-        WHERE o.cus_no = #{cus_no} AND o.status IN (6, 7)
+        WHERE o.cus_no = #{cus_no} AND o.status IN (6, 7, 9, 11)
         ORDER BY o.order_date DESC
     </select>
 
@@ -115,11 +128,10 @@
     <select id="select_total_price" resultType="int" parameterType="map">
         SELECT IFNULL(SUM(re), 0) AS total_re
         FROM (
-            SELECT (p.price * o.count) AS re FROM `order` o
-            INNER JOIN product p ON o.prod_no = p.id
-            WHERE cus_no = #{cus_no} AND order_code = #{order_code}
-            GROUP BY p.price, o.count
-        ) subquery
+        SELECT (p.price * o.count) AS re FROM `order` o
+        INNER JOIN product p ON o.prod_no = p.id
+        WHERE cus_no = #{cus_no} AND order_code = #{order_code}
+        ) subquery;
     </select>
 
     <!-- 주문코드 별 할인가 금액 총 합 -->
@@ -129,7 +141,6 @@
             SELECT (p.saled_price * o.count) AS re FROM `order` o
             INNER JOIN product p ON o.prod_no = p.id
             WHERE cus_no = #{cus_no} AND order_code = #{order_code}
-            GROUP BY p.saled_price, o.count
         ) subquery;
     </select>
 
@@ -155,6 +166,17 @@
         AND prod_no = #{prod_no}
     </update>
 
+    <!-- 전체 취소 요청 -->
+    <update id="update_order_cancel_all" parameterType="map">
+        UPDATE `order`
+        SET status = 6, refund_bank = #{refund_bank}, refund_account = #{refund_account}, reason_customer = #{reason_customer}, cancel_request_date = CURRENT_DATE
+        WHERE cus_no = #{cus_no} AND order_code = #{order_code} AND status = 1
+        AND id IN
+        <foreach item="id" collection="idList" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
     <!-- 배송 전 상품 사이즈 변경 -->
     <update id="update_order_size" parameterType="map">
         UPDATE `order`
@@ -171,6 +193,18 @@
         WHERE id = #{id} AND cus_no = #{cus_no} AND order_code = #{order_code} AND prod_no = #{prod_no}
     </update>
 
+    <!-- 전체 반품 요청 -->
+    <update id="update_order_refund_all" parameterType="map">
+        UPDATE `order`
+        SET status = 7, refund_bank = #{refund_bank}, refund_account = #{refund_account},
+        reason_customer = #{reason_customer}, retrieve_deli_no = #{retrieve_deli_no}, refund_request_date = CURRENT_DATE
+        WHERE cus_no = #{cus_no} AND order_code = #{order_code} AND status IN (2, 3, 4)
+        AND id IN
+        <foreach item="id" collection="idList" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
     <!-- 교환 요청 -->
     <update id="update_order_exchange" parameterType="map">
         UPDATE `order`
@@ -181,11 +215,11 @@
 
     <!-- 주문 시 사용한 쿠폰 내용 가져오기(전체 상품) -->
     <select id="select_order_coupons" resultType="user.vo.customer.OrderVO" parameterType="map">
-        SELECT DISTINCT c.name AS coupon_name, c.sale_per AS sale_per
+        SELECT DISTINCT o.coupon_no, c.name AS coupon_name, c.sale_per AS sale_per
         FROM `order` o
         INNER JOIN coupon c ON o.coupon_no = c.id
         INNER JOIN cus_coupon cc ON cc.coupon_no = c.id
-        WHERE o.cus_no = #{cus_no} AND o.order_code = #{order_code} AND cc.status = '2'
+        WHERE o.cus_no = #{cus_no} AND o.order_code = #{order_code}
         <if test="id != null">
             AND o.id = #{id}
         </if>
@@ -244,20 +278,32 @@
 
     <!-- 진행 중 주문현황 조회 -->
     <select id="select_order_status" resultType="user.vo.customer.OrderVO" parameterType="String">
-        SELECT s.name AS brand, p.name AS prod_name, p.prod_image AS prod_image, i.option_name AS option_name, o.* FROM `order` o
+        SELECT s.name AS brand, p.name AS prod_name, p.prod_image AS prod_image, i.option_name AS option_name, o.*,
+        CASE
+            WHEN o.status = 8 THEN 'EXCHANGE_REQUESTED'  -- 교환 신청 상태 추가
+            WHEN o.exchange_request_date IS NOT NULL AND o.status IN (1, 2, 3, 4) THEN 'EXCHANGE_IN_PROGRESS'
+            ELSE 'NORMAL'
+        END AS delivery_type
+        FROM `order` o
         INNER JOIN product p ON o.prod_no = p.id
         INNER JOIN seller s ON p.seller_no = s.id
         LEFT JOIN inventory i ON i.id = o.inventory_no
-        WHERE o.cus_no = #{cus_no} AND o.status IN (1, 2, 3, 4)
+        WHERE o.cus_no = #{cus_no} AND o.status IN (1, 2, 3, 4, 8)
     </select>
 
     <!-- 배송현황 조회 -->
     <select id="select_delivery_status" resultType="user.vo.customer.OrderVO" parameterType="map">
-        SELECT s.name AS brand, s.courier AS courier, s.address AS seller_address, p.name AS prod_name, p.prod_image AS prod_image, i.option_name AS option_name, o.* FROM `order` o
+        SELECT s.name AS brand, s.courier AS courier, s.address AS seller_address, p.name AS prod_name, p.prod_image AS prod_image, i.option_name AS option_name, o.*,
+        CASE
+            WHEN o.status = 8 THEN 'EXCHANGE_REQUESTED'  -- 교환 신청 상태 추가
+            WHEN o.exchange_request_date IS NOT NULL AND o.status IN (1, 2, 3, 4) THEN 'EXCHANGE_IN_PROGRESS'
+            ELSE 'NORMAL'
+        END AS delivery_type
+        FROM `order` o
         INNER JOIN product p ON o.prod_no = p.id
         INNER JOIN seller s ON p.seller_no = s.id
         LEFT JOIN inventory i ON i.id = o.inventory_no
-        WHERE o.cus_no = #{cus_no} AND o.order_code = #{order_code} AND s.name = #{brand} AND o.status IN (1, 2, 3, 4)
+        WHERE o.cus_no = #{cus_no} AND o.order_code = #{order_code} AND s.name = #{brand} AND o.status IN (1, 2, 3, 4, 5, 8)
     </select>
 
     <!-- 구매확정 버튼 클릭 시 status변경 -->
@@ -280,5 +326,11 @@
             AND b.cus_no = #{cus_no}
             AND b.is_del = 0
         )
+    </select>
+
+    <!-- 주문 상세 내역 -->
+    <select id="select_order_by_id" resultType="user.vo.customer.OrderVO" parameterType="String">
+        SELECT * FROM `order`
+        WHERE id = #{id}
     </select>
 </mapper>

@@ -48,10 +48,6 @@ function onCheckInput() {
     // 숫자만 허용 (특수문자와 음수 제거)
     heightInputElement.value = heightInputElement.value.replace(/[^0-9]/g, "");
     weightInputElement.value = weightInputElement.value.replace(/[^0-9]/g, "");
-
-    // 로그 출력
-    console.log("heightInput: " + heightInputElement.value);
-    console.log("weightInput: " + weightInputElement.value);
 }
 
 // 문의 탭 클릭 함수
@@ -117,7 +113,7 @@ function insertCart() {
         },
         success: function () {
             if (confirm("장바구니에 상품이 담겼습니다. 장바구니로 이동하시겠습니까?")) {
-                window.location.href = 'Controller?type=cart';
+                window.location.replace("Controller?type=cart");
             }
         }
     });

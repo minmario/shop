@@ -25,12 +25,12 @@
             <!-- 비밀번호 -->
             <div class="input-group mb-3">
                 <label for="cus_pw" class="form-label" style="width: 100%">비밀번호</label>
-                <input type="password" class="form-control" id="cus_pw" name="cus_pw"  maxlength="30" placeholder="비밀번호를 입력하세요" required>
+                <input type="password" class="form-control" id="cus_pw" name="cus_pw"  maxlength="30" placeholder="비밀번호를 입력하세요" autocomplete="off" required>
             </div>
 
             <div class="input-group mb-3">
                 <label for="cus_pw_confirm" class="form-label" style="width: 100%">비밀번호 확인</label>
-                <input type="password" class="form-control" id="cus_pw_confirm" name="cus_pw_confirm"  maxlength="30" placeholder="비밀번호를 입력하세요" required>
+                <input type="password" class="form-control" id="cus_pw_confirm" name="cus_pw_confirm"  maxlength="30" placeholder="비밀번호를 입력하세요" autocomplete="off" required>
             </div>
 
             <button class="btn btn-dark" type="button" onclick="onResetCusId()">확인</button>

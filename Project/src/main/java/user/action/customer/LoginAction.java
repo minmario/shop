@@ -5,9 +5,11 @@ import org.mindrot.jbcrypt.BCrypt;
 import user.action.Action;
 import user.dao.customer.CartDAO;
 import user.dao.customer.CustomerDAO;
+import user.dao.customer.LogDAO;
 import user.dao.customer.ProductDAO;
 import user.dao.snap.CustomerDao;
 import user.vo.customer.CustomerVO;
+import user.vo.customer.LogVO;
 import user.vo.customer.MajorCategoryVO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,11 +61,29 @@ public class LoginAction  implements Action {
                     viewPath = "/user/customer/jsp/login/resetPassword.jsp";
                     break;
                 case "update_customer":
+                    CustomerVO cvo = (CustomerVO) session.getAttribute("customer_info");
+
+                    if (cvo == null) {
+                        request.setAttribute("session_expired", true);
+                        return "/user/customer/jsp/error/error.jsp";
+                    }
+                    
                     // 비밀번호 변경
                     cus_id = (String) session.getAttribute("find_cus_id");
                     String cus_pw = request.getParameter("cus_pw");
 
                     cnt = CustomerDAO.updateCustomerPw(cus_id, BCrypt.hashpw(cus_pw, BCrypt.gensalt()));
+                    
+                    if (cnt > 0) {
+                        // 비밀번호 변경, 추가 로그
+                        LogVO lvo = new LogVO();
+                        StringBuffer sb = new StringBuffer();
+                        lvo.setCus_no(cvo.getId());
+                        lvo.setTarget("customer 수정");
+                        sb.append("비밀번호 변경");
+                        lvo.setCurrent(sb.toString());
+                        LogDAO.updateLog(lvo);
+                    }
 
                     response.setContentType("application/json");
                     response.setCharacterEncoding("UTF-8");
@@ -124,6 +144,12 @@ public class LoginAction  implements Action {
                     if (categories != null && !categories.isEmpty()) {
                         request.setAttribute("categories", categories);
                     }
+
+                    // 로그인, 추가 로그
+                    LogVO lvo = new LogVO();
+                    lvo.setCus_no(loginResult.getId());
+                    lvo.setTarget("customer 로그인");
+                    LogDAO.insertEtcLog(lvo);
 
                     viewPath = "/user/customer/jsp/index.jsp";
                 } else {

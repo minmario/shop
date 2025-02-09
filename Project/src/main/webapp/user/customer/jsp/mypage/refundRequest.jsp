@@ -156,7 +156,7 @@
                                         </ul>
                                     </div>
                                     <!-- 반품요청 버튼-->
-                                    <button type="button" class="btn btn-outline-secondary add-address-button" onclick="refundRequest()">반품 신청</button>
+                                    <button type="button" class="btn btn-outline-secondary add-address-button" id="refundRequestButton">반품 신청</button>
                                 </div>
                             </div>
                         </c:if>

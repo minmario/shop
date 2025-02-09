@@ -98,4 +98,10 @@
         INSERT INTO point (cus_no, amount, use_date, order_code, p_type)
         VALUES (#{cus_no}, #{amount}, CURRENT_TIMESTAMP(), #{order_code}, #{p_type})
     </insert>
+
+    <!-- order_code 적립금 id 찾기 -->
+    <select id="select_point_by_orderCode" resultType="String" parameterType="map">
+        SELECT id FROM point
+        WHERE cus_no = #{cus_no} AND order_code = #{order_code}
+    </select>
 </mapper>

@@ -215,13 +215,32 @@ public class PointDAO {
         return cnt;
     }
 
-    //
+    // 적립금 환불 비율 계산
     public static int calculateRefundPoint(int totalAmount, int refundAmount, int usedPoint) {
         if (totalAmount == 0) {
             return 0;  // 분모가 0인 경우 포인트 계산 불가
         }
-        // 사용 포인트의 환불 비율 계산
+
         double pointRatio = (double) refundAmount / totalAmount;
         return (int) Math.round(usedPoint * pointRatio);
+    }
+
+    // order_code로 적립금 id 찾기
+    public static String selectPointByOrderCode(String cus_no, String order_code){
+        String p_id = null;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("cus_no", cus_no);
+            map.put("order_code", order_code);
+
+            p_id = ss.selectOne("point.select_point_by_orderCode", map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+        return p_id;
     }
 }

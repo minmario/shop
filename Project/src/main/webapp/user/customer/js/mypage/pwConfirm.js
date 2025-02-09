@@ -48,8 +48,8 @@ function onCustomerConfirm() {
             }
         },
         error: function (error) {
-            console.log("error : " + error);
+            alert("요청 처리 중 오류가 발생했습니다.");
+            console.error(error);
         }
     });
-
 }

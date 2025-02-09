@@ -48,7 +48,7 @@ public class ProductDetailsAction implements Action {
                     String gender = request.getParameter("gender");
                     String height = request.getParameter("height");
                     String weight = request.getParameter("weight");
-                    List<ReviewVO> reviews = ProductDAO.selectReview(prod_no, gender, height, weight);
+                    List<BoardVO> reviews = ProductDAO.selectReview(prod_no, gender, height, weight);
                     request.setAttribute("reviews", reviews);
                     viewPath = "/user/customer/jsp/product/components/reviewList.jsp";
                     break;

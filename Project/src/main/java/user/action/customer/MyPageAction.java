@@ -11,6 +11,7 @@ import user.action.Action;
 import user.dao.customer.*;
 import user.vo.customer.BoardVO;
 import user.vo.customer.CustomerVO;
+import user.vo.customer.LogVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,8 +64,6 @@ public class MyPageAction implements Action {
                                 String fieldName = item.getFieldName();
                                 String value = item.getString("UTF-8");
 
-                                System.out.println("필드: " + fieldName + " = " + value);
-
                                 switch (fieldName) {
                                     case "nickname":
                                         nickname = value;
@@ -112,6 +111,21 @@ public class MyPageAction implements Action {
                             responseJson.put("success", true);
                             responseJson.put("message", "프로필이 변경되었습니다.");
 
+                            // 프로필 변경, 추가 로그
+                            LogVO lvo = new LogVO();
+                            StringBuffer sb = new StringBuffer();
+                            lvo.setCus_no(cvo.getId());
+                            lvo.setTarget("customer 수정");
+                            lvo.setLog_type("2");
+                            sb.append("nickname : " + cvo.getNickname() + "\n");
+                            sb.append("profile_image : " + cvo.getProfile_image());
+                            lvo.setPrev(sb.toString());
+                            sb = new StringBuffer();
+                            sb.append("nickname : " + nickname + "\n");
+                            sb.append("profile_image : " + photo);
+                            lvo.setCurrent(sb.toString());
+                            LogDAO.insertLog(lvo);
+
                             // 구매자 정보 갱신
                             CustomerVO rvo = CustomerDAO.selectCustomerById(cvo.getId());
                             session.setAttribute("customer_info", rvo);
@@ -145,12 +159,12 @@ public class MyPageAction implements Action {
                     // 구매자 조회
                     CustomerVO result = CustomerDAO.selectCustomerByCusId(cvo.getCus_id());
 
+                    // JSON 응답 설정
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+
                     if (result != null) {
                         String cus_pw = request.getParameter("cus_pw");
-
-                        // JSON 응답 설정
-                        response.setContentType("application/json");
-                        response.setCharacterEncoding("UTF-8");
 
                         boolean isValid = BCrypt.checkpw(cus_pw, result.getCus_pw());
 
@@ -198,7 +212,24 @@ public class MyPageAction implements Action {
                     uvo.setId(cvo.getId());
                     uvo.setEmail(email);
                     uvo.setPhone(phone);
-                    CustomerDAO.updateCustomer(uvo);
+                    int cnt = CustomerDAO.updateCustomer(uvo);
+
+                    if (cnt > 0) {
+                        // 구매자 정보 변경, 추가 로그
+                        LogVO lvo = new LogVO();
+                        StringBuffer sb = new StringBuffer();
+                        lvo.setCus_no(cvo.getId());
+                        lvo.setTarget("customer 수정");
+                        lvo.setLog_type("2");
+                        sb.append("email : " + cvo.getEmail() + "\n");
+                        sb.append("phone : " + cvo.getPhone());
+                        lvo.setPrev(sb.toString());
+                        sb = new StringBuffer();
+                        sb.append("email : " + email + "\n");
+                        sb.append("phone : " + phone);
+                        lvo.setCurrent(sb.toString());
+                        LogDAO.insertLog(lvo);
+                    }
 
                     viewPath = "/user/customer/jsp/mypage/profileEdit.jsp";
                     break;
@@ -206,10 +237,23 @@ public class MyPageAction implements Action {
                     // 비밀번호 변경
                     String cus_pw = request.getParameter("change_pw");
 
-                    int cnt = CustomerDAO.updateCustomerPw(cvo.getCus_id(), BCrypt.hashpw(cus_pw, BCrypt.gensalt()));
+                    cnt = CustomerDAO.updateCustomerPw(cvo.getCus_id(), BCrypt.hashpw(cus_pw, BCrypt.gensalt()));
 
                     response.setContentType("application/json");
                     response.setCharacterEncoding("UTF-8");
+
+                    if (cnt > 0) {
+                        // 비밀번호 변경, 로그 추가
+                        LogVO lvo = new LogVO();
+                        StringBuffer sb = new StringBuffer();
+                        lvo.setCus_no(cvo.getId());
+                        lvo.setTarget("customer 수정");
+                        lvo.setLog_type("2");
+                        sb = new StringBuffer();
+                        sb.append("비밀번호 변경");
+                        lvo.setCurrent(sb.toString());
+                        LogDAO.insertLog(lvo);
+                    }
 
                     try (PrintWriter out = response.getWriter()) {
                         // JSON 객체 생성
@@ -229,6 +273,17 @@ public class MyPageAction implements Action {
 
                     response.setContentType("application/json");
                     response.setCharacterEncoding("UTF-8");
+                    
+                    if (cnt > 0) {
+                        // 회원 탈퇴, 로그 추가
+                        LogVO lvo = new LogVO();
+                        StringBuffer sb = new StringBuffer();
+                        lvo.setCus_no(cvo.getId());
+                        lvo.setTarget("customer 삭제");
+                        sb.append("id : " + cvo.getId());
+                        lvo.setPrev(sb.toString());
+                        LogDAO.deleteLog(lvo);
+                    }
 
                     try (PrintWriter out = response.getWriter()) {
                         // JSON 객체 생성

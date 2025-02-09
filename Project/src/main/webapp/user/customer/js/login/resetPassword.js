@@ -30,8 +30,6 @@ function onResetCusId() {
             cus_pw: password,
         },
         success: function(response) {
-            console.log('response:', response);
-
             if (response.success) {
                 alert("비밀번호가 변경되었습니다.");
 

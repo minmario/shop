@@ -77,4 +77,10 @@
             </when>
         </choose>
     </select>
+
+    <!-- 사용한 쿠폰 찾기 -->
+    <select id="select_cus_coupon" resultType="user.vo.customer.OrderVO" parameterType="map">
+        SELECT * FROM cus_coupon
+        WHERE cus_no = #{cus_no} AND order_code = #{order_code}
+    </select>
 </mapper>

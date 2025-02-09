@@ -223,6 +223,35 @@ public class OrderDAO {
         return cnt;
     }
 
+    // 전체 취소 요청
+    public static int updateOrderCancelAll(List<String> idList, String cus_no, String order_code, String refund_bank, String refund_account, String reason){
+        int cnt = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("idList", idList);
+            map.put("cus_no", cus_no);
+            map.put("order_code", order_code);
+            map.put("refund_bank", refund_bank);
+            map.put("refund_account", refund_account);
+            map.put("reason_customer", reason);
+
+            cnt = ss.update("order.update_order_cancel_all", map);
+
+            if (cnt > 0)
+                ss.commit();
+            else
+                ss.rollback();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
+    }
+
     // 배송 전 상품 사이즈 변경
     public static int updateOrderSize(String id, String cus_no, String prod_no, String order_code, String inventory_no){
         int cnt = 0;
@@ -268,6 +297,36 @@ public class OrderDAO {
             map.put("retrieve_deli_no", retrieve_deli_no);
 
             cnt = ss.update("order.update_order_refund", map);
+
+            if (cnt > 0)
+                ss.commit();
+            else
+                ss.rollback();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+
+        return cnt;
+    }
+
+    // 전체 반품 요청
+    public static int updateOrderRefundll(List<String> idList, String cus_no, String order_code, String refund_bank, String refund_account, String reason, String retrieve_deli_no){
+        int cnt = 0;
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("idList", idList);
+            map.put("cus_no", cus_no);
+            map.put("order_code", order_code);
+            map.put("refund_bank", refund_bank);
+            map.put("refund_account", refund_account);
+            map.put("reason_customer", reason);
+            map.put("retrieve_deli_no", retrieve_deli_no);
+
+            cnt = ss.update("order.update_order_refund_all", map);
 
             if (cnt > 0)
                 ss.commit();
@@ -604,5 +663,39 @@ public class OrderDAO {
         }
 
         return cnt;
+    }
+
+    // 주문 상세 내역
+    public static OrderVO selectOrderById(String id){
+        OrderVO vo = new OrderVO();
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            vo = ss.selectOne("order.select_order_by_id", id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+        return vo;
+    }
+
+    // 사용한 쿠폰 내역 찾기
+    public static OrderVO selectCusCoupon(String cus_no, String order_code){
+        OrderVO vo = new OrderVO();
+        SqlSession ss = FactoryService.getFactory().openSession();
+
+        try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("cus_no", cus_no);
+            map.put("order_code", order_code);
+
+            vo = ss.selectOne("coupon.select_cus_coupon", map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ss.close();
+        }
+        return vo;
     }
 }

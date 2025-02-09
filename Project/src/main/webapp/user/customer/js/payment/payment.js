@@ -450,8 +450,6 @@ function onPayment() {
     const products = mergeProducts();
     const benefit_type = getSelectedReward();
 
-    console.log('Final Products for Payment:', products);
-
     const totalAmount = parseInt(document.getElementById("total_amount").innerText.replaceAll(',', '').replace('원', ''), 10);
     const taxFreeAmount = Math.floor(totalAmount * 0.1);
 
@@ -511,39 +509,77 @@ function onPayment() {
     // }
 }
 
-// 주문 배송지 변경
+// 배송지 변경
 function updateDeliveryAddr() {
-    // 기존 배송지 ID
-    const DeliveryID = document.querySelector(".deli-no").value;
-    // 선택된 배송지 ID 가져오기
-    const selectedDeliveryId = document.querySelector('input[name="deliveryAddress"]:checked').value;
-    const orderCode = document.querySelector("#orderCode").value;
+    // 선택된 배송지 정보 가져오기
+    const selectedDeliveryRadio = document.querySelector('input[name="deliveryAddress"]:checked');
 
-    $.ajax({
-        url: 'Controller?type=orderDetails&action=update', // 배송지 변경 처리 URL
-        type: 'POST',
-        data: {
-            pre_delivery_id: DeliveryID,
-            delivery_id: selectedDeliveryId,  // 선택된 배송지 ID
-            order_code: orderCode // 현재 주문 코드도 함께 전달
-        },
-        success: function(response) {
-            if (response.success) {
-                alert("배송지가 수정되었습니다.");
-                $('#changeDeliveryModal').click();
-                // 변경된 데이터를 DOM에 반영
-                document.querySelector('.name').textContent = response.data.deli_name;
-                document.querySelector('.phone').textContent = response.data.phone;
-                document.querySelector('.address').textContent =
-                    `${response.data.pos_code} ${response.data.addr1} ${response.data.addr2}`;
-            } else {
-                alert("배송지 수정 중 오류가 발생했습니다.");
-            }
-        },
-        error: function() {
-            alert("서버와의 통신 중 문제가 발생했습니다.");
-        }
-    });
+    if (!selectedDeliveryRadio) {
+        alert("배송지를 선택해주세요.");
+        return;
+    }
+
+    // 선택된 배송지의 정보 가져오기
+    const selectedDeliveryId = selectedDeliveryRadio.value;
+    const selectedName = selectedDeliveryRadio.parentElement.querySelector('.address-name').textContent;
+    const selectedAddress = selectedDeliveryRadio.parentElement.querySelector('.address-detail').textContent;
+    const selectedPhone = selectedDeliveryRadio.parentElement.querySelector('.deli-phone').textContent;
+
+    // `.delivery-info-container` 내부의 `.header` 요소 선택
+    const deliveryInfoContainer = document.querySelector(".delivery-info-container");
+    if (!deliveryInfoContainer) {
+        console.error("delivery-info-container가 존재하지 않습니다. HTML 구조를 확인하세요.");
+        return;
+    }
+
+    const headerElement = deliveryInfoContainer.querySelector(".header");
+    if (!headerElement) {
+        console.error("headerElement가 delivery-info-container 내부에 존재하지 않습니다.");
+        return;
+    }
+
+    // 선택된 배송지 ID를 data-value에 설정
+    headerElement.setAttribute("data-value", selectedDeliveryId);
+
+    // 배송지 이름과 배지를 업데이트
+    const headerNameElement = headerElement.querySelector("h3");
+
+    if (!headerNameElement) {
+        console.error("headerNameElement가 존재하지 않습니다.");
+        return;
+    }
+
+    // 배송지 이름 업데이트
+    headerNameElement.innerHTML = selectedName;
+
+    // 기본 배송지 배지를 조건부로 추가
+    const defaultBadge = selectedDeliveryRadio.parentElement.querySelector('.default-label');
+    if (defaultBadge) {
+        const badgeElement = document.createElement("span");
+        badgeElement.className = "badge";
+        badgeElement.appendChild(document.createTextNode("기본 배송지"));
+        headerNameElement.appendChild(document.createTextNode(" "));
+        headerNameElement.appendChild(badgeElement);
+    }
+
+    // 주소와 전화번호 업데이트
+    const addressElement = deliveryInfoContainer.querySelector(".address");
+    const phoneElement = deliveryInfoContainer.querySelector(".phone");
+
+    if (addressElement) {
+        addressElement.textContent = selectedAddress;
+    } else {
+        console.error("addressElement가 존재하지 않습니다.");
+    }
+
+    if (phoneElement) {
+        phoneElement.textContent = selectedPhone;
+    } else {
+        console.error("phoneElement가 존재하지 않습니다.");
+    }
+
+    // 모달 닫기
+    $(".modal-header .close").click();
 }
 
 // 적립금 입력

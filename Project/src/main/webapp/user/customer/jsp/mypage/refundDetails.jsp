@@ -30,19 +30,19 @@
             <div class="wrap">
                 <div class="row">
                     <div class="container">
+                        <div class="wrap-title">
+                            <span class="title">반품 상세내역</span>
+                        </div>
 
                         <c:if test="${requestScope.refund ne null}">
-                        <c:set var="refund" value="${requestScope.refund}"/>
-                            <div class="wrap-title">
-                                <span class="title">반품 상세내역</span>
-                            </div>
-
+                        <c:set var="refund" value="${requestScope.refund}" />
+                        <div class="wrap-content">
                             <div class="refund-details">
                                 <%-- 주문 정보 --%>
                                 <div class="order-info">
                                     <div class="order-date">${refund.order_date}</div>
                                     <div class="wrap-order-details">
-                                        <div class="order-number">주문번호 ${refund.order_code}</div>
+                                        <div class="order-number">${refund.order_code}</div>
 <%--                                        <div class="order-details-link"><a href="Controller?type=orderDetails">주문 상세</a></div>--%>
                                     </div>
                                 </div>
@@ -53,6 +53,9 @@
                                     <h2>반품 상품</h2>
                                     <c:if test="${refund.status eq '7'}">
                                         <span class="refund-status">반품신청</span>
+                                    </c:if>
+                                    <c:if test="${refund.status eq '9'}">
+                                        <span class="refund-status">반품거부</span>
                                     </c:if>
                                     <c:if test="${refund.status eq '11'}">
                                         <span class="refund-status">반품완료</span>
@@ -89,6 +92,12 @@
                                                 <span class="info-label">반품 사유</span>
                                                 <span class="info-value">${refund.reason_customer}</span>
                                             </li>
+                                            <c:if test="${refund.status eq '9'}">
+                                            <li>
+                                                <span class="info-label">거부 사유</span>
+                                                <span class="info-value">${refund.reason_seller}</span>
+                                            </li>
+                                            </c:if>
                                             <li>
                                                 <span class="info-label">수거 방법</span>
                                                 <span class="info-value">${delivery.request}</span>
@@ -113,46 +122,47 @@
                                     </div><hr/>
                                 </c:if>
 
-                                <!-- 환불 요청 내역 -->
-                                <div class="refund-request">
-                                    <h3 class="subtitle">환불 정보</h3>
-                                    <ul class="detail-list">
-                                        <li>
-                                            <span class="detail-label">상품 결제금액</span>
-                                            <span class="detail-value"><fmt:formatNumber value="${refund.result_amount}"/>원</span>
-                                        </li>
-                                        <c:if test="${requestScope.coupon ne null}">
+                                    <!-- 환불 요청 내역 -->
+                                    <div class="refund-request">
+                                        <h3 class="subtitle">환불 정보</h3>
+                                        <ul class="detail-list">
+                                            <li>
+                                                <span class="detail-label">상품 결제금액</span>
+                                                <span class="detail-value"><fmt:formatNumber value="${refund.result_amount}" maxFractionDigits="0" />원</span>
+                                            </li>
 
-                                            <c:set var="prodSaledPriceString" value="${fn:replace(refund.prod_saled_price, ',', '')}" />
-                                            <c:set var="couponSalePer" value="${not empty coupon.sale_per ? coupon.sale_per : 0}" />
-                                            <c:set var="prodSaledPriceInt" value="${prodSaledPriceString * 1}" />
-                                            <c:set var="couponDiscount" value="${prodSaledPriceInt * (couponSalePer / 100)}" />
+                                            <!-- 쿠폰 정보가 있을 때만 출력 -->
+                                            <c:if test="${not empty requestScope.coupon_name}">
+                                                <li>
+                                                    <span class="detail-label">쿠폰 사용</span>
+                                                    <span class="detail-value">[${requestScope.coupon_name}] ${requestScope.sale_per}%</span>
+                                                </li>
+                                            </c:if>
 
-                                            <span class="detail-label">쿠폰 사용</span>
-                                            <span class="detail-value">-<fmt:formatNumber value="${couponDiscount}" type="number" maxFractionDigits="0"/> 원</span>
-                                        </c:if>
-                                        <li>
-                                            <span class="detail-label">적립금 사용</span>
-                                            <span class="detail-value"><fmt:formatNumber value="${not empty requestScope.point_amount ? requestScope.point_amount : 0}"/>원</span>
-                                        </li>
-                                        <li>
-                                            <span class="detail-label">기본 배송비</span>
-                                            <span class="detail-value">무료</span>
-                                        </li>
-                                    </ul>
-                                </div><hr/>
-
-                                <!-- 환불 예정 금액 -->
-                                <div class="refund-amount">
-                                    <h3 class="subtitle">환불 예정 금액</h3>
-                                    <div class="wrap-p">
-                                        <p class="refund-method">${refund.pay_type}</p>
-                                        <p class="refund-expected"><fmt:formatNumber value="${refund.result_amount  - couponDiscount - requestScope.point_amount}" type="number" maxFractionDigits="0" />원</p>
+                                            <li>
+                                                <span class="detail-label">적립금 사용</span>
+                                                <span class="detail-value"><fmt:formatNumber value="${requestScope.point_amount}" maxFractionDigits="0" />원</span>
+                                            </li>
+                                            <li>
+                                                <span class="detail-label">기본 배송비</span>
+                                                <span class="detail-value">무료</span>
+                                            </li>
+                                        </ul>
                                     </div>
-                                </div>
+                                    <hr />
+
+                                    <!-- 환불 예정 금액 -->
+                                    <div class="refund-amount">
+                                        <h3 class="subtitle">환불 예정 금액</h3>
+                                        <div class="wrap-p">
+                                            <p class="refund-expected">
+                                                <fmt:formatNumber value="${refund.result_amount}" maxFractionDigits="0" />원
+                                            </p>
+                                        </div>
+                                    </div>
 
                                 <%-- 안내사항 --%>
-                                <div class="notice">* 주문 시 사용한 적립금 및 할인쿠폰은 취소완료 즉시 반환됩니다.</div>
+                                <div class="notice">* 주문 시 사용한 적립금 및 할인쿠폰은 환불 즉시 반환됩니다.</div>
                             </div>
                         </c:if>
                     </div>

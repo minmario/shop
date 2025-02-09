@@ -11,13 +11,27 @@
         <div class="points-item">
             <div class="points-label text-left">예정 적립금</div>
             <div class="points-value text-right">
-                <fmt:formatNumber value="${requestScope.upcomingTotal}"/>원
+                <c:choose>
+                    <c:when test="${not empty requestScope.upcomingTotal}">
+                        <fmt:formatNumber value="${requestScope.upcomingTotal}"/>원
+                    </c:when>
+                    <c:otherwise>
+                        0원
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
         <div class="points-item">
             <div class="points-label text-left">소멸 예정 적립금(30일 이내)</div>
             <div class="points-value text-right">
-                <fmt:formatNumber value="${requestScope.expireTotal}"/>원
+                <c:choose>
+                    <c:when test="${not empty requestScope.expireTotal}">
+                        <fmt:formatNumber value="${requestScope.expireTotal}"/>원
+                    </c:when>
+                    <c:otherwise>
+                        0원
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
     </div>

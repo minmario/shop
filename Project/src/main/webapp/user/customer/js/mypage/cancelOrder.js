@@ -9,6 +9,14 @@ $(document).ready(function () {
             $('#custom-reason-input').hide();  // 다른 사유 선택 시 입력 필드 숨김
         }
     });
+
+    // o_list 길이를 확인하여 버튼에 이벤트 할당
+    const orderListLength = $('input[name="order_id"]').length;
+    if (orderListLength > 1) {
+        $('#cancelRequestButton').on('click', cancelRequestAll);
+    } else {
+        $('#cancelRequestButton').on('click', cancelRequest);
+    }
 });
 
 function getSelectedCancelReason() {
@@ -38,7 +46,6 @@ function cancelRequest() {
 
     //benefit_type 값 가져오기
     const benefit_type = $('input[name="benefit_type"]').val();
-    console.log(benefit_type);
 
     // 취소 사유 가져오기
     let reason = getSelectedCancelReason();
@@ -111,6 +118,71 @@ function cancelRequest() {
                 window.location.href = "Controller?type=myPage";
             } else {
                 alert(response.message || "주문 취소 중 오류가 발생했습니다.");
+            }
+        },
+        error: function () {
+            alert("서버와의 통신 중 오류가 발생했습니다.");
+        }
+    });
+}
+
+function cancelRequestAll() {
+    const orderCode = $('#orderCode').val();
+
+    let reason = getSelectedCancelReason();
+    if (!reason) return;
+
+    if (reason === '기타') {
+        const customReason = $('input[name="customCancelReason"]').val();
+        if (!customReason) {
+            alert("기타 사유를 입력해 주세요.");
+            return;
+        }
+        reason = customReason;
+    }
+
+    const pointUsed = $('input[name="cancel-point-used"]').val();
+    let bank = '', accountNumber = '';
+    if ($('#cancel-bank-select').length > 0 && $('#account-number').length > 0) {
+        bank = $('#cancel-bank-select').find('option:selected').val();
+        accountNumber = $('#account-number').val();
+
+        if (!bank) {
+            alert("은행을 선택해 주세요.");
+            return;
+        }
+
+        if (!accountNumber) {
+            alert("계좌번호를 입력해 주세요.");
+            return;
+        }
+
+        if (!/^\d{3}-\d{4}-\d{4}-\d{4}$/.test(accountNumber)) {
+            alert("올바른 계좌번호 형식이 아닙니다. 예: 111-2222-3333-4444");
+            return;
+        }
+    }
+
+    const refundAmount = $('.cancel-refund-info .cancel-refund-amount').text().replace(/[^0-9]/g, '');
+    if (!confirm("전체 주문을 취소하시겠습니까?")) return;
+
+    $.ajax({
+        url: 'Controller?type=cancelOrder&action=update_all',
+        type: 'POST',
+        data: {
+            orderCode: orderCode,
+            reason: reason,
+            bank: bank || null,
+            account_number: accountNumber || null,
+            refund_amount: refundAmount || null,
+            point_used: pointUsed || null
+        },
+        success: function (response) {
+            if (response && response.success) {
+                alert("전체 주문 취소가 완료되었습니다.");
+                window.location.href = "Controller?type=myPage";
+            } else {
+                alert(response.message || "전체 주문 취소 중 오류가 발생했습니다.");
             }
         },
         error: function () {

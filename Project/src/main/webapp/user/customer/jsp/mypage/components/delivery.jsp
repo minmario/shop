@@ -35,15 +35,8 @@
                         <p class="address">(<span class="pos_code">${dvo.pos_code}</span>) &nbsp;<span class="addr1">${dvo.addr1}</span> <span class="addr2">${dvo.addr2}</span></p>
                         <p class="phone">${dvo.phone}</p>
                         <p class="request">${dvo.request}</p>
-                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#addrModal" onclick="updateDeliveryModal(this)">수정</button>
-                        <c:choose>
-                            <c:when test="${dvo.is_default eq '1'}">
-                                <button type="button" class="btn btn-outline-danger disabled" onclick="deleteDelivery(${dvo.id})">삭제</button>
-                            </c:when>
-                            <c:otherwise>
-                                <button type="button" class="btn btn-outline-danger" onclick="deleteDelivery(${dvo.id})">삭제</button>
-                            </c:otherwise>
-                        </c:choose>
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#addrModal" onclick="updateDeliveryModal('${dvo.id}')">수정</button>
+                        <button type="button" class="btn btn-outline-danger ${dvo.is_default eq '1' && "disabled"} disabled" onclick="deleteDelivery('${dvo.id}')">삭제</button>
                     </div>
                 </div>
             </c:forEach>

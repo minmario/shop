@@ -15,8 +15,6 @@ function onExistCusId() {
             cus_id: document.getElementById('cus_id').value,
         },
         success: function(response) {
-            console.log('response:', response);
-
             if (response.success) {
                 if (!response.is_exists) {
                     alert("존재하지 않는 사용자입니다.");

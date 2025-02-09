@@ -4,6 +4,7 @@ import user.action.Action;
 import user.dao.customer.*;
 import user.vo.customer.CustomerVO;
 import user.vo.customer.DeliveryVO;
+import user.vo.customer.LogVO;
 import user.vo.customer.OrderVO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import static user.dao.customer.PointDAO.calculateRefundPoint;
@@ -61,7 +63,7 @@ public class CancelOrderAction implements Action {
                     try {
                         o_list = OrderDAO.selectOrderProductAll(cvo.getId(), order_code);
                         d_list = DeliveryDAO.selectDelivery(cvo.getId());
-                        coupon = OrderDAO.selectOrderCoupons(null, cvo.getId(),order_code, null); // 쿠폰 정보 가져오기
+                        coupon = OrderDAO.selectOrderCoupons(null, cvo.getId(), order_code, null); // 쿠폰 정보 가져오기
                         totalPrice = OrderDAO.selectTotalPrice(cvo.getId(), order_code);
                         totalSaledPrice = OrderDAO.selectTotalSaledPrice(cvo.getId(), order_code);
                         point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code);
@@ -78,17 +80,14 @@ public class CancelOrderAction implements Action {
                         e.printStackTrace();
                         return "/user/customer/jsp/error/error.jsp";
                     }
-
                 case "update":
                     try {
-                        // 요청 데이터 가져오기
                         String orderCode = request.getParameter("orderCode");
                         String reason = request.getParameter("reason");
                         String refund_bank = request.getParameter("bank");
                         String refund_account = request.getParameter("account_number");
                         String refundAmount = request.getParameter("refund_amount");
                         String point_used = request.getParameter("point_used");
-                        String benefit_type = request.getParameter("benefit_type");
 
                         // 주문 정보 업데이트 (취소 상태로 변경)
                         int u_o_cnt = OrderDAO.updateOrderCancel(id, cvo.getId(), prod_no, orderCode, refund_bank, refund_account, reason);
@@ -102,35 +101,92 @@ public class CancelOrderAction implements Action {
                             return null;
                         }
 
-                        // null 또는 빈 문자열 값 확인
-                        if ((refund_bank == null || refund_bank.isEmpty()) ||
-                                (refund_account == null || refund_account.isEmpty()) ||
-                                (refundAmount == null || refundAmount.isEmpty())) {
+                        if(u_o_cnt > 0){
+                            OrderVO o_vo = OrderDAO.selectOrderById(id);
 
-                            response.setContentType("application/json");
-                            response.setCharacterEncoding("UTF-8");
-                            try (PrintWriter out = response.getWriter()) {
-                                out.print("{\"success\": true, \"message\": \"주문 상태가 업데이트되었습니다.\"}");
-                                out.flush();
-                            }
-                            return null;
+                            // 개별 취소 log
+                            LogVO lvo = new LogVO();
+                            StringBuffer sb = new StringBuffer();
+                            lvo.setCus_no(cvo.getId());
+                            lvo.setTarget("order 수정");
+                            sb.append("id : " + o_vo.getId() + ", ");
+                            sb.append("cus_no : " + o_vo.getCus_no() + ", ");
+                            sb.append("order_code : " + o_vo.getOrder_code() + ", ");
+                            sb.append("status : " + o_vo.getOrder_code());
+                            lvo.setPrev(sb.toString());
+                            sb = new StringBuffer();
+                            sb.append("id : " + id + ", ");
+                            sb.append("cus_no : " + cvo.getId() + ", ");
+                            sb.append("order_code : " + orderCode + ", ");
+                            sb.append("status : " + "6");
+                            lvo.setCurrent(sb.toString());
+                            LogDAO.updateLog(lvo);
                         }
 
-                        // 포인트 관련 로직
+                        // point_used가 존재하고 사용된 경우에만 실행
                         int refundAmountValue = Integer.parseInt(refundAmount);
-                        int totalOrderAmount = OrderDAO.selectTotalAmount(cvo.getId(), orderCode);
-                        int usedPointAmount = PointDAO.selectPointAmount(cvo.getId(), orderCode);
+                        if (point_used != null && !point_used.isEmpty() && Integer.parseInt(point_used) > 0) {
+                            int totalOrderAmount = OrderDAO.selectTotalAmount(cvo.getId(), orderCode);
+                            int usedPointAmount = Integer.parseInt(point_used);
 
-                        int refundPointAmount = PointDAO.calculateRefundPoint(totalOrderAmount, refundAmountValue, usedPointAmount);
+                            int refundPointAmount = PointDAO.calculateRefundPoint(totalOrderAmount, refundAmountValue, usedPointAmount);
 
-                        // 포인트 삭제 및 복구
-                        if ("0".equals(benefit_type) && usedPointAmount > 0) {
-                            PointDAO.deletePoint(cvo.getId(), orderCode);
-                            PointDAO.insertPoint(cvo.getId(), String.valueOf(refundPointAmount), orderCode);
+                            // 포인트 삭제 및 복구
+                            int d_p_cnt = PointDAO.deletePoint(cvo.getId(), orderCode);
+
+                            if(d_p_cnt > 0){
+                                String p_id = PointDAO.selectPointByOrderCode(cvo.getId(), orderCode);
+
+                                // 포인트 삭제 로그
+                                LogVO lvo = new LogVO();
+                                StringBuffer sb = new StringBuffer();
+                                lvo.setCus_no(cvo.getId());
+                                lvo.setTarget("point 삭제");
+                                sb.append("id : " + p_id);
+                                lvo.setPrev(sb.toString());
+                                LogDAO.deleteLog(lvo);
+                            }
+
+                            int i_p_cnt = PointDAO.insertPoint(cvo.getId(), String.valueOf(refundPointAmount), orderCode);
+
+                            if(i_p_cnt > 0){
+
+                                // 포인트 추가 로그
+                                LogVO lvo = new LogVO();
+                                StringBuffer sb = new StringBuffer();
+                                lvo.setCus_no(cvo.getId());
+                                lvo.setTarget("point 추가");
+                                sb.append("cus_no : " + cvo.getId() + ", ");
+                                sb.append("amount : " + String.valueOf(refundPointAmount));
+                                lvo.setCurrent(sb.toString());
+                                LogDAO.insertLog(lvo);
+                            }
                         }
 
                         // 쿠폰 복구 처리
                         int u_co_cnt = CouponDAO.updateCusCoupon(cvo.getId(), orderCode);
+
+                        if (u_co_cnt > 0){
+                            OrderVO o_vo = OrderDAO.selectCusCoupon(cvo.getId(), orderCode);
+
+                            // 쿠폰 복구 수정 로그
+                            LogVO lvo = new LogVO();
+                            StringBuffer sb = new StringBuffer();
+                            lvo.setCus_no(cvo.getId());
+                            lvo.setTarget("cus_coupon 수정");
+                            sb.append("cus_no : " + cvo.getId() + ", ");
+                            sb.append("coupon_no : " + o_vo.getCoupon_no() + ", ");
+                            sb.append("order_code : " + o_vo.getOrder_code() + ", ");
+                            sb.append("status : " + "2");
+                            lvo.setPrev(sb.toString());
+                            sb = new StringBuffer();
+                            sb.append("cus_no : " + cvo.getId() + ", ");
+                            sb.append("coupon_no : " + o_vo.getCoupon_no() + ", ");
+                            sb.append("order_code : " + orderCode + ", ");
+                            sb.append("status : " + "1");
+                            lvo.setCurrent(sb.toString());
+                            LogDAO.updateLog(lvo);
+                        }
 
                         // 고객 누적 금액 업데이트
                         int currentTotal = Integer.parseInt(cvo.getTotal());
@@ -159,7 +215,6 @@ public class CancelOrderAction implements Action {
                             }
                         }
                     }
-
                     return null;
 
                 case "update_all":
@@ -168,6 +223,8 @@ public class CancelOrderAction implements Action {
                         String reason = request.getParameter("reason");
                         String refund_bank = request.getParameter("bank");
                         String refund_account = request.getParameter("account_number");
+                        String refundAmount = request.getParameter("refund_amount");
+                        String point_used = request.getParameter("point_used");
 
                         // 전체 상품 조회
                         List<OrderVO> orderList = OrderDAO.selectOrderProductAll(cvo.getId(), orderCode);
@@ -181,50 +238,103 @@ public class CancelOrderAction implements Action {
                             return null;
                         }
 
-                        int totalRefundAmount = 0;
-                        int totalUsedPoint = 0;
-
+                        List<String> idList = new ArrayList<>();
                         for (OrderVO order : orderList) {
-                            String order_id = String.valueOf(order.getId());
-                            String prodNo = order.getProd_no();
-
-                            // 각 상품에 대한 환불 처리
-                            int refundAmount = Integer.parseInt(order.getResult_amount());  // 상품별 결제 금액
-                            int usedPoint = PointDAO.selectPointAmount(cvo.getId(), orderCode);  // 사용 포인트 조회
-                            totalRefundAmount += refundAmount;
-                            totalUsedPoint += usedPoint;
-
-                            // 주문 상태 업데이트
-                            OrderDAO.updateOrderCancel(id, cvo.getId(), prodNo, orderCode, refund_bank, refund_account, reason);
-
-                            // 포인트 삭제
-                            if (usedPoint > 0) {
-                                PointDAO.deletePoint(cvo.getId(), orderCode);
-                            }
-
-                            // 포인트 복구
-                            if (usedPoint > 0) {
-                                int refundPointAmount = calculateRefundPoint(totalRefundAmount, refundAmount, usedPoint);
-                                PointDAO.insertPoint(cvo.getId(), String.valueOf(refundPointAmount), orderCode);
-                            }
+                            idList.add(order.getId());
                         }
 
-                        // 쿠폰 복구 처리
-                        CouponDAO.updateCusCoupon(cvo.getId(), orderCode);
+                        int u_o_cnt = OrderDAO.updateOrderCancelAll(idList, cvo.getId(), orderCode, refund_bank, refund_account, reason);
 
-                        // 고객 누적 금액 업데이트
-                        int currentTotal = Integer.parseInt(cvo.getTotal());
-                        int totalINT = currentTotal - totalRefundAmount;
-                        CustomerDAO.updateTotal(cvo.getId(), String.valueOf(totalINT));
+                        int totalRefundAmount = Integer.parseInt(refundAmount);
+                        if (u_o_cnt > 0) {
 
-                        // JSON 응답 전송
-                        response.setContentType("application/json");
-                        response.setCharacterEncoding("UTF-8");
-                        try (PrintWriter out = response.getWriter()) {
-                            out.print("{\"success\": true}");
-                            out.flush();
+                            // 전체 취소 log
+                            LogVO u_lvo = new LogVO();
+                            StringBuffer u_sb = new StringBuffer();
+                            u_lvo.setCus_no(cvo.getId());
+                            u_lvo.setTarget("order 전체 취소 수정");
+                            u_sb.append("order_code : " + orderCode + "\n");
+                            u_sb.append("refundAmount : " + refundAmount + "\n");
+                            u_sb.append("refund_bank : " + refund_bank + "\n");
+                            u_sb.append("refund_account : " + refund_account);
+                            u_lvo.setCurrent(u_sb.toString());
+                            LogDAO.insertEtcLog(u_lvo);
+
+                            if (point_used != null && !point_used.isEmpty() && Integer.parseInt(point_used) > 0) {
+                                int d_p_cnt = PointDAO.deletePoint(cvo.getId(), orderCode);
+
+                                if(d_p_cnt > 0){
+                                    String p_id = PointDAO.selectPointByOrderCode(cvo.getId(), orderCode);
+
+                                    // 포인트 삭제 로그
+                                    LogVO d_lvo = new LogVO();
+                                    StringBuffer sb = new StringBuffer();
+                                    d_lvo.setCus_no(cvo.getId());
+                                    d_lvo.setTarget("point 삭제");
+                                    sb.append("id : " + p_id);
+                                    d_lvo.setPrev(sb.toString());
+                                    LogDAO.deleteLog(d_lvo);
+                                }
+
+                                int usedPointAmount = Integer.parseInt(point_used);
+                                int refundPointAmount = calculateRefundPoint(totalRefundAmount, totalRefundAmount, usedPointAmount);
+
+                                int i_p_cnt = PointDAO.insertPoint(cvo.getId(), String.valueOf(refundPointAmount), orderCode);
+
+                                if(i_p_cnt > 0){
+                                    // 포인트 추가 로그
+                                    LogVO i_lvo = new LogVO();
+                                    StringBuffer sb = new StringBuffer();
+                                    i_lvo.setCus_no(cvo.getId());
+                                    i_lvo.setTarget("point 추가");
+                                    sb.append("cus_no : " + cvo.getId() + ", ");
+                                    sb.append("amount : " + String.valueOf(refundPointAmount));
+                                    i_lvo.setCurrent(sb.toString());
+                                    LogDAO.insertLog(i_lvo);
+                                }
+                            }
+
+                            int u_co_cnt = CouponDAO.updateCusCoupon(cvo.getId(), orderCode);
+
+                            if(u_co_cnt > 0){
+                                OrderVO o_vo = OrderDAO.selectOrderById(id);
+
+                                // 쿠폰 복구 수정 로그
+                                LogVO lvo = new LogVO();
+                                StringBuffer sb = new StringBuffer();
+                                lvo.setCus_no(cvo.getId());
+                                lvo.setTarget("order 수정");
+                                sb.append("id : " + o_vo.getId() + ", ");
+                                sb.append("cus_no : " + o_vo.getCus_no() + ", ");
+                                sb.append("order_code : " + o_vo.getOrder_code() + ", ");
+                                sb.append("status : " + "2");
+                                lvo.setPrev(sb.toString());
+                                sb = new StringBuffer();
+                                sb.append("id : " + id + ", ");
+                                sb.append("cus_no : " + cvo.getId() + ", ");
+                                sb.append("order_code : " + orderCode + ", ");
+                                sb.append("status : " + "1");
+                                lvo.setCurrent(sb.toString());
+                                LogDAO.updateLog(lvo);
+                            }
+
+                            int currentTotal = Integer.parseInt(cvo.getTotal());
+                            CustomerDAO.updateTotal(cvo.getId(), String.valueOf(currentTotal - totalRefundAmount));
+
+                            response.setContentType("application/json");
+                            response.setCharacterEncoding("UTF-8");
+                            try (PrintWriter out = response.getWriter()) {
+                                out.print("{\"success\": true}");
+                                out.flush();
+                            }
+                        } else {
+                            response.setContentType("application/json");
+                            response.setCharacterEncoding("UTF-8");
+                            try (PrintWriter out = response.getWriter()) {
+                                out.print("{\"success\": false, \"message\": \"주문 상태 업데이트 실패\"}");
+                                out.flush();
+                            }
                         }
-
                     } catch (Exception e) {
                         e.printStackTrace();
                         if (!response.isCommitted()) {
@@ -241,8 +351,6 @@ public class CancelOrderAction implements Action {
                         }
                     }
                     return null;
-
-
             }
         }
 

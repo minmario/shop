@@ -216,12 +216,16 @@
             p.saled_price,
             s.name AS brand,
             s.courier,
+            mi.name AS mi_category_name,
+            ma.name AS ma_category_name,
             COALESCE(COUNT(pl.prod_no), 0) AS like_count,
             (SELECT FORMAT(AVG(score), 1) FROM board b WHERE b.prod_no = p.id AND b.bname = 'review') AS avg_score,
             (SELECT COUNT(*) FROM board b WHERE b.prod_no = p.id AND b.bname = 'review') AS review_count,
-            (SELECT COUNT(*) FROM shop.order o WHERE o.prod_no = p.id) AS sales_count
+            (SELECT SUM(o.count) FROM shop.order o WHERE o.prod_no = p.id) AS sales_count
         FROM product p
         INNER JOIN seller s ON p.seller_no = s.id
+        INNER JOIN middle_category mi ON p.category_no = mi.id
+        INNER JOIN major_category ma ON mi.major_no = ma.id
         LEFT JOIN prod_like pl ON p.id = pl.prod_no AND pl.like_status IN ('1', '3')
         WHERE p.id = #{id}
         GROUP BY
@@ -247,7 +251,7 @@
         SELECT i.id AS inventory_no, i.option_name AS i_option_name, i.count, i.total_length, i.shoulder, i.chest, i.sleeve, i.waist, i.hip, i.thigh, i.rise, i.hem, i.foot_length, i.foot_width, i.ankle_height, i.heel_height, p.*
         FROM product p
         JOIN inventory i ON i.prod_no = p.id
-        WHERE p.id = #{id} AND p.is_del = 0
+        WHERE p.id = #{id} AND p.is_del = 0 AND i.is_del = 0
         ORDER BY
             CASE
                 WHEN i.option_name = 'XS' THEN 1
@@ -271,10 +275,11 @@
     </select>
 
     <!-- 상품 리뷰 목록 가져오기 -->
-    <select id="select_review" resultType="user.vo.customer.ReviewVO" parameterType="Map">
+    <select id="select_review" resultType="user.vo.customer.BoardVO" parameterType="Map">
         SELECT
             b.*,
-            c.name AS c_name,
+            c.nickname,
+            c.profile_image,
             c.gender AS c_gender,
             c.height AS c_height,
             c.weight AS c_weight,

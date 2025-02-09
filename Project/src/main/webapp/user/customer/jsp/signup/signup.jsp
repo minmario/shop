@@ -29,141 +29,97 @@
             <!-- MUSINSA 로고 -->
             <h1 class="text-center fw-bold mb-4">MUSINSA</h1>
 
-<<<<<<<< HEAD:Project/src/main/webapp/user/snap/jsp/signup/signup.jsp
-
-        <form action="${pageContext.request.contextPath}/Controller?type=signup" method="POST">
-
-            <div class="mb-3">
-                <label for="cus_id" class="form-label">아이디</label>
-                <input type="text" class="form-control" id="cus_id" name="cus_id" placeholder="아이디를 입력하세요" maxlength="30" required>
-========
             <!-- 아이디 -->
             <div class="input-group mb-3">
                 <label for="cus_id" class="form-label" style="width: 100%">아이디</label>
-                <input type="text" class="form-control" id="cus_id" name="cus_id"  maxlength="30" placeholder="아이디를 입력하세요" required>
+                <input type="text" class="form-control" id="cus_id" name="cus_id"  maxlength="30" placeholder="아이디를 입력하세요" autocomplete="off" required>
                 <div class="input-group-append">
                     <button class="btn btn-dark" type="button" onclick="onCheckCusId()">아이디 확인</button>
                 </div>
->>>>>>>> origin/user:Project/src/main/webapp/user/customer/jsp/signup/signup.jsp
             </div>
 
-
+            <!-- 비밀번호 -->
             <div class="mb-3">
                 <label for="cus_pw" class="form-label">비밀번호</label>
-                <input type="password" class="form-control" id="cus_pw" name="cus_pw" placeholder="비밀번호를 입력하세요" maxlength="30" required>
+                <input type="password" class="form-control" id="cus_pw" name="cus_pw" placeholder="비밀번호를 입력하세요" maxlength="30" autocomplete="off" required>
             </div>
 
-
+            <!-- 이름 -->
             <div class="mb-3">
-                <label for="name" class="form-label">이름</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="이름을 입력하세요" maxlength="50" required>
+                <label for="cus_name" class="form-label">이름</label>
+                <input type="text" class="form-control" id="cus_name" name="cus_name" placeholder="이름을 입력하세요" maxlength="50" autocomplete="off" required>
             </div>
 
-
+            <!-- 닉네임 -->
             <div class="mb-3">
-<<<<<<<< HEAD:Project/src/main/webapp/user/snap/jsp/signup/signup.jsp
-                <label for="nickname" class="form-label">닉네임</label>
-                <input type="text" class="form-control" id="nickname" name="nickname" placeholder="닉네임을 입력하세요" maxlength="50">
-========
                 <label for="cus_nickname" class="form-label">닉네임</label>
-                <input type="text" class="form-control" id="cus_nickname" name="cus_nickname" placeholder="닉네임을 입력하세요" maxlength="50" required>
->>>>>>>> origin/user:Project/src/main/webapp/user/customer/jsp/signup/signup.jsp
+                <input type="text" class="form-control" id="cus_nickname" name="cus_nickname" placeholder="닉네임을 입력하세요" maxlength="50" autocomplete="off" required>
             </div>
 
-
+            <!-- 성별 -->
             <div class="mb-3">
                 <label class="form-label">성별</label>
                 <div class="form-check">
-<<<<<<<< HEAD:Project/src/main/webapp/user/snap/jsp/signup/signup.jsp
-                    <input class="form-check-input" type="radio" name="gender" id="gender_m" value="M" required>
-                    <label class="form-check-label" for="gender_m">남성</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gender" id="gender_w" value="W" required>
-========
                     <input class="form-check-input" type="radio" name="cus_gender" id="gender_m" value="1" required>
                     <label class="form-check-label" for="gender_m">남성</label>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="cus_gender" id="gender_w" value="2" required>
->>>>>>>> origin/user:Project/src/main/webapp/user/customer/jsp/signup/signup.jsp
                     <label class="form-check-label" for="gender_w">여성</label>
                 </div>
             </div>
 
-
+            <!-- 생년월일 -->
             <div class="mb-3">
-<<<<<<<< HEAD:Project/src/main/webapp/user/snap/jsp/signup/signup.jsp
-                <label for="birth_date" class="form-label">생년월일</label>
-                <input type="date" class="form-control" id="birth_date" name="birth_date">
-========
                 <label for="cus_birth" class="form-label">생년월일</label>
                 <input type="date" class="form-control" id="cus_birth" name="cus_birth" required>
->>>>>>>> origin/user:Project/src/main/webapp/user/customer/jsp/signup/signup.jsp
             </div>
 
-
+            <!-- 전화번호 -->
             <div class="mb-3">
-<<<<<<<< HEAD:Project/src/main/webapp/user/snap/jsp/signup/signup.jsp
-                <label for="phone" class="form-label">전화번호</label>
-                <input type="text" class="form-control" id="phone" name="phone" placeholder="전화번호를 입력하세요" maxlength="30">
-========
                 <label for="cus_phone" class="form-label">전화번호</label>
-                <input type="text" class="form-control" id="cus_phone" name="cus_phone" placeholder="전화번호를 입력하세요" maxlength="30" required>
->>>>>>>> origin/user:Project/src/main/webapp/user/customer/jsp/signup/signup.jsp
+                <input type="text" class="form-control" id="cus_phone" name="cus_phone" placeholder="전화번호를 입력하세요" maxlength="30" autocomplete="off" required>
             </div>
 
-
+            <!-- 이메일 -->
             <div class="mb-3">
-                <label for="email" class="form-label">이메일</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요" maxlength="100" required>
+                <label for="cus_email" class="form-label">이메일</label>
+                <input type="email" class="form-control" id="cus_email" name="cus_email" placeholder="이메일을 입력하세요" maxlength="100" autocomplete="off" required>
             </div>
 
-<<<<<<<< HEAD:Project/src/main/webapp/user/snap/jsp/signup/signup.jsp
-
-========
             <!-- 주소 -->
             <div class="mb-3">
                 <div class="input-group mb-3">
                     <label for="pos_code" class="form-label" style="width: 100%;">주소</label>
-                    <input type="text" class="form-control" placeholder="우편번호" id="pos_code" name="pos_code" required/>
+                    <input type="text" class="form-control" placeholder="우편번호" id="pos_code" name="pos_code" autocomplete="off" required/>
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button" onclick="onGetPostcode()">우편번호 찾기</button>
                     </div>
                 </div>
                 <div>
-                    <input type="text" class="form-control" id="addr1" name="addr1" placeholder="주소"/><br/>
-                    <input type="text" class="form-control" id="addr2" name="addr2" placeholder="상세주소"/><br/>
+                    <input type="text" class="form-control" id="addr1" name="addr1" placeholder="주소" autocomplete="off"/><br/>
+                    <input type="text" class="form-control" id="addr2" name="addr2" placeholder="상세주소" autocomplete="off"/><br/>
                 </div>
             </div>
 
             <!-- 키 -->
->>>>>>>> origin/user:Project/src/main/webapp/user/customer/jsp/signup/signup.jsp
             <div class="mb-3">
                 <label for="height" class="form-label">키</label>
-                <input type="number" class="form-control" id="height" name="height" placeholder="키(cm)를 입력하세요">
+                <input type="number" class="form-control" id="height" name="height" placeholder="키(cm)를 입력하세요" autocomplete="off">
             </div>
 
-
+            <!-- 몸무게 -->
             <div class="mb-3">
                 <label for="weight" class="form-label">몸무게</label>
-                <input type="number" class="form-control" id="weight" name="weight" placeholder="몸무게(kg)를 입력하세요">
+                <input type="number" class="form-control" id="weight" name="weight" placeholder="몸무게(kg)를 입력하세요" autocomplete="off">
             </div>
 
-<<<<<<<< HEAD:Project/src/main/webapp/user/snap/jsp/signup/signup.jsp
-
-            <button type="submit" class="btn btn-dark w-100">회원가입</button>
-        </form>
-        <div class="d-flex justify-content-center mt-3">
-            <a href="../index.jsp" class="text-decoration-none text-muted">이전 페이지</a>
-========
             <!-- 회원가입 버튼 -->
             <button type="button" class="btn btn-dark w-100" onclick="insertCustomer()">회원가입</button>
 
             <div class="d-flex justify-content-center mt-3">
                 <a href="../index.jsp" class="text-decoration-none text-muted">이전 페이지</a>
             </div>
->>>>>>>> origin/user:Project/src/main/webapp/user/customer/jsp/signup/signup.jsp
         </div>
     </div>
 

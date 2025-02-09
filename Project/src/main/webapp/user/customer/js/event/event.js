@@ -27,8 +27,6 @@ function selectEvent() {
         method: 'GET',
         dataType: 'json',
         success: function (data) {
-            console.log("data : " + data);
-
             // const notificationContainer = $('#notification-container');
             // notificationContainer.empty();
             //

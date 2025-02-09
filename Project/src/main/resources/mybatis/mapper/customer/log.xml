@@ -20,4 +20,10 @@
         INSERT INTO log (cus_no, writer_type, target, log_type, prev, current, log_date)
         VALUES (#{cus_no}, '2', #{target}, '2', #{prev}, #{current}, CURRENT_TIMESTAMP())
     </insert>
+
+    <!-- 기타 로그 -->
+    <insert id="insert_etc_log" parameterType="user.vo.customer.LogVO">
+        INSERT INTO log (cus_no, writer_type, target, log_type, current, log_date)
+        VALUES (#{cus_no}, '2', #{target}, '3', #{current}, CURRENT_TIMESTAMP())
+    </insert>
 </mapper>
