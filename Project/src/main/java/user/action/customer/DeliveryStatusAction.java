@@ -20,25 +20,29 @@ public class DeliveryStatusAction implements Action {
             request.setAttribute("session_expired", true);
             return "/user/customer/jsp/error/error.jsp";
         }
-        String action = request.getParameter("action");
         String order_code = request.getParameter("order_code");
         String brand = request.getParameter("brand");
-        String viewPath = null;
-        if(action != null){
-            switch (action){
-                case "select":
-                    List<OrderVO> list = OrderDAO.selectDeliveryStatus(cvo.getId(), order_code, brand);
-                    request.setAttribute("list", list);
-                    viewPath = "/user/customer/jsp/mypage/deliveryStatus.jsp";
-                    break;
 
-                case "select_exchange":
+        // 배송 현황 조회
+        List<OrderVO> list = OrderDAO.selectDeliveryStatus(cvo.getId(), order_code, brand);
 
-                    viewPath = "/user/customer/jsp/mypage/deliveryStatus.jsp";
-                    break;
-
+        // 배송 상태에 따른 타입 설정
+        for (OrderVO order : list) {
+            if (order.getExchange_request_date() != null &&
+                    (order.getStatus().equals("1") || order.getStatus().equals("2") || order.getStatus().equals("3") || order.getStatus().equals("4"))) {
+                // 교환 진행 중 상태
+                order.setDelivery_type("EXCHANGE_IN_PROGRESS");
+            } else if (order.getStatus().equals("8")) {
+                // 교환 신청 상태
+                order.setDelivery_type("EXCHANGE_REQUESTED");
+            } else {
+                // 일반 배송 상태
+                order.setDelivery_type("NORMAL_DELIVERY");
             }
         }
-        return viewPath;
+
+        request.setAttribute("list", list);
+
+        return "/user/customer/jsp/mypage/deliveryStatus.jsp";
     }
 }

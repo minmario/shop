@@ -51,7 +51,7 @@
 
                                             <!-- 주문 코드별 헤더 -->
                                             <div class="order-group-header">
-                                                <h3 class="order-group-title">주문번호: ${currentOrderCode}</h3>
+                                                <h3 class="order-group-title">${currentOrderCode}</h3>
                                             </div>
 
                                             <!-- 새로운 주문 코드 그룹 시작 -->
@@ -59,22 +59,32 @@
                                         </c:if>
 
                                         <!-- 주문 상품 출력 -->
-                                        <div class="order-item" onclick="location.href='Controller?type=deliveryStatus&action=select&order_code=${item.order_code}&brand=${item.brand}'">
+                                        <div class="order-item" onclick="location.href='Controller?type=deliveryStatus&order_code=${item.order_code}&brand=${item.brand}'">
                                             <img src="${fn:split(item.prod_image, ',')[0]}" alt="Product Image" class="product-image">
                                             <div class="order-details">
                                                 <c:choose>
-                                                    <c:when test="${item.status == '1'}">
-                                                        <div class="payment-status">결제완료</div>
+                                                    <c:when test="${item.delivery_type == 'EXCHANGE_REQUESTED'}">
+                                                        <div class="payment-status">교환 신청</div>
                                                     </c:when>
-                                                    <c:when test="${item.status == '2'}">
-                                                        <div class="payment-status">배송전</div>
+                                                    <c:when test="${item.delivery_type == 'EXCHANGE_IN_PROGRESS'}">
+                                                        <div class="payment-status">교환 배송 중</div>
                                                     </c:when>
-                                                    <c:when test="${item.status == '3'}">
-                                                        <div class="payment-status">배송중</div>
-                                                    </c:when>
-                                                    <c:when test="${item.status == '4'}">
-                                                        <div class="payment-status">배송완료</div>
-                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:choose>
+                                                            <c:when test="${item.status == '1'}">
+                                                                <div class="payment-status">결제완료</div>
+                                                            </c:when>
+                                                            <c:when test="${item.status == '2'}">
+                                                                <div class="payment-status">배송전</div>
+                                                            </c:when>
+                                                            <c:when test="${item.status == '3'}">
+                                                                <div class="payment-status">배송중</div>
+                                                            </c:when>
+                                                            <c:when test="${item.status == '4'}">
+                                                                <div class="payment-status">배송완료</div>
+                                                            </c:when>
+                                                        </c:choose>
+                                                    </c:otherwise>
                                                 </c:choose>
                                                 <div class="product-name">${item.brand}</div>
                                                 <div class="product-description">

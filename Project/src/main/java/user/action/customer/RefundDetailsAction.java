@@ -28,17 +28,35 @@ public class RefundDetailsAction implements Action {
         String order_code = request.getParameter("order_code");
         String prod_no = request.getParameter("prod_no");
 
+        // 주문 정보 조회
         OrderVO refund = OrderDAO.selectDetailsByStatus(order_id, cvo.getId(), prod_no, order_code, "7");
-        DeliveryVO delivery = DeliveryDAO.selectRetrieveInfo(order_id);
-        List<OrderVO> coupon = OrderDAO.selectOrderCoupons(order_id, cvo.getId(), order_code, prod_no);
-        int point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code);
-        OrderVO vo = OrderDAO.selectSellerAddress(order_id);
 
+        // 배송 정보 조회
+        DeliveryVO delivery = DeliveryDAO.selectRetrieveInfo(order_id);
+
+        // 쿠폰 정보 조회 및 처리
+        List<OrderVO> couponList = OrderDAO.selectOrderCoupons(order_id, cvo.getId(), order_code, prod_no);
+        String couponName = null;
+        int salePer = 0;
+        if (couponList != null && !couponList.isEmpty()) {
+            OrderVO coupon = couponList.get(0);
+            couponName = coupon.getCoupon_name();
+            salePer = (coupon.getSale_per() != null) ? Integer.parseInt(coupon.getSale_per()) : 0;
+        }
+
+        // 적립금 사용 금액 조회
+        int pointAmount = PointDAO.selectPointAmount(cvo.getId(), order_code);
+
+        // 반송지 정보 조회
+        OrderVO sellerInfo = OrderDAO.selectSellerAddress(order_id);
+
+        // JSP에 전달할 값 설정
         request.setAttribute("refund", refund);
         request.setAttribute("delivery", delivery);
-        request.setAttribute("coupon", coupon);
-        request.setAttribute("point_amount", point_amount);
-        request.setAttribute("vo", vo);
+        request.setAttribute("coupon_name", couponName);
+        request.setAttribute("sale_per", salePer);
+        request.setAttribute("point_amount", pointAmount);
+        request.setAttribute("vo", sellerInfo);
 
         return "/user/customer/jsp/mypage/refundDetails.jsp";
     }

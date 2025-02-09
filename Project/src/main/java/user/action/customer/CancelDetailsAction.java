@@ -27,12 +27,28 @@ public class CancelDetailsAction implements Action {
         String order_code = request.getParameter("order_code");
         String prod_no = request.getParameter("prod_no");
 
+        // 주문 취소 상세 정보 조회
         OrderVO cancel = OrderDAO.selectDetailsByStatus(order_id, cvo.getId(), prod_no, order_code, "6");
-        List<OrderVO> coupon = OrderDAO.selectOrderCoupons(order_id, cvo.getId(), order_code, prod_no);
-        int point_amount = PointDAO.selectPointAmount(cvo.getId(), order_code);
+
+        // 쿠폰 정보 조회 및 설정
+        List<OrderVO> couponList = OrderDAO.selectOrderCoupons(order_id, cvo.getId(), order_code, prod_no);
+        String couponName = null;
+        double salePer = 0.0;
+
+        if (couponList != null && !couponList.isEmpty()) {
+            OrderVO coupon = couponList.get(0);
+            couponName = coupon.getCoupon_name();  // 쿠폰 이름 가져오기
+            salePer = (coupon.getSale_per() != null) ? Double.parseDouble(coupon.getSale_per()) : 0.0;
+        }
+
+        // 적립금 사용 금액 조회
+        int pointAmount = PointDAO.selectPointAmount(cvo.getId(), order_code);
+
+        // JSP에 전달할 값 설정
         request.setAttribute("cancel", cancel);
-        request.setAttribute("coupon", coupon);
-        request.setAttribute("point_amount", point_amount);
+        request.setAttribute("coupon_name", couponName);
+        request.setAttribute("sale_per", (int) salePer);  // 소수점 제거 후 전달
+        request.setAttribute("point_amount", pointAmount);
 
         return "/user/customer/jsp/mypage/cancelDetails.jsp";
     }
