@@ -37,8 +37,6 @@
             <scope>test</scope>
         </dependency>
 
-
-
         <!-- https://mvnrepository.com/artifact/org.jdom/jdom -->
         <dependency>
             <groupId>org.jdom</groupId>
@@ -46,7 +44,6 @@
             <version>2.0.2</version>
         </dependency>
         <!--  https://mvnrepository.com/artifact/org.mybatis/mybatis  -->
-
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
