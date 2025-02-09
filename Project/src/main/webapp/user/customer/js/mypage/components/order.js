@@ -50,8 +50,12 @@ function searchOrder(){
     const start = new Date(startDate);
     const end = new Date(endDate);
 
-    // 조회 기간이 오늘 이후일 때 경고
-    if (start.getTime() > today.getTime() || end.getTime() > today.getTime()) {
+    // 입력된 날짜의 시간도 00:00:00으로 초기화
+    start.setHours(0, 0, 0, 0);
+    end.setHours(0, 0, 0, 0);
+
+    // 조회 기간이 내일 이후일 때 경고 (오늘 날짜는 허용)
+    if (start > today || end > today) {
         alert("조회 기간은 오늘 날짜 또는 이전 날짜만 선택할 수 있습니다.");
         return;
     }

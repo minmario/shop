@@ -30,19 +30,19 @@
             <div class="wrap">
                 <div class="row">
                     <div class="container">
-
-                        <c:if test="${requestScope.cancel ne null}">
-                        <c:set var="cancel" value="${requestScope.cancel}"/>
                         <div class="wrap-title">
                             <span class="title">취소 상세내역</span>
                         </div>
 
-                        <div class="cancel-details">
+                        <c:if test="${requestScope.cancel ne null}">
+                        <c:set var="cancel" value="${requestScope.cancel}" />
+                        <div class="wrap-content">
+                            <div class="cancel-details">
                             <%-- 주문 정보 --%>
                             <div class="order-info">
                                 <div class="order-date">${cancel.order_date}</div>
                                 <div class="wrap-order-details">
-                                    <div class="order-number">주문번호 ${cancel.order_code}</div>
+                                    <div class="order-number">${cancel.order_code}</div>
 <%--                                    <div class="order-details-link"><a href="Controller?type=orderDetails">주문 상세</a></div>--%>
                                 </div>
                             </div>
@@ -58,7 +58,7 @@
                                         <p class="product-brand">${cancel.brand}</p>
                                         <p class="product-name">${cancel.prod_name}</p>
                                         <p class="product-options">${cancel.option_name} / ${cancel.count}개</p>
-                                        <p class="product-price"><fmt:formatNumber value="${cancel.amount}"/>원</p>
+                                        <p class="product-price"><fmt:formatNumber value="${cancel.result_amount}" maxFractionDigits="0" />원</p>
                                     </div>
                                 </div>
                             </div><hr/>
@@ -82,48 +82,42 @@
                                 </ul>
                             </div><hr/>
 
-                            <!-- 환불 요청 내역 -->
-                            <div class="refund-request">
-                                <h3 class="subtitle">환불 정보</h3>
-                                <ul class="detail-list">
-                                    <li>
-                                        <span class="detail-label">상품 결제금액</span>
-                                        <span class="detail-value"><fmt:formatNumber value="${cancel.result_amount}"/>원</span>
-                                    </li>
-                                    <li>
-                                        <c:if test="${requestScope.coupon ne null}">
-
-                                            <c:set var="prodSaledPriceString" value="${fn:replace(cancel.prod_saled_price, ',', '')}" />
-                                            <c:set var="couponSalePer" value="${not empty coupon.sale_per ? coupon.sale_per : 0}" />
-                                            <c:set var="prodSaledPriceInt" value="${prodSaledPriceString * 1}" /> <!-- 숫자 변환 -->
-                                            <c:set var="couponDiscount" value="${prodSaledPriceInt * (couponSalePer / 100)}" />
-
-                                            <!-- 결과 출력 -->
-                                            <span class="detail-label">쿠폰 사용</span>
-                                            <span class="detail-value">-<fmt:formatNumber value="${couponDiscount}" type="number" maxFractionDigits="0"/> 원</span>
+                                <!-- 환불 요청 내역 -->
+                                <div class="refund-request">
+                                    <h3 class="subtitle">환불 정보</h3>
+                                    <ul class="detail-list">
+                                        <li>
+                                            <span class="detail-label">상품 결제금액</span>
+                                            <span class="detail-value"><fmt:formatNumber value="${cancel.result_amount}" maxFractionDigits="0" />원</span>
+                                        </li>
+                                        <c:if test="${not empty requestScope.coupon_name}">
+                                            <li>
+                                                <span class="detail-label">쿠폰 사용</span>
+                                                <span class="detail-value">[${requestScope.coupon_name}]  ${requestScope.sale_per}%</span>
+                                            </li>
                                         </c:if>
-                                    </li>
-                                    <li>
-                                        <span class="detail-label">적립금 사용</span>
-                                        <span class="detail-value">-<fmt:formatNumber value="${not empty requestScope.point_amount ? requestScope.point_amount : 0}"/>원</span>
-                                    </li>
-                                    <li>
-                                        <span class="detail-label">기본 배송비</span>
-                                        <span class="detail-value">무료</span>
-                                    </li>
-                                </ul>
-                            </div><hr/>
-
-                            <!-- 환불 예정 금액 -->
-                            <div class="refund-amount">
-                                <div class="wrap-p">
-                                    <h3 class="subtitle">환불 금액</h3>
-                                    <p class="refund-expected"><fmt:formatNumber value="${cancel.result_amount - couponDiscount - requestScope.point_amount}" type="number" maxFractionDigits="0" />원</p>
+                                        <li>
+                                            <span class="detail-label">적립금 사용</span>
+                                            <span class="detail-value">-<fmt:formatNumber value="${requestScope.point_amount}" maxFractionDigits="0" />원</span>
+                                        </li>
+                                        <li>
+                                            <span class="detail-label">기본 배송비</span>
+                                            <span class="detail-value">무료</span>
+                                        </li>
+                                    </ul>
                                 </div>
-                            </div>
+                                <hr />
+
+                                <!-- 환불 예정 금액 -->
+                                <div class="refund-amount">
+                                    <div class="wrap-p">
+                                        <h3 class="subtitle">환불 금액</h3>
+                                        <p class="refund-expected"><fmt:formatNumber value="${cancel.result_amount}" maxFractionDigits="0" />원</p>
+                                    </div>
+                                </div>
 
                             <%-- 안내사항 --%>
-                            <div class="notice">* 주문 시 사용한 적립금 및 할인쿠폰은 취소완료 즉시 반환됩니다.</div>
+                            <div class="notice">* 주문 시 사용한 적립금 및 할인쿠폰은 환불 즉시 반환됩니다.</div>
                         </div>
                         </c:if>
                     </div>

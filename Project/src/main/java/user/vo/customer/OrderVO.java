@@ -6,7 +6,23 @@ public class OrderVO {
     private String id, tid, cus_no, prod_no, coupon_no, deli_no, order_code, count, order_date, amount, benefit_type, result_amount, pay_type, status, refund_bank, refund_account, reason_customer,
             retrieve_deli_no, prod_code, prod_name, prod_price, prod_sale, prod_image, prod_saled_price, brand, option_name, deli_name, pos_code, addr1,
             addr2, phone, deli_request, is_default, point_amount, inventory_no, coupon_name, sale_per, delivery_date, purchase_confirm_date, exchange_inventory_no,
-            expected_point, refund_request_date, cancel_request_date, exchange_request_date, invoice_number, refund_completed_date, courier, seller_address;
+            expected_point, refund_request_date, cancel_request_date, exchange_request_date, invoice_number, refund_completed_date, courier, seller_address, delivery_type, is_write_review;
+
+    public String getIs_write_review() {
+        return is_write_review;
+    }
+
+    public void setIs_write_review(String is_write_review) {
+        this.is_write_review = is_write_review;
+    }
+
+    public String getDelivery_type() {
+        return delivery_type;
+    }
+
+    public void setDelivery_type(String delivery_type) {
+        this.delivery_type = delivery_type;
+    }
 
     public String getBenefit_type() {
         return benefit_type;
