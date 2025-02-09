@@ -384,6 +384,13 @@
         try {
           let response = await fetch('/Controller?type=uploadImage', {
             method: 'POST', body: formData });
+          if (!response.ok) {
+            console.error('이미지 업로드 실패:', response.status);
+            alert('이미지 업로드 중 오류가 발생했습니다.');
+            return;
+          }
+
+
           let data = await response.json();
 
           if (data.success) {

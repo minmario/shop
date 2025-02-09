@@ -130,16 +130,24 @@ public class Controller extends HttpServlet {
     // 만약! type이 null이면 기본객체(DateAction)을 지정한다.
     if (type == null)
       type = "index";
-
+    System.out.println("type:"+type);
     // type으로 받은 값이 actionMap의 key로 사용되고 있으며
     // actionMap으로부터 원하는 객체를 얻도록 한다.
     Action action = actionMap.get(type);
+    System.out.println("action:"+action);
 
     String viewPath = action.execute(request, response);
 
     //forward 준비
-    RequestDispatcher disp = request.getRequestDispatcher(viewPath);
-    disp.forward(request, response);
+
+
+    if (viewPath != null) {
+      RequestDispatcher disp = request.getRequestDispatcher(viewPath);
+      disp.forward(request, response);
+    } else {
+      // JSON 응답이 이미 완료된 경우
+      System.out.println("JSON 응답 완료, JSP forward 없음");
+    }
   }
 
   /**

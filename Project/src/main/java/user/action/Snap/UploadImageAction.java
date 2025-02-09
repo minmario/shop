@@ -22,12 +22,18 @@ import java.nio.file.StandardCopyOption;
 public class UploadImageAction implements Action {
   @Override
   public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-    JsonObject jsonResponse = new JsonObject();
-    response.setContentType("application/json");
 
+    JsonObject jsonResponse = new JsonObject();
+    System.out.println("11");
+    response.setContentType("application/json");
+    System.out.println("요청 Content-Type: " + request.getContentType());
+    System.out.println("요청이 multipart인가? " + request.getContentType().startsWith("multipart/form-data"));
 
 
     Part filePart = request.getPart("file"); // input name="file"
+    System.out.println(filePart.getSubmittedFileName());
+    System.out.println(filePart);
+    System.out.println("실행");
     if (filePart == null) {
       jsonResponse.addProperty("success", false);
       jsonResponse.addProperty("message", "파일을 찾을 수 없습니다.");
@@ -43,11 +49,11 @@ public class UploadImageAction implements Action {
       return null;
     }
 
-    // ✅ 파일명 정리 (한글 및 특수문자 제거)
+    //  파일명 정리 (한글 및 특수문자 제거)
     String safeFileName = originalFileName.replaceAll("[^a-zA-Z0-9.]", "_");
-    System.out.println("📌 변환된 파일명: " + safeFileName);
+    System.out.println(" 변환된 파일명: " + safeFileName);
 
-    // ✅ 파일을 로컬 임시 저장
+    //  파일을 로컬 임시 저장
     File tempFile = convertInputStreamToFile(filePart.getInputStream(), safeFileName);
     if (tempFile == null) {
       jsonResponse.addProperty("success", false);
@@ -56,22 +62,22 @@ public class UploadImageAction implements Action {
       return null;
     }
 
-    // ✅ S3 업로드
+    //  S3 업로드
     S3Uploader uploader = new S3Uploader();
     String imageUrl = uploader.uploadFile(tempFile, safeFileName);
-
-    // ✅ 업로드 성공 여부 확인
+    System.out.println("파일 업로드 요청 시작"+imageUrl);
+    // 업로드 성공 여부 확인
     if (imageUrl == null || imageUrl.isEmpty()) {
-      System.out.println("❌ S3 업로드 실패!");
+      System.out.println(" S3 업로드 실패!");
       jsonResponse.addProperty("success", false);
       jsonResponse.addProperty("message", "S3 업로드 실패");
     } else {
-      System.out.println("✅ S3 업로드 성공! 이미지 URL: " + imageUrl);
+      System.out.println(" S3 업로드 성공! 이미지 URL: " + imageUrl);
       jsonResponse.addProperty("success", true);
       jsonResponse.addProperty("imageUrl", imageUrl);
     }
 
-    // ✅ 임시 파일 삭제
+    //  임시 파일 삭제
     tempFile.delete();
 
     response.getWriter().write(jsonResponse.toString());
@@ -79,7 +85,7 @@ public class UploadImageAction implements Action {
   }
 
   /**
-   * ✅ InputStream을 File로 변환하는 메서드
+   * InputStream을 File로 변환하는 메서드
    */
   private File convertInputStreamToFile(InputStream inputStream, String fileName) {
     try {
@@ -88,7 +94,7 @@ public class UploadImageAction implements Action {
       inputStream.close();
       return tempFile;
     } catch (IOException e) {
-      System.err.println("❌ 파일 변환 오류: " + e.getMessage());
+      System.err.println(" 파일 변환 오류: " + e.getMessage());
       return null;
     }
   }

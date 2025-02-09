@@ -41,9 +41,7 @@ public class SnsAction implements Action {
      List<CustomerVO> recommendedUsers = userDao.getRandomUsers(5);
      request.setAttribute("recommendedUsers", recommendedUsers);
 
-     ReplyDao replyDao = new ReplyDao();
-     ReplyVO latestReply = replyDao.getLatestReply(boardNo);
-     request.setAttribute("latestReply", latestReply);
+
 
      //좋아요확인용
      LikeDao likeDao = new LikeDao();
@@ -58,6 +56,9 @@ public class SnsAction implements Action {
 
       String mainImage = snap.getSnapshot_image();
       String additionalImages = snap.getAdditional_images();
+      ReplyDao replyDao = new ReplyDao();
+      ReplyVO latestReply = replyDao.getLatestReply(boardNo);
+      request.setAttribute("latestReply", latestReply);
 
       if (additionalImages != null && additionalImages.trim().endsWith("_")) {
         // 서브 이미지가 `_`로 끝나면 삭제하고 메인이미지만 보냄

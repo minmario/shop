@@ -263,3 +263,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+document.getElementById('snapEditForm').addEventListener('submit', function(e) {
+  const submitButton = document.getElementById('submitSnap');
+  // 중복 클릭 방지를 위해 저장 버튼 비활성화
+  submitButton.disabled = true;
+  submitButton.textContent = '저장 중...';
+});

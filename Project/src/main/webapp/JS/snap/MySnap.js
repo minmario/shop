@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   let editingCommentId = null; // 현재 수정 중인 댓글 ID 저장
 
+
   //  "모든 댓글 보기" 버튼 클릭 시 모달 열기 + 댓글 불러오기
   document.getElementById("viewAllCommentsBtn").addEventListener("click", function () {
     const heartIcon = document.querySelector(".heart-icon");
@@ -283,40 +284,57 @@ document.getElementById("postCommentBtn").addEventListener("click", function () 
 
 
 
-  // 페이지 로딩 시 각 게시글 내용에 대해 더보기 버튼 표시 여부를 결정
-  document.addEventListener("DOMContentLoaded", function() {
+// 페이지 로딩 시 각 게시글 내용에 대해 더보기 버튼 표시 여부를 결정
+document.addEventListener("DOMContentLoaded", function() {
   // 모든 게시글 내용 요소를 순회
   var contentElements = document.querySelectorAll(".snap-content");
   contentElements.forEach(function(el) {
-  // 실제 내용 높이와 클램프된 높이를 비교해서 더보기 버튼을 보여줌
-  // 클램프된 경우 대략 2줄의 높이를 가지므로, 2줄보다 높으면 버튼을 보임
-  if (el.scrollHeight > el.clientHeight + 5) { // 여유 5px
-  var id = el.id.split("_")[1]; // 예: "snapContent_123" → "123"
-  var moreBtnContainer = document.getElementById("moreBtnContainer_" + id);
-  if (moreBtnContainer) {
-  moreBtnContainer.style.display = "block";
-}
-}
-});
+    // 실제 내용 높이와 클램프된 높이를 비교해서 더보기 버튼을 보여줌
+    // 클램프된 경우 대략 2줄의 높이를 가지므로, 2줄보다 높으면 버튼을 보임
+    if (el.scrollHeight > el.clientHeight + 5) { // 여유 5px
+      var id = el.id.split("_")[1]; // 예: "snapContent_123" → "123"
+      var moreBtnContainer = document.getElementById("moreBtnContainer_" + id);
+      if (moreBtnContainer) {
+        moreBtnContainer.style.display = "block";
+      }
+    }
+  });
 });
 
-  // 더보기 버튼 클릭 시 확장/축소 기능
-  function toggleContent(id) {
+// 더보기 버튼 클릭 시 확장/축소 기능
+function toggleContent(id) {
   var contentEl = document.getElementById("snapContent_" + id);
   var btnContainer = document.getElementById("moreBtnContainer_" + id);
   if (contentEl.classList.contains("expanded")) {
-  // 접기: 클램프 효과 적용
-  contentEl.classList.remove("expanded");
-  btnContainer.innerHTML = '<span class="more-btn" onclick="toggleContent(\''+id+'\')">더보기</span>';
-} else {
-  // 펼치기: clamped 효과 제거
-  contentEl.classList.add("expanded");
-  btnContainer.innerHTML = '<span class="more-btn" onclick="toggleContent(\''+id+'\')">접기</span>';
+    // 접기: 클램프 효과 적용
+    contentEl.classList.remove("expanded");
+    btnContainer.innerHTML = '<span class="more-btn" onclick="toggleContent(\''+id+'\')">더보기</span>';
+  } else {
+    // 펼치기: clamped 효과 제거
+    contentEl.classList.add("expanded");
+    btnContainer.innerHTML = '<span class="more-btn" onclick="toggleContent(\''+id+'\')">접기</span>';
+  }
 }
-}
 
 
-
+// $(document).on('click', '.edit-snap-btn', function(e) {
+//   e.preventDefault();
+//   var snapId = $(this).data('snap-id');
+//   console.log("수정 버튼 클릭, snapId:", snapId);
+//   // AJAX로 수정 모달 컨텐츠 로드
+//   $.ajax({
+//     url: "${pageContext.request.contextPath}/Controller?type=snapUpdate&id=" + snapId,
+//     method: "GET",
+//     success: function(response) {
+//       // 수정 모달 내부의 .modal-content 영역에 로드된 HTML 삽입
+//       $('#snapEditModal .modal-content').html(response);
+//       // 모달은 이미 data-bs-toggle, data-bs-target 속성에 의해 열림
+//     },
+//     error: function() {
+//       alert("게시글 정보를 불러오는데 실패했습니다.");
+//     }
+//   });
+// });
 // document.addEventListener("DOMContentLoaded", function () {
 //   var carouselElement = document.getElementById("photoCarousel");
 //   var currentIndexElement = document.getElementById("currentIndex");

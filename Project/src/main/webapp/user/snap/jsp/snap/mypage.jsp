@@ -19,9 +19,22 @@
     }
 
     .image-gallery img {
-        width: 100%;
+        max-width: 344.83px;
         aspect-ratio: 1 / 1; /* 정사각형 유지 */
         object-fit: cover;
+    }
+    .heart-icon {
+        position: absolute !important;
+        top: 10px !important;
+        right: 10px !important;
+        font-size: 24px!important;
+        color: #ccc;
+        z-index: 10!important;
+        transition: color 0.3s ease!important;
+    }
+
+    .heart-icon:hover {
+        transform: scale(1.2);
     }
 
 </style>
@@ -85,14 +98,13 @@
                 <c:forEach var="snap" items="${snapList}">
                     <div class="col">
                         <div class="position-relative">
-                            <img src="${snap.snapshot_image}" class="img-fluid" alt="Snap Image"  onclick="location.href='Controller?type=sns&id=${snap.id}'">
-                            <i class="bi bi-heart${snap.liked ? '-fill' : ''} heart-icon position-absolute top-0 end-0 m-2"
-                               data-board-no="${snap.id}"></i>
-
+                            <img src="${snap.snapshot_image}" class="img-fluid w-100" alt="Snap Image" onclick="location.href='Controller?type=sns&id=${snap.id}'">
+                            <i class="bi bi-heart${snap.liked ? '-fill' : ''} heart-icon" data-board-no="${snap.id}"></i>
                         </div>
                     </div>
                 </c:forEach>
             </div>
+
 
             <!-- 페이지네이션 -->
             <nav aria-label="Page navigation" class="mt-4">

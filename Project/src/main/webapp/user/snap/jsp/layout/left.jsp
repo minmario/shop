@@ -42,7 +42,7 @@
         <li>
 <c:choose>
     <c:when test="${not empty sessionScope.nickname}">
-            <a href="/Controller?type=dm" class="nav-link text-dark d-flex align-items-center">
+            <a href="${pageContext.request.contextPath}/Controller?type=dm" class="nav-link text-dark d-flex align-items-center">
                 <i class="bi bi-chat-dots fs-4 me-2"></i>
                 <span>메시지</span>
             </a>
