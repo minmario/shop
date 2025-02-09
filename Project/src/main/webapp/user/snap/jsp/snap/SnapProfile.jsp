@@ -94,12 +94,13 @@
 
 
             <!-- 게시물 그리드 -->
+            <c:set var="firstBoardId" value="${board1[0].id}" />
                 <div class="d-flex flex-wrap justify-content-between" style="gap: 4px; max-width: 930px; margin: 0 auto;"> <!-- 고정 너비 설정 -->
                     <c:forEach var="image" items="${board}">
                         <div style="width: 307px; height: 307px;"> <!-- 고정 크기 -->
                             <div class="d-flex justify-content-center align-items-center" style="width: 100%; height: 100%; overflow: hidden;">
                                 <c:if test="${boardCount>0}">
-                                <img src="${image.snapshot_image}" onclick= "location.href='${pageContext.request.contextPath}/Controller?type=sns&id=${image.id}'" alt="Post Image" class="img-fluid" style="object-fit: cover; width: 100%; height: 100%;">
+                                <img src="${image.snapshot_image}" onclick= "location.href='${pageContext.request.contextPath}/Controller?type=sns&id=${firstBoardId}'" alt="Post Image" class="img-fluid" style="object-fit: cover; width: 100%; height: 100%;">
                                 </c:if>
 
                             </div>
@@ -146,7 +147,7 @@
       const confirmLoginBtn = document.getElementById('confirmLoginBtn');
       const messageForm = document.getElementById('messageForm');
       const messageButton = document.getElementById("messageButton");
-
+      const currentUserId = ${board[0].id};
 
       // const isLoggedIn = followButton.getAttribute('data-logged-in') === "true";
       //  console.log(isLoggedIn);
@@ -247,10 +248,10 @@
               .then(data => {
                 const followList = document.getElementById('followList');
                 followList.innerHTML = ''; // 기존 목록 초기화
-
                 data.forEach(user => {
                   let followStatus = user.is_following ? '팔로잉 취소' : '팔로우';
                   let followClass = user.is_following ? 'btn-danger' : 'btn-primary';
+                  let userId = user.user_id ? user.user_id : currentUserId;  // 기본값을 currentUserId로 설정
 
                   followList.innerHTML +=
                       '<li class="list-group-item d-flex justify-content-between align-items-center">' +
@@ -258,8 +259,7 @@
                       '<img src="' + user.profile_image + '" alt="Profile" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">' +
                       '<span class="ms-2">' + user.nickname + '</span>' +
                       '</div>' +
-
-                      '<button class="btn ' + followClass + ' btn-sm follow-btn" data-user-id="' + user.user_id + '">' +
+                      '<button id="followButton" class="btn ' + followClass + ' btn-sm follow-btn" data-user-id="' + userId + '">' +
                       followStatus +
                       '</button>' +
                       '</li>';
@@ -279,6 +279,58 @@
         }
       });
 
+      document.addEventListener('click', function (event) {
+        if (event.target.classList.contains('follow-btn')) {
+          const followButton = event.target;
+
+          let userId = followButton.getAttribute('data-user-id');
+          if (!userId) {
+            userId = currentUserId; // 현재 프로필의 사용자 ID 사용
+          }
+
+          const isCurrentlyFollowing = followButton.classList.contains('btn-danger');
+          const action = isCurrentlyFollowing ? 'unfollow' : 'follow';
+
+          updateButtonUI(followButton, !isCurrentlyFollowing);
+          followButton.disabled = true;
+          sendRequest(action, userId, followButton);
+        }
+      });
+      function updateButtonUI(button, isFollowing) {
+        if (isFollowing) {
+          button.textContent = '팔로잉 취소';
+          button.classList.replace('btn-primary', 'btn-danger');
+        } else {
+          button.textContent = '팔로우';
+          button.classList.replace('btn-danger', 'btn-primary');
+        }
+      }
+
+      function sendRequest(action, userId, button, retryCount = 0) {
+        fetch('/Controller?type=' + action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId }),
+        })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('서버 응답 오류');
+              }
+              return response.json();
+            })
+            .then(data => {
+              if (!data.success) {
+                throw new Error('처리 실패');
+              }
+              // 성공 시 추가 작업 (필요한 경우)
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            })
+            .finally(() => {
+              button.disabled = false;
+            });
+      }
 
     </script>
 </body>

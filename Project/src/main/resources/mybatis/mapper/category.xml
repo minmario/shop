@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="category">
+  <!-- 인자로 카테고리 값을 받아 검색하는 기능 -->
+
+  <select id="all_major_category"  resultType="comm.vo.MajorCategoryVO">
+    SELECT * FROM major_category
+  </select>
+  <select id="all_middle_category"  resultType="comm.vo.MiddleCategoryVO">
+    SELECT * FROM middle_category
+  </select>
+  <select id="get_prod_category" parameterType="String" resultType="comm.vo.MiddleCategoryVO">
+    SELECT major_category.name AS major_name, middle_category.*
+    FROM middle_category
+    JOIN major_category ON major_category.id = middle_category.major_no
+    WHERE middle_category.id = 1;
+  </select>
+  <select id="major_category_one" parameterType="String" resultType="comm.vo.MajorCategoryVO">
+    SELECT * FROM major_category
+    WHERE id = #{id}
+  </select>
+</mapper>

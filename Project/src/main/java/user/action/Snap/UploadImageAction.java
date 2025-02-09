@@ -4,36 +4,31 @@ import com.google.gson.JsonObject;
 import service.S3Uploader;
 import user.action.Action;
 
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import java.io.*;
-import java.net.URLEncoder;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 @MultipartConfig(
     fileSizeThreshold = 1024 * 1024 * 2,  // 2MB
     maxFileSize = 1024 * 1024 * 10,      // 10MB
-    maxRequestSize = 1024 * 1024 * 50    // 50MB
+    maxRequestSize = 1024 * 1024 * 50   // 50MB
 )
 public class UploadImageAction implements Action {
   @Override
   public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
     JsonObject jsonResponse = new JsonObject();
-    System.out.println("11");
     response.setContentType("application/json");
-    System.out.println("요청 Content-Type: " + request.getContentType());
-    System.out.println("요청이 multipart인가? " + request.getContentType().startsWith("multipart/form-data"));
-
+    System.out.println("saaaaaaaaaaaaaaa");
 
     Part filePart = request.getPart("file"); // input name="file"
-    System.out.println(filePart.getSubmittedFileName());
-    System.out.println(filePart);
-    System.out.println("실행");
+    System.out.println("saaaaaaaaaaaaaaa"+filePart.getSubmittedFileName());
     if (filePart == null) {
       jsonResponse.addProperty("success", false);
       jsonResponse.addProperty("message", "파일을 찾을 수 없습니다.");
@@ -41,20 +36,19 @@ public class UploadImageAction implements Action {
       return null;
     }
 
-    String originalFileName = filePart.getSubmittedFileName();
-    if (originalFileName == null || originalFileName.isEmpty()) {
+
+    String fileName = filePart.getSubmittedFileName();
+    if (fileName == null || fileName.isEmpty()) {
       jsonResponse.addProperty("success", false);
       jsonResponse.addProperty("message", "파일 이름이 유효하지 않습니다.");
       response.getWriter().write(jsonResponse.toString());
       return null;
     }
 
-    //  파일명 정리 (한글 및 특수문자 제거)
-    String safeFileName = originalFileName.replaceAll("[^a-zA-Z0-9.]", "_");
-    System.out.println(" 변환된 파일명: " + safeFileName);
 
-    //  파일을 로컬 임시 저장
-    File tempFile = convertInputStreamToFile(filePart.getInputStream(), safeFileName);
+
+
+    File tempFile = convertInputStreamToFile(filePart.getInputStream(), fileName);
     if (tempFile == null) {
       jsonResponse.addProperty("success", false);
       jsonResponse.addProperty("message", "파일 변환 실패");
@@ -62,22 +56,22 @@ public class UploadImageAction implements Action {
       return null;
     }
 
-    //  S3 업로드
+
     S3Uploader uploader = new S3Uploader();
-    String imageUrl = uploader.uploadFile(tempFile, safeFileName);
-    System.out.println("파일 업로드 요청 시작"+imageUrl);
-    // 업로드 성공 여부 확인
-    if (imageUrl == null || imageUrl.isEmpty()) {
-      System.out.println(" S3 업로드 실패!");
+    String imageUrl = uploader.uploadFile(tempFile, fileName); // 기존 uploadFile() 메서드 사용
+
+
+
+
+    if (imageUrl == null) {
       jsonResponse.addProperty("success", false);
       jsonResponse.addProperty("message", "S3 업로드 실패");
     } else {
-      System.out.println(" S3 업로드 성공! 이미지 URL: " + imageUrl);
       jsonResponse.addProperty("success", true);
       jsonResponse.addProperty("imageUrl", imageUrl);
     }
 
-    //  임시 파일 삭제
+
     tempFile.delete();
 
     response.getWriter().write(jsonResponse.toString());
@@ -89,9 +83,17 @@ public class UploadImageAction implements Action {
    */
   private File convertInputStreamToFile(InputStream inputStream, String fileName) {
     try {
-      File tempFile = File.createTempFile("upload_", "_" + fileName);
-      Files.copy(inputStream, tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+      File tempFile = File.createTempFile("upload_", fileName);
+      FileOutputStream outputStream = new FileOutputStream(tempFile);
+
+      byte[] buffer = new byte[1024];
+      int bytesRead;
+      while ((bytesRead = inputStream.read(buffer)) != -1) {
+        outputStream.write(buffer, 0, bytesRead);
+      }
+      outputStream.close();
       inputStream.close();
+
       return tempFile;
     } catch (IOException e) {
       System.err.println(" 파일 변환 오류: " + e.getMessage());

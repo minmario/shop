@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="product">
+  <!-- 인자로 카테고리 값을 받아 검색하는 기능 -->
+
+  <select id="getAll" parameterType="String" resultType="comm.vo.ProductVO">
+    SELECT * FROM product
+    WHERE seller_no = #{id}
+    AND is_del = 0;
+  </select>
+  <select id="search_product_all" parameterType="map" resultType="comm.vo.ProductVO">
+    SELECT * FROM product
+    WHERE seller_no=1
+    AND name LIKE CONCAT('%',#{prod_name},'%')
+    AND is_del = 0
+  </select>
+  <select id="search_product" parameterType="map" resultType="comm.vo.ProductVO">
+    SELECT * FROM product
+    WHERE seller_no=1
+    AND category_no = #{category}
+    AND name LIKE CONCAT('%',#{prod_name},'%')
+    AND is_del = 0
+  </select>
+  <select id="getProductOne" parameterType="String" resultType="comm.vo.ProductVO">
+    SELECT * FROM product
+    WHERE id = #{prod_no}
+  </select>
+  <update id="changeActive" parameterType="map">
+    UPDATE product
+    SET active= #{active}
+    WHERE id=#{prod_no}
+  </update>
+  <update id="delete_product" parameterType="String">
+    UPDATE product
+    SET is_del=1
+    WHERE id=#{prod_no}
+  </update>
+  <insert id="addProduct" parameterType="map" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    INSERT INTO product (name,major_category,category_no ,price, sale,seller_no,add_date,prod_image,additional_images,content,saled_price,content_image)
+    VALUES (#{prod_name},#{major_category}, #{middle_category}, #{price}, #{sale},#{seller_no},NOW(),#{prod_image},#{additional_image},#{content},#{saled_price},#{content_image})
+  </insert>
+  <update id="updateProduct" parameterType="map">
+    UPDATE product SET
+    name = #{prod_name},
+    major_category=#{major_category},
+    category_no = #{middle_category},
+    price = #{price},
+    sale = #{sale},
+    prod_image = #{prod_image},
+    additional_images=#{additional_image},
+    content = #{content},
+    saled_price = #{saled_price},
+    content_image=#{content_image}
+    WHERE id = #{prod_no}
+  </update>
+</mapper>

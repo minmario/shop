@@ -317,6 +317,8 @@ function toggleContent(id) {
 }
 
 
+
+
 // $(document).on('click', '.edit-snap-btn', function(e) {
 //   e.preventDefault();
 //   var snapId = $(this).data('snap-id');

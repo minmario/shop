@@ -103,6 +103,14 @@
     FROM customer c LEFT JOIN board b ON b.cus_no = c.id  AND bname = 'snap' AND b.is_del = 0 WHERE c.id =#{cus_no}
   </select>
 
+  <select id="getProfile1" parameterType="int" resultType="user.vo.BoardVO">
+    SELECT b.id, b.cus_no, b.gender, b.season, b.style, b.title, b.content, b.snapshot_image, b.like_count, b.write_date, b.is_del , c.Introduce,
+    c.profile_image,c.nickname
+    FROM customer c LEFT JOIN board b ON b.cus_no = c.id  AND bname = 'snap' AND b.is_del = 0 WHERE c.id =#{cus_no}
+  </select>
+
+
+
   <select id="getProductsByBoardNo" parameterType="int" resultType="user.vo.snap.ProductVO">
     SELECT p.id, p.name, p.prod_image, p.price, p.sale, s.name AS sellerName
     FROM product p

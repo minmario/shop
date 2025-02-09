@@ -98,6 +98,12 @@ public class SnapDao {
     session.close();
     return boardList;
   }
+  public List<BoardVO> profile1(int cus_no) {
+    SqlSession session = FactoryService.getFactory().openSession();
+    List<BoardVO> boardList = session.selectList("board.getProfile1", cus_no);
+    session.close();
+    return boardList;
+  }
 
   public List<ProductVO> getProductsByBoardNo(int boardNo) {
     SqlSession session = FactoryService.getFactory().openSession();

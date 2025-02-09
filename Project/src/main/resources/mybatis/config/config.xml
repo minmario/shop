@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration
-    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-    "https://mybatis.org/dtd/mybatis-3-config.dtd">
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
   <environments default="">
     <environment id="">
@@ -37,5 +37,14 @@
     <mapper resource="mybatis/snap/mapper/FollowMapper.xml"/>
     <mapper resource="mybatis/snap/mapper/ChatMapper.xml"/>
     <mapper resource="mybatis/snap/mapper/reply.xml"/>
+
+    <mapper resource="mybatis/mapper/inventory.xml"/>
+    <mapper resource="mybatis/mapper/product.xml"/>
+    <mapper resource="mybatis/mapper/category.xml"/>
+    <mapper resource="mybatis/mapper/order.xml"/>
+    <mapper resource="mybatis/mapper/question.xml"/>
+    <mapper resource="mybatis/mapper/seller.xml"/>
+    <mapper resource="mybatis/mapper/sales.xml"/>
+    <mapper resource="mybatis/mapper/coupon.xml"/>
   </mappers>
 </configuration>

@@ -24,10 +24,11 @@ public class SnapProfileAction  implements Action {
     if (customerId == null) {
       customerId = 0;  // 비로그인 사용자의 기본값
     }
-
+    List<BoardVO> vo1 = new ArrayList<BoardVO>();
+    vo1= snapDao.profile1(cus_no);
     vo = snapDao.profile(cus_no);
     request.setAttribute("board", vo);
-
+    request.setAttribute("board1", vo1);
 
     System.out.println("test"+vo.size());
 

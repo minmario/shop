@@ -101,10 +101,10 @@
             <jsp:include page="/user/snap/jsp/layout/left.jsp"></jsp:include>
         </div>
 
-        <!-- ✅ 콘텐츠 + 추천 사용자 목록을 같은 줄(row)로 배치 -->
+        <!--  콘텐츠 + 추천 사용자 목록을 같은 줄(row)로 배치 -->
         <div class="col-md-10 offset-md-2">
             <div class="row">
-                <!-- ✅ 본문 내용 (8 컬럼) -->
+                <!--  본문 내용 (8 컬럼) -->
                 <div class="col-md-8">
                     <div class="container mt-4">
                         <div class="row justify-content-center">
@@ -156,11 +156,12 @@
                                             <c:choose>
                                                 <c:when test="${isFollowing}">
                                                     <!-- 팔로우 중인 경우 -->
-                                                    <button id="followButton" class="btn btn-primary btn-sm" data-following-id="${snap.cus_no}" style="font-size: 0.875rem;">팔로잉 취소</button>
+                                                    <button id="followButton" class="btn btn-danger btn-sm follow-btn" data-user-id="${snap.cus_no}" style="font-size: 0.875rem;">팔로잉 취소</button>
+
                                                 </c:when>
                                                 <c:otherwise>
                                                     <!-- 팔로우하지 않은 경우 -->
-                                                    <button id="followButton" class="btn btn-primary btn-sm" data-following-id="${snap.cus_no}" style="font-size: 0.875rem;">팔로우</button>
+                                                    <button id="followButton" class="btn btn-primary btn-sm follow-btn" data-user-id="${snap.cus_no}" style="font-size: 0.875rem;">팔로우</button>
                                                 </c:otherwise>
                                             </c:choose>
                                         </c:if>
@@ -326,7 +327,7 @@
                                     <c:forEach var="user" items="${recommendedUsers}">
                                         <li class="d-flex align-items-center justify-content-between mb-2">
                                             <div class="d-flex align-items-center">
-                                                <img src="${user.profile_image}" onclick="location.href='/Controller?type'" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
+                                                <img src="${user.profile_image}"  onclick="location.href='Controller?type=profile&cus_no=${user.id}'"class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
                                                 <div class="ms-2">${user.nickname}</div>
                                             </div>
                                             <button class="btn btn-primary btn-sm follow-btn" data-user-id="${user.id}">팔로우</button>
@@ -363,6 +364,66 @@
     <script src="${pageContext.request.contextPath}/JS/snapModal.js"></script>
     <script src="${pageContext.request.contextPath}/JS/snap/MySnap.js"></script>
     <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const followButtons = document.querySelectorAll('.follow-btn');
+
+        followButtons.forEach(function (button) {
+          button.addEventListener('click', function () {
+            const followingId = button.getAttribute('data-user-id');
+            const isCurrentlyFollowing = button.classList.contains('btn-danger');
+            const action = isCurrentlyFollowing ? 'unfollow' : 'follow';
+
+            // UI 즉시 업데이트
+            updateButtonUI(button, !isCurrentlyFollowing);
+
+            // 버튼 비활성화
+            button.disabled = true;
+
+            // Ajax 요청 보내기
+            sendRequest(action, followingId, button);
+          });
+        });
+
+        function updateButtonUI(button, isFollowing) {
+          if (isFollowing) {
+            button.textContent = '팔로잉 취소';
+            button.classList.remove('btn-primary');
+            button.classList.add('btn-danger');
+          } else {
+            button.textContent = '팔로우';
+            button.classList.remove('btn-danger');
+            button.classList.add('btn-primary');
+          }
+        }
+
+        function sendRequest(action, followingId, button) {
+          fetch('/Controller?type=' + action, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ followingId: followingId }),
+            timeout: 5000
+          })
+              .then(function (response) {
+                if (!response.ok) {
+                  throw new Error('서버 응답 오류');
+                }
+                return response.json();
+              })
+              .then(function (data) {
+                if (!data.success) {
+                  throw new Error('처리 실패');
+                }
+              })
+              .catch(function (error) {
+                console.error('Error:', error);
+                alert('요청 처리 중 오류가 발생했습니다.');
+              })
+              .finally(function () {
+                button.disabled = false;
+              });
+        }
+      });
+
       <%--document.addEventListener("DOMContentLoaded", function () {--%>
       <%--  var contextPath = "${pageContext.request.contextPath}";--%>
       <%--  $(document).on('click', '.edit-snap-btn', function(e) {--%>
