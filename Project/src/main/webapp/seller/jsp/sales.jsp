@@ -190,7 +190,7 @@
         <th>주문일</th>
         <th>상품명</th>
         <th>카테고리</th>
-        <th>판매 금액</th>
+        <th>쿠폰 할인률</th>
         <th>정산 금액</th>
         <th>상태</th>
         <th>관리</th>
@@ -203,7 +203,7 @@
           <td>${sale.order_date}</td>
           <td>${sale.product_name}</td>
           <td>${sale.category_name}</td>
-          <td>₩${sale.discount_value}</td>
+          <td>${sale.discount_value}%</td>
           <td>₩${sale.final_price}</td>
           <td>
             <c:choose>

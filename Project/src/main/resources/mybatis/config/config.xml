@@ -20,5 +20,6 @@
         <mapper resource="mybatis/mapper/seller.xml"/>
         <mapper resource="mybatis/mapper/sales.xml"/>
         <mapper resource="mybatis/mapper/coupon.xml"/>
+        <mapper resource="mybatis/mapper/sellerLog.xml"/>
     </mappers>
 </configuration>
