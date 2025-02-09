@@ -21,6 +21,13 @@
 <body>
     <c:choose>
         <c:when test="${not empty sessionScope.customer_info}">
+            <%-- 결제 실패 시 --%>
+            <c:if test="${not empty requestScope.fail_msg}">
+                <script>
+                    alert("${requestScope.fail_msg}");
+                </script>
+            </c:if>
+
             <%-- header --%>
             <jsp:include page="../layout/header.jsp"></jsp:include>
 

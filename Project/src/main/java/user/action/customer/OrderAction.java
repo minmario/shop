@@ -421,21 +421,31 @@ public class OrderAction implements Action {
                                     session.removeAttribute("tid");
                                     session.removeAttribute("deli_no");
                                     session.removeAttribute("used_point");
+
+                                    viewPage = "/user/customer/jsp/payment/orderCompleted.jsp";
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     System.out.println("Error parsing products JSON.");
+
+                                    request.setAttribute("fail_msg", "결제에 실패했습니다. 다시 시도해 주세요.");
+                                    viewPage = "/user/customer/jsp/cart/cart.jsp";
                                 }
                             } else {
                                 System.out.println("No products data found in session.");
+
+                                request.setAttribute("fail_msg", "결제에 실패했습니다. 다시 시도해 주세요.");
+                                viewPage = "/user/customer/jsp/cart/cart.jsp";
                             }
                         } else {
                             System.out.println("approve API 요청 실패: " + jsonResponse);
+
+                            request.setAttribute("fail_msg", "결제에 실패했습니다. 다시 시도해 주세요.");
+                            viewPage = "/user/customer/jsp/cart/cart.jsp";
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
 
-                    viewPage = "/user/customer/jsp/payment/orderCompleted.jsp";
                     break;
                 case "completed":
                     order_code = request.getParameter("order_code");
