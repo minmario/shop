@@ -103,6 +103,7 @@ public class ExchangeRequestAction implements Action {
                             if (u_o_cnt > 0) {
                                 OrderVO o_vo = OrderDAO.selectOrderById(id);
 
+                                // 교환 로그
                                 LogVO lvo = new LogVO();
                                 StringBuffer sb = new StringBuffer();
                                 lvo.setCus_no(cvo.getId());
@@ -111,14 +112,14 @@ public class ExchangeRequestAction implements Action {
                                 sb.append("cus_co : " + o_vo.getCus_no() + ", ");
                                 sb.append("order_code : " + o_vo.getOrder_code() + ", ");
                                 sb.append("status : " + o_vo.getStatus() + ", ");
-                                sb.append("inventory_no : " + o_vo.getInventory_no() + ", ");
+                                sb.append("inventory_no : " + o_vo.getInventory_no());
                                 lvo.setPrev(sb.toString());
                                 sb = new StringBuffer();
                                 sb.append("id : " + id + ", ");
                                 sb.append("cus_co : " + cvo.getId() + ", ");
                                 sb.append("order_code : " + orderCode + ", ");
                                 sb.append("status : " + "8" + ", ");
-                                sb.append("inventory_no : " + inventory_no + ", ");
+                                sb.append("inventory_no : " + inventory_no);
                                 lvo.setCurrent(sb.toString());
                                 LogDAO.updateLog(lvo);
 
