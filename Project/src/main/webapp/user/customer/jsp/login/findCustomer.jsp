@@ -25,7 +25,7 @@
             <!-- 아이디 -->
             <div class="input-group mb-3">
                 <label for="cus_id" class="form-label" style="width: 100%">아이디</label>
-                <input type="text" class="form-control" id="cus_id" name="cus_id"  maxlength="30" placeholder="아이디를 입력하세요" required>
+                <input type="text" class="form-control" id="cus_id" name="cus_id"  maxlength="30" placeholder="아이디를 입력하세요" autocomplete="off" required>
             </div>
 
             <button class="btn btn-dark" type="button" onclick="onExistCusId()">확인</button>

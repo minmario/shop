@@ -32,7 +32,7 @@
             <!-- 아이디 -->
             <div class="input-group mb-3">
                 <label for="cus_id" class="form-label" style="width: 100%">아이디</label>
-                <input type="text" class="form-control" id="cus_id" name="cus_id"  maxlength="30" placeholder="아이디를 입력하세요" required>
+                <input type="text" class="form-control" id="cus_id" name="cus_id"  maxlength="30" placeholder="아이디를 입력하세요" autocomplete="off" required>
                 <div class="input-group-append">
                     <button class="btn btn-dark" type="button" onclick="onCheckCusId()">아이디 확인</button>
                 </div>
@@ -41,19 +41,19 @@
             <!-- 비밀번호 -->
             <div class="mb-3">
                 <label for="cus_pw" class="form-label">비밀번호</label>
-                <input type="password" class="form-control" id="cus_pw" name="cus_pw" placeholder="비밀번호를 입력하세요" maxlength="30" required>
+                <input type="password" class="form-control" id="cus_pw" name="cus_pw" placeholder="비밀번호를 입력하세요" maxlength="30" autocomplete="off" required>
             </div>
 
             <!-- 이름 -->
             <div class="mb-3">
                 <label for="cus_name" class="form-label">이름</label>
-                <input type="text" class="form-control" id="cus_name" name="cus_name" placeholder="이름을 입력하세요" maxlength="50" required>
+                <input type="text" class="form-control" id="cus_name" name="cus_name" placeholder="이름을 입력하세요" maxlength="50" autocomplete="off" required>
             </div>
 
             <!-- 닉네임 -->
             <div class="mb-3">
                 <label for="cus_nickname" class="form-label">닉네임</label>
-                <input type="text" class="form-control" id="cus_nickname" name="cus_nickname" placeholder="닉네임을 입력하세요" maxlength="50" required>
+                <input type="text" class="form-control" id="cus_nickname" name="cus_nickname" placeholder="닉네임을 입력하세요" maxlength="50" autocomplete="off" required>
             </div>
 
             <!-- 성별 -->
@@ -78,40 +78,40 @@
             <!-- 전화번호 -->
             <div class="mb-3">
                 <label for="cus_phone" class="form-label">전화번호</label>
-                <input type="text" class="form-control" id="cus_phone" name="cus_phone" placeholder="전화번호를 입력하세요" maxlength="30" required>
+                <input type="text" class="form-control" id="cus_phone" name="cus_phone" placeholder="전화번호를 입력하세요" maxlength="30" autocomplete="off" required>
             </div>
 
             <!-- 이메일 -->
             <div class="mb-3">
                 <label for="cus_email" class="form-label">이메일</label>
-                <input type="email" class="form-control" id="cus_email" name="cus_email" placeholder="이메일을 입력하세요" maxlength="100" required>
+                <input type="email" class="form-control" id="cus_email" name="cus_email" placeholder="이메일을 입력하세요" maxlength="100" autocomplete="off" required>
             </div>
 
             <!-- 주소 -->
             <div class="mb-3">
                 <div class="input-group mb-3">
                     <label for="pos_code" class="form-label" style="width: 100%;">주소</label>
-                    <input type="text" class="form-control" placeholder="우편번호" id="pos_code" name="pos_code" required/>
+                    <input type="text" class="form-control" placeholder="우편번호" id="pos_code" name="pos_code" autocomplete="off" required/>
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button" onclick="onGetPostcode()">우편번호 찾기</button>
                     </div>
                 </div>
                 <div>
-                    <input type="text" class="form-control" id="addr1" name="addr1" placeholder="주소"/><br/>
-                    <input type="text" class="form-control" id="addr2" name="addr2" placeholder="상세주소"/><br/>
+                    <input type="text" class="form-control" id="addr1" name="addr1" placeholder="주소" autocomplete="off"/><br/>
+                    <input type="text" class="form-control" id="addr2" name="addr2" placeholder="상세주소" autocomplete="off"/><br/>
                 </div>
             </div>
 
             <!-- 키 -->
             <div class="mb-3">
                 <label for="height" class="form-label">키</label>
-                <input type="number" class="form-control" id="height" name="height" placeholder="키(cm)를 입력하세요">
+                <input type="number" class="form-control" id="height" name="height" placeholder="키(cm)를 입력하세요" autocomplete="off">
             </div>
 
             <!-- 몸무게 -->
             <div class="mb-3">
                 <label for="weight" class="form-label">몸무게</label>
-                <input type="number" class="form-control" id="weight" name="weight" placeholder="몸무게(kg)를 입력하세요">
+                <input type="number" class="form-control" id="weight" name="weight" placeholder="몸무게(kg)를 입력하세요" autocomplete="off">
             </div>
 
             <!-- 회원가입 버튼 -->
