@@ -79,7 +79,7 @@
         INNER JOIN delivery d ON o.deli_no = d.id
         INNER JOIN seller s ON p.seller_no = s.id
         LEFT JOIN inventory i ON i.id = o.inventory_no
-        WHERE o.order_code = #{order_code} AND o.cus_no = #{cus_no} AND o.status NOT IN (6,7,8)
+        WHERE o.order_code = #{order_code} AND o.cus_no = #{cus_no} AND o.status NOT IN (5,6,7,8)
     </select>
 
     <!-- 취소/반품/교환 상품 전체 조회 -->
@@ -102,7 +102,7 @@
         INNER JOIN product p ON o.prod_no = p.id
         INNER JOIN seller s ON p.seller_no = s.id
         LEFT JOIN inventory i ON i.id = o.inventory_no
-        WHERE o.cus_no = #{cus_no} AND o.status IN (6, 7)
+        WHERE o.cus_no = #{cus_no} AND o.status IN (6, 7, 9, 11)
         ORDER BY o.order_date DESC
     </select>
 

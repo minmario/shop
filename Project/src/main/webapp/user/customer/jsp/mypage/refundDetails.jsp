@@ -54,6 +54,9 @@
                                     <c:if test="${refund.status eq '7'}">
                                         <span class="refund-status">반품신청</span>
                                     </c:if>
+                                    <c:if test="${refund.status eq '9'}">
+                                        <span class="refund-status">반품거부</span>
+                                    </c:if>
                                     <c:if test="${refund.status eq '11'}">
                                         <span class="refund-status">반품완료</span>
                                     </c:if>
@@ -89,6 +92,12 @@
                                                 <span class="info-label">반품 사유</span>
                                                 <span class="info-value">${refund.reason_customer}</span>
                                             </li>
+                                            <c:if test="${refund.status eq '9'}">
+                                            <li>
+                                                <span class="info-label">거부 사유</span>
+                                                <span class="info-value">${refund.reason_seller}</span>
+                                            </li>
+                                            </c:if>
                                             <li>
                                                 <span class="info-label">수거 방법</span>
                                                 <span class="info-value">${delivery.request}</span>

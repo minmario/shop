@@ -111,7 +111,7 @@
             <c:set var="totalDiscount" value="${priceAfterDiscount}"/>
 
             <!-- 받은 총 혜택 계산 -->
-            <c:set var="gradeBenefit" value="${totalPrice * (requestScope.grade.point_condition / 100)}"/>
+            <c:set var="gradeBenefit" value="${totalAmount * (requestScope.grade.point_condition / 100)}"/>
             <c:set var="totalBenefits" value="${totalDiscount + gradeBenefit}"/>
             <li><span>총 할인 금액</span> <span><fmt:formatNumber value="${totalDiscount}" type="number" maxFractionDigits="0"/>원</span></li>
             <li><span>${requestScope.grade.name} ${requestScope.grade.point_condition}% 적립</span> <fmt:formatNumber value="${gradeBenefit}" type="number" maxFractionDigits="0"/>원</span></li>

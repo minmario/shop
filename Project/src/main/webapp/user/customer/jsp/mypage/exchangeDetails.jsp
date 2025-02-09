@@ -50,14 +50,19 @@
                                 <%-- 교환 상품 정보 --%>
                                 <div class="exchange-product">
                                     <h2>교환 상품</h2>
-                                    <span class="exchange-status">교환신청</span>
+                                    <c:if test="${exchange.status == '8'}">
+                                        <span class="exchange-status">교환신청</span>
+                                    </c:if>
+                                    <c:if test="${exchange.status == '10'}">
+                                        <span class="exchange-status">교환거부</span>
+                                    </c:if>
                                     <div class="product-details">
                                         <img src="${fn:split(exchange.prod_image, ',')[0]}" alt="상품 이미지" class="product-image">
                                         <div class="product-info">
                                             <p class="product-brand">${exchange.brand}</p>
                                             <p class="product-name">${exchange.prod_name}</p>
                                             <p class="product-options">${exchange.option_name} / ${exchange.count}개</p>
-                                            <p class="product-price"><fmt:formatNumber value="${exchange.amount}"/>원</p>
+                                            <p class="product-price"><fmt:formatNumber value="${exchange.result_amount}"/>원</p>
                                         </div>
                                     </div>
                                 </div>
@@ -77,6 +82,12 @@
                                                 <span class="info-label">교환 사유</span>
                                                 <span class="info-value">${exchange.reason_customer}</span>
                                             </li>
+                                            <c:if test="${exchange.status == '10'}">
+                                                <li>
+                                                    <span class="info-label">거부 사유</span>
+                                                    <span class="info-value">${exchange.reason_seller}</span>
+                                                </li>
+                                            </c:if>
                                             <li>
                                                 <span class="info-label">수거 방법</span>
                                                 <span class="info-value">${delivery.request}</span>

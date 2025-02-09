@@ -144,6 +144,14 @@
     width: 100%;
 }
 
+.exchange-details-button{
+    width: 100%;
+}
+
+.refund-details-button{
+    width: 100%;
+}
+
 .custom-action-button {
     padding: 10px 0;
     font-size: 14px;
