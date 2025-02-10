@@ -181,7 +181,7 @@
                     <c:if test="${order.status == 2 || order.status == 3}">
                         <tr class="list">
                             <td><c:if test="${order.status == 2}">
-                                <input type="checkbox" name="returnBox">
+                                <input type="checkbox" name="readyBox">
                             </c:if></td>
                             <td> <a href="#" class="text-primary" onclick="setModal('${order.id}')" >
                                 ${order.tid}
@@ -564,7 +564,7 @@
 
     // 선택된 항목 처리
     function processSelected(button) {
-        const selectedOrders = [];
+        let selectedOrders = [];
         let checkboxes = [];
         let status = [];
         let chk = false;
@@ -580,7 +580,7 @@
         }
 
 
-        if (chk) {
+
             let i = 0;
             checkboxes.forEach(checkbox => {
                 // checkbox가 속한 tr 요소를 찾아서 그 안의 td 값 추출
@@ -593,11 +593,11 @@
                     else if (division === '교환')
                         status[i] = 2;
                 }
-
                 selectedOrders.push(orderValue);
                 i++;
             });
-        }
+
+        console.log(selectedOrders.join(','));
         const param = "type=changeStatus&selectedOrders="+encodeURIComponent(selectedOrders.join(','))+"&status="+encodeURIComponent(status.join(','));
         $.ajax({
             url: "Controller",

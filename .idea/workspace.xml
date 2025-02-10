@@ -10,7 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5b829c05-df2b-409a-9128-08397fbb7afd" name="Changes" comment="카카오 로그인 삭제">
-      <change beforePath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/order.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/order.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/dao/OrderDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/dao/OrderDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/ChangeStatusAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/ChangeStatusAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/order_list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/order_list.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,19 +58,19 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Tomcat 서버.Tomcat 9.0.98.executor": "Run",
-    "git-widget-placeholder": "develop",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/my_study/HTML_Study/work/shop/Project",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Tomcat 서버.Tomcat 9.0.98.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/my_study/HTML_Study/work/shop/Project&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <method v="2">
@@ -225,6 +228,7 @@
     <MESSAGE value="병합 중간 푸쉬" />
     <MESSAGE value="이승범 최신화2" />
     <MESSAGE value="카카오 로그인 삭제" />
-    <option name="LAST_COMMIT_MESSAGE" value="카카오 로그인 삭제" />
+    <MESSAGE value="order.get_total오류 해결" />
+    <option name="LAST_COMMIT_MESSAGE" value="order.get_total오류 해결" />
   </component>
 </project>
