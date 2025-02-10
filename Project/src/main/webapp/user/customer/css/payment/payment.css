@@ -198,14 +198,13 @@
     display: block;
     font-size: 14px;
     cursor: pointer;
-    width: 100px;
+    width: 120px !important;
     margin-right: 5px;
 }
 
 .cancel-coupon-btn {
-    width: 100px;
+    width: 120px !important;
 }
-
 .cancel-coupon-btn:hover {
     background-color: #fff !important;
     color: #dc3545 !important;

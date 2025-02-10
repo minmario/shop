@@ -9,17 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5b829c05-df2b-409a-9128-08397fbb7afd" name="Changes" comment="카카오 로그인 삭제">
+    <list default="true" id="5b829c05-df2b-409a-9128-08397fbb7afd" name="Changes" comment="merge3">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/QuestionAction.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/coupon.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/coupon.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/sales.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/sales.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/seller.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/seller.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/sellerLog.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/sellerLog.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/main/webapp/WEB-INF/action.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/webapp/WEB-INF/action.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/coupon.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/coupon.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/layout/header.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/layout/header.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/order_list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/order_list.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/webapp/user/customer/css/payment/payment.css" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/webapp/user/customer/css/payment/payment.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/webapp/user/customer/jsp/layout/footer.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/webapp/user/customer/jsp/layout/footer.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +27,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="develop" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -64,19 +62,28 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;Tomcat 서버.Tomcat 9.0.98.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/my_study/HTML_Study/work/shop/Project&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Tomcat 서버.Tomcat 9.0.98.executor": "Run",
+    "git-widget-placeholder": "develop2",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/my_study/jsp_study/work/shop/Project/src/main/webapp/seller/jsp",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\my_study\jsp_study\work\shop\Project\src\main\webapp\seller\jsp" />
+      <recent name="C:\my_study\jsp_study\work\shop\Project\src\main\resources\mybatis\mapper" />
+      <recent name="C:\my_study\jsp_study\work\shop\Project\src\main\java\seller\action" />
+      <recent name="C:\my_study\jsp_study\work\shop\Project\src\main\java\comm\vo\seller" />
+      <recent name="C:\my_study\jsp_study\work\shop\Project\src\main\java\comm\dao" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <method v="2">
@@ -175,18 +182,6 @@
         </option>
       </method>
     </configuration>
-    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false">
-      <deployment />
-      <server-settings />
-      <predefined_log_file enabled="true" id="Tomcat" />
-      <predefined_log_file enabled="true" id="Tomcat Catalina" />
-      <predefined_log_file id="Tomcat Manager" />
-      <predefined_log_file id="Tomcat Host Manager" />
-      <predefined_log_file id="Tomcat Localhost Access" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -231,7 +226,23 @@
       <option name="project" value="LOCAL" />
       <updated>1739152139287</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="merge3">
+      <option name="closed" value="true" />
+      <created>1739212822889</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1739212822889</updated>
+    </task>
+    <task id="LOCAL-00005" summary="merge3">
+      <option name="closed" value="true" />
+      <created>1739212900148</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1739212900148</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -243,6 +254,22 @@
     <MESSAGE value="이승범 최신화2" />
     <MESSAGE value="order.get_total오류 해결" />
     <MESSAGE value="카카오 로그인 삭제" />
-    <option name="LAST_COMMIT_MESSAGE" value="카카오 로그인 삭제" />
+    <MESSAGE value="merge3" />
+    <option name="LAST_COMMIT_MESSAGE" value="merge3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/Project/src/main/java/comm/dao/SellerDAO.java</url>
+          <line>11</line>
+          <properties class="comm.dao.SellerDAO" method="updateStock">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
