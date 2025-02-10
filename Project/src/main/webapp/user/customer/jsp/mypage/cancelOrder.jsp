@@ -1,4 +1,3 @@
-cancelOrder.jsp
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -26,13 +25,6 @@ cancelOrder.jsp
     <c:when test="${not empty sessionScope.customer_info}">
         <%-- header --%>
         <jsp:include page="../layout/header.jsp"></jsp:include>
-
-        <c:if test="${requestScope.o_list eq null}">
-            <script>
-                // alert("해당 주문의 정보를 불러올 수 없습니다.");
-                // window.location.href = "Controller?type=mypage";
-            </script>
-        </c:if>
 
         <div class="wrap">
             <div class="row">
@@ -100,14 +92,14 @@ cancelOrder.jsp
                                 <!-- 계좌 번호 입력 -->
                                 <div class="margin">
                                     <label for="account-number" class="bold account-number">계좌번호</label><br>
-                                    <input type="text" class="toggle form-control" id="account-number" name="account-number" placeholder="계좌번호를 입력하세요"/><br/>
+                                    <input type="text" class="toggle form-control" id="account-number" name="account-number" placeholder="계좌번호를 입력하세요 (000-0000-0000 형식)"/><br/>
                                 </div>
                             </div>
 
                             <div class="cancel-refund-info">
                                 <h5>환불 정보</h5>
                                 <ul>
-                                        <%-- 상품 결제 금액 및 적립금 사용 값 변환 및 계산 --%>
+                                    <%-- 상품 결제 금액 및 적립금 사용 값 변환 및 계산 --%>
                                     <c:set var="totalAmount" value="0" />
                                     <c:forEach var="item" items="${requestScope.o_list}">
                                         <!-- 쉼표 제거 후 숫자로 변환 -->
@@ -138,7 +130,14 @@ cancelOrder.jsp
                                 <p>결제 시 사용한 적립금 및 할인 쿠폰은 취소 완료 즉시 반환됩니다.</p>
                             </div>
                             <div class="cancel-button-container">
-                                <button type="button" class="btn btn-dark cancel-request-btn" id="cancelRequestButton">취소 요청하기</button>
+                                <c:choose>
+                                    <c:when test="${fn:length(requestScope.o_list) > 1}">
+                                        <button type="button" class="btn btn-dark cancel-request-btn" id="cancelRequestButton">취소 요청하기</button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button type="button" class="btn btn-dark cancel-request-btn" id="cancelAllRequestButton">취소 요청하기</button>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                     </c:if>
