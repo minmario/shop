@@ -9,7 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5b829c05-df2b-409a-9128-08397fbb7afd" name="Changes" comment="merge3" />
+    <list default="true" id="5b829c05-df2b-409a-9128-08397fbb7afd" name="Changes" comment="merge3">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/webapp/user/customer/css/payment/payment.css" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/webapp/user/customer/css/payment/payment.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/webapp/user/customer/jsp/layout/footer.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/webapp/user/customer/jsp/layout/footer.jsp" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,7 +29,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="vldhtmxk" />
+        <entry key="$PROJECT_DIR$" value="develop" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -63,7 +67,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "Tomcat 서버.Tomcat 9.0.98.executor": "Run",
-    "git-widget-placeholder": "develop",
+    "git-widget-placeholder": "develop2",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/my_study/jsp_study/work/shop/Project/src/main/webapp/seller/jsp",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -230,7 +234,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739212822889</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="merge3">
+      <option name="closed" value="true" />
+      <created>1739212900148</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1739212900148</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
