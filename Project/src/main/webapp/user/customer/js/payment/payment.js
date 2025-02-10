@@ -394,6 +394,16 @@ function onGetProducts() {
             } else if (benefitType === "0") {
                 // 적립 선택 시 point 설정, result_amount는 없음
                 productData[cartNo].point = point;
+
+                // 값을 가져오고 100으로 나눈 값을 곱하기
+                const value = Number(selectedRadio.dataset.value);
+                const multiplier = value / 100;
+
+                // 곱하기 연산
+                productData[cartNo].result_amount *= multiplier;
+
+                // 원복시키는 연산 (곱했던 값을 다시 나누기)
+                productData[cartNo].result_amount /= multiplier;
             }
         }
     });

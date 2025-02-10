@@ -18,12 +18,14 @@ function updateDeliveryAddress() {
         success: function(response) {
             if (response.success) {
                 alert("배송지가 수정되었습니다.");
-                $('#changeDeliveryModal').click();
+
+                // 모달 닫기
+                $(".modal-header .close").click();
+
                 // 변경된 데이터를 DOM에 반영
                 document.querySelector('.name').textContent = response.data.deli_name;
                 document.querySelector('.phone').textContent = response.data.phone;
-                document.querySelector('.address').textContent =
-                    `${response.data.pos_code} ${response.data.addr1} ${response.data.addr2}`;
+                document.querySelector('.address').textContent = `${response.data.pos_code} ${response.data.addr1} ${response.data.addr2}`;
             } else {
                 alert("배송지 수정 중 오류가 발생했습니다.");
             }

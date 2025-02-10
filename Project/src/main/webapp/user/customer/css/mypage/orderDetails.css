@@ -327,6 +327,8 @@
 .address-item input[type="radio"] {
     margin-right: 10px;
     cursor: pointer;
+    position: relative;
+    bottom: 15px;
 }
 
 .address-name {
