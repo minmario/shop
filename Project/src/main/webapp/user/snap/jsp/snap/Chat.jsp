@@ -151,301 +151,217 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    // 전역 변수: request 및 session 값 (채팅방이 선택된 경우에만 값이 있을 수 있음)
-    let currentRoomId = '<%= request.getAttribute("selectedRoomId") %>';
-    const currentUserId = '<%= session.getAttribute("cus_id") %>';
-    const userId = currentUserId;
+    // === 전역 변수 설정 ===
+    // 서버에서 전달된 값 (채팅방이 선택된 경우)
+    var currentRoomId = '<%= request.getAttribute("selectedRoomId") %>';
+    var currentUserId = '<%= session.getAttribute("cus_id") %>';
+    var userId = currentUserId; // 동일하게 사용
 
     // DOM 요소 캐싱
-    const messageInput = document.getElementById("messageInput");
-    const sendMessageBtn = document.getElementById("sendMessageBtn");
-    const chatBox = document.getElementById("chat-box");
-    const fileInput = document.getElementById("fileInput");
+    var messageInput = document.getElementById("messageInput");
+    var sendMessageBtn = document.getElementById("sendMessageBtn");
+    var chatBox = document.getElementById("chat-box");
+    var fileInput = document.getElementById("fileInput");
 
-    // WebSocket 전역 변수 선언 및 interval 변수
-    let socket = null;
-    let messageInterval;
+    // WebSocket 객체 (양방향 통신) – 실제 사용시 URL을 환경에 맞게 수정하세요.
+    var socket = null;
 
-    // WebSocket 초기화 함수: 전달받은 roomId로 연결 생성
+    // 폴링 간격 500ms
+    var pollingInterval = 500;
+    var messageInterval;
+
+    // 최근 불러온 메시지 데이터를 문자열로 저장 (변화가 없으면 DOM 업데이트를 하지 않음)
+    var lastMessagesJSON = "";
+
+    // 채팅창 스크롤은 기본적으로 smooth로 설정
+    chatBox.style.scrollBehavior = "smooth";
+
+    // === WebSocket 초기화 함수 (변경 없음) ===
     function initializeSocket(roomId) {
-      // 기존 소켓이 있다면 닫기
       if (socket && socket.readyState === WebSocket.OPEN) {
         socket.close();
       }
-      const socketUrl = "ws://localhost:8080/chatSocket/" + userId + "?roomId=" + roomId;
+      var socketUrl = "ws://xxxxxx.execute-api.ap-northeast-2.amazonaws.com/dev/chatSocket/" + userId + "?roomId=" + roomId;
+      console.log("Initializing WebSocket with URL: " + socketUrl);
+      console.log("userId: " + userId + ", currentRoomId: " + roomId);
       socket = new WebSocket(socketUrl);
+      socket.onerror = (error) => {
+        console.error("웹소켓 에러 발생:", error);
+      };
       socket.onopen = function(event) {
         console.log("WebSocket 연결 성공");
-        console.log("userId:", userId);
-        console.log("currentRoomId:", roomId);
       };
       socket.onmessage = function(event) {
-        console.log("WebSocket 메시지 수신:", event.data);
-        const msg = JSON.parse(event.data);
-        displayMessage(msg);
+        console.log("WebSocket 메시지 수신: " + event.data);
+        var dataStr = event.data;
+        var prefix = "서버 응답: ";
+        if (dataStr.indexOf(prefix) === 0) {
+          dataStr = dataStr.substring(prefix.length);
+        }
+        try {
+          var msg = JSON.parse(dataStr);
+          displayMessage(msg);
+        } catch (e) {
+          console.error("JSON 파싱 오류: " + e);
+        }
       };
       socket.onclose = function(event) {
         console.log("WebSocket 연결 종료");
       };
     }
 
-    // displayMessage: WebSocket으로 받은 메시지를 화면에 추가 (현재 채팅방에 해당하는 경우만)
+    // === displayMessage 함수: 단일 메시지를 채팅창에 추가 (실시간 WebSocket 메시지용) ===
     function displayMessage(msg) {
-      // 수신된 메시지의 roomId가 현재 채팅방과 다르면 무시
       if (msg.roomId != currentRoomId) return;
-
-      // 메시지 전송 시각 처리 (서버에서 보내는 created_at 또는 createdAt 필드에 맞게 수정)
-      const messageDate = new Date(msg.created_at || msg.createdAt);
-      const formattedTime = messageDate.toLocaleTimeString('ko-KR', {
-        hour: '2-digit', minute: '2-digit', hour12: true
+      var messageDate = new Date(msg.created_at || msg.createdAt);
+      var formattedTime = messageDate.toLocaleTimeString("ko-KR", {
+        hour: "2-digit", minute: "2-digit", hour12: true
       });
-
-      let messageHTML = "";
-      const isMyMessage = parseInt(msg.senderId) === parseInt(currentUserId);
-
+      var messageHTML = "";
+      var isMyMessage = parseInt(msg.senderId) === parseInt(currentUserId);
       if (isMyMessage) {
         messageHTML = '<div class="d-flex flex-column align-items-end mb-2">' +
             '<div class="d-flex flex-column align-items-end">' +
-            (msg.imageUrl
-                ? '<img src="' + msg.imageUrl + '" class="chat-image rounded mb-1" style="max-width: 200px; max-height: 250px; object-fit: cover; cursor: pointer;">'
-                : '') +
+            (msg.imageUrl ? '<img src="' + msg.imageUrl + '" class="chat-image rounded mb-1" style="max-width:200px; max-height:250px; object-fit:cover; cursor:pointer;">' : "") +
             '<div class="d-flex align-items-center">' +
             '<div class="small text-muted me-2">' + formattedTime + '</div>' +
-            '<div class="p-2 rounded bg-warning text-dark" style="max-width: 60%; border-radius: 15px;">' +
-            msg.message +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '</div>';
+            '<div class="p-2 rounded bg-warning text-dark" style="max-width:60%; border-radius:15px;">' + msg.message + '</div>' +
+            "</div>" +
+            "</div>" +
+            "</div>";
       } else {
         messageHTML = '<div class="d-flex align-items-start mb-2">' +
-            '<img src="' + document.getElementById("receiverProfileImg").src + '" class="rounded-circle me-2" style="width: 40px; height: 40px; object-fit: cover;">' +
+            '<img src="' + document.getElementById("receiverProfileImg").src + '" class="rounded-circle me-2" style="width:40px; height:40px; object-fit:cover;">' +
             '<div>' +
             '<div class="fw-bold text-dark">' + document.getElementById("receiverNickname").textContent + '</div>' +
             '<div class="d-flex flex-column">' +
-            (msg.imageUrl
-                ? '<img src="' + msg.imageUrl + '" class="chat-image rounded mb-1" style="max-width: 200px; max-height: 250px; object-fit: cover; cursor: pointer;">'
-                : '') +
+            (msg.imageUrl ? '<img src="' + msg.imageUrl + '" class="chat-image rounded mb-1" style="max-width:200px; max-height:250px; object-fit:cover; cursor:pointer;">' : "") +
             '<div class="d-flex align-items-center">' +
-            '<div class="p-2 rounded bg-light" style="max-width: 60%; border-radius: 15px;">' +
-            msg.message +
-            '</div>' +
+            '<div class="p-2 rounded bg-light" style="max-width:60%; border-radius:15px;">' + msg.message + '</div>' +
             '<div class="small text-muted ms-2">' + formattedTime + '</div>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '</div>';
+            "</div>" +
+            "</div>" +
+            "</div>" +
+            "</div>";
       }
-      chatBox.insertAdjacentHTML('beforeend', messageHTML);
+      // 단일 메시지 추가 후, 스크롤은 항상 맨 아래로 (실시간 수신 시)
+      chatBox.insertAdjacentHTML("beforeend", messageHTML);
       chatBox.scrollTop = chatBox.scrollHeight;
     }
 
-    // 페이지 로드시, 만약 선택된 채팅방이 있다면 WebSocket 초기화 및 메시지 로드
-    if (currentRoomId && currentRoomId !== "null") {
-      initializeSocket(currentRoomId);
-      document.querySelectorAll('.chat-room').forEach(room => {
-        if (room.getAttribute("data-room-id") === currentRoomId) {
-          room.classList.add('active');
-          document.getElementById("receiverProfileImg").src = room.getAttribute("data-profile");
-          document.getElementById("receiverNickname").textContent = room.getAttribute("data-nickname");
-        }
-      });
-      loadChatMessages(currentRoomId);
-    }
-
-    // 업로드 폼의 기본 동작(새로고침) 방지
-    const uploadForm = document.getElementById("uploadForm");
-    if (uploadForm) {
-      uploadForm.addEventListener("submit", function(e) {
-        e.preventDefault();
-      });
-    }
-
-    // 파일 선택 이벤트
-    fileInput.addEventListener("change", function() {
-      if (fileInput.files.length > 0) {
-        console.log("파일 선택됨: " + fileInput.files[0].name);
-      }
-    });
-
-    // 채팅방 클릭 이벤트 처리
-    document.querySelectorAll('.chat-room').forEach(room => {
-      room.addEventListener('click', function() {
-        currentRoomId = this.dataset.roomId;
-        const selectedProfileImage = this.dataset.profile;
-        const selectedNickname = this.dataset.nickname;
-
-        document.getElementById("receiverProfileImg").src = selectedProfileImage;
-        document.getElementById("receiverNickname").textContent = selectedNickname;
-        document.querySelectorAll('.chat-room').forEach(r => r.classList.remove('active'));
-        this.classList.add('active');
-
-        loadChatMessages(currentRoomId);
-        // WebSocket 재설정: 새로운 채팅방 번호로 연결
-        initializeSocket(currentRoomId);
-
-        // 이전에 설정된 갱신 interval이 있다면 초기화 (여기서는 1,000,000ms; 필요에 따라 수정)
-        if (typeof messageInterval !== 'undefined') {
-          clearInterval(messageInterval);
-        }
-        messageInterval = setInterval(() => {
-          loadChatMessages(currentRoomId);
-        }, 1000000);
-      });
-    });
-
-    // 메시지 전송 함수 (파일 업로드 포함)
-    async function sendMessage() {
-      if (!currentRoomId) {
-        alert('채팅방을 선택해주세요.');
-        return;
-      }
-      const message = messageInput.value.trim();
-      let imageUrl = null;
-
-      // 파일 업로드 처리 (파일이 선택된 경우)
-      if (fileInput.files.length > 0) {
-        const formData = new FormData();
-        formData.append("file", fileInput.files[0]);
-        console.log("파일 선택됨: " + fileInput.files[0].name);
-        try {
-          let response = await fetch('/Controller?type=uploadImage', {
-            method: 'POST',
-            body: formData
-          });
-          let data = await response.json();
-          if (data.success) {
-            imageUrl = data.imageUrl;
-          } else {
-            alert("이미지 업로드 실패");
-            return;
-          }
-        } catch (error) {
-          console.error('이미지 업로드 오류:', error);
-          return;
-        }
-      }
-
-      // WebSocket을 통한 메시지 전송
-      const messageData = {
-        roomId: currentRoomId,
-        message: message,
-        senderId: currentUserId,
-        imageUrl: imageUrl
-      };
-
-      if (socket && socket.readyState === WebSocket.OPEN) {
-        socket.send(JSON.stringify(messageData));
-        // 메시지 전송 후 입력창 초기화
-        messageInput.value = '';
-        fileInput.value = '';
-      } else {
-        alert("WebSocket 연결이 열려 있지 않습니다. 잠시 후 다시 시도해주세요.");
-      }
-    }
-
-    // 메시지 전송 버튼 이벤트 등록
-    sendMessageBtn.addEventListener("click", sendMessage);
-
-    // 채팅 메시지 불러오기 함수 (fetch를 통해 최신 메시지 목록 로드)
+    // === loadChatMessages 함수: 폴링을 통한 전체 메시지 업데이트 (변화가 있을 때만 업데이트) ===
     function loadChatMessages(roomId) {
       if (!roomId) return;
       fetch("/Controller?type=chatRoom&roomId=" + roomId)
-          .then(response => response.json())
-          .then(messages => {
-            chatBox.innerHTML = '';
-            let lastDate = '';
-            messages.forEach(msg => {
-              const isMyMessage = parseInt(msg.sender_id) === parseInt(currentUserId);
-              const messageDate = new Date(msg.created_at);
-              const formattedDate = messageDate.toLocaleDateString('ko-KR', {
-                year: 'numeric', month: 'long', day: 'numeric', weekday: 'long'
+          .then(function(response) { return response.json(); })
+          .then(function(messages) {
+            var newMessagesJSON = JSON.stringify(messages);
+            // 변화가 없으면 DOM 업데이트하지 않음
+            if(newMessagesJSON === lastMessagesJSON) {
+              return;
+            }
+            lastMessagesJSON = newMessagesJSON;
+
+            // 스크롤 보정을 위한 기존 스크롤 정보 저장
+            var oldScrollTop = chatBox.scrollTop;
+            var oldScrollHeight = chatBox.scrollHeight;
+            var threshold = 50;
+            var isAtBottom = (oldScrollHeight - oldScrollTop - chatBox.clientHeight) < threshold;
+
+            // 전체 메시지 DOM 업데이트
+            chatBox.innerHTML = "";
+            var lastDate = "";
+            messages.forEach(function(msg) {
+              var isMyMessage = parseInt(msg.sender_id) === parseInt(currentUserId);
+              var messageDate = new Date(msg.created_at);
+              var formattedDate = messageDate.toLocaleDateString("ko-KR", {
+                year: "numeric", month: "long", day: "numeric", weekday: "long"
               });
-              const formattedTime = messageDate.toLocaleTimeString('ko-KR', {
-                hour: '2-digit', minute: '2-digit', hour12: true
+              var formattedTime = messageDate.toLocaleTimeString("ko-KR", {
+                hour: "2-digit", minute: "2-digit", hour12: true
               });
               if (formattedDate !== lastDate) {
-                chatBox.insertAdjacentHTML('beforeend', `<div class="text-center my-3 text-muted fw-bold">${formattedDate}</div>`);
+                chatBox.insertAdjacentHTML("beforeend", '<div class="text-center my-3 text-muted fw-bold">' + formattedDate + "</div>");
                 lastDate = formattedDate;
               }
-              let messageHTML = '';
+              var messageHTML = "";
               if (isMyMessage) {
                 messageHTML = '<div class="d-flex flex-column align-items-end mb-2">' +
                     '<div class="d-flex flex-column align-items-end">' +
-                    (msg.image_url
-                        ? '<img src="' + msg.image_url + '" class="chat-image rounded mb-1" style="max-width: 200px; max-height: 250px; object-fit: cover; cursor: pointer;">'
-                        : '') +
+                    (msg.image_url ? '<img src="' + msg.image_url + '" class="chat-image rounded mb-1" style="max-width:200px; max-height:250px; object-fit:cover; cursor:pointer;">' : "") +
                     '<div class="d-flex align-items-center">' +
-                    '<div class="small text-muted me-2">' +
-                    (msg.is_read == 0 ? '<span class="text-warning fw-bold me-1">1</span>' : '') + formattedTime +
-                    '</div>' +
-                    '<div class="p-2 rounded bg-warning text-dark" style="max-width: 60%; border-radius: 15px;">' +
-                    msg.message +
-                    '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>';
+                    '<div class="small text-muted me-2">' + formattedTime + '</div>' +
+                    '<div class="p-2 rounded bg-warning text-dark" style="max-width:60%; border-radius:15px;">' + msg.message + '</div>' +
+                    "</div>" +
+                    "</div>" +
+                    "</div>";
               } else {
                 messageHTML = '<div class="d-flex align-items-start mb-2">' +
-                    '<img src="' + document.getElementById("receiverProfileImg").src + '" class="rounded-circle me-2" style="width: 40px; height: 40px; object-fit: cover;">' +
+                    '<img src="' + document.getElementById("receiverProfileImg").src + '" class="rounded-circle me-2" style="width:40px; height:40px; object-fit:cover;">' +
                     '<div>' +
                     '<div class="fw-bold text-dark">' + document.getElementById("receiverNickname").textContent + '</div>' +
                     '<div class="d-flex flex-column">' +
-                    (msg.image_url
-                        ? '<img src="' + msg.image_url + '" class="chat-image rounded mb-1" style="max-width: 200px; max-height: 250px; object-fit: cover; cursor: pointer;">'
-                        : '') +
+                    (msg.image_url ? '<img src="' + msg.image_url + '" class="chat-image rounded mb-1" style="max-width:200px; max-height:250px; object-fit:cover; cursor:pointer;">' : "") +
                     '<div class="d-flex align-items-center">' +
-                    '<div class="p-2 rounded bg-light" style="max-width: 60%; border-radius: 15px;">' +
-                    msg.message +
-                    '</div>' +
+                    '<div class="p-2 rounded bg-light" style="max-width:60%; border-radius:15px;">' + msg.message + '</div>' +
                     '<div class="small text-muted ms-2">' + formattedTime + '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>';
+                    "</div>" +
+                    "</div>" +
+                    "</div>" +
+                    "</div>";
               }
-              chatBox.insertAdjacentHTML('beforeend', messageHTML);
+              chatBox.insertAdjacentHTML("beforeend", messageHTML);
             });
-            chatBox.scrollTop = chatBox.scrollHeight;
-            // 읽음 처리: 메시지 로드 후 해당 roomId의 메시지를 읽음 상태로 업데이트
+
+            var newScrollHeight = chatBox.scrollHeight;
+            if (isAtBottom) {
+              // 하단에 있었으면 부드럽게 맨 아래로 이동
+              chatBox.scrollTop = newScrollHeight;
+            } else {
+              // 그렇지 않으면 기존 위치 보존(내용 변화만큼 보정)
+              chatBox.scrollTop = oldScrollTop + (newScrollHeight - oldScrollHeight);
+            }
+
             markMessagesAsRead(roomId);
           })
-          .catch(error => {
-            console.error('메시지 로딩 오류:', error);
+          .catch(function(error) {
+            console.error("메시지 로딩 오류:", error);
             chatBox.innerHTML = '<p class="text-muted text-center">채팅방을 선택해주세요.</p>';
           });
     }
 
-    // 채팅방 읽음 처리 함수
+    // === markMessagesAsRead 함수: 읽음 처리 요청 (변경 없음) ===
     function markMessagesAsRead(roomId) {
       fetch("/Controller?type=markAsRead&roomId=" + roomId, { method: "POST" })
-          .then(response => response.json())
-          .then(data => {
+          .then(function(response) { return response.json(); })
+          .then(function(data) {
             if (data.success) {
               console.log("메시지를 읽음 상태로 변경 완료");
               updateUnreadCount(roomId);
             }
           })
-          .catch(error => console.error("읽음 상태 업데이트 오류:", error));
+          .catch(function(error) {
+            console.error("읽음 상태 업데이트 오류:", error);
+          });
     }
 
-    // 채팅 목록에서 숫자 제거 함수
+    // === updateUnreadCount 함수: 채팅방 목록의 unread 배지 제거 (변경 없음) ===
     function updateUnreadCount(roomId) {
-      const chatRoomElement = document.querySelector('.chat-room[data-room-id="' + roomId + '"]');
+      var chatRoomElement = document.querySelector('.chat-room[data-room-id="' + roomId + '"]');
       if (chatRoomElement) {
-        const unreadBadge = chatRoomElement.querySelector(".unread-badge");
+        var unreadBadge = chatRoomElement.querySelector(".unread-badge");
         if (unreadBadge) {
           unreadBadge.remove();
         }
       }
     }
 
-    // 이미지 모달 이벤트 처리 (chatBox 내 이미지 클릭)
-    chatBox.addEventListener("click", function (event) {
+    // === 이미지 모달 이벤트 처리 (변경 없음) ===
+    chatBox.addEventListener("click", function(event) {
       if (event.target.tagName === "IMG" && event.target.classList.contains("chat-image")) {
-        const imageUrl = event.target.src;
-        const modalImage = document.getElementById("modalImage");
-        const downloadImage = document.getElementById("downloadImage");
+        var imageUrl = event.target.src;
+        var modalImage = document.getElementById("modalImage");
+        var downloadImage = document.getElementById("downloadImage");
         if (modalImage && downloadImage) {
           modalImage.src = imageUrl;
           downloadImage.setAttribute("data-url", imageUrl);
@@ -454,41 +370,89 @@
       }
     });
 
-  }); // DOMContentLoaded 종료
+    // === 초기 메시지 로드 및 폴링 시작 (폴링 간격 500ms 적용) ===
+    if (currentRoomId && currentRoomId !== "null") {
+      loadChatMessages(currentRoomId);
+      messageInterval = setInterval(function() {
+        loadChatMessages(currentRoomId);
+      }, pollingInterval);
+    }
 
-  // 이미지 모달: 다운로드 버튼 이벤트 처리
-  document.addEventListener("DOMContentLoaded", function () {
-    const downloadImageBtn = document.getElementById("downloadImage");
-    if (downloadImageBtn) {
-      downloadImageBtn.addEventListener("click", function() {
-        const imageUrl = this.getAttribute("data-url");
-        if (!imageUrl) {
-          alert("이미지를 찾을 수 없습니다.");
+    // === 채팅방 클릭 이벤트: 채팅방 변경 시 메시지 로드 및 폴링 재설정 (변경 없음) ===
+    document.querySelectorAll(".chat-room").forEach(function(room) {
+      room.addEventListener("click", function() {
+        currentRoomId = this.dataset.roomId;
+        var selectedProfileImage = this.dataset.profile;
+        var selectedNickname = this.dataset.nickname;
+        document.getElementById("receiverProfileImg").src = selectedProfileImage;
+        document.getElementById("receiverNickname").textContent = selectedNickname;
+        document.querySelectorAll(".chat-room").forEach(function(r) {
+          r.classList.remove("active");
+        });
+        this.classList.add("active");
+        loadChatMessages(currentRoomId);
+        if (typeof messageInterval !== "undefined") {
+          clearInterval(messageInterval);
+        }
+        messageInterval = setInterval(function() {
+          loadChatMessages(currentRoomId);
+        }, pollingInterval);
+      });
+    });
+
+    // === 메시지 전송 함수 (파일 업로드 포함, 변경 없음) ===
+    async function sendMessage() {
+      if (!currentRoomId) {
+        alert("채팅방을 선택해주세요.");
+        return;
+      }
+      var text = messageInput.value.trim();
+      var imageUrl = null;
+      if (fileInput.files.length > 0) {
+        var formData = new FormData();
+        formData.append("file", fileInput.files[0]);
+        console.log("파일 선택됨: " + fileInput.files[0].name);
+        try {
+          var response = await fetch("/UploadController?type=uploadImage", {
+            method: "POST",
+            body: formData
+          });
+          var data = await response.json();
+          if (data.success) {
+            imageUrl = data.imageUrl;
+          } else {
+            alert("이미지 업로드 실패");
+            return;
+          }
+        } catch (error) {
+          console.error("이미지 업로드 오류: " + error);
           return;
         }
-        fetch(imageUrl)
-            .then(response => response.blob())
-            .then(blob => {
-              const url = window.URL.createObjectURL(blob);
-              const a = document.createElement("a");
-              a.style.display = "none";
-              a.href = url;
-              a.download = imageUrl.split('/').pop();
-              document.body.appendChild(a);
-              a.click();
-              window.URL.revokeObjectURL(url);
-              document.body.removeChild(a);
-            })
-            .catch(error => {
-              console.error("다운로드 오류:", error);
-              alert("파일을 다운로드할 수 없습니다.");
-            });
+      }
+      var messageData = {
+        roomId: currentRoomId,
+        message: text,
+        senderId: currentUserId,
+        imageUrl: imageUrl
+      };
+      var sendResponse = await fetch("/Controller?type=chatSend", {
+        method: "POST",
+        headers: { "Content-Type": "application/json; charset=UTF-8" },
+        body: JSON.stringify(messageData)
       });
+      var sendData = await sendResponse.json();
+      if (sendData.success) {
+        messageInput.value = "";
+        fileInput.value = "";
+        loadChatMessages(currentRoomId);
+      } else {
+        throw new Error(sendData.message || "메시지 전송 실패");
+      }
     }
+
+    sendMessageBtn.addEventListener("click", sendMessage);
   });
 </script>
-
-
 
 </body>
 </html>

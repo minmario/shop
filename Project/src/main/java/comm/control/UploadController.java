@@ -1,11 +1,6 @@
 package comm.control;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Properties;
+import user.action.Action;
 
 import javax.servlet.*;
 import javax.servlet.annotation.MultipartConfig;
@@ -14,14 +9,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import user.action.Action;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Properties;
 
 /**
  * Servlet implementation class Controller
  */
 @WebServlet(
-    urlPatterns = {"/Controller"},
+    urlPatterns = {"/UploadController"},
     initParams = {
         @WebInitParam(name = "myParam", value = "/WEB-INF/action.properties")
     })
@@ -31,14 +30,14 @@ import user.action.Action;
     maxRequestSize = 1024 * 1024 * 50       // 전체 요청(여러 파일 포함)의 최대 크기를 50MB로 제한
 )
 
-public class Controller extends HttpServlet {
+public class UploadController extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   // 초기 파라미터로 전달된 action.properties파일의 경로를 가지고
   // 그 파일의 내용(클래스의 경로)들을 가져와서 객체로 생성한 후  저장할 곳
   private Map<String, Action> actionMap;
 
-  public Controller() {
+  public  UploadController() {
     super();
     actionMap = new HashMap<>();
   }
