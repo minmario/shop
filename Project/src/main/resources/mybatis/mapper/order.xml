@@ -11,5 +11,16 @@
   <select id="get_confirm_month" parameterType="String" resultType="int"> SELECT COUNT(o.purchase_confirm_date) FROM `order` as o JOIN product as p ON p.id = o.prod_no WHERE YEAR(o.purchase_confirm_date) = YEAR(CURDATE()) AND MONTH(o.purchase_confirm_date) = MONTH(CURDATE()) AND p.seller_no = #{seller_no} </select>
   <insert id="log_cancel_order" parameterType="map"> INSERT INTO log(seller_no, writer_type, target, log_type, current, log_date) VALUES(#{seller_no}, '1', CONCAT('order_no: ', #{order_no}), '0',#{reason_seller} , NOW()) </insert>
   <insert id="log_change_status" parameterType="map"> INSERT INTO log(seller_no, writer_type, target, log_type, current, log_date) VALUES(#{seller_no}, '1', CONCAT('tid: ', #{tid}), '2',#{status} , NOW()) </insert>
-  <select id="get_total" parameterType="String" resultType="map"> SELECT DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL x.month_offset MONTH), '%c월') AS month, COALESCE(SUM(o.result_amount), 0) AS total_sales FROM (SELECT 0 AS month_offset UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5) AS x -- 월별 오프셋을 생성 LEFT JOIN `order` o ON DATE_FORMAT(o.purchase_confirm_date, '%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL x.month_offset MONTH), '%Y-%m') LEFT JOIN product p ON o.prod_no = p.id AND p.seller_no = #{seller_no} -- 특정 판매자의 데이터만 가져오기 WHERE p.seller_no IS NOT NULL OR o.prod_no IS NULL -- 매칭되지 않는 경우도 포함 GROUP BY month ORDER BY MIN(DATE_SUB(CURDATE(), INTERVAL x.month_offset MONTH)) ASC; </select>
+
+  <select id="get_total" parameterType="java.lang.String" resultType="HashMap">
+    SELECT
+    DATE_FORMAT(purchase_confirm_date, '%c월') AS month,
+    SUM(result_amount) AS total_sales
+    FROM `order` AS o
+    JOIN product AS p ON o.prod_no = p.id
+    WHERE p.seller_no = #{seller_no}  <!-- 여기가 중요! -->
+    AND purchase_confirm_date IS NOT NULL
+    GROUP BY month
+    ORDER BY MIN(purchase_confirm_date) DESC
+  </select>
 </mapper>
