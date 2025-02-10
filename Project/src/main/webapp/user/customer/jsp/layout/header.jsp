@@ -101,12 +101,14 @@
                                 <i class="bi bi-heart-fill"></i>
                                 <span class="like_title">좋아요</span>
                             </a>
+
                             <%-- 알림 --%>
                             <%--<a href="#" class="text-decoration-none text-dark position-relative" id="event-toggle">
                                 <i class="bi bi-bell-fill"></i>
                                 <span>알림</span>
                                 <span class="new_alert"></span>
                             </a>--%>
+
                             <%-- 장바구니 --%>
                             <a href="Controller?type=cart" class="text-decoration-none text-dark position-relative">
                                 <i class="bi bi-basket-fill"></i>
@@ -117,11 +119,13 @@
                                     </span>
                                 </c:if>
                             </a>
+
                             <%-- 주문배송조회 --%>
                             <a href="Controller?type=orderDelivery" class="text-decoration-none text-dark">
                                 <i class="bi bi-box-seam-fill"></i>
                                 <span>주문배송조회</span>
                             </a>
+
                             <%-- 마이페이지 --%>
                             <a href="Controller?type=myPage" class="text-decoration-none text-dark">
                                 <i class="bi bi-person-circle"></i>

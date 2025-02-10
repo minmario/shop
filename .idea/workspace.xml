@@ -9,11 +9,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5b829c05-df2b-409a-9128-08397fbb7afd" name="Changes" comment="병합 중간 푸쉬">
-      <change afterPath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/ajax/coupon_delete.jsp" afterDir="false" />
+    <list default="true" id="5b829c05-df2b-409a-9128-08397fbb7afd" name="Changes" comment="카카오 로그인 삭제">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/dao/SellerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/dao/SellerDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/CouponDeleteAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/CouponDeleteAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/QuestionAction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/coupon.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/coupon.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/sales.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/sales.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/seller.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/seller.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/sellerLog.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/sellerLog.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/webapp/WEB-INF/action.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/webapp/WEB-INF/action.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/coupon.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/coupon.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/layout/header.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/layout/header.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/order_list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/order_list.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,31 +64,28 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Tomcat 서버.Tomcat 9.0.98.executor": "Run",
-    "git-widget-placeholder": "seller",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/my_study/HTML_Study/work/shop/Project",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Tomcat 서버.Tomcat 9.0.98.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/my_study/HTML_Study/work/shop/Project&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
-    <configuration default="true" type="TomeeConfiguration" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false">
-      <deployment />
-      <server-settings />
-      <predefined_log_file enabled="true" id="Tomcat" />
-      <predefined_log_file enabled="true" id="Tomcat Catalina" />
-      <predefined_log_file id="Tomcat Manager" />
-      <predefined_log_file id="Tomcat Host Manager" />
-      <predefined_log_file id="Tomcat Localhost Access" />
+    <configuration default="true" type="JetRunConfigurationType">
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2" />
     </configuration>
     <configuration name="Tomcat 9.0.98" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.98" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
       <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/shop/Controller" />
@@ -172,6 +175,18 @@
         </option>
       </method>
     </configuration>
+    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false">
+      <deployment />
+      <server-settings />
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -200,7 +215,23 @@
       <option name="project" value="LOCAL" />
       <updated>1739083854645</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="카카오 로그인 삭제">
+      <option name="closed" value="true" />
+      <created>1739148189839</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1739148189839</updated>
+    </task>
+    <task id="LOCAL-00003" summary="카카오 로그인 삭제">
+      <option name="closed" value="true" />
+      <created>1739152139287</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1739152139287</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -209,6 +240,9 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Changes" />
     <MESSAGE value="병합 중간 푸쉬" />
-    <option name="LAST_COMMIT_MESSAGE" value="병합 중간 푸쉬" />
+    <MESSAGE value="이승범 최신화2" />
+    <MESSAGE value="order.get_total오류 해결" />
+    <MESSAGE value="카카오 로그인 삭제" />
+    <option name="LAST_COMMIT_MESSAGE" value="카카오 로그인 삭제" />
   </component>
 </project>

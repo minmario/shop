@@ -138,6 +138,8 @@ public class SaveProductAction implements Action {
                                     break;
                                 case "main_url":
                                     mainImageUrl = value;
+                                case "additional_url[]":
+                                    additionalImageUrls.add(value);
                             }
                         }
                     } else {
