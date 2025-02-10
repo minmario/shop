@@ -28,7 +28,7 @@
             </form>
 
             <!-- 네비게이션 메뉴 -->
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <%--<div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
                     <li class="nav-item">
                         <a class="nav-link text-success fw-bold" href="#">쿨탠다드</a>
@@ -68,7 +68,7 @@
                         <a class="nav-link" href="#">브랜드</a>
                     </li>
                 </ul>
-            </div>
+            </div>--%>
         </div>
     </nav>
     <div>
@@ -78,6 +78,12 @@
                     <!-- 로그인 상태 -->
                     <span class="nickname">${sessionScope.nickname}님 &nbsp;&nbsp; <button type="button" class="btn btn-outline-danger" onclick="location.href='${pageContext.request.contextPath}/Controller?type=logout';">로그아웃</button></span>
                     <div class="d-flex gap-3 align-items-center user-header-menu">
+                            <%-- 코디 --%>
+                        <a href="${pageContext.request.contextPath}/Controller?type=snap" class="text-decoration-none text-dark">
+                            <i class="bi bi-sunglasses"></i>
+                            <span class="like_title">코디</span>
+                        </a>
+
                             <%-- 좋아요 --%>
                         <a href="#" class="text-decoration-none text-danger">
                             <i class="bi bi-heart-fill"></i>
