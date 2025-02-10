@@ -5,7 +5,7 @@
 <mapper namespace="sellerLog">
 
     <insert id="insertSellerLog" parameterType="comm.vo.SellerLogVO">
-        INSERT INTO shop.log (seller_no, writer_type, target, log_type,prev,current,log_date) VALUES ('2','1',#{target},#{log_type},#{prev},#{current}, sysdate())
+        INSERT INTO shop.log (seller_no, writer_type, target, log_type,prev,current,log_date) VALUES (#{seller_no},'1',#{target},#{log_type},#{prev},#{current}, sysdate())
     </insert>
 
 </mapper>
