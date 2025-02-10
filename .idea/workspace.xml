@@ -10,16 +10,90 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5b829c05-df2b-409a-9128-08397fbb7afd" name="Changes" comment="카카오 로그인 삭제">
+      <change afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/QuestionAction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/QuestionAction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/control/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/control/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/dao/CategoryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/dao/CategoryDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/dao/CouponDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/dao/CouponDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/dao/CustomerDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/dao/DashboardDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/dao/DashboardDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/dao/InventoryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/dao/InventoryDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/dao/OrderDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/dao/OrderDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/dao/ProductDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/dao/ProductDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/dao/QuestionDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/dao/QuestionDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/dao/SalesDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/dao/SalesDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/dao/SellerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/dao/SellerDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/dao/SellerLogDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/dao/SellerLogDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/vo/BoardVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/vo/seller/BoardVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/vo/CouponVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/vo/seller/CouponVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/vo/DeliveryVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/vo/seller/DeliveryVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/vo/EndCouponVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/vo/seller/EndCouponVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/vo/InventoryVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/vo/seller/InventoryVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/vo/MajorCategoryVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/vo/seller/MajorCategoryVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/vo/MiddleCategoryVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/vo/seller/MiddleCategoryVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/vo/OrderVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/vo/seller/OrderVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/vo/ProductVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/vo/seller/ProductVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/vo/QuestionVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/vo/seller/QuestionVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/vo/ReplyVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/vo/seller/ReplyVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/vo/SalesModalVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/vo/seller/SalesModalVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/vo/SalesVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/vo/seller/SalesVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/vo/SellerLogVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/vo/seller/SellerLogVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/vo/SellerVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/vo/seller/SellerVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/comm/vo/StatusVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/comm/vo/seller/StatusVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/BrandInfoAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/BrandInfoAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/CancelOrderAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/CancelOrderAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/ChangeActiveAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/ChangeActiveAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/ChangeStatusAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/ChangeStatusAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/CouponDeleteAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/CouponDeleteAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/CouponInsertAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/CouponInsertAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/CouponListAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/CouponListAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/CouponUpdateAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/CouponUpdateAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/DashBoardAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/DashBoardAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/DeleteProductAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/DeleteProductAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/EndCouponListAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/EndCouponListAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/OrderListAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/OrderListAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/OrderOneAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/OrderOneAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/ProductEditAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/ProductEditAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/ProductListAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/ProductListAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/QuestionListAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/QuestionListAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/ReplyQuestionAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/ReplyQuestionAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/SalesListAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/SalesListAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/SalesModalAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/SalesModalAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/SaveProductAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/SaveProductAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/SearchProductAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/SearchProductAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/SellerLoginAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/SellerLoginAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/SellerLogoutAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/SellerLogoutAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/SnapWriteAction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/UpdateSellerAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/UpdateSellerAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/seller/action/UploadLogoAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/seller/action/UploadLogoAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/user/action/Snap/GetSnapDetailAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/user/action/Snap/GetSnapDetailAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/user/action/Snap/LoadSnapDataAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/user/action/Snap/LoadSnapDataAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/user/action/Snap/SnapAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/user/action/Snap/SnapAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/user/action/Snap/SnapDetailAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/user/action/Snap/SnapDetailAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/user/action/Snap/SnapEditAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/user/action/Snap/SnapEditAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/user/action/Snap/SnapProfileAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/user/action/Snap/SnapProfileAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/user/action/Snap/SnapWriteAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/user/action/Snap/SnapWriteAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/user/action/Snap/SnsAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/user/action/Snap/SnsAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/user/action/Snap/UpdateSnapAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/user/action/Snap/UpdateSnapAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/user/dao/snap/SnapDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/user/dao/snap/SnapDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/resources/mybatis/config/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/resources/mybatis/config/config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/category.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/category.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/coupon.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/coupon.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/inventory.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/inventory.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/order.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/order.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/product.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/product.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/question.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/question.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/sales.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/sales.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/seller.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/seller.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/sellerLog.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/resources/mybatis/mapper/sellerLog.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/main/webapp/WEB-INF/action.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/webapp/WEB-INF/action.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/coupon.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/coupon.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/layout/header.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/layout/header.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/order_list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/order_list.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/resources/mybatis/snap/mapper/customer.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/resources/mybatis/snap/mapper/customer.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/resources/mybatis/snap/mapper/snap.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/resources/mybatis/snap/mapper/snap.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/ajax/order_one.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/ajax/order_one.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/ajax/search_product.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/ajax/search_product.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/brandinfo.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/brandinfo.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/product_edit.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/product_edit.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/product_list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/product_list.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/product_new.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/webapp/seller/jsp/product_new.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +108,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="vldhtmxk" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -64,19 +143,28 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;Tomcat 서버.Tomcat 9.0.98.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/my_study/HTML_Study/work/shop/Project&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Tomcat 서버.Tomcat 9.0.98.executor": "Run",
+    "git-widget-placeholder": "develop",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/my_study/jsp_study/work/shop/Project/src/main/webapp/seller/jsp",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\my_study\jsp_study\work\shop\Project\src\main\webapp\seller\jsp" />
+      <recent name="C:\my_study\jsp_study\work\shop\Project\src\main\resources\mybatis\mapper" />
+      <recent name="C:\my_study\jsp_study\work\shop\Project\src\main\java\seller\action" />
+      <recent name="C:\my_study\jsp_study\work\shop\Project\src\main\java\comm\vo\seller" />
+      <recent name="C:\my_study\jsp_study\work\shop\Project\src\main\java\comm\dao" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <method v="2">
@@ -175,18 +263,6 @@
         </option>
       </method>
     </configuration>
-    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false">
-      <deployment />
-      <server-settings />
-      <predefined_log_file enabled="true" id="Tomcat" />
-      <predefined_log_file enabled="true" id="Tomcat Catalina" />
-      <predefined_log_file id="Tomcat Manager" />
-      <predefined_log_file id="Tomcat Host Manager" />
-      <predefined_log_file id="Tomcat Localhost Access" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -244,5 +320,20 @@
     <MESSAGE value="order.get_total오류 해결" />
     <MESSAGE value="카카오 로그인 삭제" />
     <option name="LAST_COMMIT_MESSAGE" value="카카오 로그인 삭제" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/Project/src/main/java/comm/dao/SellerDAO.java</url>
+          <line>11</line>
+          <properties class="comm.dao.SellerDAO" method="updateStock">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

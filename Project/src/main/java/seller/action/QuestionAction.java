@@ -1,25 +1,25 @@
 package seller.action;
 
 import user.action.Action;
-import comm.dao.ProductDAO;
-import comm.vo.seller.ProductVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class ProductListAction implements Action {
+public class QuestionAction implements Action {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
 
-        String  seller_no=  (String) session.getAttribute("seller_no");
+        String  question_no= (String) session.getAttribute("question_no");
 
-        ProductVO[] ar = ProductDAO.getAll(seller_no);
-        if(ar!=null){
-            request.setAttribute("ar",ar);
+
+        if(question_no == null){
+
+            return "/seller/jsp/question.jsp";
         }
-        return "/seller/jsp/product_list.jsp";
+
+        return "/seller/jsp/question.jsp";
     }
 
 }
