@@ -130,7 +130,7 @@
                             <button type="button" class="btn btn-secondary" id="prevStep" disabled>이전</button>
                             <button type="button" class="btn btn-primary" id="nextStep">다음</button>
                             <!-- type="button"을 유지 -->
-                            <button type="submit" id="submitSnap">저장</button>
+                            <button type="submit" class="btn btn-primary" id="submitSnap">저장</button>
                         </div>
                     </div>
                 </form>
