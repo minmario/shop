@@ -31,7 +31,7 @@
             height: 30px;
         }
         #content{
-           margin: 0;
+            margin: 0;
             margin-top: 100px;
         }
         #table td{
@@ -134,8 +134,8 @@
                     <td>${prod.sale }%</td>
                     <td>
                         <select id="active" onchange="changeActive(${prod.id})" name="active">
-                            <option value="0" <c:if test="${prod.active == 0}">selected</c:if>>판매</option>
-                            <option value="1" <c:if test="${prod.active == 1}">selected</c:if>>판매중지</option>
+                            <option value="1" <c:if test="${prod.active == 1}">selected</c:if>>판매</option>
+                            <option value="0" <c:if test="${prod.active == 0}">selected</c:if>>판매중지</option>
                         </select>
                     </td>
                     <td><button type="button" onclick="deleteProduct(this)">삭제</button></td>
@@ -192,81 +192,81 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
 <script>
-    $(function(){
-        $("#category, #prod_name").on("keydown", function(event) {
-            if (event.key === "Enter") {
-                event.preventDefault(); // 기본 엔터 동작(폼 제출) 방지
-                $(".search").click();   // 조회 버튼 클릭 이벤트 실행
-            }
-        });
+  $(function(){
+    $("#category, #prod_name").on("keydown", function(event) {
+      if (event.key === "Enter") {
+        event.preventDefault(); // 기본 엔터 동작(폼 제출) 방지
+        $(".search").click();   // 조회 버튼 클릭 이벤트 실행
+      }
     });
-    function changeActive(prod_no){
-        const active = $("#active").val();  // 선택된 상태 값 (0 또는 1)
+  });
+  function changeActive(prod_no){
+    const active = $("#active").val();  // 선택된 상태 값 (0 또는 1)
 
-        // Ajax 요청 보내기
-        $.ajax({
-            url: "Controller?type=changeActive", // 서버에서 처리할 URL
-            type: "POST",
-            data: {
-                prod_no: prod_no,
-                active: active
-            },
-            dataType: "json",
-        }).done(function(res){
-            if(res.cnt>0){
-                alert("변경완료!");
+    // Ajax 요청 보내기
+    $.ajax({
+      url: "Controller?type=changeActive", // 서버에서 처리할 URL
+      type: "POST",
+      data: {
+        prod_no: prod_no,
+        active: active
+      },
+      dataType: "json",
+    }).done(function(res){
+      if(res.cnt>0){
+        alert("변경완료!");
 
-            }else{
-                alert("변경 실패!");
-            }
-        });
+      }else{
+        alert("변경 실패!");
+      }
+    });
+  }
+  function deleteProduct(button) {
+    // 버튼에서 가장 가까운 행(Row) 찾기
+    const row = $(button).closest('tr');
+
+    // 필요한 데이터 가져오기
+    const prodNo = row.find('td:first').text().trim(); // 상품 번호 (첫 번째 셀)
+
+    if (!confirm("정말로 이 상품을 삭제하시겠습니까?")) {
+      return;
     }
-    function deleteProduct(button) {
-        // 버튼에서 가장 가까운 행(Row) 찾기
-        const row = $(button).closest('tr');
 
-        // 필요한 데이터 가져오기
-        const prodNo = row.find('td:first').text().trim(); // 상품 번호 (첫 번째 셀)
+    // Ajax 요청 보내기
+    $.ajax({
+      url: "Controller?type=deleteProduct", // 서버에서 처리할 URL
+      type: "POST",
+      data: "prod_no=" + encodeURIComponent(prodNo),
+      dataType: "json",
+    }).done(function(res){
+      if(res.cnt>0){
+        alert("변경완료!");
+        row.remove();
+      }else{
+        alert("변경 실패!");
+      }
+    });
+  }
+  function searchProduct(frm) {
+    const category = frm.category.value;
+    const prod_name = frm.prod_name.value;
+    let param = "type=searchProduct&category="+encodeURIComponent(category)+"&prod_name="+encodeURIComponent(prod_name);
 
-        if (!confirm("정말로 이 상품을 삭제하시겠습니까?")) {
-            return;
-        }
+    $.ajax({
+      url: "Controller", // 서버에서 JSON 응답을 받는 URL
+      type: "POST",
+      data: param,
+      dataType: "json", // 서버에서 JSON 형태로 응답받음
+      success: function(res) {
+        const tableBody = $("#table tbody");
+        tableBody.empty(); // 기존 테이블 내용 비우기
 
-        // Ajax 요청 보내기
-        $.ajax({
-            url: "Controller?type=deleteProduct", // 서버에서 처리할 URL
-            type: "POST",
-            data: "prod_no=" + encodeURIComponent(prodNo),
-            dataType: "json",
-        }).done(function(res){
-            if(res.cnt>0){
-                alert("변경완료!");
-                row.remove();
-            }else{
-                alert("변경 실패!");
-            }
-        });
-    }
-    function searchProduct(frm) {
-        const category = frm.category.value;
-        const prod_name = frm.prod_name.value;
-        let param = "type=searchProduct&category="+encodeURIComponent(category)+"&prod_name="+encodeURIComponent(prod_name);
+        // 서버에서 받은 JSON 데이터 처리
+        if (res.ar.length > 0) {
+          // 반복문을 통해 테이블에 데이터 추가
+          res.ar.forEach(vo => {
 
-        $.ajax({
-            url: "Controller", // 서버에서 JSON 응답을 받는 URL
-            type: "POST",
-            data: param,
-            dataType: "json", // 서버에서 JSON 형태로 응답받음
-            success: function(res) {
-                const tableBody = $("#table tbody");
-                tableBody.empty(); // 기존 테이블 내용 비우기
-
-                // 서버에서 받은 JSON 데이터 처리
-                if (res.ar.length > 0) {
-                    // 반복문을 통해 테이블에 데이터 추가
-                    res.ar.forEach(vo => {
-
-                        const row = `
+            const row = `
                             <tr>
                                 <td>`+ vo.id +`</td>
                                 <td><img src="${pageContext.request.contextPath}/seller/images/product2.jpg" class="product-image" alt="Product Image"></td>
@@ -286,25 +286,25 @@
                                 <td><button type="button" onclick="deleteProduct(this)">삭제</button></td>
                             </tr>
                             `;
-                        tableBody.append(row);
-                    });
-                } else {
-                    // 검색 결과가 없는 경우
-                    const emptyRow = `
+            tableBody.append(row);
+          });
+        } else {
+          // 검색 결과가 없는 경우
+          const emptyRow = `
                     <tr>
                         <td colspan="7" class="text-center">검색 결과가 없습니다.</td>
                     </tr>
                 `;
-                    tableBody.append(emptyRow);
-                }
-            },
-            error: function() {
-                alert("서버와 통신 중 오류가 발생했습니다.");
-            }
-        });
+          tableBody.append(emptyRow);
+        }
+      },
+      error: function() {
+        alert("서버와 통신 중 오류가 발생했습니다.");
+      }
+    });
 
-        return false; // 폼 제출 방지
-    }
+    return false; // 폼 제출 방지
+  }
 </script>
 </body>
 <footer>

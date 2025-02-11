@@ -24,7 +24,7 @@
         <button type="submit" class="btn btn-dark w-100 mb-2">로그인</button>
     </form>
     <div class="d-flex justify-content-between mt-3">
-        <a href="/shop/seller/jsp/login/sign_up.jsp" class="text-decoration-none text-muted">입점 신청</a>
+        <a href="seller/jsp/login/sign_up.jsp" class="text-decoration-none text-muted">입점 신청</a>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

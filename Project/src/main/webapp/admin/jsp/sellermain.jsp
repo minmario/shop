@@ -92,6 +92,8 @@
 <div class="sidebar">
     <nav class="nav flex-column">
         <!-- 판매자 관리 전용 메뉴 -->
+
+
         <a class="nav-link active" href="#seller1">승인대기 (active = 1)</a>
         <a class="nav-link" href="#seller0">현재 판매자 (active = 0)</a>
         <!-- 필요시 추가 모달 링크 -->
@@ -203,14 +205,373 @@
                     </tbody>
                 </table>
             </div>
+
         </div>
     </div>
 </div>
 
+
+<%--판매자대기 거절 모달 창--%>
+<div class="modal fade" id="rejectSellerModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="rejectModalLabel">거절 사유</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="rejectSellerForm">
+                <div class="modal-body">
+                    <input type="hidden" id="rejectSellerId" name="id">
+
+                    <textarea class="form-control" id="rejectSellerReason" name="content" rows="3" placeholder="해당 판매자대기를 삭제할 이유를 적어주세요."></textarea>
+                    <span class="text-danger">*특수문자사용시 스마트스토어 정책에 따라 전송 에러가 발생합니다. 텍스트와 숫자로 안내문구를 작성해주시기 바랍니다.</span>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button type="submit" class="btn btn-primary">저장</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<%--판매자대기 승인 모달 창--%>
+<div class="modal fade" id="admitSellerModal" tabindex="-1" aria-labelledby="admitModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="admitModalLabel">승인 사유</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="admitSellerForm">
+                <div class="modal-body">
+                    <input type="hidden" id="admitSellerId" name="id">
+
+                    <textarea class="form-control" id="admitSellerReason" name="content" rows="3" placeholder="해당 판매자대기를 승인할 이유를 적어주세요."></textarea>
+                    <span class="text-danger">*특수문자사용시 스마트스토어 정책에 따라 전송 에러가 발생합니다. 텍스트와 숫자로 안내문구를 작성해주시기 바랍니다.</span>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button type="submit" class="btn btn-primary">저장</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<%--판매자 정지 모달 창--%>
+<div class="modal fade" id="stopSellerModal" tabindex="-1" aria-labelledby="stopModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="stopModalLabel">정지 사유</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="stopSellerForm">
+                <div class="modal-body">
+                    <input type="hidden" id="stopSellerId" name="id">
+
+                    <textarea class="form-control" id="stopSellerReason" name="content" rows="3" placeholder="해당 판매자를 정지할 이유를 적어주세요."></textarea>
+                    <span class="text-danger">*특수문자사용시 스마트스토어 정책에 따라 전송 에러가 발생합니다. 텍스트와 숫자로 안내문구를 작성해주시기 바랍니다.</span>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button type="submit" class="btn btn-primary">저장</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
-  // 기존 판매자 관련 AJAX 및 setSellerId 함수 등은 그대로 유지
+
+  $(function (){
+    $("#seller0_search_btn").click(function(){
+      //검색버튼을 클릭할 때마다 수행하는 곳
+      let category_name = $("#seller0_name").val();
+      let word = $("#seller0_word").val();
+      alert(category_name+"/"+word);
+      let param = "type=searchSeller0&searchType="+
+          encodeURIComponent(category_name)+
+          "&searchValue="+encodeURIComponent(word);
+      //비동기식 통신
+      $.ajax({
+        url: "Controller",
+        type: "POST",
+        data: param,
+      }).done(function(data){
+        $("#seller0_table tbody").html(data);
+      });
+    });
+
+  });
+  $(function (){
+    $("#seller1_search_btn").click(function(){
+      //검색버튼을 클릭할 때마다 수행하는 곳
+      let category_name = $("#seller1_name").val();
+      let word = $("#seller1_word").val();
+      alert(category_name+"/"+word);
+      let param = "type=searchSeller1&searchType="+
+          encodeURIComponent(category_name)+
+          "&searchValue="+encodeURIComponent(word);
+      //비동기식 통신
+      $.ajax({
+        url: "Controller",
+        type: "POST",
+        data: param,
+      }).done(function(data){
+        $("#seller1_table tbody").html(data);
+      });
+    });
+  });
+  $(function (){
+    $("#seller2_search_btn").click(function(){
+      //검색버튼을 클릭할 때마다 수행하는 곳
+      let category_name = $("#seller2_name").val();
+      let word = $("#seller2_word").val();
+      alert(category_name+"/"+word);
+      let param = "type=searchSeller2&searchType="+
+          encodeURIComponent(category_name)+
+          "&searchValue="+encodeURIComponent(word);
+      //비동기식 통신
+      $.ajax({
+        url: "Controller",
+        type: "POST",
+        data: param,
+      }).done(function(data){
+        $("#seller2_table tbody").html(data);
+      });
+    });
+  });
+  $(function (){
+    $("#seller3_search_btn").click(function(){
+      //검색버튼을 클릭할 때마다 수행하는 곳
+      let category_name = $("#seller3_name").val();
+      let word = $("#seller3_word").val();
+      alert(category_name+"/"+word);
+      let param = "type=searchSeller3&searchType="+
+          encodeURIComponent(category_name)+
+          "&searchValue="+encodeURIComponent(word);
+      //비동기식 통신
+      $.ajax({
+        url: "Controller",
+        type: "POST",
+        data: param,
+      }).done(function(data){
+        $("#seller3_table tbody").html(data);
+      });
+    });
+  });
+
+  const columnTranslations = {
+    'seller_id': '판매자 id',
+
+    'name': '이름',
+
+    'gender': '성별',
+    'birth_date': '생일',
+    'phone': '전화번호',
+    'email': '이메일',
+    'desc': '분류',
+    'courier': '배송회사',
+    'address': '주소',
+
+
+  };
+
+  // 페이지 로딩 후 컬럼 이름을 한국어로 변환
+  document.addEventListener('DOMContentLoaded', function() {
+    const columnElements = document.querySelectorAll('.column-name'); // 'column-name' 클래스를 가진 요소들
+
+    columnElements.forEach(element => {
+      const columnName = element.innerText.trim();
+      if (columnTranslations[columnName]) {
+        element.innerText = columnTranslations[columnName];  // 한국어로 번역
+      }
+    });
+  });
+
+  function setSellerId(sellerId) {
+    console.log("전달된 판매자 ID:", sellerId);
+    $("#rejectSellerId").val(sellerId);
+    $("#admitSellerId").val(sellerId);
+    $("#stopSellerId").val(sellerId);
+
+
+  }
+  function setAdmitSellerId(sellerId){
+    console.log("전달된 판매자 ID:", sellerId);
+    $("#admitSellerId").val(sellerId);
+  }
+  $(document).ready(function () {<%--폼태그--%>
+    $("#rejectSellerForm").submit(function (event) {
+      event.preventDefault(); // 기본 form 제출 막기
+
+      let sellerId = $("#rejectSellerId").val();
+
+      let content = $("#rejectSellerReason").val();
+
+      if (!sellerId) {
+        alert("삭제할 게시판 ID가 없습니다.");
+        return;
+      }
+
+      $.ajax({
+        url: "Controller",
+        type: "POST",
+        data: {
+          type: "buttonSeller",
+          id: sellerId,
+
+          content: content,
+          action: "reject"
+        },
+        dataType: "json", <%--보내지는 데이터 타입--%>
+        <%--삭제의 경우 기존 값에서 하나의 행만 지우는 식이로 해야해서 이렇게 했다--%>
+        <%--삭제시 반드시 1로 만들어준다-->
+        <%--추가는 전부 불러오는 방식으로 하길 권장한다--%>
+        <%--spring에서도 자주 사용하니 반드시 알아야한다--%>
+
+        success: function (response) {
+          if (response.status === "success") {
+            console.log("거절 성공:", response);
+
+            <%--테이블의 열의 id를 레코드를 삭제--%>
+            $("#row-" + sellerId).remove();
+
+
+
+            $("#rejectSellerModal").modal("hide");
+
+            alert("판매자가 거절되었습니다.");
+          } else {
+            console.error("거절 실패:", response.message);
+            alert("판매자 거절에 실패했습니다: " + response.message);
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error("거절 실패:", error);
+          alert("판매자 거절 중 오류가 발생했습니다.");
+        }
+      });
+    });
+  });
+  $(document).ready(function () {<%--폼태그--%>
+    $("#admitSellerForm").submit(function (event) {
+      event.preventDefault(); // 기본 form 제출 막기
+
+      let sellerId = $("#admitSellerId").val();
+
+      let content = $("#admitSellerReason").val();
+
+      if (!sellerId) {
+        alert("승인할 게시판 ID가 없습니다.");
+        return;
+      }
+
+      $.ajax({
+        url: "Controller",
+        type: "POST",
+        data: {
+          type: "buttonSeller",
+          id: sellerId,
+
+          content: content,
+          action: "admit"
+        },
+        dataType: "json", <%--보내지는 데이터 타입--%>
+        <%--삭제의 경우 기존 값에서 하나의 행만 지우는 식이로 해야해서 이렇게 했다--%>
+        <%--삭제시 반드시 1로 만들어준다-->
+        <%--추가는 전부 불러오는 방식으로 하길 권장한다--%>
+        <%--spring에서도 자주 사용하니 반드시 알아야한다--%>
+
+        success: function (response) {
+          if (response.status === "success") {
+            console.log("승인 성공:", response);
+
+            <%--테이블의 열의 id를 레코드를 삭제--%>
+            $("#row-" + sellerId).remove();
+
+
+
+            $("#admitSellerModal").modal("hide");
+
+            alert("판매자가 승인되었습니다.");
+          } else {
+            console.error("승인 실패:", response.message);
+            alert("판매자 승인에 실패했습니다: " + response.message);
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error("승인 실패:", error);
+          alert("판매자 승인 중 오류가 발생했습니다.");
+        }
+      });
+    });
+  });
+  $(document).ready(function () {<%--폼태그--%>
+    $("#stopSellerForm").submit(function (event) {
+      event.preventDefault(); // 기본 form 제출 막기
+
+      let sellerId = $("#stopSellerId").val();
+
+      let content = $("#stopSellerReason").val();
+
+      if (!sellerId) {
+        alert("승인할 게시판 ID가 없습니다.");
+        return;
+      }
+
+      $.ajax({
+        url: "Controller",
+        type: "POST",
+        data: {
+          type: "buttonSeller",
+          id: sellerId,
+
+          content: content,
+          action: "stop"
+        },
+        dataType: "json", <%--보내지는 데이터 타입--%>
+        <%--삭제의 경우 기존 값에서 하나의 행만 지우는 식이로 해야해서 이렇게 했다--%>
+        <%--삭제시 반드시 1로 만들어준다-->
+        <%--추가는 전부 불러오는 방식으로 하길 권장한다--%>
+        <%--spring에서도 자주 사용하니 반드시 알아야한다--%>
+
+        success: function (response) {
+          if (response.status === "success") {
+            console.log("정지 성공:", response);
+
+            <%--테이블의 열의 id를 레코드를 삭제--%>
+            $("#row-" + sellerId).remove();
+
+
+
+            $("#stopSellerModal").modal("hide");
+
+            alert("판매자가 정지되었습니다.");
+          } else {
+            console.error("정지 실패:", response.message);
+            alert("판매자 정지에 실패했습니다: " + response.message);
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error("정지 실패:", error);
+          alert("판매자 정지 중 오류가 발생했습니다.");
+        }
+      });
+    });
+  });
+
+
+
+
+
 </script>
 </body>
 </html>
