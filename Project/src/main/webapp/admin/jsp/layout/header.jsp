@@ -1,67 +1,75 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: user
-  Date: 2025-01-14
-  Time: 오후 2:24
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     request.setCharacterEncoding("UTF-8");
     String nickname = (String) session.getAttribute("nickname");
-    boolean isLoggedIn = (nickname != null);
 %>
-
-
-
-
-<html>
-<header>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <%--    <link rel="stylesheet" href="css/styles.css">--%>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-        <div class="container-fluid">
-            <!-- 로고 -->
-            <a class="navbar-brand fw-bold text-white" href="./shop/seller/jsp/index.jsp" style="font-size: 1.8rem;">MUSINSA</a>
-
-            <!-- 검색창 -->
-
-
-            <!-- 네비게이션 메뉴 -->
-
-        </div>
+<style>
+    /* 수정된 헤더 스타일 */
+    .header {
+        background-color: var(--header-bg, #23282c);
+        color: var(--header-color, #ffffff);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        flex-wrap: nowrap;  /* 항목 줄바꿈 방지 */
+        padding: 0 20px;
+        z-index: 1050;
+    }
+    .header .logo {
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-right: 2rem;
+    }
+    /* nav를 flex 컨테이너로 설정 */
+    .header nav {
+        display: flex;
+        align-items: center;
+        flex-wrap: nowrap;
+    }
+    .header nav a {
+        color: var(--header-color, #ffffff);
+        margin-right: 1.5rem;
+        text-decoration: none;
+        font-weight: 500;
+        white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+    }
+    .header nav a:hover,
+    .header nav a.active {
+        color: var(--primary-color, #0d6efd);
+    }
+    .header .auth {
+        margin-left: auto;
+    }
+</style>
+<header class="header">
+    <div class="logo">
+        <a href="${pageContext.request.contextPath}/shop/seller/jsp/index.jsp" style="color:inherit; text-decoration:none;">
+            MUSINSA
+        </a>
+    </div>
+    <nav>
+        <a href="${pageContext.request.contextPath}/Controller?type=adminindex" class="nav-link">대시보드</a>
+        <a href="${pageContext.request.contextPath}/Controller?type=sellermain" class="nav-link">판매자관리</a>
+        <a href="${pageContext.request.contextPath}/Controller?type=customermain" class="nav-link">구매자관리</a>
+        <a href="${pageContext.request.contextPath}/Controller?type=categorymain" class="nav-link active">카테고리관리</a>
+        <a href="${pageContext.request.contextPath}/Controller?type=boardmain" class="nav-link">게시판관리</a>
+        <a href="${pageContext.request.contextPath}/Controller?type=couponmain" class="nav-link">쿠폰관리</a>
+        <a href="${pageContext.request.contextPath}/Controller?type=logsee" class="nav-link">로그확인</a>
     </nav>
-    <div class="index header d-flex align-items-center p-3 bg-light border-bottom">
-        <!-- 왼쪽: 로그인 버튼 -->
-        <div class="d-flex align-items-center">
-            <c:choose>
-                <c:when test="${not empty sessionScope.name}">
-                    <span class="me-2">환영합니다, <strong>${sessionScope.name}님</strong></span>
-                    <button type="button" class="btn btn-outline-danger"
-                            onclick="location.href='Controller?type=adminlogout';">로그아웃</button>
-                </c:when>
-                <c:otherwise>
-                    <button type="button" class="btn btn-outline"
-                            onclick="location.href='Controller?type=adminlogout';">로그인</button>
-                </c:otherwise>
-            </c:choose>
-        </div>
-
-        <!-- 중앙: 바로접속 ~ 고객센터 -->
-        <div class="d-flex gap-3 align-items-center justify-content-center flex-grow-1">
-            <a href="${pageContext.request.contextPath}/Controller?type=adminindex" class="text-decoration-none text-dark">대시보드</a>
-
-            <a href="${pageContext.request.contextPath}/Controller?type=sellermain" class="text-decoration-none text-dark">판매자관리</a>
-            <a href="${pageContext.request.contextPath}/Controller?type=customermain" class="text-decoration-none text-dark">구매자관리</a>
-            <a href="${pageContext.request.contextPath}/Controller?type=categorymain" class="text-decoration-none text-dark">카테고리관리</a>
-            <a href="${pageContext.request.contextPath}/Controller?type=boardmain" class="text-decoration-none text-dark">게시판관리</a>
-            <a href="${pageContext.request.contextPath}/Controller?type=couponmain" class="text-decoration-none text-dark">쿠폰관리</a>
-            <a href="${pageContext.request.contextPath}/Controller?type=logsee" class="text-decoration-none text-dark">로그확인</a>
-        </div>
-
+    <div class="auth">
+        <c:choose>
+            <c:when test="${not empty sessionScope.name}">
+                <span>환영합니다, <strong>${sessionScope.name}님</strong></span>
+                <button type="button" class="btn btn-outline-light btn-sm ms-2" onclick="location.href='Controller?type=adminlogout';">로그아웃</button>
+            </c:when>
+            <c:otherwise>
+                <button type="button" class="btn btn-outline-light btn-sm" onclick="location.href='Controller?type=adminlogin';">로그인</button>
+            </c:otherwise>
+        </c:choose>
     </div>
 </header>
-</html>

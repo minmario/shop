@@ -9,50 +9,58 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="/user/snap/css/Snap/mypage.css">
+    <style>
+        .chat-meta {
+            position: relative;  /* 부모 요소 설정 */
+            display: flex;
+            flex-direction: column; /* 요소를 세로로 정렬 */
+            align-items: center; /* 가운데 정렬 */
+        }
+        .last-message-time {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px; /* 시간과 배지 간격 조정 */
+        }
+        .unread-badge {
+            position: absolute;
+            bottom: -10px;  /* 숫자 뱃지를 아래쪽으로 이동 */
+            left: 50%;
+            transform: translateX(-50%); /* 가운데 정렬 */
+            font-size: 12px;
+            font-weight: bold;
+            min-width: 20px;
+            height: 20px;
+            line-height: 18px;
+            text-align: center;
+            color: white;
+            background-color: red;
+            border-radius: 50%;
+        }
+        .unread-message-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: red;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* (옵션) 새 메시지 알림 버튼 – 필요 시 사용 */
+        #newMessageButton {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 1000;
+            display: none;
+        }
+    </style>
 </head>
-<style>
-    .chat-meta {
-        position: relative;  /* 부모 요소 설정 */
-        display: flex;
-        flex-direction: column; /* 요소를 세로로 정렬 */
-        align-items: center; /* 가운데 정렬 */
-    }
-    .last-message-time {
-        font-size: 12px;
-        color: #666;
-        margin-bottom: 10px; /* 시간과 배지 간격 조정 */
-    }
-    .unread-badge {
-        position: absolute;
-        bottom: -10px;  /* 숫자 뱃지를 아래쪽으로 이동 */
-        left: 50%;
-        transform: translateX(-50%); /* 가운데 정렬 */
-        font-size: 12px;
-        font-weight: bold;
-        min-width: 20px;
-        height: 20px;
-        line-height: 18px;
-        text-align: center;
-        color: white;
-        background-color: red;
-        border-radius: 50%;
-    }
-    .unread-message-badge {
-        position: absolute;
-        top: -5px;
-        right: -5px;
-        background-color: red;
-        color: white;
-        font-size: 12px;
-        font-weight: bold;
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-</style>
 <body>
 <%-- 헤더, 왼쪽 메뉴 등 필요한 include --%>
 <div class="container-fluid mt-4">
@@ -126,7 +134,7 @@
     </div><!-- row 끝 -->
 </div><!-- container-fluid 끝 -->
 
-<!-- 이미지 모달 -->
+<!-- 이미지 모달 (다운로드 버튼 그대로 둠) -->
 <div id="imageModal" class="modal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -145,6 +153,9 @@
     </div>
 </div>
 
+<!-- 새 메시지 알림 버튼 (옵션) -->
+<button id="newMessageButton" class="btn btn-primary">새 메시지 보기</button>
+
 <jsp:include page="/user/snap/jsp/snap/snapModal.jsp"></jsp:include>
 <script src="/JS/snapModal.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -152,38 +163,37 @@
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     // === 전역 변수 설정 ===
-    // 서버에서 전달된 값 (채팅방이 선택된 경우)
     var currentRoomId = '<%= request.getAttribute("selectedRoomId") %>';
     var currentUserId = '<%= session.getAttribute("cus_id") %>';
-    var userId = currentUserId; // 동일하게 사용
+    var userId = currentUserId;
 
     // DOM 요소 캐싱
     var messageInput = document.getElementById("messageInput");
     var sendMessageBtn = document.getElementById("sendMessageBtn");
     var chatBox = document.getElementById("chat-box");
     var fileInput = document.getElementById("fileInput");
+    var newMessageButton = document.getElementById("newMessageButton");
 
-    // WebSocket 객체 (양방향 통신) – 실제 사용시 URL을 환경에 맞게 수정하세요.
+    // WebSocket 객체 (필요시 사용)
     var socket = null;
 
     // 폴링 간격 500ms
     var pollingInterval = 500;
     var messageInterval;
 
-    // 최근 불러온 메시지 데이터를 문자열로 저장 (변화가 없으면 DOM 업데이트를 하지 않음)
-    var lastMessagesJSON = "";
+    // 마지막으로 추가된 메시지의 id (서버에서 id가 존재한다고 가정)
+    var lastMessageId = 0;
 
-    // 채팅창 스크롤은 기본적으로 smooth로 설정
+    // 채팅창 스크롤 부드럽게
     chatBox.style.scrollBehavior = "smooth";
 
-    // === WebSocket 초기화 함수 (변경 없음) ===
+    // --- WebSocket 초기화 (기존과 동일) ---
     function initializeSocket(roomId) {
       if (socket && socket.readyState === WebSocket.OPEN) {
         socket.close();
       }
       var socketUrl = "ws://xxxxxx.execute-api.ap-northeast-2.amazonaws.com/dev/chatSocket/" + userId + "?roomId=" + roomId;
       console.log("Initializing WebSocket with URL: " + socketUrl);
-      console.log("userId: " + userId + ", currentRoomId: " + roomId);
       socket = new WebSocket(socketUrl);
       socket.onerror = (error) => {
         console.error("웹소켓 에러 발생:", error);
@@ -201,6 +211,9 @@
         try {
           var msg = JSON.parse(dataStr);
           displayMessage(msg);
+          if (msg.id && parseInt(msg.id) > lastMessageId) {
+            lastMessageId = parseInt(msg.id);
+          }
         } catch (e) {
           console.error("JSON 파싱 오류: " + e);
         }
@@ -210,25 +223,33 @@
       };
     }
 
-    // === displayMessage 함수: 단일 메시지를 채팅창에 추가 (실시간 WebSocket 메시지용) ===
+    // --- displayMessage 함수: 단일 메시지 추가 (실시간) ---
+    // 텍스트가 없더라도 이미지가 있을 경우 빈 말풍선(공백 포함) 생성
     function displayMessage(msg) {
       if (msg.roomId != currentRoomId) return;
       var messageDate = new Date(msg.created_at || msg.createdAt);
       var formattedTime = messageDate.toLocaleTimeString("ko-KR", {
         hour: "2-digit", minute: "2-digit", hour12: true
       });
+      var textHTML = "";
+      if (msg.message && msg.message.trim() !== "") {
+        textHTML = (parseInt(msg.senderId) === parseInt(currentUserId))
+            ? '<div class="p-2 rounded bg-warning text-dark" style="max-width:60%; border-radius:15px;">' + msg.message + '</div>'
+            : '<div class="p-2 rounded bg-light" style="max-width:60%; border-radius:15px;">' + msg.message + '</div>';
+      } else if (msg.imageUrl) {
+        textHTML = (parseInt(msg.senderId) === parseInt(currentUserId))
+            ? '<div class="p-2 rounded bg-warning text-dark" style="max-width:60%; border-radius:15px;">&nbsp;</div>'
+            : '<div class="p-2 rounded bg-light" style="max-width:60%; border-radius:15px;">&nbsp;</div>';
+      }
       var messageHTML = "";
-      var isMyMessage = parseInt(msg.senderId) === parseInt(currentUserId);
-      if (isMyMessage) {
+      if (parseInt(msg.senderId) === parseInt(currentUserId)) {
         messageHTML = '<div class="d-flex flex-column align-items-end mb-2">' +
             '<div class="d-flex flex-column align-items-end">' +
             (msg.imageUrl ? '<img src="' + msg.imageUrl + '" class="chat-image rounded mb-1" style="max-width:200px; max-height:250px; object-fit:cover; cursor:pointer;">' : "") +
             '<div class="d-flex align-items-center">' +
             '<div class="small text-muted me-2">' + formattedTime + '</div>' +
-            '<div class="p-2 rounded bg-warning text-dark" style="max-width:60%; border-radius:15px;">' + msg.message + '</div>' +
-            "</div>" +
-            "</div>" +
-            "</div>";
+            textHTML +
+            '</div></div></div>';
       } else {
         messageHTML = '<div class="d-flex align-items-start mb-2">' +
             '<img src="' + document.getElementById("receiverProfileImg").src + '" class="rounded-circle me-2" style="width:40px; height:40px; object-fit:cover;">' +
@@ -237,91 +258,72 @@
             '<div class="d-flex flex-column">' +
             (msg.imageUrl ? '<img src="' + msg.imageUrl + '" class="chat-image rounded mb-1" style="max-width:200px; max-height:250px; object-fit:cover; cursor:pointer;">' : "") +
             '<div class="d-flex align-items-center">' +
-            '<div class="p-2 rounded bg-light" style="max-width:60%; border-radius:15px;">' + msg.message + '</div>' +
+            textHTML +
             '<div class="small text-muted ms-2">' + formattedTime + '</div>' +
-            "</div>" +
-            "</div>" +
-            "</div>" +
-            "</div>";
+            '</div></div></div></div>';
       }
-      // 단일 메시지 추가 후, 스크롤은 항상 맨 아래로 (실시간 수신 시)
       chatBox.insertAdjacentHTML("beforeend", messageHTML);
-      chatBox.scrollTop = chatBox.scrollHeight;
+      setTimeout(function() {
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }, 20);
     }
 
-    // === loadChatMessages 함수: 폴링을 통한 전체 메시지 업데이트 (변화가 있을 때만 업데이트) ===
-    function loadChatMessages(roomId) {
+    // --- buildMessageHTML 함수: 메시지 객체를 HTML 문자열로 변환 (폴링용) ---
+    function buildMessageHTML(msg) {
+      var messageDate = new Date(msg.created_at || msg.createdAt);
+      var formattedTime = messageDate.toLocaleTimeString("ko-KR", {
+        hour: "2-digit", minute: "2-digit", hour12: true
+      });
+      var html = "";
+      var isMyMessage = parseInt(msg.sender_id) === parseInt(currentUserId);
+      if (isMyMessage) {
+        html = '<div class="d-flex flex-column align-items-end mb-2">' +
+            '<div class="d-flex flex-column align-items-end">' +
+            (msg.image_url ? '<img src="' + msg.image_url +
+                '" class="chat-image rounded mb-1" style="max-width:200px;max-height:250px;object-fit:cover;cursor:pointer;">' : "") +
+            '<div class="d-flex align-items-center">' +
+            '<div class="small text-muted me-2">' + formattedTime + '</div>' +
+            '<div class="p-2 rounded bg-warning text-dark" style="max-width:60%;border-radius:15px;">' + msg.message + '</div>' +
+            '</div></div></div>';
+      } else {
+        html = '<div class="d-flex align-items-start mb-2">' +
+            '<img src="' + document.getElementById("receiverProfileImg").src +
+            '" class="rounded-circle me-2" style="width:40px;height:40px;object-fit:cover;">' +
+            '<div>' +
+            '<div class="fw-bold text-dark">' + document.getElementById("receiverNickname").textContent + '</div>' +
+            '<div class="d-flex flex-column">' +
+            (msg.image_url ? '<img src="' + msg.image_url +
+                '" class="chat-image rounded mb-1" style="max-width:200px;max-height:250px;object-fit:cover;cursor:pointer;">' : "") +
+            '<div class="d-flex align-items-center">' +
+            '<div class="p-2 rounded bg-light" style="max-width:60%;border-radius:15px;">' + msg.message + '</div>' +
+            '<div class="small text-muted ms-2">' + formattedTime + '</div>' +
+            '</div></div></div></div>';
+      }
+      return html;
+    }
+
+    // --- isUserAtBottom 함수 ---
+    function isUserAtBottom() {
+      return (chatBox.scrollHeight - chatBox.scrollTop - chatBox.clientHeight) < 50;
+    }
+
+    // --- loadChatMessages 함수: 폴링을 통한 메시지 업데이트 (새 메시지만 append) ---
+    function loadChatMessages(roomId, forceScroll) {
       if (!roomId) return;
       fetch("/Controller?type=chatRoom&roomId=" + roomId)
           .then(function(response) { return response.json(); })
           .then(function(messages) {
-            var newMessagesJSON = JSON.stringify(messages);
-            // 변화가 없으면 DOM 업데이트하지 않음
-            if(newMessagesJSON === lastMessagesJSON) {
-              return;
-            }
-            lastMessagesJSON = newMessagesJSON;
-
-            // 스크롤 보정을 위한 기존 스크롤 정보 저장
-            var oldScrollTop = chatBox.scrollTop;
-            var oldScrollHeight = chatBox.scrollHeight;
-            var threshold = 50;
-            var isAtBottom = (oldScrollHeight - oldScrollTop - chatBox.clientHeight) < threshold;
-
-            // 전체 메시지 DOM 업데이트
-            chatBox.innerHTML = "";
-            var lastDate = "";
-            messages.forEach(function(msg) {
-              var isMyMessage = parseInt(msg.sender_id) === parseInt(currentUserId);
-              var messageDate = new Date(msg.created_at);
-              var formattedDate = messageDate.toLocaleDateString("ko-KR", {
-                year: "numeric", month: "long", day: "numeric", weekday: "long"
-              });
-              var formattedTime = messageDate.toLocaleTimeString("ko-KR", {
-                hour: "2-digit", minute: "2-digit", hour12: true
-              });
-              if (formattedDate !== lastDate) {
-                chatBox.insertAdjacentHTML("beforeend", '<div class="text-center my-3 text-muted fw-bold">' + formattedDate + "</div>");
-                lastDate = formattedDate;
-              }
-              var messageHTML = "";
-              if (isMyMessage) {
-                messageHTML = '<div class="d-flex flex-column align-items-end mb-2">' +
-                    '<div class="d-flex flex-column align-items-end">' +
-                    (msg.image_url ? '<img src="' + msg.image_url + '" class="chat-image rounded mb-1" style="max-width:200px; max-height:250px; object-fit:cover; cursor:pointer;">' : "") +
-                    '<div class="d-flex align-items-center">' +
-                    '<div class="small text-muted me-2">' + formattedTime + '</div>' +
-                    '<div class="p-2 rounded bg-warning text-dark" style="max-width:60%; border-radius:15px;">' + msg.message + '</div>' +
-                    "</div>" +
-                    "</div>" +
-                    "</div>";
-              } else {
-                messageHTML = '<div class="d-flex align-items-start mb-2">' +
-                    '<img src="' + document.getElementById("receiverProfileImg").src + '" class="rounded-circle me-2" style="width:40px; height:40px; object-fit:cover;">' +
-                    '<div>' +
-                    '<div class="fw-bold text-dark">' + document.getElementById("receiverNickname").textContent + '</div>' +
-                    '<div class="d-flex flex-column">' +
-                    (msg.image_url ? '<img src="' + msg.image_url + '" class="chat-image rounded mb-1" style="max-width:200px; max-height:250px; object-fit:cover; cursor:pointer;">' : "") +
-                    '<div class="d-flex align-items-center">' +
-                    '<div class="p-2 rounded bg-light" style="max-width:60%; border-radius:15px;">' + msg.message + '</div>' +
-                    '<div class="small text-muted ms-2">' + formattedTime + '</div>' +
-                    "</div>" +
-                    "</div>" +
-                    "</div>" +
-                    "</div>";
-              }
-              chatBox.insertAdjacentHTML("beforeend", messageHTML);
+            var newMessages = messages.filter(function(msg) {
+              return parseInt(msg.id) > lastMessageId;
             });
-
-            var newScrollHeight = chatBox.scrollHeight;
-            if (isAtBottom) {
-              // 하단에 있었으면 부드럽게 맨 아래로 이동
-              chatBox.scrollTop = newScrollHeight;
-            } else {
-              // 그렇지 않으면 기존 위치 보존(내용 변화만큼 보정)
-              chatBox.scrollTop = oldScrollTop + (newScrollHeight - oldScrollHeight);
+            if (newMessages.length === 0) return;
+            newMessages.forEach(function(msg) {
+              chatBox.insertAdjacentHTML("beforeend", buildMessageHTML(msg));
+              lastMessageId = Math.max(lastMessageId, parseInt(msg.id));
+            });
+            if (forceScroll || isUserAtBottom()) {
+              chatBox.scrollTop = chatBox.scrollHeight;
             }
-
             markMessagesAsRead(roomId);
           })
           .catch(function(error) {
@@ -330,7 +332,7 @@
           });
     }
 
-    // === markMessagesAsRead 함수: 읽음 처리 요청 (변경 없음) ===
+    // --- markMessagesAsRead 함수 ---
     function markMessagesAsRead(roomId) {
       fetch("/Controller?type=markAsRead&roomId=" + roomId, { method: "POST" })
           .then(function(response) { return response.json(); })
@@ -345,7 +347,7 @@
           });
     }
 
-    // === updateUnreadCount 함수: 채팅방 목록의 unread 배지 제거 (변경 없음) ===
+    // --- updateUnreadCount 함수 ---
     function updateUnreadCount(roomId) {
       var chatRoomElement = document.querySelector('.chat-room[data-room-id="' + roomId + '"]');
       if (chatRoomElement) {
@@ -356,7 +358,7 @@
       }
     }
 
-    // === 이미지 모달 이벤트 처리 (변경 없음) ===
+    // --- 이미지 모달 이벤트 처리 (원본 그대로) ---
     chatBox.addEventListener("click", function(event) {
       if (event.target.tagName === "IMG" && event.target.classList.contains("chat-image")) {
         var imageUrl = event.target.src;
@@ -370,17 +372,11 @@
       }
     });
 
-    // === 초기 메시지 로드 및 폴링 시작 (폴링 간격 500ms 적용) ===
-    if (currentRoomId && currentRoomId !== "null") {
-      loadChatMessages(currentRoomId);
-      messageInterval = setInterval(function() {
-        loadChatMessages(currentRoomId);
-      }, pollingInterval);
-    }
-
-    // === 채팅방 클릭 이벤트: 채팅방 변경 시 메시지 로드 및 폴링 재설정 (변경 없음) ===
+    // --- 채팅방 클릭 이벤트: 오른쪽 대화창 업데이트 및 폴링 재설정 ---
     document.querySelectorAll(".chat-room").forEach(function(room) {
       room.addEventListener("click", function() {
+        // 먼저 현재 채팅방 ID를 업데이트하고, lastMessageId 재설정
+        lastMessageId = 0;
         currentRoomId = this.dataset.roomId;
         var selectedProfileImage = this.dataset.profile;
         var selectedNickname = this.dataset.nickname;
@@ -390,7 +386,9 @@
           r.classList.remove("active");
         });
         this.classList.add("active");
-        loadChatMessages(currentRoomId);
+        // 새 채팅방의 메시지를 로드하고 강제 스크롤
+        loadChatMessages(currentRoomId, true);
+        // 폴링 인터벌 재설정
         if (typeof messageInterval !== "undefined") {
           clearInterval(messageInterval);
         }
@@ -400,7 +398,7 @@
       });
     });
 
-    // === 메시지 전송 함수 (파일 업로드 포함, 변경 없음) ===
+    // --- 메시지 전송 함수 (파일 업로드 포함) ---
     async function sendMessage() {
       if (!currentRoomId) {
         alert("채팅방을 선택해주세요.");
@@ -431,7 +429,7 @@
       }
       var messageData = {
         roomId: currentRoomId,
-        message: text,
+        message: text,  // 텍스트가 없더라도 빈 문자열 전송 (백엔드에서 처리)
         senderId: currentUserId,
         imageUrl: imageUrl
       };
@@ -444,15 +442,20 @@
       if (sendData.success) {
         messageInput.value = "";
         fileInput.value = "";
-        loadChatMessages(currentRoomId);
+        loadChatMessages(currentRoomId, true);
       } else {
         throw new Error(sendData.message || "메시지 전송 실패");
       }
     }
 
     sendMessageBtn.addEventListener("click", sendMessage);
+    messageInput.addEventListener("keydown", function(e) {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
   });
 </script>
-
 </body>
 </html>
