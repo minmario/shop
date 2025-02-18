@@ -475,8 +475,8 @@ public class OrderDAO {
         SqlSession ss = FactoryService.getFactory().openSession();
         
         try {
-            // 적립만 선택된 경우 result_amount를 amount로 설정
-            if ("0".equals(benefit_type)) {
+            // 상품 금액과 최종 결제 금액이 같고, 적립만 선택된 경우 result_amount를 amount로 설정
+            if ((result_amount == amount) && "0".equals(benefit_type)) {
                 result_amount = amount;
             }
 

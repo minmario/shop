@@ -40,7 +40,7 @@
                                 </div>
                                 <p class="address">${dvo.addr1} ${dvo.addr2}</p>
                                 <p class="phone">${dvo.phone}</p>
-                                <p class="" id="request-delivery">${dvo.request}</p>
+                                <p class="request" id="request-delivery">${dvo.request}</p>
                             </c:if>
                         </div>
                         <div class="order-product-container">
@@ -60,7 +60,7 @@
                                             <p class="product-size">${item.option_name} / <span id="product-count">${item.count}</span>개</p>
                                             <p class="product-price">
                                                 <c:choose>
-                                                    <c:when test="${not empty item.saled_price}">
+                                                    <c:when test="${not empty item.saled_price and item.saled_price ne 0}">
                                                         <p class="original-price"><fmt:formatNumber value="${item.price * item.count}"/>원</p>
                                                         <c:if test="${not empty item.sale}">
                                                             <span class="sale-percent">${item.sale}%</span>
@@ -73,6 +73,8 @@
                                                     </c:when>
                                                     <c:otherwise>
                                                         <span class="original-price"><fmt:formatNumber value="${item.price * item.count}"/>원</span>
+                                                        <!-- 할인 적용 시 업데이트할 대상 요소로 사용하기 위해 추가 -->
+                                                        <span class="discounted-price"></span>
                                                         <!-- 할인 가격이 없을 경우 원래 가격 누적 -->
                                                         <c:set var="total_amount" value="${total_amount + (item.price * item.count)}"/>
                                                     </c:otherwise>
@@ -90,11 +92,11 @@
                             <div class="points-left">
                                 <h3>보유 적립금 사용</h3>
                                 <span class="svg-icon" data-toggle="modal" data-target="#pointsModal">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
-                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                        <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
-                                    </svg>
-                                </span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                            <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
+                                        </svg>
+                                    </span>
                             </div>
                             <div class="points-input">
                                 <input type="text" id="point-input" oninput="formatCurrency()" placeholder="사용할 적립금을 입력하세요"/>
@@ -107,11 +109,11 @@
                             <div class="reward-top">
                                 <h3>구매 적립/선할인</h3>
                                 <span class="svg-icon" data-toggle="modal" data-target="#rewardModal">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
-                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                        <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
-                                    </svg>
-                                </span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                            <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
+                                        </svg>
+                                    </span>
                             </div>
                             <div class="reward-options">
                                 <div class="reward-item">
@@ -119,32 +121,19 @@
                                         <input type="radio" name="reward" value="earn" onclick="toggleRewardDisplay(this)" checked> 구매 적립
                                     </label>
                                     <span id="reward-earn" class="text-blue">
-                                        <fmt:formatNumber value="${total_amount * (sessionScope.customer_info.point_condition / 100)}"/>원 적립
-                                    </span>
+                                            <fmt:formatNumber value="${total_amount * (sessionScope.customer_info.point_condition / 100)}"/>원 적립
+                                        </span>
                                 </div>
                                 <div class="reward-item">
                                     <label>
                                         <input type="radio" name="reward" value="discount" onclick="toggleRewardDisplay(this)" data-value="${sessionScope.customer_info.point_condition}"> 적립금 선할인
                                     </label>
                                     <span id="reward-discount" class="text-blue" style="display:none;">
-                                        - <fmt:formatNumber value="${total_amount * (sessionScope.customer_info.point_condition / 100)}"/>원
-                                    </span>
+                                            - <fmt:formatNumber value="${total_amount * (sessionScope.customer_info.point_condition / 100)}"/>원
+                                        </span>
                                 </div>
                             </div>
                         </div>
-<%--                        <div class="payment-methods-container">--%>
-<%--                            <h3>결제 수단</h3>--%>
-<%--                            <div class="radio-group">--%>
-<%--                                <label>--%>
-<%--                                    <input type="radio" name="payment-method" id="tosspay-radio">--%>
-<%--                                    <img class="logo-finance" src="./user/images/logo-finance-toss.png"/>토스페이--%>
-<%--                                </label>--%>
-<%--                                <label>--%>
-<%--                                    <input type="radio" name="payment-method" id="kakaopay-radio">--%>
-<%--                                    <img class="logo-finance" src="./user/images/logo-finance-kakaopay.png"/>카카오페이--%>
-<%--                                </label>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
                         <div class="payment-details-container">
                             <h3>결제 금액</h3>
                             <ul>
@@ -174,11 +163,11 @@
                             <div class="reward-benefits-top">
                                 <h3>적립 혜택</h3>
                                 <span class="svg-icon" data-toggle="modal" data-target="#rewardBenefitsModal">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
-                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                        <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
-                                    </svg>
-                                </span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                            <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
+                                        </svg>
+                                    </span>
                             </div>
                             <ul>
                                 <c:if test="${not empty sessionScope.customer_info}">
@@ -194,11 +183,11 @@
                                 <div class="benefits-left">
                                     <h5>이번 주문으로 받을 혜택</h5>
                                     <span class="svg-icon" data-toggle="modal" data-target="#benefitsModal">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                    <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
-                                </svg>
-                            </span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                                <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
+                                            </svg>
+                                        </span>
                                 </div>
                                 <div class="benefits-right">
                                     <span class="text-blue total-benefit" id="total_amount"><fmt:formatNumber value="${total_amount}"/>원</span>
@@ -242,6 +231,7 @@
                                             </c:if>
                                             <p class="address-detail">${deli.addr1} ${deli.addr2}</p>
                                             <p class="deli-phone">${deli.phone}</p>
+                                            <p class="deli-request">${deli.request}</p>
                                         </label>
                                     </div>
                                 </c:forEach>
@@ -294,16 +284,16 @@
                                 <div>
                                     <table>
                                         <thead>
-                                            <tr>
-                                                <th>등급</th>
-                                                <th>적용 한도</th>
-                                            </tr>
+                                        <tr>
+                                            <th>등급</th>
+                                            <th>적용 한도</th>
+                                        </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <th>전체</th>
-                                                <td>판매가 기준 7%</td>
-                                            </tr>
+                                        <tr>
+                                            <th>전체</th>
+                                            <td>판매가 기준 7%</td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -335,22 +325,22 @@
                             <div>
                                 <table>
                                     <thead>
-                                        <tr>
-                                            <th>등급</th>
-                                            <th>선할인율</th>
-                                            <th>적립률</th>
-                                        </tr>
+                                    <tr>
+                                        <th>등급</th>
+                                        <th>선할인율</th>
+                                        <th>적립률</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        <c:if test="${not empty requestScope.grades}">
-                                            <c:forEach var="item" items="${requestScope.grades}">
-                                                <tr>
-                                                    <th>${item.name}</th>
-                                                    <td>${item.sale_condition}%</td>
-                                                    <td>${item.point_condition}%</td>
-                                                </tr>
-                                            </c:forEach>
-                                        </c:if>
+                                    <c:if test="${not empty requestScope.grades}">
+                                        <c:forEach var="item" items="${requestScope.grades}">
+                                            <tr>
+                                                <th>${item.name}</th>
+                                                <td>${item.sale_condition}%</td>
+                                                <td>${item.point_condition}%</td>
+                                            </tr>
+                                        </c:forEach>
+                                    </c:if>
                                     </tbody>
                                 </table>
                             </div>
@@ -414,7 +404,7 @@
     </c:choose>
 
     <%-- JQuery --%>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
 
     <%-- Bootstrap --%>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>

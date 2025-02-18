@@ -361,6 +361,7 @@ public class OrderAction implements Action {
                                         String expected_point = productData.optString("point") != null && !productData.optString("point").isEmpty() ? productData.optString("point") : null; // 적립 예정 적립금
                                         String coupon = products.getJSONObject(cartNo).optString("coupon", null);
                                         int result_amount = productData.optInt("result_amount", 0);
+                                        System.out.println("result_amount : " + result_amount);
                                         tid = responseJson.optString("tid");
                                         order_code = responseJson.optString("partner_order_id");
                                         deli_no = (String) session.getAttribute("deli_no");
@@ -393,7 +394,7 @@ public class OrderAction implements Action {
 
                                     // DB point 테이블, 사용한 적립금 저장
                                     String i_point_amount = (String) session.getAttribute("used_point");
-                                    if (i_point_amount != null && !i_point_amount.isEmpty()) {
+                                    if (i_point_amount != null && !i_point_amount.isEmpty() && !i_point_amount.equals("0")) {
                                         PointVO u_pvo = new PointVO();
                                         u_pvo.setCus_no(cvo.getId());
                                         u_pvo.setAmount(i_point_amount);
