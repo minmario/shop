@@ -167,7 +167,8 @@ public class CancelOrderAction implements Action {
                         int u_co_cnt = CouponDAO.updateCusCoupon(cvo.getId(), orderCode);
 
                         if (u_co_cnt > 0){
-                            OrderVO o_vo = OrderDAO.selectCusCoupon(cvo.getId(), orderCode);
+                            OrderVO o_vo = null;
+                            o_vo = OrderDAO.selectCusCoupon(cvo.getId(), orderCode);
 
                             // 쿠폰 복구 수정 로그
                             LogVO lvo = new LogVO();

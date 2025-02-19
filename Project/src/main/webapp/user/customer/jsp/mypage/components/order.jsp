@@ -104,7 +104,7 @@
                         <c:if test="${item.status == '11'}">
                             <button type="button" class="btn btn-outline-secondary refund-details-button" onclick="location.href='Controller?type=refundDetails&action=select_complete&order_id=${item.id}&order_code=${item.order_code}&prod_no=${item.prod_no}'">반품 상세</button>
                         </c:if>
-                        <c:if test="${item.status != '6' && item.status != '9' && item.status != '11'}">
+                        <c:if test="${item.status != '6'  && item.status != '7' && item.status != '9' && item.status != '11'}">
                             <div class="custom-product-actions">
                                 <button type="button" class="btn btn-outline-secondary custom-action-button" onclick="location.href='Controller?type=deliveryStatus&order_code=${item.order_code}&brand=${item.brand}'">배송 조회</button>
                             </div>
