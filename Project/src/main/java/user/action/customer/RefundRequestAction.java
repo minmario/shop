@@ -2,10 +2,7 @@ package user.action.customer;
 
 import user.action.Action;
 import user.dao.customer.*;
-import user.vo.customer.CustomerVO;
-import user.vo.customer.DeliveryVO;
-import user.vo.customer.LogVO;
-import user.vo.customer.OrderVO;
+import user.vo.customer.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -173,28 +170,25 @@ public class RefundRequestAction implements Action {
                         }
 
                         // 쿠폰 복구 처리
-                        int u_co_cnt = CouponDAO.updateCusCoupon(cvo.getId(), orderCode);
+                        CouponVO c_vo = CouponDAO.selectCusCoupon(cvo.getId(), orderCode);
+                        String cus_coupon_id = c_vo.getCus_coupon_no();
+                        String coupon_no = c_vo.getId();
 
-                        if (u_co_cnt > 0){
-                            OrderVO o_vo = OrderDAO.selectCusCoupon(cvo.getId(), orderCode);
+                        int d_co_cnt = CouponDAO.deleteCusCoupon(cvo.getId(), orderCode);
 
-                            // 쿠폰 복구 로그
-                            LogVO lvo = new LogVO();
-                            StringBuffer sb = new StringBuffer();
-                            lvo.setCus_no(cvo.getId());
-                            lvo.setTarget("cus_coupon 수정");
-                            sb.append("cus_no : " + cvo.getId() + ", ");
-                            sb.append("coupon_no : " + o_vo.getCoupon_no() + ", ");
-                            sb.append("order_code : " + o_vo.getOrder_code() + ", ");
-                            sb.append("status : " + "2");
-                            lvo.setPrev(sb.toString());
-                            sb = new StringBuffer();
-                            sb.append("cus_no : " + cvo.getId() + ", ");
-                            sb.append("coupon_no : " + o_vo.getCoupon_no() + ", ");
-                            sb.append("order_code : " + orderCode + ", ");
-                            sb.append("status : " + "1");
-                            lvo.setCurrent(sb.toString());
-                            LogDAO.updateLog(lvo);
+                        if (d_co_cnt > 0){
+
+                          // 쿠폰 복구 수정 로그
+                          LogVO lvo = new LogVO();
+                          StringBuffer sb = new StringBuffer();
+                          lvo.setCus_no(cvo.getId());
+                          lvo.setTarget("cus_coupon 삭제");
+                          sb.append("cus_coupon_id : " + cus_coupon_id + ", ");
+                          sb.append("cus_no : " + cvo.getId() + ", ");
+                          sb.append("coupon_no : " + coupon_no + ", ");
+                          sb.append("order_code : " + orderCode + ", ");
+                          lvo.setPrev(sb.toString());
+                          LogDAO.deleteLog(lvo);
                         }
 
                         // 고객 누적 금액 업데이트
@@ -304,28 +298,26 @@ public class RefundRequestAction implements Action {
                                 }
                             }
 
-                            int u_co_cnt = CouponDAO.updateCusCoupon(cvo.getId(), orderCode);
+                            // 쿠폰 복구 처리
+                            CouponVO c_vo = CouponDAO.selectCusCoupon(cvo.getId(), orderCode);
+                            String cus_coupon_id = c_vo.getCus_coupon_no();
+                            String coupon_no = c_vo.getId();
 
-                            if(u_co_cnt > 0){
-                                OrderVO o_vo = OrderDAO.selectOrderById(id);
+                            int d_co_cnt = CouponDAO.deleteCusCoupon(cvo.getId(), orderCode);
 
-                                // 쿠폰 복구 수정 로그
-                                LogVO lvo = new LogVO();
-                                StringBuffer sb = new StringBuffer();
-                                lvo.setCus_no(cvo.getId());
-                                lvo.setTarget("order 수정");
-                                sb.append("id : " + o_vo.getId() + ", ");
-                                sb.append("cus_no : " + o_vo.getCus_no() + ", ");
-                                sb.append("order_code : " + o_vo.getOrder_code() + ", ");
-                                sb.append("status : " + "2");
-                                lvo.setPrev(sb.toString());
-                                sb = new StringBuffer();
-                                sb.append("id : " + id + ", ");
-                                sb.append("cus_no : " + cvo.getId() + ", ");
-                                sb.append("order_code : " + orderCode + ", ");
-                                sb.append("status : " + "1");
-                                lvo.setCurrent(sb.toString());
-                                LogDAO.updateLog(lvo);
+                            if (d_co_cnt > 0){
+
+                              // 쿠폰 복구 수정 로그
+                              LogVO lvo = new LogVO();
+                              StringBuffer sb = new StringBuffer();
+                              lvo.setCus_no(cvo.getId());
+                              lvo.setTarget("cus_coupon 삭제");
+                              sb.append("cus_coupon_id : " + cus_coupon_id + ", ");
+                              sb.append("cus_no : " + cvo.getId() + ", ");
+                              sb.append("coupon_no : " + coupon_no + ", ");
+                              sb.append("order_code : " + orderCode + ", ");
+                              lvo.setPrev(sb.toString());
+                              LogDAO.deleteLog(lvo);
                             }
 
                             int currentTotal = (cvo.getTotal() != null && !cvo.getTotal().isEmpty()) ? Integer.parseInt(cvo.getTotal()) : 0;
