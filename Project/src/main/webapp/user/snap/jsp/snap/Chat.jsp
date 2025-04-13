@@ -10,13 +10,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="/user/snap/css/Snap/mypage.css">
     <style>
-        /*.chat-message {*/
-        /*    max-width: 60%; !* 메시지 박스 최대 너비 설정 *!*/
-        /*    word-wrap: break-word;*/
-        /*    overflow-wrap: break-word;*/
-        /*    white-space: pre-wrap;*/
-        /*}*/
-
         .chat-meta {
             position: relative;  /* 부모 요소 설정 */
             display: flex;
@@ -365,8 +358,6 @@
       }
     }
 
-
-
     // --- 이미지 모달 이벤트 처리 (원본 그대로) ---
     chatBox.addEventListener("click", function(event) {
       if (event.target.tagName === "IMG" && event.target.classList.contains("chat-image")) {
@@ -380,19 +371,6 @@
         }
       }
     });
-
-    //허찬희가 지울거
-    function updateLastMessage(roomId, lastMessage, lastMessageTimeStr) {
-      var chatRoomElement = document.querySelector('.chat-room[data-room-id="' + roomId + '"]');
-      if (chatRoomElement) {
-        var messagePreview = chatRoomElement.querySelector('.text-muted');
-        var timePreview = chatRoomElement.querySelector('.last-message-time');
-
-        if (messagePreview) messagePreview.textContent = lastMessage;
-        if (timePreview) timePreview.textContent = lastMessageTimeStr;
-      }
-    }
-
 
     // --- 채팅방 클릭 이벤트: 오른쪽 대화창 업데이트 및 폴링 재설정 ---
     document.querySelectorAll(".chat-room").forEach(function(room) {
@@ -465,9 +443,6 @@
         messageInput.value = "";
         fileInput.value = "";
         loadChatMessages(currentRoomId, true);
-
-        var currentTime = new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit", hour12: true });
-        updateLastMessage(currentRoomId, messageData.message || "사진", currentTime);
       } else {
         throw new Error(sendData.message || "메시지 전송 실패");
       }
