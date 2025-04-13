@@ -11,8 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5b829c05-df2b-409a-9128-08397fbb7afd" name="Changes" comment="merge3">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/main/webapp/user/customer/css/payment/payment.css" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/webapp/user/customer/css/payment/payment.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project/src/main/webapp/user/customer/jsp/layout/footer.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/webapp/user/customer/jsp/layout/footer.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +44,10 @@
     &quot;accountId&quot;: &quot;a5bd25bd-bf00-4f06-9e7c-9799e4ed5953&quot;
   }
 }</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
     <option name="FILTER_WARNINGS" value="false" />
@@ -62,19 +64,22 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Tomcat 서버.Tomcat 9.0.98.executor": "Run",
-    "git-widget-placeholder": "develop2",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/my_study/jsp_study/work/shop/Project/src/main/webapp/seller/jsp",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Tomcat 서버.Tomcat 9.0.98.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/my_study/HTML_Study/work/shop&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\my_study\jsp_study\work\shop\Project\src\main\webapp\seller\jsp" />
@@ -85,22 +90,13 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <option name="filePath" />
-      <method v="2" />
-    </configuration>
     <configuration name="Tomcat 9.0.98" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.98" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
       <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/shop/Controller" />
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
         <artifact name="shop:war exploded">
           <settings>
-            <option name="CONTEXT_PATH" value="/shop" />
+            <option name="CONTEXT_PATH" value="/" />
           </settings>
         </artifact>
       </deployment>
@@ -201,6 +197,8 @@
       <updated>1738758162302</updated>
       <workItem from="1738758163410" duration="12000" />
       <workItem from="1738819173605" duration="43000" />
+      <workItem from="1739257956311" duration="2000" />
+      <workItem from="1744522906030" duration="896000" />
     </task>
     <task id="LOCAL-00001" summary="병합 중간 푸쉬">
       <option name="closed" value="true" />
@@ -248,6 +246,17 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Changes" />
     <MESSAGE value="병합 중간 푸쉬" />
@@ -263,7 +272,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/Project/src/main/java/comm/dao/SellerDAO.java</url>
           <line>11</line>
-          <properties class="comm.dao.SellerDAO" method="updateStock">
+          <properties class="comm.dao.SellerDAO">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
