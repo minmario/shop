@@ -4,13 +4,13 @@
 
 <mapper namespace="ReplyDao">
   <!-- 댓글 저장 -->
-  <insert id="insertReply" parameterType="user.vo.snap.ReplyVO">
+  <insert id="insertReply" parameterType="user.vo.snaps.ReplyVO">
     INSERT INTO reply (board_no, cus_no, content, is_like, write_date, is_del)
     VALUES (#{board_no},  #{cus_no}, #{content}, 0, NOW(), 0)
   </insert>
 
   <!-- 최신 댓글 1개 조회 -->
-  <select id="getLatestReply" parameterType="int" resultType="user.vo.snap.ReplyVO">
+  <select id="getLatestReply" parameterType="int" resultType="user.vo.snaps.ReplyVO">
     SELECT r.*, c.nickname, c.profile_image
     FROM reply r
            JOIN customer c ON r.cus_no = c.id
@@ -19,7 +19,7 @@
       LIMIT 1
   </select>
 
-  <select id="getReplyList" parameterType="int" resultType="user.vo.snap.ReplyVO">
+  <select id="getReplyList" parameterType="int" resultType="user.vo.snaps.ReplyVO">
     SELECT r.*, c.nickname, c.profile_image
     FROM reply r  JOIN customer c ON r.cus_no = c.id
     WHERE r.board_no = #{board_no} AND r.is_del = 0

@@ -5,7 +5,6 @@ import user.dao.customer.OrderDAO;
 import user.dao.customer.PointDAO;
 import user.vo.customer.CustomerVO;
 import user.vo.customer.OrderVO;
-import user.vo.customer.PointVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

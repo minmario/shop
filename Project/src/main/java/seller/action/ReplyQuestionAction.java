@@ -1,7 +1,7 @@
 package seller.action;
 
 import user.action.Action;
-import comm.dao.QuestionDAO;
+import seller.dao.QuestionDAO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

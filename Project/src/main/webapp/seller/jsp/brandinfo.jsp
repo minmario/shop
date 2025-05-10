@@ -1,6 +1,6 @@
 
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-<%@ page import="comm.vo.seller.SellerVO" %>
+<%@ page import="seller.vo.SellerVO" %>
 <%
     SellerVO vo = (SellerVO) request.getAttribute("vo");
     if (vo == null) {

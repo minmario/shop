@@ -1,4 +1,4 @@
-<%@ page import="comm.vo.seller.ProductVO" %>
+<%@ page import="seller.vo.ProductVO" %>
 <%@ page import="com.google.gson.Gson" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.HashMap" %><%--

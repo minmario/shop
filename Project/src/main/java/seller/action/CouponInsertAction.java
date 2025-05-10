@@ -2,10 +2,10 @@ package seller.action;
 
 
 import user.action.Action;
-import comm.dao.CouponDAO;
-import comm.dao.SellerLogDAO;
-import comm.vo.seller.CouponVO;
-import comm.vo.seller.SellerLogVO;
+import seller.dao.CouponDAO;
+import seller.dao.SellerLogDAO;
+import seller.vo.CouponVO;
+import seller.vo.SellerLogVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

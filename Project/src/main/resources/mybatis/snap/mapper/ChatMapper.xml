@@ -5,7 +5,7 @@
 <mapper namespace="ChatMapper">
 
   <!--   특정 두 사용자의 채팅방 존재 여부 확인 -->
-  <select id="getChatRoom" parameterType="map" resultType="user.vo.snap.ChatRoomVO">
+  <select id="getChatRoom" parameterType="map" resultType="user.vo.snaps.ChatRoomVO">
     SELECT id,CASE WHEN user1_id = #{user1Id} THEN user2_id
     ELSE user1_id END AS otherUserId
     FROM chat_room
@@ -20,7 +20,7 @@
   </insert>
 
 
-   <select id="getUserInfo" parameterType="int" resultType="user.vo.snap.CustomerVO">
+   <select id="getUserInfo" parameterType="int" resultType="user.vo.snaps.CustomerVO">
     SELECT id, profile_image, nickname
     FROM customer
     WHERE id = #{userId}
@@ -28,7 +28,7 @@
 
 
   <!--   사용자의 모든 채팅방 목록 가져오기 -->
-  <select id="getChatRooms" parameterType="int" resultType="user.vo.snap.ChatRoomVO">
+  <select id="getChatRooms" parameterType="int" resultType="user.vo.snaps.ChatRoomVO">
     SELECT cr.id,
            CASE WHEN cr.user1_id = #{userId} THEN cr.user2_id ELSE cr.user1_id END AS otherUserId,
            c.profile_image AS otherUserProfileImage,
@@ -42,7 +42,7 @@
   </select>
 
   <!--   특정 채팅방의 메시지 조회 -->
-  <select id="getChatMessages" parameterType="int" resultType="user.vo.snap.ChatMessageVO">
+  <select id="getChatMessages" parameterType="int" resultType="user.vo.snaps.ChatMessageVO">
     SELECT id, room_id, sender_id, message, created_at, is_read, image_url
     FROM chat_message
     WHERE room_id = #{roomId}
@@ -50,7 +50,7 @@
   </select>
 
   <!--   메시지 전송 -->
-  <insert id="sendMessage" parameterType="user.vo.snap.ChatMessageVO">
+  <insert id="sendMessage" parameterType="user.vo.snaps.ChatMessageVO">
     INSERT INTO chat_message (room_id, sender_id, message, image_url, created_at, is_read)
     VALUES (#{roomId}, #{sender_id}, #{message}, #{image_url}, NOW(), 0)
   </insert>

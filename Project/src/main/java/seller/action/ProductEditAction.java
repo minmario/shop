@@ -1,13 +1,13 @@
 package seller.action;
 
 import user.action.Action;
-import comm.dao.CategoryDAO;
-import comm.dao.InventoryDAO;
-import comm.dao.ProductDAO;
-import comm.vo.seller.InventoryVO;
-import comm.vo.seller.MajorCategoryVO;
-import comm.vo.seller.MiddleCategoryVO;
-import comm.vo.seller.ProductVO;
+import seller.dao.CategoryDAO;
+import seller.dao.InventoryDAO;
+import seller.dao.ProductDAO;
+import seller.vo.InventoryVO;
+import seller.vo.MajorCategoryVO;
+import seller.vo.MiddleCategoryVO;
+import seller.vo.ProductVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

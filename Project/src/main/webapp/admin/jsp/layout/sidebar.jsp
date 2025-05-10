@@ -88,7 +88,7 @@
 <header class="custom-header">
     <div class="container d-flex align-items-center justify-content-between">
         <div class="logo">
-            <a href="./shop/seller/jsp/index.jsp" class="text-white text-decoration-none">MUSINSA</a>
+            <a href="./shop/admin/jsp/index.jsp" class="text-white text-decoration-none">MUSINSA</a>
         </div>
         <nav>
             <a href="${pageContext.request.contextPath}/Controller?type=adminindex" class="nav-link">대시보드</a>

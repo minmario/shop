@@ -1,26 +1,26 @@
-package user.control;
+package comm.control;
 
-import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import javax.servlet.ServletContext;
 
 public class ConfigUtil {
-  private Properties properties = new Properties();
+    private static final Properties properties = new Properties();
 
-  public ConfigUtil(ServletContext context) {
-    try {
-      // WEB-INF 폴더에 있는 파일 경로 가져오기
-      String filePath = context.getRealPath("/WEB-INF/config.properties");
-      try (InputStream input = new FileInputStream(filePath)) {
-        properties.load(input);
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
+    static {
+        try (InputStream input = ConfigUtil.class.getClassLoader()
+            .getResourceAsStream("config/config.properties")) {
+            if (input != null) {
+                properties.load(input);
+            } else {
+                throw new RuntimeException("config.properties 파일을 찾을 수 없습니다.");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("config.properties 로딩 실패", e);
+        }
     }
-  }
 
-  public String getProperty(String key) {
-    return properties.getProperty(key);
-  }
+    public static String get(String key) {
+        return properties.getProperty(key);
+    }
 }

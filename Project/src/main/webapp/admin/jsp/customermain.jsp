@@ -12,35 +12,54 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <!-- 추가 CSS (테이블 디자인 등) -->
     <style>
+        /* CSS 변수로 색상 정의 */
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+            --background-color: #f5f6fa;
+            --sidebar-bg: #2f4050;
+            --sidebar-color: #ffffff;
+            --header-bg: #23282c;
+            --header-color: #ffffff;
+        }
+
         /* 사이드바와 페이지 레이아웃 */
         #wrapper {
             display: flex;
             width: 100%;
             height: 100vh;
-            overflow: hidden;
+            overflow-y: auto;
         }
         #sidebar-wrapper {
+            position: fixed;
+            top: 60px; /* 헤더 높이 */
+            left: 0;
+            bottom: 0;
             min-width: 250px;
             max-width: 250px;
-            background: #f8f9fa;
+            padding: 20px;
+            overflow-y: auto;
             border-right: 1px solid #dee2e6;
-        }
-        #sidebar-wrapper .sidebar-heading {
-            padding: 1rem 1.5rem;
-            font-size: 1.25rem;
-            background: #e9ecef;
+            background-color: var(--sidebar-bg);
         }
         #sidebar-wrapper .list-group-item {
             border: none;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
             padding: 0.75rem 1.5rem;
             cursor: pointer;
+            background-color: var(--sidebar-bg);
+            color: var(--sidebar-color);
         }
-        #sidebar-wrapper .list-group-item:hover {
-            background: #e2e6ea;
+        #sidebar-wrapper .list-group-item:hover, #sidebar-wrapper .list-group .active {
+            background-color: var(--primary-color);
+            color: #fff;
         }
-        #page-content-wrapper {
-            flex: 1;
-            overflow-y: auto;
+        /* 메인 콘텐츠 영역 */
+        .main-content {
+            margin-left: 260px;
+            padding: 80px 30px 30px;
         }
         /* 페이지 상단 요약 카드 영역 */
         .summary-card {
@@ -57,9 +76,8 @@
 <div id="wrapper">
     <!-- 사이드바 -->
     <div id="sidebar-wrapper">
-        <div class="sidebar-heading">쇼핑몰 관리자</div>
         <div class="list-group list-group-flush">
-            <a href="#dashboard" class="list-group-item list-group-item-action">대시보드</a>
+            <a href="#dashboard" class="list-group-item list-group-item-action active">대시보드</a>
             <a href="#active" class="list-group-item list-group-item-action">구매자 목록</a>
             <a href="#withdrawn" class="list-group-item list-group-item-action">탈퇴 목록</a>
             <a href="#stopped" class="list-group-item list-group-item-action">정지 목록</a>
@@ -67,10 +85,10 @@
     </div>
 
     <!-- 페이지 콘텐츠 -->
-    <div id="page-content-wrapper">
+    <div class="main-content">
+        <h2 class="mb-4">구매자 관리</h2>
+
         <div class="container-fluid p-4">
-            <!-- 대시보드 타이틀 -->
-            <h1 class="mb-4" id="dashboard">대시보드</h1>
 
             <!-- 요약 카드 (예시로 서버에서 전달받은 변수 사용) -->
             <div class="row mb-4">
@@ -110,7 +128,7 @@
             <section id="active" class="mb-5">
                 <div class="card">
                     <div class="card-header bg-light">
-                        <h5 class="mb-0">구매자 목록 (is_del == 0)</h5>
+                        <h5 class="mb-0">구매자 목록</h5>
                     </div>
                     <div class="card-body">
                         <!-- 검색바 -->
@@ -188,7 +206,7 @@
             <section id="withdrawn" class="mb-5">
                 <div class="card">
                     <div class="card-header bg-light">
-                        <h5 class="mb-0">탈퇴 목록 (is_del == 1)</h5>
+                        <h5 class="mb-0">탈퇴 목록</h5>
                     </div>
                     <div class="card-body">
                         <!-- 검색바 -->
@@ -260,7 +278,7 @@
             <section id="stopped" class="mb-5">
                 <div class="card">
                     <div class="card-header bg-light">
-                        <h5 class="mb-0">정지 목록 (is_del == 2)</h5>
+                        <h5 class="mb-0">정지 목록</h5>
                     </div>
                     <div class="card-body">
                         <!-- 검색바 -->

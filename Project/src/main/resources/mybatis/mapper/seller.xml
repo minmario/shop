@@ -3,18 +3,18 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="seller">
-        <select id="login" parameterType="String" resultType="comm.vo.seller.SellerVO">
+        <select id="login" parameterType="String" resultType="seller.vo.SellerVO">
             SELECT * FROM seller
             WHERE seller_id = #{seller_id}
-            AND active=0
+            AND active=1
         </select>
-        <select id="getSellerInfo" resultType="comm.vo.seller.SellerVO" parameterType="String">
+        <select id="getSellerInfo" resultType="seller.vo.SellerVO" parameterType="String">
             SELECT *
             FROM seller
             where id = #{seller_no}
         </select>
 
-        <update id="updateSellerInfo" parameterType="comm.vo.seller.SellerVO">
+        <update id="updateSellerInfo" parameterType="seller.vo.SellerVO">
             update seller set
             seller_id = #{seller_id},
             name = #{name},

@@ -1,10 +1,10 @@
 package seller.action;
 
 import user.action.Action;
-import comm.dao.InventoryDAO;
-import comm.dao.ProductDAO;
+import seller.dao.InventoryDAO;
+import seller.dao.ProductDAO;
 import comm.service.S3Uploader;
-import comm.vo.seller.InventoryVO;
+import seller.vo.InventoryVO;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;

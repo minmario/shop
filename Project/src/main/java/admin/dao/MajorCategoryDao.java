@@ -3,7 +3,7 @@ package admin.dao;
 import admin.vo.LogVO;
 import admin.vo.MajorCategoryVO;
 import org.apache.ibatis.session.SqlSession;
-import service.FactoryService;
+import comm.service.FactoryService;
 import admin.vo.CustomerVO;
 
 import java.util.ArrayList;

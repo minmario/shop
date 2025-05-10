@@ -3,14 +3,15 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+  <properties resource="config/config.properties" />
   <environments default="">
     <environment id="">
       <transactionManager type="JDBC"/>
       <dataSource type="POOLED">
-        <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://43.201.217.68/shop"/>
-        <property name="username" value="team_user"/>
-        <property name="password" value="Faker@12345"/>
+        <property name="driver" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
       </dataSource>
     </environment>
   </environments>

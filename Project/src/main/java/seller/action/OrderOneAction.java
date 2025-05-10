@@ -2,8 +2,8 @@ package seller.action;
 
 
 import user.action.Action;
-import comm.dao.OrderDAO;
-import comm.vo.seller.OrderVO;
+import seller.dao.OrderDAO;
+import seller.vo.OrderVO;
 
 import javax.servlet.http.*;
 

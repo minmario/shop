@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static user.dao.customer.PointDAO.calculateRefundPoint;
-import static user.dao.customer.PointDAO.deletePoint;
 
 public class RefundRequestAction implements Action {
     @Override

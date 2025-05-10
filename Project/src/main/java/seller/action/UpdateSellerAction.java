@@ -5,9 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import user.action.Action;
-import comm.dao.SellerDAO;
+import seller.dao.SellerDAO;
 import comm.service.S3Uploader;
-import comm.vo.seller.SellerVO;
+import seller.vo.SellerVO;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;

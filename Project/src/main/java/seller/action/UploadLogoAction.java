@@ -1,7 +1,7 @@
 package seller.action;
 
 import user.action.Action;
-import comm.dao.SellerDAO;
+import seller.dao.SellerDAO;
 import comm.service.S3Uploader;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Paths;
 
 public class UploadLogoAction implements Action {

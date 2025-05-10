@@ -1,15 +1,13 @@
 package user.action.customer;
 
 import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.json.JSONObject;
 import org.mindrot.jbcrypt.BCrypt;
-import service.S3Uploader;
+import comm.service.S3Uploader;
 import user.action.Action;
 import user.dao.customer.*;
-import user.vo.customer.BoardVO;
 import user.vo.customer.CustomerVO;
 import user.vo.customer.LogVO;
 
@@ -19,7 +17,6 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.text.Normalizer;
 import java.util.List;
 import java.util.UUID;

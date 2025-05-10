@@ -48,18 +48,29 @@
 </style>
 <header class="header">
     <div class="logo">
-        <a href="${pageContext.request.contextPath}/shop/seller/jsp/index.jsp" style="color:inherit; text-decoration:none;">
+        <a href="${pageContext.request.contextPath}/shop/admin/jsp/index.jsp" style="color:inherit; text-decoration:none;">
             MUSINSA
         </a>
     </div>
+    <%
+        String currentType = request.getParameter("type");
+        request.setAttribute("currentType", currentType);
+    %>
     <nav>
-        <a href="${pageContext.request.contextPath}/Controller?type=adminindex" class="nav-link">대시보드</a>
-        <a href="${pageContext.request.contextPath}/Controller?type=sellermain" class="nav-link">판매자관리</a>
-        <a href="${pageContext.request.contextPath}/Controller?type=customermain" class="nav-link">구매자관리</a>
-        <a href="${pageContext.request.contextPath}/Controller?type=categorymain" class="nav-link active">카테고리관리</a>
-        <a href="${pageContext.request.contextPath}/Controller?type=boardmain" class="nav-link">게시판관리</a>
-        <a href="${pageContext.request.contextPath}/Controller?type=couponmain" class="nav-link">쿠폰관리</a>
-        <a href="${pageContext.request.contextPath}/Controller?type=logsee" class="nav-link">로그확인</a>
+        <a href="${pageContext.request.contextPath}/Controller?type=adminindex"
+           class="nav-link ${currentType == 'adminindex' ? 'active' : ''}">대시보드</a>
+        <a href="${pageContext.request.contextPath}/Controller?type=sellermain"
+           class="nav-link ${currentType == 'sellermain' ? 'active' : ''}">판매자관리</a>
+        <a href="${pageContext.request.contextPath}/Controller?type=customermain"
+           class="nav-link ${currentType == 'customermain' ? 'active' : ''}">구매자관리</a>
+        <a href="${pageContext.request.contextPath}/Controller?type=categorymain"
+           class="nav-link ${currentType == 'categorymain' ? 'active' : ''}">카테고리관리</a>
+        <a href="${pageContext.request.contextPath}/Controller?type=boardmain"
+           class="nav-link ${currentType == 'boardmain' ? 'active' : ''}">게시판관리</a>
+        <a href="${pageContext.request.contextPath}/Controller?type=couponmain"
+           class="nav-link ${currentType == 'couponmain' ? 'active' : ''}">쿠폰관리</a>
+        <a href="${pageContext.request.contextPath}/Controller?type=logsee"
+           class="nav-link ${currentType == 'logsee' ? 'active' : ''}">로그확인</a>
     </nav>
     <div class="auth">
         <c:choose>

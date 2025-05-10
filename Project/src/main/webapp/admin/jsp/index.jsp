@@ -77,7 +77,6 @@
 <body>
 <jsp:include page="layout/header.jsp" />
 <div class="sidebar">
-    <div class="mb-4 fs-4 fw-bold">쇼핑몰 관리자</div>
     <a href="#dashboard" class="nav-link active">대시보드</a>
     <a href="#active" class="nav-link">구매자 목록</a>
     <a href="#withdrawn" class="nav-link">탈퇴 목록</a>

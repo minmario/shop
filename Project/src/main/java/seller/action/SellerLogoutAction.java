@@ -1,8 +1,7 @@
 package seller.action;
 
 import user.action.Action;
-import comm.dao.SellerDAO;
-import org.mindrot.jbcrypt.BCrypt;
+import seller.dao.SellerDAO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

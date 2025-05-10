@@ -4,7 +4,7 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="customer">
   <!-- 회원가입 -->
-   <insert id="signupInsert" parameterType="user.vo.snap.CustomerVO">
+   <insert id="signupInsert" parameterType="user.vo.snaps.CustomerVO">
       INSERT INTO `customer` (
       `cus_id`, `cus_pw`, `name`, `nickname`, `gender`, `birth_date`,
       `phone`, `email`, `weight`, `height`, `total`, `expire_date`, `is_del` )
@@ -14,7 +14,7 @@
     </insert>
 
   <!-- 로그인검증 -->
-  <select id="loginSelect" parameterType="user.vo.snap.CustomerVO" resultType="user.vo.snap.CustomerVO">
+  <select id="loginSelect" parameterType="user.vo.snaps.CustomerVO" resultType="user.vo.snaps.CustomerVO">
     SELECT * FROM `customer`
     WHERE cus_id = #{cus_id} AND
     cus_pw = #{cus_pw}
@@ -24,7 +24,7 @@
      SELECT id FROM customer
      WHERE nickname = #{nickname}
    </select>
-<!--  <select id="getId2" parameterType="user.vo.BoardVOVO" resultType="comm.vo.seller.BoardVO">-->
+<!--  <select id="getId2" parameterType="user.vo.BoardVOVO" resultType="seller.vo.BoardVO">-->
 <!--    SELECT * FROM board-->
 <!--    WHERE cus_no = #{cus_id}-->
 
@@ -33,14 +33,14 @@
 
 
   <!-- 현재 로그인한 사용자 정보 조회 -->
-  <select id="getUserProfile" parameterType="int" resultType="user.vo.snap.CustomerVO">
+  <select id="getUserProfile" parameterType="int" resultType="user.vo.snaps.CustomerVO">
     SELECT id, nickname, profile_image
     FROM customer
     WHERE id = #{cusId}
   </select>
 
   <!-- 랜덤 추천 사용자 5명 가져오기 (로그인한 사용자는 제외) -->
-  <select id="getRandomUsers" parameterType="int" resultType="user.vo.snap.CustomerVO">
+  <select id="getRandomUsers" parameterType="int" resultType="user.vo.snaps.CustomerVO">
     SELECT id, nickname, profile_image
     FROM customer
     WHERE id != #{excludeCusId}

@@ -87,21 +87,25 @@
     </style>
 </head>
 <body>
+<!-- 상단 헤더 (공통 헤더 include) -->
 <jsp:include page="layout/header.jsp" />
 
+<!-- 좌측 사이드바 -->
 <div class="sidebar">
     <nav class="nav flex-column">
         <!-- 판매자 관리 전용 메뉴 -->
-        <a class="nav-link active" href="#seller1">승인대기 (active = 1)</a>
-        <a class="nav-link" href="#seller0">현재 판매자 (active = 0)</a>
+        <a class="nav-link active" href="#seller1">승인대기</a>
+        <a class="nav-link" href="#seller0">현재 판매자</a>
         <!-- 필요시 추가 모달 링크 -->
     </nav>
 </div>
 
 <div class="main-content">
+    <h2 class="mb-4">판매자 관리</h2>
+
     <!-- 승인대기 판매자 섹션 -->
     <div class="card mb-4" id="seller1">
-        <div class="card-header">승인대기 (active = 1)</div>
+        <div class="card-header">승인대기</div>
         <div class="card-body">
             <div class="input-group mb-3">
                 <span class="input-group-text"><i class="bi bi-search"></i></span>
@@ -155,7 +159,7 @@
     </div>
     <!-- 현재 판매자 섹션 -->
     <div class="card mb-4" id="seller0">
-        <div class="card-header">현재 판매자 (active = 0)</div>
+        <div class="card-header">현재 판매자</div>
         <div class="card-body">
             <div class="input-group mb-3">
                 <span class="input-group-text"><i class="bi bi-search"></i></span>

@@ -87,13 +87,13 @@
 <jsp:include page="layout/header.jsp" />
 <div class="sidebar">
     <nav class="nav flex-column">
-        <a class="nav-link active" href="#log0">로그 목록 0 (삭제)</a>
+        <a class="nav-link active" href="#log0">로그 목록</a>
         <!-- 필요 시 추가 로그 유형 링크 -->
     </nav>
 </div>
 <div class="main-content">
     <div class="card" id="log0">
-        <div class="card-header">로그 목록 0 - 삭제</div>
+        <div class="card-header">로그 목록</div>
         <div class="card-body">
             <div class="input-group mb-3">
                 <span class="input-group-text"><i class="bi bi-search"></i></span>

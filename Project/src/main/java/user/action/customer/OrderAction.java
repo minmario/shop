@@ -1,5 +1,6 @@
 package user.action.customer;
 
+import comm.control.ConfigUtil;
 import org.json.JSONObject;
 import user.action.Action;
 import user.dao.customer.*;
@@ -16,10 +17,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class OrderAction implements Action {
-    private static final String HOST = "https://open-api.kakaopay.com";
-    private static final String SECRET_KEY = "DEV3FACF03E22F89D2BFE1D14B430CCD153B9BAD";
-    private static final String KAKAO_PAY_URL = "/online/v1/payment/ready";
-    private static final String KAKAO_APPROVE = "/online/v1/payment/approve";
+    private static final String HOST = ConfigUtil.get("kakao.host");
+    private static final String SECRET_KEY = ConfigUtil.get("kakao.secretKey");
+    private static final String KAKAO_PAY_URL = ConfigUtil.get("kakao.readyPath");
+    private static final String KAKAO_APPROVE = ConfigUtil.get("kakao.approvePath");
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {

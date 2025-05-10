@@ -22,7 +22,7 @@
   </select>
 
 
-  <select id="getFollowers" parameterType="map" resultType="user.vo.snap.CustomerVO">
+  <select id="getFollowers" parameterType="map" resultType="user.vo.snaps.CustomerVO">
     SELECT c.id AS user_id,
            c.profile_image,
            c.nickname,
@@ -35,7 +35,7 @@
 
   </select>
 
-  <select id="getFollowings" parameterType="map" resultType="user.vo.snap.CustomerVO">
+  <select id="getFollowings" parameterType="map" resultType="user.vo.snaps.CustomerVO">
     SELECT c.id AS user_id, c.profile_image, c.nickname,
            (SELECT COUNT(*) FROM follow WHERE customer_id = #{sessionUserId} AND following_id = c.id) AS is_following
     FROM follow f
@@ -53,7 +53,7 @@
     SELECT COUNT(*) FROM follow WHERE customer_id = #{userId}
   </select>
 
-  <select id="searchUsers" parameterType="String" resultType="user.vo.snap.CustomerVO">
+  <select id="searchUsers" parameterType="String" resultType="user.vo.snaps.CustomerVO">
     SELECT c.id, c.nickname, c.profile_image,
            (SELECT COUNT(*) FROM follow f WHERE f.customer_id = c.id) AS follower_count
     FROM customer c   WHERE c.nickname LIKE CONCAT('%', #{keyword}, '%')

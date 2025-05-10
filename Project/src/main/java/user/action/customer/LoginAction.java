@@ -7,7 +7,7 @@ import user.dao.customer.CartDAO;
 import user.dao.customer.CustomerDAO;
 import user.dao.customer.LogDAO;
 import user.dao.customer.ProductDAO;
-import user.dao.snap.CustomerDao;
+import user.dao.snaps.CustomerDao;
 import user.vo.customer.CustomerVO;
 import user.vo.customer.LogVO;
 import user.vo.customer.MajorCategoryVO;
@@ -125,8 +125,6 @@ public class LoginAction  implements Action {
 
                   String nickname = loginResult.getNickname();
                   int customer_id = CustomerDao.getId(nickname);
-
-
 
                   // 로그인 정보 저장
                    session.setAttribute("cus_id", customer_id);

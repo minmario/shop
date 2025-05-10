@@ -4,7 +4,7 @@ import admin.vo.LogVO;
 import admin.vo.MajorCategoryVO;
 import admin.vo.MiddleCategoryVO;
 import org.apache.ibatis.session.SqlSession;
-import service.FactoryService;
+import comm.service.FactoryService;
 
 import java.util.ArrayList;
 import java.util.HashMap;

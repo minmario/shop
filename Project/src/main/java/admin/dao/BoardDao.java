@@ -1,11 +1,9 @@
 package admin.dao;
 
-import admin.vo.BoardProdVO;
 import admin.vo.BoardVO;
 import admin.vo.LogVO;
-import admin.vo.MajorCategoryVO;
 import org.apache.ibatis.session.SqlSession;
-import service.FactoryService;
+import comm.service.FactoryService;
 
 import java.util.ArrayList;
 import java.util.HashMap;

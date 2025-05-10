@@ -1,5 +1,5 @@
 <%@ page import="com.mysql.cj.x.protobuf.MysqlxCrud" %>
-<%@ page import="comm.vo.seller.OrderVO" %>
+<%@ page import="seller.vo.OrderVO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%-- JSON표기법 --%>

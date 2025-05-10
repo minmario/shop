@@ -1,7 +1,7 @@
 package user.dao.customer;
 
 import org.apache.ibatis.session.SqlSession;
-import service.FactoryService;
+import comm.service.FactoryService;
 import user.vo.customer.EventVO;
 
 import java.util.HashMap;

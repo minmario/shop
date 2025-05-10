@@ -4,7 +4,10 @@ import user.action.Action;
 import user.dao.customer.ProdLikeDAO;
 import user.dao.customer.ProductDAO;
 import user.dao.customer.QuestionDAO;
-import user.vo.customer.*;
+import user.vo.customer.BoardVO;
+import user.vo.customer.CustomerVO;
+import user.vo.customer.ProdLikeVO;
+import user.vo.customer.ProductVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
