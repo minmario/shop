@@ -40,4 +40,4 @@ build/
 .DS_Store
 
 ### 설정 파일 제외 ###
-/src/main/resources/config/jdbc.properties
+/src/main/resources/mybatis/config/config.properties
