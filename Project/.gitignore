@@ -40,4 +40,4 @@ build/
 .DS_Store
 
 ### 설정 파일 제외 ###
-!**/src/main/resources/config/config.properties
+**/src/main/resources/config/config.properties
