@@ -36,3 +36,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### 설정 파일 제외 ###
+/src/main/resources/config/jdbc.properties
