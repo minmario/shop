@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="seller">
+        <select id="login" parameterType="String" resultType="seller.vo.SellerVO">
+            SELECT * FROM seller
+            WHERE seller_id = #{seller_id}
+            AND active=1
+        </select>
+        <select id="getSellerInfo" resultType="seller.vo.SellerVO" parameterType="String">
+            SELECT *
+            FROM seller
+            where id = #{seller_no}
+        </select>
+
+        <update id="updateSellerInfo" parameterType="seller.vo.SellerVO">
+            update seller set
+            seller_id = #{seller_id},
+            name = #{name},
+            phone = #{phone},
+            email = #{email},
+            `desc` = #{desc},
+            address = #{address},
+            seller_icon = #{seller_icon}
+            where id = #{id}
+        </update>
+        <update id="updateSellerIcon" parameterType="map">
+            UPDATE shop.seller
+            SET seller_icon = #{logoUrl}
+            WHERE seller_no = #{seller_no}
+        </update>
+        <select id="check_id" parameterType="String" resultType="int">
+            SELECT COUNT(*) FROM seller
+            WHERE id = #{seller_no}
+        </select>
+        <insert id="add_seller" parameterType="Map">
+            INSERT INTO seller(seller_id,seller_pw,email,phone,name,address,courier,`desc`)
+            VALUES(#{seller_id},#{seller_pw},#{email},#{phone},#{name},#{address},#{courier},#{desc})
+        </insert>
+    <insert id="log_login" parameterType="String">
+        INSERT INTO log(seller_no, writer_type, target, log_type, current, log_date)
+        VALUES(#{seller_no}, '1', 'LOGIN' , '1',#{seller_no} , NOW())
+    </insert>
+    <insert id="log_logout" parameterType="String">
+        INSERT INTO log(seller_no, writer_type, target, log_type, current, log_date)
+        VALUES(#{seller_no}, '1', 'LOGOUT' , '0',#{seller_no} , NOW())
+    </insert>
+
+</mapper>
